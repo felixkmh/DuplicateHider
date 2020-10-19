@@ -85,21 +85,23 @@ namespace DuplicateHider
             plugin.SettingsView.PlatformComboBox.Items.Dispatcher.Invoke(() =>
             {
                 List<CheckBox> checkBoxes = new List<CheckBox>();
-                foreach (var platform in plugin.PlayniteApi.Database.Platforms)
+                foreach (var platform in plugin.PlayniteApi.Database.Platforms.Concat(new List<Platform>{ null }))
                 {
-                    if (IncludePlatforms.Contains(platform.Name))
+                    string platformName = platform != null ? platform.Name : "Undefined";
+                    if (IncludePlatforms.Contains(platformName))
                     {
-                        var cb = new CheckBox { Content = platform.Name, Tag = platform };
+                        var cb = new CheckBox { Content = platformName, Tag = platform };
                         cb.IsChecked = true;
                         checkBoxes.Add(cb);
                         plugin.SettingsView.PlatformComboBox.Items.Add(cb);
                     }
                 }
-                foreach (var platform in plugin.PlayniteApi.Database.Platforms)
+                foreach (var platform in plugin.PlayniteApi.Database.Platforms.Concat(new List<Platform> { null }))
                 {
-                    if (!IncludePlatforms.Contains(platform.Name))
+                    string platformName = platform != null ? platform.Name : "Undefined";
+                    if (!IncludePlatforms.Contains(platformName))
                     {
-                        var cb = new CheckBox { Content = platform.Name, Tag = platform };
+                        var cb = new CheckBox { Content = platformName, Tag = platform };
                         cb.IsChecked = false;
                         checkBoxes.Add(cb);
                         plugin.SettingsView.PlatformComboBox.Items.Add(cb);
@@ -110,21 +112,23 @@ namespace DuplicateHider
             plugin.SettingsView.SourceComboBox.Items.Dispatcher.Invoke(() =>
             {
                 List<CheckBox> checkBoxes = new List<CheckBox>();
-                foreach (var source in plugin.PlayniteApi.Database.Sources)
+                foreach (var source in plugin.PlayniteApi.Database.Sources.Concat(new List<GameSource> { null }))
                 {
-                    if (ExcludeSources.Contains(source.Name))
+                    string sourceName = source != null ? source.Name : "Undefined"; 
+                    if (ExcludeSources.Contains(sourceName))
                     {
-                        var cb = new CheckBox { Content = source.Name, Tag = source };
+                        var cb = new CheckBox { Content = sourceName, Tag = source };
                         cb.IsChecked = true;
                         checkBoxes.Add(cb);
                         plugin.SettingsView.SourceComboBox.Items.Add(cb);
                     }
                 }
-                foreach (var source in plugin.PlayniteApi.Database.Sources)
+                foreach (var source in plugin.PlayniteApi.Database.Sources.Concat(new List<GameSource> { null }))
                 {
-                    if (!ExcludeSources.Contains(source.Name))
+                    string sourceName = source != null ? source.Name : "Undefined";
+                    if (!ExcludeSources.Contains(sourceName))
                     {
-                        var cb = new CheckBox { Content = source.Name, Tag = source };
+                        var cb = new CheckBox { Content = sourceName, Tag = source };
                         cb.IsChecked = false;
                         checkBoxes.Add(cb);
                         plugin.SettingsView.SourceComboBox.Items.Add(cb);
@@ -218,10 +222,10 @@ namespace DuplicateHider
                 {
                     if (item.Tag is GameSource source)
                     {
-                        updatedPriorites.Add(source.Name);
+                        updatedPriorites.AddMissing(source.Name);
                     } else
                     {
-                        updatedPriorites.Add("Undefined");
+                        updatedPriorites.AddMissing("Undefined");
                     }
                 }
             });
@@ -233,8 +237,7 @@ namespace DuplicateHider
                     string name = cb.Content as string;
                     if (cb.IsChecked ?? false)
                     {
-                        if (!IncludePlatforms.Contains(name))
-                            IncludePlatforms.Add(name);
+                        IncludePlatforms.AddMissing(name);
                     } else
                     {
                         IncludePlatforms.Remove(name);
@@ -249,8 +252,7 @@ namespace DuplicateHider
                     string name = cb.Content as string;
                     if (cb.IsChecked ?? false)
                     {
-                        if (!ExcludeSources.Contains(name))
-                            ExcludeSources.Add(name);
+                        ExcludeSources.AddMissing(name);
                     }
                     else
                     {
@@ -266,8 +268,7 @@ namespace DuplicateHider
                     string name = cb.Content as string;
                     if (cb.IsChecked ?? false)
                     {
-                        if (!ExcludeCategories.Contains(name))
-                            ExcludeCategories.Add(name);
+                        ExcludeCategories.AddMissing(name);
                     }
                     else
                     {
@@ -283,7 +284,7 @@ namespace DuplicateHider
                 List<ListBoxItem> toIgnore = new List<ListBoxItem>();
                 foreach (ListBoxItem item in plugin.SettingsView.IgnoreListBox.Items)
                 {
-                    toIgnore.Add(item);
+                    toIgnore.AddMissing(item);
                 }
                 foreach (var item in toIgnore)
                 {
