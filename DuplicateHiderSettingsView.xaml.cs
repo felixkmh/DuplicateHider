@@ -1,0 +1,213 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using Playnite.SDK.Models;
+
+namespace DuplicateHider
+{
+    public partial class DuplicateHiderSettingsView : UserControl
+    {
+        public DuplicateHiderSettingsView()
+        {
+            InitializeComponent();
+        }
+
+        public ListBoxItem CreatePriorityEntry(GameSource source)
+        {
+            Button buttonUp = new Button {
+                Content = "▲", Margin = new Thickness(0, 0, 3, 0), Width = 20, Height = 20,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                ClipToBounds = false,
+                Padding = new Thickness(0, 0, 0, 0),
+                Cursor = Cursors.Arrow
+            };
+            buttonUp.Click += ButtonUp_Click;
+            Button buttonDown = new Button {
+                Content = "▼", Margin = new Thickness(0, 0, 8, 0), Width = 20, Height = 20,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                ClipToBounds = false,
+                Padding = new Thickness(0, 0, 0, 0),
+                Cursor = Cursors.Arrow
+            };
+            buttonDown.Click += ButtonDown_Click;
+            Label label = new Label { Content = source != null? source.Name : "Undefined" };
+            StackPanel stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
+            stackPanel.Children.Add(buttonUp);
+            stackPanel.Children.Add(buttonDown);
+            stackPanel.Children.Add(label);
+            ListBoxItem item = new ListBoxItem { Content = stackPanel, Tag = source, AllowDrop = true };
+            item.Drop += Item_Drop;
+            item.PreviewDragOver += Item_PreviewDragOver;
+            // label.PreviewMouseLeftButtonDown += Label_PreviewMouseLeftButtonDown;
+            item.PreviewMouseMove += Item_PreviewMouseMove;
+            item.PreviewMouseLeftButtonDown += Item_MouseLeftButtonDown;
+            item.PreviewMouseLeftButtonUp += Item_MouseLeftButtonUp;
+            buttonUp.Tag = item;
+            buttonDown.Tag = item;
+            label.Tag = item;
+            item.Cursor = Cursors.SizeNS;
+            return item;
+        }
+
+        private void Item_Drop(object sender, DragEventArgs e)
+        {
+            PriorityListBox.SelectedItem = null;
+        }
+
+        bool dragging = false;
+        Point draggingStart = new Point();
+
+        private void Item_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dragging = false;
+        }
+
+        private void Item_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            dragging = true;
+            draggingStart = e.GetPosition(PriorityListBox);
+        }
+
+        private void Item_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (sender is ListBoxItem draggedItem)
+            {
+                if (e.LeftButton == MouseButtonState.Pressed)
+                {
+                    var delta = (Vector)Point.Subtract(e.GetPosition(PriorityListBox), draggingStart);
+                    if (dragging && delta.Length > 5)
+                        DragDrop.DoDragDrop(draggedItem, draggedItem, DragDropEffects.Move);
+                }
+            }
+        }
+
+        private void Label_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Label draggedItem)
+            {
+                DragDrop.DoDragDrop(draggedItem, draggedItem.Tag, DragDropEffects.Move);
+            }
+        }
+
+        private void Item_PreviewDragOver(object sender, DragEventArgs e)
+        {
+            if (sender is ListBoxItem hitItem)
+            {
+                if (e.Data.GetData(typeof(ListBoxItem)) is ListBoxItem droppedItem)
+                {
+                    int targetIdx = PriorityListBox.Items.IndexOf(hitItem);
+                    int removedIdx = PriorityListBox.Items.IndexOf(droppedItem);
+                    PriorityListBox.Items.RemoveAt(removedIdx);
+                    PriorityListBox.Items.Insert(targetIdx, droppedItem);
+                    PriorityListBox.SelectedItem = droppedItem;
+                }
+            }
+        }
+
+        private void ButtonDown_Click(object sender, RoutedEventArgs e)
+        {
+            var item = (ListBoxItem)((Button)sender).Tag;
+            item.IsSelected = false;
+            int index = PriorityListBox.Items.IndexOf(item);
+            PriorityListBox.Items.RemoveAt(index);
+            if (index < PriorityListBox.Items.Count - 1)
+            {
+                PriorityListBox.Items.Insert(index+1, item);
+            } else
+            {
+                PriorityListBox.Items.Add(item);
+            }
+        }
+
+        private void ButtonUp_Click(object sender, RoutedEventArgs e)
+        {
+            var item = (ListBoxItem)((Button)sender).Tag;
+            int index = PriorityListBox.Items.IndexOf(item);
+            if (index > 0)
+            {
+                PriorityListBox.Items.RemoveAt(index);
+                PriorityListBox.Items.Insert(index - 1, item);
+            }
+        }
+
+        public IEnumerable<CheckBox> Platforms { get; set; }
+        public IEnumerable<CheckBox> Categories { get; set; }
+        public IEnumerable<CheckBox> Sources { get; set; }
+
+        private void PlatformComboBox_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (sender is ComboBox comboBox)
+            {
+                comboBox.Items.Clear();
+                foreach (var checkbox in Platforms)
+                {
+                    if (checkbox.IsChecked ?? false)
+                        if (string.IsNullOrEmpty(comboBox.Text) || ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower()))
+                            comboBox.Items.Add(checkbox);
+                }
+                foreach (var checkbox in Platforms)
+                {
+                    if (!checkbox.IsChecked ?? false)
+                        if (string.IsNullOrEmpty(comboBox.Text) || ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower()))
+                            comboBox.Items.Add(checkbox);
+                }
+                comboBox.IsDropDownOpen = true;
+            }
+        }
+
+        private void SourceComboBox_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (sender is ComboBox comboBox)
+            {
+                comboBox.Items.Clear();
+                foreach (var checkbox in Sources)
+                {
+                    if (checkbox.IsChecked ?? false)
+                        if (string.IsNullOrEmpty(comboBox.Text) || ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower()))
+                            comboBox.Items.Add(checkbox);
+                }
+                foreach (var checkbox in Sources)
+                {
+                    if (!checkbox.IsChecked ?? false)
+                        if (string.IsNullOrEmpty(comboBox.Text) || ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower()))
+                            comboBox.Items.Add(checkbox);
+                }
+                comboBox.IsDropDownOpen = true;
+            }
+        }
+
+        private void CategoriesComboBox_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (sender is ComboBox comboBox)
+            {
+                comboBox.Items.Clear();
+                foreach (var checkbox in Categories)
+                {
+                    if (checkbox.IsChecked ?? false)
+                        if (string.IsNullOrEmpty(comboBox.Text) || ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower()))
+                            comboBox.Items.Add(checkbox);
+                }
+                foreach (var checkbox in Categories)
+                {
+                    if (!checkbox.IsChecked ?? false)
+                        if (string.IsNullOrEmpty(comboBox.Text) || ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower()))
+                            comboBox.Items.Add(checkbox);
+                }
+                comboBox.IsDropDownOpen = true;
+            }
+        }
+    }
+}
