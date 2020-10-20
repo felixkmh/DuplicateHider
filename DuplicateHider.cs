@@ -93,26 +93,6 @@ namespace DuplicateHider
 
         public override ISettings GetSettings(bool firstRunSettings)
         {
-            if (firstRunSettings)
-            {
-                settings.Priorities = new List<string> {
-                    "Steam",
-                    "GOG",
-                    "Epic",
-                    "Amazon",
-                    "Humble",
-                    "Twitch",
-                    "Xbox",
-                    "Uplay",
-                    "Origin",
-                    "Battle.net",
-                    "Rockstar Games",
-                    "itch.io",
-                    "Bethesda",
-                    "Undefined"
-                };
-                settings.IncludePlatforms = new List<string> { "PC", "Undefined" };
-            }
             return settings;
         }
 
@@ -193,6 +173,33 @@ namespace DuplicateHider
                     }
                 }
             };
+        }
+
+        public override List<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
+        {
+            if (PlayniteApi.MainView.SelectedGames.Count() == 1)
+            {
+                var entries = new List<GameMenuItem>();
+                var selected = PlayniteApi.MainView.SelectedGames.First();
+                var name = selected.Name.Filter(GetNameFilter());
+                if (index.TryGetValue(name, out var copies)) {
+                    var others = copies.Where(c => c != selected.Id);
+                    foreach (var copyId in others)
+                    {
+                        if (PlayniteApi.Database.Games.Get(copyId) is Game copy)
+                        {
+                            entries.Add(new GameMenuItem
+                            {
+                                Action = (context) => { PlayniteApi.StartGame(copyId); },
+                                MenuSection = $"Other Copies: {others.Count()}",
+                                Description = $"{copy.Name} on {copy.GetSourceName()} ({(copy.IsInstalled?"Installed":"Not installed")})"
+                            }) ;
+                        }
+                    }
+                }
+                return entries;
+            }
+            return base.GetGameMenuItems(args);
         }
 
         private void UpdateDuplicateState(IEnumerable<Game> games, Visibility visibility)
