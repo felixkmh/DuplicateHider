@@ -34,9 +34,8 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>C:\Users\Felix\AppData\Local\Playnite\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Playnite.SDK, Version=5.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>C:\Users\Felix\AppData\Local\Playnite\Playnite.SDK.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Playnite.SDK, Version=5.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\PlayniteSDK.5.5.0\lib\net462\Playnite.SDK.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -62,6 +61,7 @@
     <Compile Include="IFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringFilters.cs" />
+    <Compile Include="UniqueList.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">
