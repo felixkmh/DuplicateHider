@@ -25,6 +25,9 @@
                 <CheckBox x:Name="AutoUpdateCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">Update Rank Automatically
                     <CheckBox.ToolTip>If enabled, DuplicateHider will re-evaluate the rank of a copy when it changes, always keeping the copy with the highest rank visible while hiding all other copies</CheckBox.ToolTip>
                 </CheckBox>
+                <CheckBox x:Name="ShowCopiesInGameMenu" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0">Show Copies in Game Menu
+                    <CheckBox.ToolTip>If enabled, other copies of a game can be started using a games context menu.</CheckBox.ToolTip>
+                </CheckBox>
                 <Label Margin="0,10,0,0">Included Platforms:</Label>
                 <ComboBox x:Name="PlatformComboBox" Margin="0,10,0,0" StaysOpenOnEdit="True" IsSynchronizedWithCurrentItem="False" IsEditable="True" PreviewKeyUp="PlatformComboBox_PreviewKeyUp"  IsTextSearchEnabled="False"/>
                 <Label Margin="0,10,0,0">Excluded Sources:</Label>

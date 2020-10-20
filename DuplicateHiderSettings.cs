@@ -22,6 +22,7 @@ namespace DuplicateHider
         private DuplicateHiderSettings previousSettings = null;
 
         public bool UpdateAutomatically { get; set; } = false;
+        public bool ShowOtherCopiesInGameMenu { get; set; } = false;
 
         public UniqueList<string> Priorities { get; set; } = new UniqueList<string>
         {
@@ -78,6 +79,10 @@ namespace DuplicateHider
             plugin.SettingsView.AutoUpdateCheckBox.Dispatcher.Invoke(() =>
             {
                 plugin.SettingsView.AutoUpdateCheckBox.IsChecked = UpdateAutomatically;
+            });
+            plugin.SettingsView.ShowCopiesInGameMenu.Dispatcher.Invoke(() =>
+            {
+                plugin.SettingsView.ShowCopiesInGameMenu.IsChecked = ShowOtherCopiesInGameMenu;
             });
             plugin.SettingsView.PriorityListBox.Items.Dispatcher.Invoke(() =>
             {
@@ -231,6 +236,10 @@ namespace DuplicateHider
             plugin.SettingsView.AutoUpdateCheckBox.Dispatcher.Invoke(() =>
             {
                 UpdateAutomatically = plugin.SettingsView.AutoUpdateCheckBox.IsChecked ?? false;
+            });
+            plugin.SettingsView.ShowCopiesInGameMenu.Dispatcher.Invoke(() =>
+            {
+                ShowOtherCopiesInGameMenu= plugin.SettingsView.ShowCopiesInGameMenu.IsChecked ?? false;
             });
             UniqueList<string> updatedPriorites = new UniqueList<string> { };
             plugin.SettingsView.PriorityListBox.Items.Dispatcher.Invoke(() =>
