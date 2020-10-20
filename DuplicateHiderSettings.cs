@@ -69,6 +69,7 @@ namespace DuplicateHider
                 ExcludeCategories = savedSettings.ExcludeCategories;
                 ExcludeSources = savedSettings.ExcludeSources;
                 IgnoredGames = savedSettings.IgnoredGames;
+                ShowOtherCopiesInGameMenu = savedSettings.ShowOtherCopiesInGameMenu;
             }
         }
 
