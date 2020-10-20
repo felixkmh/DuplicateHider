@@ -23,11 +23,27 @@ namespace DuplicateHider
 
         public bool UpdateAutomatically { get; set; } = false;
 
-        public List<string> Priorities { get; set; } = new List<string>();
+        public UniqueList<string> Priorities { get; set; } = new UniqueList<string>
+        {
+                "Steam",
+                "GOG",
+                "Epic",
+                "Amazon",
+                "Humble",
+                "Twitch",
+                "Xbox",
+                "Uplay",
+                "Origin",
+                "Battle.net",
+                "Rockstar Games",
+                "itch.io",
+                "Bethesda",
+                "Undefined"
+            };
 
-        public List<string> IncludePlatforms { get; set; } = new List<string>();
-        public List<string> ExcludeSources { get; set; } = new List<string>();
-        public List<string> ExcludeCategories { get; set; } = new List<string>();
+        public UniqueList<string> IncludePlatforms { get; set; } = new UniqueList<string> { "PC", "Undefined" };
+        public UniqueList<string> ExcludeSources { get; set; } = new UniqueList<string>();
+        public UniqueList<string> ExcludeCategories { get; set; } = new UniqueList<string>();
         public HashSet<Guid> IgnoredGames { get; set; } = new HashSet<Guid>();
 
         // Parameterless constructor must exist if you want to use LoadPluginSettings method.
@@ -71,12 +87,13 @@ namespace DuplicateHider
                     Priorities.AddMissing(source.Name);
                 }
                 Priorities.AddMissing("Undefined");
-                foreach(var sourceName in Priorities)
+                foreach (var sourceName in Priorities)
                 {
                     if (plugin.PlayniteApi.Database.Sources.TryFind(s => s.Name == sourceName, out var source))
                     {
                         plugin.SettingsView.PriorityListBox.Items.Add(plugin.SettingsView.CreatePriorityEntry(source));
-                    } else if (sourceName == "Undefined")
+                    }
+                    else if (sourceName == "Undefined")
                     {
                         plugin.SettingsView.PriorityListBox.Items.Add(plugin.SettingsView.CreatePriorityEntry(null));
                     }
@@ -85,7 +102,7 @@ namespace DuplicateHider
             plugin.SettingsView.PlatformComboBox.Items.Dispatcher.Invoke(() =>
             {
                 List<CheckBox> checkBoxes = new List<CheckBox>();
-                foreach (var platform in plugin.PlayniteApi.Database.Platforms.Concat(new List<Platform>{ null }))
+                foreach (var platform in plugin.PlayniteApi.Database.Platforms.Concat(new List<Platform> { null }))
                 {
                     string platformName = platform != null ? platform.Name : "Undefined";
                     if (IncludePlatforms.Contains(platformName))
@@ -114,7 +131,7 @@ namespace DuplicateHider
                 List<CheckBox> checkBoxes = new List<CheckBox>();
                 foreach (var source in plugin.PlayniteApi.Database.Sources.Concat(new List<GameSource> { null }))
                 {
-                    string sourceName = source != null ? source.Name : "Undefined"; 
+                    string sourceName = source != null ? source.Name : "Undefined";
                     if (ExcludeSources.Contains(sourceName))
                     {
                         var cb = new CheckBox { Content = sourceName, Tag = source };
@@ -172,7 +189,7 @@ namespace DuplicateHider
                 menuItem.Click += RemoveIgnored_Click;
                 item.ContextMenu.Items.Add(menuItem);
                 var game = plugin.PlayniteApi.Database.Games.Get(id);
-                item.Content = game == null ? "Game not found: " + id.ToString() : $"{game.Name} ({(game.Source != null? game.Source.Name:"Undefined")})";
+                item.Content = game == null ? "Game not found: " + id.ToString() : $"{game.Name} ({(game.Source != null ? game.Source.Name : "Undefined")})";
                 item.ToolTip = item.Content;
                 plugin.SettingsView.IgnoreListBox.Items.Add(item);
             }
@@ -213,9 +230,9 @@ namespace DuplicateHider
             // This method should save settings made to Option1 and Option2.
             plugin.SettingsView.AutoUpdateCheckBox.Dispatcher.Invoke(() =>
             {
-                UpdateAutomatically = plugin.SettingsView.AutoUpdateCheckBox.IsChecked??false;
+                UpdateAutomatically = plugin.SettingsView.AutoUpdateCheckBox.IsChecked ?? false;
             });
-            List<string> updatedPriorites = new List<string> { };
+            UniqueList<string> updatedPriorites = new UniqueList<string> { };
             plugin.SettingsView.PriorityListBox.Items.Dispatcher.Invoke(() =>
             {
                 foreach (ListBoxItem item in plugin.SettingsView.PriorityListBox.Items)
@@ -223,7 +240,8 @@ namespace DuplicateHider
                     if (item.Tag is GameSource source)
                     {
                         updatedPriorites.AddMissing(source.Name);
-                    } else
+                    }
+                    else
                     {
                         updatedPriorites.AddMissing("Undefined");
                     }
@@ -238,7 +256,8 @@ namespace DuplicateHider
                     if (cb.IsChecked ?? false)
                     {
                         IncludePlatforms.AddMissing(name);
-                    } else
+                    }
+                    else
                     {
                         IncludePlatforms.Remove(name);
                     }
