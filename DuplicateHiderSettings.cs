@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace DuplicateHider
 {
@@ -23,6 +24,7 @@ namespace DuplicateHider
 
         public bool UpdateAutomatically { get; set; } = false;
         public bool ShowOtherCopiesInGameMenu { get; set; } = false;
+        public string DisplayString { get; set; } = "{Name} on {Source} ({Installed})";
 
         public UniqueList<string> Priorities { get; set; } = new UniqueList<string>
         {
@@ -70,6 +72,7 @@ namespace DuplicateHider
                 ExcludeSources = savedSettings.ExcludeSources;
                 IgnoredGames = savedSettings.IgnoredGames;
                 ShowOtherCopiesInGameMenu = savedSettings.ShowOtherCopiesInGameMenu;
+                DisplayString = savedSettings.DisplayString;
             }
         }
 
@@ -185,20 +188,62 @@ namespace DuplicateHider
                 plugin.SettingsView.Categories = checkBoxes;
             });
 
-            plugin.SettingsView.IgnoreListBox.Items.Clear();
-            foreach (var id in IgnoredGames)
+            plugin.SettingsView.IgnoreListBox.Dispatcher.Invoke(() =>
             {
-                var item = new ListBoxItem();
-                item.Tag = id;
-                item.ContextMenu = new ContextMenu();
-                var menuItem = new MenuItem { Header = "Remove Entry", Tag = id };
-                menuItem.Click += RemoveIgnored_Click;
-                item.ContextMenu.Items.Add(menuItem);
-                var game = plugin.PlayniteApi.Database.Games.Get(id);
-                item.Content = game == null ? "Game not found: " + id.ToString() : $"{game.Name} ({(game.Source != null ? game.Source.Name : "Undefined")})";
-                item.ToolTip = item.Content;
-                plugin.SettingsView.IgnoreListBox.Items.Add(item);
-            }
+                plugin.SettingsView.IgnoreListBox.Items.Clear();
+                foreach (var id in IgnoredGames)
+                {
+                    var item = new ListBoxItem();
+                    item.Tag = id;
+                    item.ContextMenu = new ContextMenu();
+                    var menuItem = new MenuItem { Header = "Remove Entry", Tag = id };
+                    menuItem.Click += RemoveIgnored_Click;
+                    item.ContextMenu.Items.Add(menuItem);
+                    var game = plugin.PlayniteApi.Database.Games.Get(id);
+                    item.Content = game == null ? "Game not found: " + id.ToString() : $"{game.Name} ({(game.Source != null ? game.Source.Name : "Undefined")})";
+                    item.ToolTip = item.Content;
+                    plugin.SettingsView.IgnoreListBox.Items.Add(item);
+                }
+            });
+
+            plugin.SettingsView.DisplayStringTextBox.Dispatcher.Invoke(() =>
+            {
+                var textBox = plugin.SettingsView.DisplayStringTextBox;
+                textBox.Text = DisplayString??"";
+                var contextMenu = textBox.ContextMenu = new ContextMenu();
+
+                var installedItem = new MenuItem();
+                installedItem.Header = "Installed";
+                installedItem.Click += InsertVariable;
+                installedItem.Tag = "{Installed}";
+                contextMenu.Items.Add(installedItem);
+
+                var sourceItem = new MenuItem();
+                sourceItem.Header = "SourceName";
+                sourceItem.Click += InsertVariable;
+                sourceItem.Tag = "{Source}";
+                contextMenu.Items.Add(sourceItem);
+
+                foreach (var variable in typeof(ExpandableVariables).GetFields())
+                {
+                    var item = new MenuItem();
+                    item.Header = variable.Name;
+                    item.Click += InsertVariable;
+                    item.Tag = variable.GetRawConstantValue();
+                    contextMenu.Items.Add(item);
+                }
+            });
+        }
+
+        private void InsertVariable(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuItem item)
+                if (item.Tag is string variable)
+                {
+                    var index = plugin.SettingsView.DisplayStringTextBox.CaretIndex;
+                    plugin.SettingsView.DisplayStringTextBox.SelectedText = variable;
+                    plugin.SettingsView.DisplayStringTextBox.CaretIndex = index + variable.Length;
+                }
         }
 
         private void RemoveIgnored_Click(object sender, RoutedEventArgs e)
@@ -324,6 +369,12 @@ namespace DuplicateHider
                     IgnoredGames.Add(id);
                 }
             });
+
+            plugin.SettingsView.DisplayStringTextBox.Dispatcher.Invoke(() =>
+            {
+                DisplayString = plugin.SettingsView.DisplayStringTextBox.Text ?? DisplayString;
+            });
+
             OnSettingsChanged?.Invoke(previousSettings, this);
             plugin.SavePluginSettings(this);
         }

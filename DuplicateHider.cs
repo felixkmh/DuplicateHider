@@ -193,8 +193,8 @@ namespace DuplicateHider
                                 {
                                     Action = (context) => { PlayniteApi.StartGame(copyId); },
                                     MenuSection = $"Other Copies: {others.Count()}",
-                                    Description = $"{copy.Name} on {copy.GetSourceName()} ({(copy.IsInstalled?"Installed":"Not installed")})"
-                                }) ;
+                                    Description = ExpandDisplayString(copy, settings.DisplayString)
+                                });
                             }
                         }
                     }
@@ -267,6 +267,13 @@ namespace DuplicateHider
                     index[cleanName] = new List<Guid> { };
                 index[cleanName].InsertSorted(game.Id, GetGamePriority);
             }
+        }
+
+        public string ExpandDisplayString(Game game, string displayString)
+        {
+            var result = displayString.Replace("{Source}", game.GetSourceName());
+            result = result.Replace("{Installed}", game.IsInstalled ? "Installed" : "Not installed");
+            return PlayniteApi.ExpandGameVariables(game, result).Trim();
         }
 
         private int GetGamePriority(Guid id)
