@@ -198,6 +198,7 @@ namespace DuplicateHider
                             }
                         }
                     }
+                    entries.Sort((a, b) => a.Description.CompareTo(b.Description));
                     return entries;
                 }
             return base.GetGameMenuItems(args);
