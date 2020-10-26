@@ -274,7 +274,7 @@ namespace DuplicateHider
         {
             var result = displayString.Replace("{Source}", game.GetSourceName());
             result = result.Replace("{Installed}", game.IsInstalled ? "Installed" : "Not installed");
-            return PlayniteApi.ExpandGameVariables(game, result).Trim();
+            return PlayniteApi.ExpandGameVariables(game, result).Trim().Replace("_", " \u0331 ");
         }
 
         private int GetGamePriority(Guid id)
@@ -302,6 +302,7 @@ namespace DuplicateHider
         IFilter<string> GetNameFilter()
         {
             return IFilter<string>.MakeChain(
+                new DiacriticsFilter(),
                 new CaseFilter(CaseFilter.Case.Lower),
                 new WhiteSpaceFilter(),
                 new ReplaceFilter("and", "&", "+"),

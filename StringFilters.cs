@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -73,6 +74,31 @@ namespace DuplicateHider
         public override string ApplySingle(in string input)
         {
             return regex.Replace(input, "");
+        }
+    }
+
+    class DiacriticsFilter : IFilter<string>
+    {
+        public override string ApplySingle(in string input)
+        {
+            return RemoveDiacritics(input);
+        }
+
+        static string RemoveDiacritics(in string text)
+        {
+            var normalizedString = text.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder();
+
+            foreach (var c in normalizedString)
+            {
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
     }
 }
