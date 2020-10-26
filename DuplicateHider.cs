@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
@@ -270,11 +271,35 @@ namespace DuplicateHider
             }
         }
 
+        static Regex regex = new Regex(@"{(?:(?<Prefix>[^'{}]*)')?(?<Variable>[^'{}]+)(?:'(?<Suffix>[^'{}]*))?}");
         public string ExpandDisplayString(Game game, string displayString)
         {
-            var result = displayString.Replace("{Source}", game.GetSourceName());
-            result = result.Replace("{Installed}", game.IsInstalled ? "Installed" : "Not installed");
-            return PlayniteApi.ExpandGameVariables(game, result).Trim().Replace("_", " \u0331 ");
+            var result = displayString;
+            var matches = regex.Matches(displayString);
+            var prefixIdx = regex.GroupNumberFromName("Prefix");
+            var suffixIdx = regex.GroupNumberFromName("Suffix");
+            var variableIdx = regex.GroupNumberFromName("Variable");
+            foreach (Match match in matches)
+            {
+                var prefix = match.Groups[prefixIdx].Value;
+                var suffix = match.Groups[suffixIdx].Value;
+                var infix = match.Groups[variableIdx].Value;
+                var variable = "{" + infix + "}";
+                var expanded = PlayniteApi.ExpandGameVariables(game, variable);
+                if (expanded == string.Empty || expanded == variable)
+                {
+                    expanded = expanded.Replace("{Source}", game.GetSourceName());
+                    expanded = expanded.Replace("{Installed}", game.IsInstalled ? "Installed" : "Not installed");
+                }
+                if (expanded != string.Empty && expanded != variable)
+                {
+                    result = result.Replace(match.Value, prefix + expanded + suffix);
+                } else
+                {
+                    result = result.Replace(match.Value, string.Empty);
+                }
+            }
+            return result.Trim().Replace("_", " \u0331 ");
         }
 
         private int GetGamePriority(Guid id)

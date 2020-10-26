@@ -24,7 +24,7 @@ namespace DuplicateHider
 
         public bool UpdateAutomatically { get; set; } = false;
         public bool ShowOtherCopiesInGameMenu { get; set; } = false;
-        public string DisplayString { get; set; } = "{Name} on {Source} ({Installed})";
+        public string DisplayString { get; set; } = "{Name} [{Installed} on {'Source'}{, ROM: 'ImageNameNoExt}]";
 
         public UniqueList<string> Priorities { get; set; } = new UniqueList<string>
         {
@@ -215,13 +215,13 @@ namespace DuplicateHider
                 var installedItem = new MenuItem();
                 installedItem.Header = "Installed";
                 installedItem.Click += InsertVariable;
-                installedItem.Tag = "{Installed}";
+                installedItem.Tag = "{'Installed'}";
                 contextMenu.Items.Add(installedItem);
 
                 var sourceItem = new MenuItem();
                 sourceItem.Header = "SourceName";
                 sourceItem.Click += InsertVariable;
-                sourceItem.Tag = "{Source}";
+                sourceItem.Tag = "{'Source'}";
                 contextMenu.Items.Add(sourceItem);
 
                 foreach (var variable in typeof(ExpandableVariables).GetFields())
@@ -229,7 +229,7 @@ namespace DuplicateHider
                     var item = new MenuItem();
                     item.Header = variable.Name;
                     item.Click += InsertVariable;
-                    item.Tag = variable.GetRawConstantValue();
+                    item.Tag = ((string)variable.GetRawConstantValue()).Replace("{", "{'").Replace("}", "'}");
                     contextMenu.Items.Add(item);
                 }
             });
