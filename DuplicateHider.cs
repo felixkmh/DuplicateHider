@@ -35,7 +35,7 @@ namespace DuplicateHider
         {
             BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
             if (settings.UpdateAutomatically) 
-                PlayniteApi.Database.Games.Update(SetDuplicateState(PlayniteApi.Database.Games, Hidden));
+                PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
             PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
             settings.OnSettingsChanged += Settings_OnSettingsChanged;
@@ -55,13 +55,17 @@ namespace DuplicateHider
             if (newSettings.UpdateAutomatically)
             {
                 BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
-                PlayniteApi.Database.Games.Update(SetDuplicateState(PlayniteApi.Database.Games, Hidden));
+                PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
+                PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
+                PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             }
         }
         
         private void Games_ItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<Game> e)
         {
             PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
+            PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
+            var toUpdate = new List<Game>();
             if (settings.UpdateAutomatically)
             {
                 var filter = GetGameFilter();
@@ -72,11 +76,25 @@ namespace DuplicateHider
                     var name = game.Name.Filter(nameFilter);
                     if (index.ContainsKey(name))
                     {
-                        index[name].Remove(game.Id);
-                        PlayniteApi.Database.Games.Update(SetDuplicateState(index[name], Hidden));
+                        if (index[name].Remove(game.Id) && index[name].Count == 1)
+                        {
+                            if (PlayniteApi.Database.Games.Get(index[name][0]) is Game last)
+                            {
+                                if (last.Hidden)
+                                {
+                                    last.Hidden = false;
+                                    toUpdate.Add(last);
+                                }
+                            } else
+                            {
+                                index[name] = null;
+                            }
+                        }
                     }
                 }
             }
+            PlayniteApi.Database.Games.Update(toUpdate);
+            PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
         }
 
@@ -85,7 +103,33 @@ namespace DuplicateHider
             PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
             if (settings.UpdateAutomatically)
             {
-                UpdateDuplicateState((from update in e.UpdatedItems select update.NewData).Filter(GetGameFilter()), Hidden);
+                IFilter<IEnumerable<Game>> gameFilter = GetGameFilter();
+                IFilter<string> nameFilter = GetNameFilter();
+                foreach (var oldData in (from update in e.UpdatedItems select update.OldData).Filter(gameFilter))
+                {
+                    var filteredName = oldData.Name.Filter(nameFilter);
+                    if (index.TryGetValue(filteredName, out var guids))
+                    {
+                        if (guids.Remove(oldData.Id))
+                            if (guids.Count == 1)
+                            {
+                                if (PlayniteApi.Database.Games.Get(guids[0]) is Game game)
+                                {
+                                    game.Hidden = false;
+                                    PlayniteApi.Database.Games.Update(game);
+                                }
+                            }
+                    }
+                }
+                foreach (var newData in (from update in e.UpdatedItems select update.NewData).Filter(gameFilter))
+                {
+                    var filteredName = newData.Name.Filter(nameFilter);
+                    if (index.TryGetValue(filteredName, out var guids))
+                    {
+                        guids.InsertSorted(newData.Id, GetGamePriority);
+                    }
+                }
+                PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
             }
             PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
         }
@@ -121,7 +165,7 @@ namespace DuplicateHider
                         PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
                         PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
                         BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
-                        var hidden = SetDuplicateState(PlayniteApi.Database.Games, Hidden);
+                        var hidden = SetDuplicateState(Hidden);
                         PlayniteApi.Database.Games.Update(hidden);
                         PlayniteApi.Dialogs.ShowMessage($"{hidden.Where(g => g.Hidden).Count()} games have been hidden.", "DuplicateHider");
                         PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
@@ -136,7 +180,7 @@ namespace DuplicateHider
                         PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
                         PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
                         BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
-                        var revealed = SetDuplicateState(PlayniteApi.Database.Games, Visible);
+                        var revealed = SetDuplicateState(Visible);
                         PlayniteApi.Database.Games.Update(revealed);
                         PlayniteApi.Dialogs.ShowMessage($"{revealed.Where(g => !g.Hidden).Count()} games have been revealed.", "DuplicateHider");
                         PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
@@ -152,7 +196,7 @@ namespace DuplicateHider
                         PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
                         foreach(var game in PlayniteApi.MainView.SelectedGames) settings.IgnoredGames.Add(game.Id);
                         BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
-                        var revealed = SetDuplicateState(PlayniteApi.Database.Games, Hidden);
+                        var revealed = SetDuplicateState(Hidden);
                         PlayniteApi.Database.Games.Update(revealed);
                         PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
                         PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
@@ -167,7 +211,7 @@ namespace DuplicateHider
                         PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
                         foreach(var game in PlayniteApi.MainView.SelectedGames) settings.IgnoredGames.Remove(game.Id);
                         BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
-                        var revealed = SetDuplicateState(PlayniteApi.Database.Games, Hidden);
+                        var revealed = SetDuplicateState(Hidden);
                         PlayniteApi.Database.Games.Update(revealed);
                         PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
                         PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
@@ -221,10 +265,10 @@ namespace DuplicateHider
                 }
                 index[name].InsertSorted(game.Id, GetGamePriority);
             }
-            PlayniteApi.Database.Games.Update(SetDuplicateState(games, visibility));
+            PlayniteApi.Database.Games.Update(SetDuplicateState(visibility));
         }
 
-        private IList<Game> SetDuplicateState(IEnumerable<Game> games, Visibility visibility)
+        private IList<Game> SetDuplicateState(Visibility visibility)
         {
             List<Game> toUpdate = new List<Game> { };
             bool hidden = visibility == Hidden ? true : false;
@@ -253,11 +297,6 @@ namespace DuplicateHider
             return toUpdate;
         }
 
-        private IList<Game> SetDuplicateState(IEnumerable<Guid> gameId, Visibility visibility)
-        {
-            return SetDuplicateState(from id in gameId where (PlayniteApi.Database.Games.Get(id) != null) select PlayniteApi.Database.Games.Get(id), visibility);
-        }
-
         private void BuildIndex(IEnumerable<Game> games, IFilter<IEnumerable<Game>> gameFilter, IFilter<string> nameFilter)
         {
             index.Clear();
@@ -271,33 +310,40 @@ namespace DuplicateHider
             }
         }
 
-        static Regex regex = new Regex(@"{(?:(?<Prefix>[^'{}]*)')?(?<Variable>[^'{}]+)(?:'(?<Suffix>[^'{}]*))?}");
+        static readonly Regex regex = new Regex(@"{(?:(?<Prefix>[^'{}]*)')?(?<Variable>[^'{}]+)(?:'(?<Suffix>[^'{}]*))?}");
+        static readonly int prefixIdx = regex.GroupNumberFromName("Prefix");
+        static readonly int suffixIdx = regex.GroupNumberFromName("Suffix");
+        static readonly int variableIdx = regex.GroupNumberFromName("Variable");
+
         public string ExpandDisplayString(Game game, string displayString)
         {
             var result = displayString;
-            var matches = regex.Matches(displayString);
-            var prefixIdx = regex.GroupNumberFromName("Prefix");
-            var suffixIdx = regex.GroupNumberFromName("Suffix");
-            var variableIdx = regex.GroupNumberFromName("Variable");
-            foreach (Match match in matches)
+            const int MAX_RECURSION = 5;
+            int recursion = 0;
+            while (regex.IsMatch(result) && MAX_RECURSION > recursion)
             {
-                var prefix = match.Groups[prefixIdx].Value;
-                var suffix = match.Groups[suffixIdx].Value;
-                var infix = match.Groups[variableIdx].Value;
-                var variable = "{" + infix + "}";
-                var expanded = PlayniteApi.ExpandGameVariables(game, variable);
-                if (expanded == string.Empty || expanded == variable)
+                var matches = regex.Matches(result);
+                foreach (Match match in matches)
                 {
-                    expanded = expanded.Replace("{Source}", game.GetSourceName());
-                    expanded = expanded.Replace("{Installed}", game.IsInstalled ? "Installed" : "Not installed");
+                    var prefix = match.Groups[prefixIdx].Value;
+                    var suffix = match.Groups[suffixIdx].Value;
+                    var infix = match.Groups[variableIdx].Value;
+                    var variable = "{" + infix + "}";
+                    var expanded = PlayniteApi.ExpandGameVariables(game, variable);
+                    if (expanded.Length == 0 || expanded == variable)
+                    {
+                        expanded = expanded.Replace("{Source}", game.GetSourceName());
+                        expanded = expanded.Replace("{Installed}", game.IsInstalled ? "Installed" : "Not installed");
+                    }
+                    if (expanded.Length != 0 && expanded != variable)
+                    {
+                        result = result.Replace(match.Value, prefix + expanded + suffix);
+                    } else
+                    {
+                        result = result.Replace(match.Value, string.Empty);
+                    }
                 }
-                if (expanded != string.Empty && expanded != variable)
-                {
-                    result = result.Replace(match.Value, prefix + expanded + suffix);
-                } else
-                {
-                    result = result.Replace(match.Value, string.Empty);
-                }
+                ++recursion;
             }
             return result.Trim().Replace("_", " \u0331 ");
         }
