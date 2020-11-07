@@ -40,6 +40,7 @@ namespace DuplicateHider
         #region Events       
         public override void OnApplicationStarted()
         {
+            // Clean orphaned entries from Priorites list
             for (int i = settings.Priorities.Count - 1; i >= 0; --i)
             {
                 var prio = settings.Priorities[i];
@@ -49,13 +50,10 @@ namespace DuplicateHider
                     settings.Priorities.RemoveAt(i);
                 }
             }
-
+            // Add new sources not yet contained in the Priorities list
             foreach (var source in PlayniteApi.Database.Sources)
             {
-                if (!settings.Priorities.Contains(source.Name))
-                {
-                    settings.Priorities.Add(source.Name);
-                }
+                settings.Priorities.Add(source.Name);
             }
 
             BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
