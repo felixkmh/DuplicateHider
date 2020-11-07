@@ -26,23 +26,10 @@ namespace DuplicateHider
         public bool ShowOtherCopiesInGameMenu { get; set; } = false;
         public string DisplayString { get; set; } = "{Name} [{Installed} on {'Source'}{, ROM: 'ImageNameNoExt}]";
 
-        public UniqueList<string> Priorities { get; set; } = new UniqueList<string>
-        {
-                "Steam",
-                "GOG",
-                "Epic",
-                "Amazon",
-                "Humble",
-                "Twitch",
-                "Xbox",
-                "Uplay",
-                "Origin",
-                "Battle.net",
-                "Rockstar Games",
-                "itch.io",
-                "Bethesda",
-                "Undefined"
-            };
+        public UniqueList<string> Priorities { get; set; } = new UniqueList<string>();
+        [JsonIgnore]
+        public Dictionary<Guid, Guid> SharedGameIds { get; set; } = new Dictionary<Guid, Guid>();
+
 
         public UniqueList<string> IncludePlatforms { get; set; } = new UniqueList<string> { "PC", "Undefined" };
         public UniqueList<string> ExcludeSources { get; set; } = new UniqueList<string>();
@@ -74,6 +61,29 @@ namespace DuplicateHider
                 ShowOtherCopiesInGameMenu = savedSettings.ShowOtherCopiesInGameMenu;
                 DisplayString = savedSettings.DisplayString;
             }
+
+            if (Priorities.Count == 0)
+            {
+                Priorities = new UniqueList<string>
+                {
+                    "Steam",
+                    "GOG",
+                    "Epic",
+                    "Amazon",
+                    "Humble",
+                    "Twitch",
+                    "Xbox",
+                    "Uplay",
+                    "Origin",
+                    "Battle.net",
+                    "Rockstar Games",
+                    "itch.io",
+                    "Bethesda",
+                    "Undefined"
+                };
+            }
+            
+            
         }
 
         public void BeginEdit()

@@ -1,10 +1,17 @@
-﻿using Playnite.SDK;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Net.Http;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -33,12 +40,31 @@ namespace DuplicateHider
         #region Events       
         public override void OnApplicationStarted()
         {
+            for (int i = settings.Priorities.Count - 1; i >= 0; --i)
+            {
+                var prio = settings.Priorities[i];
+                if (prio == "Undefined") continue;
+                if (!PlayniteApi.Database.Sources.TryFind(s => s.Name == prio, out var source))
+                {
+                    settings.Priorities.RemoveAt(i);
+                }
+            }
+
+            foreach (var source in PlayniteApi.Database.Sources)
+            {
+                if (!settings.Priorities.Contains(source.Name))
+                {
+                    settings.Priorities.Add(source.Name);
+                }
+            }
+
             BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
             if (settings.UpdateAutomatically) 
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
             PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
             settings.OnSettingsChanged += Settings_OnSettingsChanged;
+
         }
 
 
@@ -159,6 +185,48 @@ namespace DuplicateHider
             {
                 new MainMenuItem
                 {
+                    Description = "Generate Shared Ids",
+                    MenuSection = "@|DuplicateHider",
+                    Action = (context) =>
+                    {
+                        SortedDictionary<string, Guid> nameToSharedId = new SortedDictionary<string, Guid>();
+                        settings.SharedGameIds.Clear();
+                        BuildIndex(PlayniteApi.Database.Games, new PlaceboGameFilter(), GetNameFilter());
+                        foreach (var group in index)
+                        {
+                            var sharedId = Guid.NewGuid();
+                            nameToSharedId.Add(group.Key, sharedId);
+                            foreach(var id in group.Value)
+                            {
+                                settings.SharedGameIds.Add(id, sharedId);
+                            }
+                        }
+                        var path = Path.Combine(this.GetPluginUserDataPath(), "SharedGameIds.json");
+                        using (var file = File.CreateText(path))
+                        {
+                            var obj = JsonConvert.SerializeObject(settings.SharedGameIds, Formatting.Indented);
+                            file.Write(obj);
+                        }
+                        using (var stream = new FileStream(Path.ChangeExtension(path,".bin"), FileMode.Create))
+                        {
+                            IFormatter formatter = new BinaryFormatter();
+                            formatter.Serialize(stream, settings.SharedGameIds);
+                        }
+                        path = Path.Combine(this.GetPluginUserDataPath(), "NameToSharedId.json");
+                        using (var file = File.CreateText(path))
+                        {
+                            var obj = JsonConvert.SerializeObject(nameToSharedId, Formatting.Indented);
+                            file.Write(obj);
+                        }
+                        using (var stream = new FileStream(Path.ChangeExtension(path,".bin"), FileMode.Create))
+                        {
+                            IFormatter formatter = new BinaryFormatter();
+                            formatter.Serialize(stream, nameToSharedId);
+                        }
+                    }
+                },
+                new MainMenuItem
+                {
                     Description = "Hide Duplicates",
                     MenuSection = "@|DuplicateHider",
                     Action = (context) => {
@@ -222,10 +290,11 @@ namespace DuplicateHider
 
         public override List<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
+
+            var entries = new List<GameMenuItem>();
             if (settings.ShowOtherCopiesInGameMenu)
                 if (args.Games.Count == 1)
                 {
-                    var entries = new List<GameMenuItem>();
                     var selected = args.Games[0];
                     var name = selected.Name.Filter(GetNameFilter());
                     if (index.TryGetValue(name, out var copies)) {
@@ -244,9 +313,8 @@ namespace DuplicateHider
                         }
                     }
                     entries.Sort((a, b) => a.Description.CompareTo(b.Description));
-                    return entries;
                 }
-            return base.GetGameMenuItems(args);
+                return entries;
         }
 
         private void UpdateDuplicateState(IEnumerable<Game> games, Visibility visibility)
