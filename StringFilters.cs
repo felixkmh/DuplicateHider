@@ -8,6 +8,14 @@ using System.Threading.Tasks;
 
 namespace DuplicateHider
 {
+    class PlaceboStringFilters : IFilter<string>
+    {
+        public override string ApplySingle(in string input)
+        {
+            return input;
+        }
+    }
+
     class CaseFilter : IFilter<string>
     {
         public enum Case { Keep, Upper, Lower };
@@ -70,7 +78,7 @@ namespace DuplicateHider
 
     class SpecialCharFilter : IFilter<string>
     {
-        private readonly Regex regex = new Regex("[" + Regex.Escape("&.,:;^°_`´~+!\"§$% &/ () =?<>#|") + "\\-]");
+        private readonly Regex regex = new Regex("[" + Regex.Escape("&.,:;^°_`´~+!\"§$% &/ () =?<>#|'") + "\\-]");
         public override string ApplySingle(in string input)
         {
             return regex.Replace(input, "");

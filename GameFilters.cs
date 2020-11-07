@@ -7,6 +7,14 @@ using System.Threading.Tasks;
 
 namespace DuplicateHider
 {
+    class PlaceboGameFilter : IFilter<IEnumerable<Game>>
+    {
+        public override IEnumerable<Game> ApplySingle(in IEnumerable<Game> input)
+        {
+            return input;
+        }
+    }
+
     class PlatformFilter : IFilter<IEnumerable<Game>>
     {
         protected bool _include;
