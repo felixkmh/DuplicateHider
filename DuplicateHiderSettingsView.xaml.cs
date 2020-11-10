@@ -152,17 +152,11 @@ namespace DuplicateHider
             if (sender is ComboBox comboBox)
             {
                 comboBox.Items.Clear();
-                foreach (var checkbox in Platforms)
+                foreach (var checkbox in Platforms.OrderByDescending(cb => cb.IsChecked).ThenBy(cb => (string)cb.Content))
                 {
-                    if (checkbox.IsChecked ?? false)
-                        if (string.IsNullOrEmpty(comboBox.Text) || ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower()))
-                            comboBox.Items.Add(checkbox);
-                }
-                foreach (var checkbox in Platforms)
-                {
-                    if (!checkbox.IsChecked ?? false)
-                        if (string.IsNullOrEmpty(comboBox.Text) || ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower()))
-                            comboBox.Items.Add(checkbox);
+                    bool found = ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower());
+                    if (string.IsNullOrEmpty(comboBox.Text) || found)
+                        comboBox.Items.Add(checkbox);
                 }
                 comboBox.IsDropDownOpen = true;
             }
@@ -173,17 +167,11 @@ namespace DuplicateHider
             if (sender is ComboBox comboBox)
             {
                 comboBox.Items.Clear();
-                foreach (var checkbox in Sources)
+                foreach (var checkbox in Sources.OrderByDescending(cb => cb.IsChecked).ThenBy(o => (string)o.Content))
                 {
-                    if (checkbox.IsChecked ?? false)
-                        if (string.IsNullOrEmpty(comboBox.Text) || ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower()))
-                            comboBox.Items.Add(checkbox);
-                }
-                foreach (var checkbox in Sources)
-                {
-                    if (!checkbox.IsChecked ?? false)
-                        if (string.IsNullOrEmpty(comboBox.Text) || ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower()))
-                            comboBox.Items.Add(checkbox);
+                    bool found = ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower());
+                    if (string.IsNullOrEmpty(comboBox.Text) || found)
+                        comboBox.Items.Add(checkbox);
                 }
                 comboBox.IsDropDownOpen = true;
             }
@@ -194,19 +182,55 @@ namespace DuplicateHider
             if (sender is ComboBox comboBox)
             {
                 comboBox.Items.Clear();
-                foreach (var checkbox in Categories)
+                foreach (var checkbox in Categories.OrderByDescending(cb => cb.IsChecked).ThenBy(o => (string)o.Content))
                 {
-                    if (checkbox.IsChecked ?? false)
-                        if (string.IsNullOrEmpty(comboBox.Text) || ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower()))
-                            comboBox.Items.Add(checkbox);
-                }
-                foreach (var checkbox in Categories)
-                {
-                    if (!checkbox.IsChecked ?? false)
-                        if (string.IsNullOrEmpty(comboBox.Text) || ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower()))
-                            comboBox.Items.Add(checkbox);
+                    bool found = ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower());
+                    if (string.IsNullOrEmpty(comboBox.Text) || found)
+                        comboBox.Items.Add(checkbox);
                 }
                 comboBox.IsDropDownOpen = true;
+            }
+        }
+
+        private void PlatformComboBox_DropDownClosed(object sender, EventArgs e)
+        {
+            if (sender is ComboBox comboBox)
+            {
+                comboBox.Items.Clear();
+                foreach (var checkbox in Platforms.OrderByDescending(cb => cb.IsChecked).ThenBy(o => (string)o.Content))
+                {
+                    bool found = ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower());
+                    if (string.IsNullOrEmpty(comboBox.Text) || found)
+                        comboBox.Items.Add(checkbox);
+                }
+            }
+        }
+
+        private void SourceComboBox_DropDownClosed(object sender, EventArgs e)
+        {
+            if (sender is ComboBox comboBox)
+            {
+                comboBox.Items.Clear();
+                foreach (var checkbox in Sources.OrderByDescending(cb => cb.IsChecked).ThenBy(o => (string)o.Content))
+                {
+                    bool found = ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower());
+                    if (string.IsNullOrEmpty(comboBox.Text) || found)
+                        comboBox.Items.Add(checkbox);
+                }
+            }
+        }
+
+        private void CategoriesComboBox_DropDownClosed(object sender, EventArgs e)
+        {
+            if (sender is ComboBox comboBox)
+            {
+                comboBox.Items.Clear();
+                foreach (var checkbox in Categories.OrderByDescending(cb => cb.IsChecked).ThenBy(o => (string)o.Content))
+                {
+                    bool found = ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower());
+                    if (string.IsNullOrEmpty(comboBox.Text) || found)
+                        comboBox.Items.Add(checkbox);
+                }
             }
         }
     }
