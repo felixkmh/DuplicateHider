@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -106,6 +107,21 @@ namespace DuplicateHider
         {
             if (sender is ListBoxItem hitItem)
             {
+                ScrollViewer sv = (ScrollViewer)GetScrollViewer(PriorityListBox);
+                if (sv != null)
+                {
+                    var relPos = e.GetPosition(PriorityListBox);
+                    if (relPos.Y > PriorityListBox.ActualHeight - 30)
+                    {
+                        var delta = 30 - (PriorityListBox.ActualHeight - relPos.Y);
+                        sv.ScrollToVerticalOffset(sv.VerticalOffset + delta * 0.3);
+                    }
+                    if (relPos.Y < 30)
+                    {
+                        var delta = 30 - relPos.Y;
+                        sv.ScrollToVerticalOffset(sv.VerticalOffset - delta * 0.3);
+                    }
+                }
                 if (e.Data.GetData(typeof(ListBoxItem)) is ListBoxItem droppedItem)
                 {
                     int targetIdx = PriorityListBox.Items.IndexOf(hitItem);
@@ -115,6 +131,29 @@ namespace DuplicateHider
                     PriorityListBox.SelectedItem = droppedItem;
                 }
             }
+        }
+
+        public static DependencyObject GetScrollViewer(DependencyObject o)
+        {
+            // Return the DependencyObject if it is a ScrollViewer
+            if (o is ScrollViewer)
+            { return o; }
+
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(o); i++)
+            {
+                var child = VisualTreeHelper.GetChild(o, i);
+
+                var result = GetScrollViewer(child);
+                if (result == null)
+                {
+                    continue;
+                }
+                else
+                {
+                    return result;
+                }
+            }
+            return null;
         }
 
         private void ButtonDown_Click(object sender, RoutedEventArgs e)
