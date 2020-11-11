@@ -133,6 +133,7 @@ namespace DuplicateHider
             }
         }
 
+        // See https://stackoverflow.com/a/1009297
         public static DependencyObject GetScrollViewer(DependencyObject o)
         {
             // Return the DependencyObject if it is a ScrollViewer
