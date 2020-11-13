@@ -124,7 +124,7 @@ namespace DuplicateHider
             if (number < 1 || number > 4000) return number.ToString();
 
             var roman = new StringBuilder();
-            while(number > 0 && number <= 4000)
+            while(number > 0)
             {
                 if (number >= 1000) { roman.Append("M");  number -= 1000; continue; }
                 if (number >= 900)  { roman.Append("CM"); number -= 900;  continue; }
