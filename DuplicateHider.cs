@@ -439,6 +439,7 @@ namespace DuplicateHider
         IFilter<string> GetNameFilter()
         {
             return IFilter<string>.MakeChain(
+                new NumberToRomanFilter(),
                 new DiacriticsFilter(),
                 new CaseFilter(CaseFilter.Case.Lower),
                 new WhiteSpaceFilter(),
