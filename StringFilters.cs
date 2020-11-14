@@ -81,7 +81,14 @@ namespace DuplicateHider
         private readonly Regex regex = new Regex("[" + Regex.Escape("&.,:;^°_`´~+!\"§$% &/ () =?<>#|'’") + "\\-]");
         public override string ApplySingle(in string input)
         {
-            return regex.Replace(input, "");
+            var stringBuilder = new StringBuilder();
+            foreach (var c in input)
+            {
+                var cat = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (cat != UnicodeCategory.OtherSymbol)
+                    stringBuilder.Append(c);
+            }
+            return regex.Replace(stringBuilder.ToString(), "");
         }
     }
 
