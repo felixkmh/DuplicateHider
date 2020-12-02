@@ -31,7 +31,7 @@ namespace DuplicateHider
         public Dictionary<Guid, Guid> SharedGameIds { get; set; } = new Dictionary<Guid, Guid>();
 
 
-        public UniqueList<string> IncludePlatforms { get; set; } = new UniqueList<string> { "PC", "Undefined" };
+        public UniqueList<string> IncludePlatforms { get; set; } = new UniqueList<string> { "PC", Constants.UNDEFINED_SOURCE };
         public UniqueList<string> ExcludeSources { get; set; } = new UniqueList<string>();
         public UniqueList<string> ExcludeCategories { get; set; } = new UniqueList<string>();
         public HashSet<Guid> IgnoredGames { get; set; } = new HashSet<Guid>();
@@ -79,7 +79,7 @@ namespace DuplicateHider
                     "Rockstar Games",
                     "itch.io",
                     "Bethesda",
-                    "Undefined"
+                    Constants.UNDEFINED_SOURCE
                 };
             }
             
@@ -90,157 +90,123 @@ namespace DuplicateHider
         {
             // Code executed when settings view is opened and user starts editing values.
             previousSettings = this.Copy();
-            plugin.SettingsView.AutoUpdateCheckBox.Dispatcher.Invoke(() =>
+            plugin.SettingsView.Dispatcher.Invoke(() =>
             {
                 plugin.SettingsView.AutoUpdateCheckBox.IsChecked = UpdateAutomatically;
-            });
-            plugin.SettingsView.ShowCopiesInGameMenu.Dispatcher.Invoke(() =>
-            {
                 plugin.SettingsView.ShowCopiesInGameMenu.IsChecked = ShowOtherCopiesInGameMenu;
-            });
-            plugin.SettingsView.PriorityListBox.Items.Dispatcher.Invoke(() =>
-            {
-                plugin.SettingsView.PriorityListBox.Items.Clear();
-                foreach (var source in plugin.PlayniteApi.Database.Sources)
+
+                // Populate Priority list
                 {
-                    Priorities.AddMissing(source.Name);
-                }
-                Priorities.AddMissing("Undefined");
-                foreach (var sourceName in Priorities)
-                {
-                    if (plugin.PlayniteApi.Database.Sources.TryFind(s => s.Name == sourceName, out var source))
+                    plugin.SettingsView.PriorityListBox.Items.Clear();
+                    // Add missing sources to the end of the Priority list
+                    foreach (var source in plugin.PlayniteApi.Database.Sources)
                     {
-                        plugin.SettingsView.PriorityListBox.Items.Add(plugin.SettingsView.CreatePriorityEntry(source));
+                        Priorities.AddMissing(source.Name);
                     }
-                    else if (sourceName == "Undefined")
+                    Priorities.AddMissing(Constants.UNDEFINED_SOURCE);
+
+                    // Add valid entries to the PriorityListBox
+                    foreach (var sourceName in Priorities)
                     {
-                        plugin.SettingsView.PriorityListBox.Items.Add(plugin.SettingsView.CreatePriorityEntry(null));
+                        if (plugin.PlayniteApi.Database.Sources.TryFind(s => s.Name == sourceName, out var source))
+                        {
+                            plugin.SettingsView.PriorityListBox.Items.Add(plugin.SettingsView.CreatePriorityEntry(source));
+                        }
+                        else if (sourceName == Constants.UNDEFINED_SOURCE)
+                        {
+                            plugin.SettingsView.PriorityListBox.Items.Add(plugin.SettingsView.CreatePriorityEntry(null));
+                        }
                     }
                 }
-            });
-            plugin.SettingsView.PlatformComboBox.Items.Dispatcher.Invoke(() =>
-            {
-                List<CheckBox> checkBoxes = new List<CheckBox>();
-                foreach (var platform in plugin.PlayniteApi.Database.Platforms.Concat(new List<Platform> { null }))
+
+                // Populate PlatformComboBox
                 {
-                    string platformName = platform != null ? platform.Name : "Undefined";
-                    if (IncludePlatforms.Contains(platformName))
+                    List<CheckBox> checkBoxes = new List<CheckBox>();
+                    foreach (var platform in plugin.PlayniteApi.Database.Platforms.Concat(new List<Platform> { null }))
                     {
+                        string platformName = platform != null ? platform.Name : Constants.UNDEFINED_PLATFORM;
                         var cb = new CheckBox { Content = platformName, Tag = platform };
-                        cb.IsChecked = true;
+                        cb.IsChecked = IncludePlatforms.Contains(platformName);
                         checkBoxes.Add(cb);
-                        plugin.SettingsView.PlatformComboBox.Items.Add(cb);
                     }
+                    checkBoxes = checkBoxes.OrderByDescending(cb => cb.IsChecked).ThenBy(cb => cb.Content).ToList();
+                    plugin.SettingsView.Platforms = checkBoxes;
+                    checkBoxes.ForEach(cb => plugin.SettingsView.PlatformComboBox.Items.Add(cb));
                 }
-                foreach (var platform in plugin.PlayniteApi.Database.Platforms.Concat(new List<Platform> { null }))
+
+                // Populate SourceComboBox
                 {
-                    string platformName = platform != null ? platform.Name : "Undefined";
-                    if (!IncludePlatforms.Contains(platformName))
+                    List<CheckBox> checkBoxes = new List<CheckBox>();
+                    foreach (var source in plugin.PlayniteApi.Database.Sources.Concat(new List<GameSource> { null }))
                     {
-                        var cb = new CheckBox { Content = platformName, Tag = platform };
-                        cb.IsChecked = false;
-                        checkBoxes.Add(cb);
-                        plugin.SettingsView.PlatformComboBox.Items.Add(cb);
-                    }
-                }
-                plugin.SettingsView.Platforms = checkBoxes;
-            });
-            plugin.SettingsView.SourceComboBox.Items.Dispatcher.Invoke(() =>
-            {
-                List<CheckBox> checkBoxes = new List<CheckBox>();
-                foreach (var source in plugin.PlayniteApi.Database.Sources.Concat(new List<GameSource> { null }))
-                {
-                    string sourceName = source != null ? source.Name : "Undefined";
-                    if (ExcludeSources.Contains(sourceName))
-                    {
+                        string sourceName = source != null ? source.Name : Constants.UNDEFINED_SOURCE;
                         var cb = new CheckBox { Content = sourceName, Tag = source };
-                        cb.IsChecked = true;
+                        cb.IsChecked = ExcludeSources.Contains(sourceName);
                         checkBoxes.Add(cb);
-                        plugin.SettingsView.SourceComboBox.Items.Add(cb);
                     }
+                    checkBoxes = checkBoxes.OrderByDescending(cb => cb.IsChecked).ThenBy(cb => cb.Content).ToList();
+                    plugin.SettingsView.Sources = checkBoxes;
+                    checkBoxes.ForEach(cb => plugin.SettingsView.SourceComboBox.Items.Add(cb));
                 }
-                foreach (var source in plugin.PlayniteApi.Database.Sources.Concat(new List<GameSource> { null }))
+
+                // Populate CategoriesComboBox
                 {
-                    string sourceName = source != null ? source.Name : "Undefined";
-                    if (!ExcludeSources.Contains(sourceName))
-                    {
-                        var cb = new CheckBox { Content = sourceName, Tag = source };
-                        cb.IsChecked = false;
-                        checkBoxes.Add(cb);
-                        plugin.SettingsView.SourceComboBox.Items.Add(cb);
-                    }
-                }
-                plugin.SettingsView.Sources = checkBoxes;
-            });
-            plugin.SettingsView.CategoriesComboBox.Items.Dispatcher.Invoke(() =>
-            {
-                List<CheckBox> checkBoxes = new List<CheckBox>();
-                foreach (var category in plugin.PlayniteApi.Database.Categories)
-                {
-                    if (ExcludeCategories.Contains(category.Name))
+                    List<CheckBox> checkBoxes = new List<CheckBox>();
+                    foreach (var category in plugin.PlayniteApi.Database.Categories)
                     {
                         var cb = new CheckBox { Content = category.Name, Tag = category };
-                        cb.IsChecked = true;
+                        cb.IsChecked = ExcludeCategories.Contains(category.Name);
                         checkBoxes.Add(cb);
-                        plugin.SettingsView.CategoriesComboBox.Items.Add(cb);
                     }
+                    checkBoxes = checkBoxes.OrderByDescending(cb => cb.IsChecked).ThenBy(cb => cb.Content).ToList();
+                    plugin.SettingsView.Categories = checkBoxes;
+                    checkBoxes.ForEach(cb => plugin.SettingsView.CategoriesComboBox.Items.Add(cb));
                 }
-                foreach (var category in plugin.PlayniteApi.Database.Categories)
+
+                // Populate IgnoredGames ListBox
                 {
-                    if (!ExcludeCategories.Contains(category.Name))
+                    plugin.SettingsView.IgnoreListBox.Items.Clear();
+                    foreach (var id in IgnoredGames)
                     {
-                        var cb = new CheckBox { Content = category.Name, Tag = category };
-                        cb.IsChecked = false;
-                        checkBoxes.Add(cb);
-                        plugin.SettingsView.CategoriesComboBox.Items.Add(cb);
+                        var item = new ListBoxItem();
+                        item.Tag = id;
+                        item.ContextMenu = new ContextMenu();
+                        var menuItem = new MenuItem { Header = "Remove Entry", Tag = id };
+                        menuItem.Click += RemoveIgnored_Click;
+                        item.ContextMenu.Items.Add(menuItem);
+                        var game = plugin.PlayniteApi.Database.Games.Get(id);
+                        item.Content = game == null ? "Game not found: " + id.ToString() : $"{game.Name} ({game.GetSourceName()})";
+                        item.ToolTip = item.Content;
+                        plugin.SettingsView.IgnoreListBox.Items.Add(item);
                     }
                 }
-                plugin.SettingsView.Categories = checkBoxes;
-            });
 
-            plugin.SettingsView.IgnoreListBox.Dispatcher.Invoke(() =>
-            {
-                plugin.SettingsView.IgnoreListBox.Items.Clear();
-                foreach (var id in IgnoredGames)
+                // Add context menu options to FormatString TextField
                 {
-                    var item = new ListBoxItem();
-                    item.Tag = id;
-                    item.ContextMenu = new ContextMenu();
-                    var menuItem = new MenuItem { Header = "Remove Entry", Tag = id };
-                    menuItem.Click += RemoveIgnored_Click;
-                    item.ContextMenu.Items.Add(menuItem);
-                    var game = plugin.PlayniteApi.Database.Games.Get(id);
-                    item.Content = game == null ? "Game not found: " + id.ToString() : $"{game.Name} ({(game.Source != null ? game.Source.Name : "Undefined")})";
-                    item.ToolTip = item.Content;
-                    plugin.SettingsView.IgnoreListBox.Items.Add(item);
-                }
-            });
+                    var textBox = plugin.SettingsView.DisplayStringTextBox;
+                    textBox.Text = DisplayString??"";
+                    var contextMenu = textBox.ContextMenu = new ContextMenu();
 
-            plugin.SettingsView.DisplayStringTextBox.Dispatcher.Invoke(() =>
-            {
-                var textBox = plugin.SettingsView.DisplayStringTextBox;
-                textBox.Text = DisplayString??"";
-                var contextMenu = textBox.ContextMenu = new ContextMenu();
+                    var installedItem = new MenuItem();
+                    installedItem.Header = "Installed";
+                    installedItem.Click += InsertVariable;
+                    installedItem.Tag = "{'Installed'}";
+                    contextMenu.Items.Add(installedItem);
 
-                var installedItem = new MenuItem();
-                installedItem.Header = "Installed";
-                installedItem.Click += InsertVariable;
-                installedItem.Tag = "{'Installed'}";
-                contextMenu.Items.Add(installedItem);
+                    var sourceItem = new MenuItem();
+                    sourceItem.Header = "SourceName";
+                    sourceItem.Click += InsertVariable;
+                    sourceItem.Tag = "{'Source'}";
+                    contextMenu.Items.Add(sourceItem);
 
-                var sourceItem = new MenuItem();
-                sourceItem.Header = "SourceName";
-                sourceItem.Click += InsertVariable;
-                sourceItem.Tag = "{'Source'}";
-                contextMenu.Items.Add(sourceItem);
-
-                foreach (var variable in typeof(ExpandableVariables).GetFields())
-                {
-                    var item = new MenuItem();
-                    item.Header = variable.Name;
-                    item.Click += InsertVariable;
-                    item.Tag = ((string)variable.GetRawConstantValue()).Replace("{", "{'").Replace("}", "'}");
-                    contextMenu.Items.Add(item);
+                    foreach (var variable in typeof(ExpandableVariables).GetFields())
+                    {
+                        var item = new MenuItem();
+                        item.Header = variable.Name;
+                        item.Click += InsertVariable;
+                        item.Tag = ((string)variable.GetRawConstantValue()).Replace("{", "{'").Replace("}", "'}");
+                        contextMenu.Items.Add(item);
+                    }
                 }
             });
         }
@@ -287,102 +253,94 @@ namespace DuplicateHider
 
         public void EndEdit()
         {
-            // Code executed when user decides to confirm changes made since BeginEdit was called.
-            // This method should save settings made to Option1 and Option2.
+            // Apply changed settings
             plugin.SettingsView.AutoUpdateCheckBox.Dispatcher.Invoke(() =>
             {
                 UpdateAutomatically = plugin.SettingsView.AutoUpdateCheckBox.IsChecked ?? false;
-            });
-            plugin.SettingsView.ShowCopiesInGameMenu.Dispatcher.Invoke(() =>
-            {
-                ShowOtherCopiesInGameMenu= plugin.SettingsView.ShowCopiesInGameMenu.IsChecked ?? false;
-            });
-            UniqueList<string> updatedPriorites = new UniqueList<string> { };
-            plugin.SettingsView.PriorityListBox.Items.Dispatcher.Invoke(() =>
-            {
-                foreach (ListBoxItem item in plugin.SettingsView.PriorityListBox.Items)
                 {
-                    if (item.Tag is GameSource source)
+                    ShowOtherCopiesInGameMenu= plugin.SettingsView.ShowCopiesInGameMenu.IsChecked ?? false;
+                }
+                UniqueList<string> updatedPriorites = new UniqueList<string> { };
+                {
+                    foreach (ListBoxItem item in plugin.SettingsView.PriorityListBox.Items)
                     {
-                        updatedPriorites.AddMissing(source.Name);
-                    }
-                    else
-                    {
-                        updatedPriorites.AddMissing("Undefined");
+                        if (item.Tag is GameSource source)
+                        {
+                            updatedPriorites.AddMissing(source.Name);
+                        }
+                        else
+                        {
+                            updatedPriorites.AddMissing(Constants.UNDEFINED_SOURCE);
+                        }
                     }
                 }
-            });
-            Priorities = updatedPriorites;
-            plugin.SettingsView.PlatformComboBox.Items.Dispatcher.Invoke(() =>
-            {
-                foreach (CheckBox cb in plugin.SettingsView.PlatformComboBox.Items)
+                Priorities = updatedPriorites;
                 {
-                    string name = cb.Content as string;
-                    if (cb.IsChecked ?? false)
+                    foreach (CheckBox cb in plugin.SettingsView.PlatformComboBox.Items)
                     {
-                        IncludePlatforms.AddMissing(name);
-                    }
-                    else
-                    {
-                        IncludePlatforms.Remove(name);
-                    }
+                        string name = cb.Content as string;
+                        if (cb.IsChecked ?? false)
+                        {
+                            IncludePlatforms.AddMissing(name);
+                        }
+                        else
+                        {
+                            IncludePlatforms.Remove(name);
+                        }
 
+                    }
                 }
-            });
-            plugin.SettingsView.SourceComboBox.Items.Dispatcher.Invoke(() =>
-            {
-                foreach (CheckBox cb in plugin.SettingsView.SourceComboBox.Items)
                 {
-                    string name = cb.Content as string;
-                    if (cb.IsChecked ?? false)
+                    foreach (CheckBox cb in plugin.SettingsView.SourceComboBox.Items)
                     {
-                        ExcludeSources.AddMissing(name);
-                    }
-                    else
-                    {
-                        ExcludeSources.Remove(name);
-                    }
+                        string name = cb.Content as string;
+                        if (cb.IsChecked ?? false)
+                        {
+                            ExcludeSources.AddMissing(name);
+                        }
+                        else
+                        {
+                            ExcludeSources.Remove(name);
+                        }
 
-                }
-            });
-            plugin.SettingsView.CategoriesComboBox.Items.Dispatcher.Invoke(() =>
-            {
-                foreach (CheckBox cb in plugin.SettingsView.CategoriesComboBox.Items)
-                {
-                    string name = cb.Content as string;
-                    if (cb.IsChecked ?? false)
-                    {
-                        ExcludeCategories.AddMissing(name);
                     }
-                    else
+                }
+                {
+                    foreach (CheckBox cb in plugin.SettingsView.CategoriesComboBox.Items)
                     {
-                        ExcludeCategories.Remove(name);
+                        string name = cb.Content as string;
+                        if (cb.IsChecked ?? false)
+                        {
+                            ExcludeCategories.AddMissing(name);
+                        }
+                        else
+                        {
+                            ExcludeCategories.Remove(name);
+                        }
+
                     }
+                }
+                List<Guid> toIgnoreIds = new List<Guid>();
+                IgnoredGames.Clear();
+                {
+                    List<ListBoxItem> toIgnore = new List<ListBoxItem>();
+                    foreach (ListBoxItem item in plugin.SettingsView.IgnoreListBox.Items)
+                    {
+                        toIgnore.AddMissing(item);
+                    }
+                    foreach (var item in toIgnore)
+                    {
+                        item.Dispatcher.Invoke(() => toIgnoreIds.Add((Guid)item.Tag));
+                    }
+                    foreach (var id in toIgnoreIds)
+                    {
+                        IgnoredGames.Add(id);
+                    }
+                }
 
-                }
-            });
-            List<Guid> toIgnoreIds = new List<Guid>();
-            IgnoredGames.Clear();
-            plugin.SettingsView.IgnoreListBox.Dispatcher.Invoke(() =>
-            {
-                List<ListBoxItem> toIgnore = new List<ListBoxItem>();
-                foreach (ListBoxItem item in plugin.SettingsView.IgnoreListBox.Items)
                 {
-                    toIgnore.AddMissing(item);
+                    DisplayString = plugin.SettingsView.DisplayStringTextBox.Text ?? DisplayString;
                 }
-                foreach (var item in toIgnore)
-                {
-                    item.Dispatcher.Invoke(() => toIgnoreIds.Add((Guid)item.Tag));
-                }
-                foreach (var id in toIgnoreIds)
-                {
-                    IgnoredGames.Add(id);
-                }
-            });
-
-            plugin.SettingsView.DisplayStringTextBox.Dispatcher.Invoke(() =>
-            {
-                DisplayString = plugin.SettingsView.DisplayStringTextBox.Text ?? DisplayString;
             });
 
             OnSettingsChanged?.Invoke(previousSettings, this);

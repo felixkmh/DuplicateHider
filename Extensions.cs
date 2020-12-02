@@ -2,7 +2,9 @@
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -41,7 +43,7 @@ namespace DuplicateHider
         {
             if (game.Source == null)
             {
-                return "Undefined";
+                return Constants.UNDEFINED_SOURCE;
             }
             else
             {
@@ -53,7 +55,7 @@ namespace DuplicateHider
         {
             if (game.Platform == null)
             {
-                return "Undefined";
+                return Constants.UNDEFINED_SOURCE;
             }
             else
             {
@@ -91,7 +93,7 @@ namespace DuplicateHider
         {
             if (Object.ReferenceEquals(instance, null))
             {
-                return default(T);
+                return new T();
             }
             return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(instance));
         }
