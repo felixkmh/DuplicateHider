@@ -10,22 +10,40 @@ namespace DuplicateHider
     {
         public static bool InsertSorted<T>(this IList<T> list, T item, Func<T, int> toValue)
         {
-            if (list.Contains(item)) return false;
+            if (list.Contains(item))
+            {
+                return false;
+            }
+
             int i;
             for (i = 0; i < list.Count; ++i)
+            {
                 if (i < list.Count && toValue(item) <= toValue(list[i]))
+                {
                     break;
+                }
+            }
+
             list.Insert(i, item);
             return true;
         }
 
         public static bool InsertSorted<T>(this IList<T> list, T item, Comparer<T> comparer)
         {
-            if (list.Contains(item)) return false;
+            if (list.Contains(item))
+            {
+                return false;
+            }
+
             int i;
             for (i = 0; i < list.Count; ++i)
+            {
                 if (comparer.Compare(item, list[i]) <= 0)
+                {
                     break;
+                }
+            }
+
             list.Insert(i, item);
             return true;
         }

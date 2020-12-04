@@ -83,7 +83,9 @@ namespace DuplicateHider
             {
                 var cat = CharUnicodeInfo.GetUnicodeCategory(c);
                 if (cat != UnicodeCategory.OtherSymbol)
+                {
                     stringBuilder.Append(c);
+                }
             }
             return regex.Replace(stringBuilder.ToString(), "");
         }
@@ -125,7 +127,10 @@ namespace DuplicateHider
 
         public string ToRoman(int number)
         {
-            if (number < 1 || number > 4000) return number.ToString();
+            if (number < 1 || number > 4000)
+            {
+                return number.ToString();
+            }
 
             var roman = new StringBuilder();
             while (number > 0)

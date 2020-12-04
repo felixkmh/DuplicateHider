@@ -9,7 +9,11 @@
     {
         public static IFilter<T> MakeChain(params IFilter<T>[] filters)
         {
-            if (filters.Length == 0) return null;
+            if (filters.Length == 0)
+            {
+                return null;
+            }
+
             for (int i = 1; i < filters.Length; ++i)
             {
                 filters[i - 1].NextFilter = filters[i];
@@ -29,9 +33,13 @@
         {
             T result = ApplySingle(input);
             if (NextFilter != null)
+            {
                 return NextFilter.Apply(result);
+            }
             else
+            {
                 return result;
+            }
         }
     }
 

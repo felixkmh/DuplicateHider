@@ -30,7 +30,10 @@ namespace DuplicateHider
 
         public void Add(T item)
         {
-            if (!data.Contains(item)) data.Add(item);
+            if (!data.Contains(item))
+            {
+                data.Add(item);
+            }
         }
 
         public void Clear()

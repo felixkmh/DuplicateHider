@@ -90,7 +90,9 @@ namespace DuplicateHider
                 {
                     var delta = (Vector)Point.Subtract(e.GetPosition(PriorityListBox), draggingStart);
                     if (dragging && delta.Length > 5)
+                    {
                         DragDrop.DoDragDrop(draggedItem, draggedItem, DragDropEffects.Move);
+                    }
                 }
             }
         }
@@ -197,7 +199,9 @@ namespace DuplicateHider
                 {
                     bool found = ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower());
                     if (string.IsNullOrEmpty(comboBox.Text) || found)
+                    {
                         comboBox.Items.Add(checkbox);
+                    }
                 }
                 comboBox.IsDropDownOpen = true;
             }
@@ -212,7 +216,9 @@ namespace DuplicateHider
                 {
                     bool found = ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower());
                     if (string.IsNullOrEmpty(comboBox.Text) || found)
+                    {
                         comboBox.Items.Add(checkbox);
+                    }
                 }
                 comboBox.IsDropDownOpen = true;
             }
@@ -227,7 +233,9 @@ namespace DuplicateHider
                 {
                     bool found = ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower());
                     if (string.IsNullOrEmpty(comboBox.Text) || found)
+                    {
                         comboBox.Items.Add(checkbox);
+                    }
                 }
                 comboBox.IsDropDownOpen = true;
             }
@@ -242,7 +250,9 @@ namespace DuplicateHider
                 {
                     bool found = ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower());
                     if (string.IsNullOrEmpty(comboBox.Text) || found)
+                    {
                         comboBox.Items.Add(checkbox);
+                    }
                 }
             }
         }
@@ -256,7 +266,9 @@ namespace DuplicateHider
                 {
                     bool found = ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower());
                     if (string.IsNullOrEmpty(comboBox.Text) || found)
+                    {
                         comboBox.Items.Add(checkbox);
+                    }
                 }
             }
         }
@@ -270,7 +282,9 @@ namespace DuplicateHider
                 {
                     bool found = ((string)checkbox.Content).ToLower().Contains(comboBox.Text.ToLower());
                     if (string.IsNullOrEmpty(comboBox.Text) || found)
+                    {
                         comboBox.Items.Add(checkbox);
+                    }
                 }
             }
         }

@@ -36,7 +36,11 @@ namespace DuplicateHider
             for (int i = settings.Priorities.Count - 1; i >= 0; --i)
             {
                 var prio = settings.Priorities[i];
-                if (prio == Constants.UNDEFINED_SOURCE) continue;
+                if (prio == Constants.UNDEFINED_SOURCE)
+                {
+                    continue;
+                }
+
                 if (!PlayniteApi.Database.Sources.TryFind(s => s.Name == prio, out var source))
                 {
                     settings.Priorities.RemoveAt(i);
@@ -50,7 +54,10 @@ namespace DuplicateHider
 
             BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
             if (settings.UpdateAutomatically)
+            {
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
+            }
+
             PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
             settings.OnSettingsChanged += Settings_OnSettingsChanged;
@@ -128,6 +135,7 @@ namespace DuplicateHider
                     if (index.TryGetValue(filteredName, out var guids))
                     {
                         if (guids.Remove(oldData.Id))
+                        {
                             if (guids.Count == 1)
                             {
                                 if (PlayniteApi.Database.Games.Get(guids[0]) is Game game)
@@ -136,6 +144,7 @@ namespace DuplicateHider
                                     PlayniteApi.Database.Games.Update(game);
                                 }
                             }
+                        }
                     }
                 }
                 foreach (var newData in (from update in e.UpdatedItems select update.NewData).Filter(gameFilter))
@@ -244,8 +253,7 @@ namespace DuplicateHider
                     Action = (context) => {
                         PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
                         PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
-                        foreach(var game in PlayniteApi.MainView.SelectedGames) settings.IgnoredGames.Add(game.Id);
-                        BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
+                        foreach(var game in PlayniteApi.MainView.SelectedGames) { settings.IgnoredGames.Add(game.Id); } BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
                         var revealed = SetDuplicateState(Hidden);
                         PlayniteApi.Database.Games.Update(revealed);
                         PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
@@ -259,8 +267,7 @@ namespace DuplicateHider
                     Action = (context) => {
                         PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
                         PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
-                        foreach(var game in PlayniteApi.MainView.SelectedGames) settings.IgnoredGames.Remove(game.Id);
-                        BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
+                        foreach(var game in PlayniteApi.MainView.SelectedGames) { settings.IgnoredGames.Remove(game.Id); } BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
                         var revealed = SetDuplicateState(Hidden);
                         PlayniteApi.Database.Games.Update(revealed);
                         PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
@@ -275,6 +282,7 @@ namespace DuplicateHider
 
             var entries = new List<GameMenuItem>();
             if (settings.ShowOtherCopiesInGameMenu)
+            {
                 if (args.Games.Count == 1)
                 {
                     var selected = args.Games[0];
@@ -297,6 +305,8 @@ namespace DuplicateHider
                     }
                     entries.Sort((a, b) => a.Description.CompareTo(b.Description));
                 }
+            }
+
             return entries;
         }
 
@@ -355,7 +365,10 @@ namespace DuplicateHider
             {
                 var cleanName = game.Name.Filter(nameFilter);
                 if (!index.ContainsKey(cleanName))
+                {
                     index[cleanName] = new List<Guid> { };
+                }
+
                 index[cleanName].InsertSorted(game.Id, GetGamePriority);
             }
         }

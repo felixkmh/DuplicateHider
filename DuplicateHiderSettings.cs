@@ -211,12 +211,14 @@ namespace DuplicateHider
         private void InsertVariable(object sender, RoutedEventArgs e)
         {
             if (sender is MenuItem item)
+            {
                 if (item.Tag is string variable)
                 {
                     var index = plugin.SettingsView.DisplayStringTextBox.CaretIndex;
                     plugin.SettingsView.DisplayStringTextBox.SelectedText = variable;
                     plugin.SettingsView.DisplayStringTextBox.CaretIndex = index + variable.Length;
                 }
+            }
         }
 
         private void RemoveIgnored_Click(object sender, RoutedEventArgs e)
