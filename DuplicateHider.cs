@@ -44,7 +44,7 @@ namespace DuplicateHider
             for (int i = settings.Priorities.Count - 1; i >= 0; --i)
             {
                 var prio = settings.Priorities[i];
-                if (prio == "Undefined") continue;
+                if (prio == Constants.UNDEFINED_SOURCE) continue;
                 if (!PlayniteApi.Database.Sources.TryFind(s => s.Name == prio, out var source))
                 {
                     settings.Priorities.RemoveAt(i);
