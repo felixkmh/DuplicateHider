@@ -4,11 +4,8 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace DuplicateHider
 {
@@ -82,8 +79,8 @@ namespace DuplicateHider
                     Constants.UNDEFINED_SOURCE
                 };
             }
-            
-            
+
+
         }
 
         public void BeginEdit()
@@ -184,7 +181,7 @@ namespace DuplicateHider
                 // Add context menu options to FormatString TextField
                 {
                     var textBox = plugin.SettingsView.DisplayStringTextBox;
-                    textBox.Text = DisplayString??"";
+                    textBox.Text = DisplayString ?? "";
                     var contextMenu = textBox.ContextMenu = new ContextMenu();
 
                     var installedItem = new MenuItem();
@@ -258,7 +255,7 @@ namespace DuplicateHider
             {
                 UpdateAutomatically = plugin.SettingsView.AutoUpdateCheckBox.IsChecked ?? false;
                 {
-                    ShowOtherCopiesInGameMenu= plugin.SettingsView.ShowCopiesInGameMenu.IsChecked ?? false;
+                    ShowOtherCopiesInGameMenu = plugin.SettingsView.ShowCopiesInGameMenu.IsChecked ?? false;
                 }
                 UniqueList<string> updatedPriorites = new UniqueList<string> { };
                 {

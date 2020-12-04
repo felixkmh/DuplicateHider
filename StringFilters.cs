@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace DuplicateHider
 {
@@ -131,21 +128,21 @@ namespace DuplicateHider
             if (number < 1 || number > 4000) return number.ToString();
 
             var roman = new StringBuilder();
-            while(number > 0)
+            while (number > 0)
             {
-                if (number >= 1000) { roman.Append("M");  number -= 1000; continue; }
-                if (number >= 900)  { roman.Append("CM"); number -= 900;  continue; }
-                if (number >= 500)  { roman.Append("D");  number -= 500;  continue; }
-                if (number >= 400)  { roman.Append("CD"); number -= 400;  continue; }
-                if (number >= 100)  { roman.Append("C");  number -= 100;  continue; }
-                if (number >= 90)   { roman.Append("XC"); number -= 90;   continue; }
-                if (number >= 50)   { roman.Append("L");  number -= 50;   continue; }
-                if (number >= 40)   { roman.Append("XL"); number -= 40;   continue; }
-                if (number >= 10)   { roman.Append("X");  number -= 10;   continue; }
-                if (number >= 9)    { roman.Append("IX"); number -= 9;    continue; }
-                if (number >= 5)    { roman.Append("V");  number -= 5;    continue; }
-                if (number >= 4)    { roman.Append("IV"); number -= 4;    continue; }
-                if (number >= 1)    { roman.Append("I");  number -= 1;    continue; }
+                if (number >= 1000) { roman.Append("M"); number -= 1000; continue; }
+                if (number >= 900) { roman.Append("CM"); number -= 900; continue; }
+                if (number >= 500) { roman.Append("D"); number -= 500; continue; }
+                if (number >= 400) { roman.Append("CD"); number -= 400; continue; }
+                if (number >= 100) { roman.Append("C"); number -= 100; continue; }
+                if (number >= 90) { roman.Append("XC"); number -= 90; continue; }
+                if (number >= 50) { roman.Append("L"); number -= 50; continue; }
+                if (number >= 40) { roman.Append("XL"); number -= 40; continue; }
+                if (number >= 10) { roman.Append("X"); number -= 10; continue; }
+                if (number >= 9) { roman.Append("IX"); number -= 9; continue; }
+                if (number >= 5) { roman.Append("V"); number -= 5; continue; }
+                if (number >= 4) { roman.Append("IV"); number -= 4; continue; }
+                if (number >= 1) { roman.Append("I"); number -= 1; continue; }
             }
             return roman.ToString();
         }

@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DuplicateHider
 {
@@ -28,9 +26,9 @@ namespace DuplicateHider
 
         public override IEnumerable<Game> ApplySingle(in IEnumerable<Game> input)
         {
-            return 
-                from game 
-                in input 
+            return
+                from game
+                in input
                 where _include == _platforms.Contains(game.GetPlatformName())
                 select game;
         }

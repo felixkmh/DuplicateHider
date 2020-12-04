@@ -1,20 +1,12 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
-using System.Net.Http;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 using static DuplicateHider.DuplicateHider.Visibility;
@@ -57,7 +49,7 @@ namespace DuplicateHider
             }
 
             BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
-            if (settings.UpdateAutomatically) 
+            if (settings.UpdateAutomatically)
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
             PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
@@ -84,7 +76,7 @@ namespace DuplicateHider
                 PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             }
         }
-        
+
         private void Games_ItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<Game> e)
         {
             PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
@@ -109,7 +101,8 @@ namespace DuplicateHider
                                     last.Hidden = false;
                                     toUpdate.Add(last);
                                 }
-                            } else
+                            }
+                            else
                             {
                                 index[name] = null;
                             }
@@ -205,22 +198,13 @@ namespace DuplicateHider
                             var obj = JsonConvert.SerializeObject(settings.SharedGameIds, Formatting.Indented);
                             file.Write(obj);
                         }
-                        using (var stream = new FileStream(Path.ChangeExtension(path,".bin"), FileMode.Create))
-                        {
-                            IFormatter formatter = new BinaryFormatter();
-                            formatter.Serialize(stream, settings.SharedGameIds);
-                        }
                         path = Path.Combine(this.GetPluginUserDataPath(), "NameToSharedId.json");
                         using (var file = File.CreateText(path))
                         {
                             var obj = JsonConvert.SerializeObject(nameToSharedId, Formatting.Indented);
                             file.Write(obj);
                         }
-                        using (var stream = new FileStream(Path.ChangeExtension(path,".bin"), FileMode.Create))
-                        {
-                            IFormatter formatter = new BinaryFormatter();
-                            formatter.Serialize(stream, nameToSharedId);
-                        }
+                        BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
                     }
                 },
                 new MainMenuItem
@@ -295,7 +279,8 @@ namespace DuplicateHider
                 {
                     var selected = args.Games[0];
                     var name = selected.Name.Filter(GetNameFilter());
-                    if (index.TryGetValue(name, out var copies)) {
+                    if (index.TryGetValue(name, out var copies))
+                    {
                         var others = copies.Where(c => c != selected.Id);
                         foreach (var copyId in others)
                         {
@@ -312,7 +297,7 @@ namespace DuplicateHider
                     }
                     entries.Sort((a, b) => a.Description.CompareTo(b.Description));
                 }
-                return entries;
+            return entries;
         }
 
         private void UpdateDuplicateState(IEnumerable<Game> games, Visibility visibility)
@@ -340,7 +325,7 @@ namespace DuplicateHider
             bool hidden = visibility == Hidden ? true : false;
             foreach (var copies in index.Values)
             {
-                for(int i = 1; i < copies.Count; ++i)
+                for (int i = 1; i < copies.Count; ++i)
                 {
                     if (PlayniteApi.Database.Games.Get(copies[i]) is Game copy)
                     {
@@ -366,7 +351,6 @@ namespace DuplicateHider
         private void BuildIndex(IEnumerable<Game> games, IFilter<IEnumerable<Game>> gameFilter, IFilter<string> nameFilter)
         {
             index.Clear();
-            var filter = GetNameFilter();
             foreach (var game in games.Filter(gameFilter))
             {
                 var cleanName = game.Name.Filter(nameFilter);
@@ -376,19 +360,19 @@ namespace DuplicateHider
             }
         }
 
-        static readonly Regex regex = new Regex(@"{(?:(?<Prefix>[^'{}]*)')?(?<Variable>[^'{}]+)(?:'(?<Suffix>[^'{}]*))?}");
-        static readonly int prefixIdx = regex.GroupNumberFromName("Prefix");
-        static readonly int suffixIdx = regex.GroupNumberFromName("Suffix");
-        static readonly int variableIdx = regex.GroupNumberFromName("Variable");
+        static readonly Regex regexVariable = new Regex(@"{(?:(?<Prefix>[^'{}]*)')?(?<Variable>[^'{}]+)(?:'(?<Suffix>[^'{}]*))?}");
+        static readonly int prefixIdx = regexVariable.GroupNumberFromName("Prefix");
+        static readonly int suffixIdx = regexVariable.GroupNumberFromName("Suffix");
+        static readonly int variableIdx = regexVariable.GroupNumberFromName("Variable");
 
         public string ExpandDisplayString(Game game, string displayString)
         {
             var result = displayString;
             const int MAX_RECURSION = 5;
             int recursion = 0;
-            while (regex.IsMatch(result) && MAX_RECURSION > recursion)
+            while (regexVariable.IsMatch(result) && MAX_RECURSION > recursion)
             {
-                var matches = regex.Matches(result);
+                var matches = regexVariable.Matches(result);
                 foreach (Match match in matches)
                 {
                     var prefix = match.Groups[prefixIdx].Value;
@@ -404,7 +388,8 @@ namespace DuplicateHider
                     if (expanded.Length != 0 && expanded != variable)
                     {
                         result = result.Replace(match.Value, prefix + expanded + suffix);
-                    } else
+                    }
+                    else
                     {
                         result = result.Replace(match.Value, string.Empty);
                     }
@@ -430,7 +415,8 @@ namespace DuplicateHider
             if (index > -1)
             {
                 return index;
-            } else
+            }
+            else
             {
                 return settings.Priorities.Count;
             }

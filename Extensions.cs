@@ -2,11 +2,7 @@
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DuplicateHider
 {
@@ -67,7 +63,7 @@ namespace DuplicateHider
         {
             if (game.Categories == null)
             {
-                return new string[]{ };
+                return new string[] { };
             }
             else
             {
@@ -77,7 +73,7 @@ namespace DuplicateHider
 
         public static bool TryFind<T>(this IEnumerable<T> items, Predicate<T> predicate, out T result)
         {
-            foreach(var item in items)
+            foreach (var item in items)
             {
                 if (predicate(item))
                 {

@@ -1,19 +1,11 @@
-﻿using System;
+﻿using Playnite.SDK.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Playnite.SDK.Models;
 
 namespace DuplicateHider
 {
@@ -26,8 +18,12 @@ namespace DuplicateHider
 
         public ListBoxItem CreatePriorityEntry(GameSource source)
         {
-            Button buttonUp = new Button {
-                Content = "▲", Margin = new Thickness(0, 0, 3, 0), Width = 20, Height = 20,
+            Button buttonUp = new Button
+            {
+                Content = "▲",
+                Margin = new Thickness(0, 0, 3, 0),
+                Width = 20,
+                Height = 20,
                 HorizontalContentAlignment = HorizontalAlignment.Center,
                 VerticalContentAlignment = VerticalAlignment.Center,
                 ClipToBounds = false,
@@ -35,8 +31,12 @@ namespace DuplicateHider
                 Cursor = Cursors.Arrow
             };
             buttonUp.Click += ButtonUp_Click;
-            Button buttonDown = new Button {
-                Content = "▼", Margin = new Thickness(0, 0, 8, 0), Width = 20, Height = 20,
+            Button buttonDown = new Button
+            {
+                Content = "▼",
+                Margin = new Thickness(0, 0, 8, 0),
+                Width = 20,
+                Height = 20,
                 HorizontalContentAlignment = HorizontalAlignment.Center,
                 VerticalContentAlignment = VerticalAlignment.Center,
                 ClipToBounds = false,
@@ -44,7 +44,7 @@ namespace DuplicateHider
                 Cursor = Cursors.Arrow
             };
             buttonDown.Click += ButtonDown_Click;
-            Label label = new Label { Content = source != null? source.Name : "Undefined" };
+            Label label = new Label { Content = source != null ? source.Name : "Undefined" };
             StackPanel stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
             stackPanel.Children.Add(buttonUp);
             stackPanel.Children.Add(buttonDown);
@@ -165,8 +165,9 @@ namespace DuplicateHider
             PriorityListBox.Items.RemoveAt(index);
             if (index < PriorityListBox.Items.Count - 1)
             {
-                PriorityListBox.Items.Insert(index+1, item);
-            } else
+                PriorityListBox.Items.Insert(index + 1, item);
+            }
+            else
             {
                 PriorityListBox.Items.Add(item);
             }
