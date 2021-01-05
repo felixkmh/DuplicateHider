@@ -124,9 +124,9 @@ namespace DuplicateHider
 
         private void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> e)
         {
+            PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
             IFilter<IEnumerable<Game>> gameFilter = GetGameFilter();
             IFilter<string> nameFilter = GetNameFilter();
-            PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
             if (settings.AddHiddenToIgnoreList)
             {
                 foreach (var change in e.UpdatedItems)
