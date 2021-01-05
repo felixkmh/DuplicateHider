@@ -33,6 +33,8 @@ namespace DuplicateHider
         public UniqueList<string> ExcludeCategories { get; set; } = new UniqueList<string>();
         public HashSet<Guid> IgnoredGames { get; set; } = new HashSet<Guid>();
 
+        public bool AddHiddenToIgnoreList { get; set; } = false;
+
         // Parameterless constructor must exist if you want to use LoadPluginSettings method.
         public DuplicateHiderSettings()
         {
@@ -57,6 +59,7 @@ namespace DuplicateHider
                 IgnoredGames = savedSettings.IgnoredGames;
                 ShowOtherCopiesInGameMenu = savedSettings.ShowOtherCopiesInGameMenu;
                 DisplayString = savedSettings.DisplayString;
+                AddHiddenToIgnoreList = savedSettings.AddHiddenToIgnoreList;
             }
 
             if (Priorities.Count == 0)
@@ -91,6 +94,7 @@ namespace DuplicateHider
             {
                 plugin.SettingsView.AutoUpdateCheckBox.IsChecked = UpdateAutomatically;
                 plugin.SettingsView.ShowCopiesInGameMenu.IsChecked = ShowOtherCopiesInGameMenu;
+                plugin.SettingsView.AddHiddenToIgnoreList.IsChecked = AddHiddenToIgnoreList;
 
                 // Populate Priority list
                 {
@@ -255,9 +259,10 @@ namespace DuplicateHider
             // Apply changed settings
             plugin.SettingsView.AutoUpdateCheckBox.Dispatcher.Invoke(() =>
             {
-                UpdateAutomatically = plugin.SettingsView.AutoUpdateCheckBox.IsChecked ?? false;
                 {
+                    UpdateAutomatically = plugin.SettingsView.AutoUpdateCheckBox.IsChecked ?? false;
                     ShowOtherCopiesInGameMenu = plugin.SettingsView.ShowCopiesInGameMenu.IsChecked ?? false;
+                    AddHiddenToIgnoreList = plugin.SettingsView.AddHiddenToIgnoreList.IsChecked ?? false;
                 }
                 UniqueList<string> updatedPriorites = new UniqueList<string> { };
                 {

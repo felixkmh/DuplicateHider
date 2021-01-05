@@ -125,6 +125,19 @@ namespace DuplicateHider
         private void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> e)
         {
             PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
+            if (settings.AddHiddenToIgnoreList)
+            {
+                foreach (var change in e.UpdatedItems)
+                {
+                    if (change.OldData.Hidden != change.NewData.Hidden)
+                    {
+                        settings.IgnoredGames.Add(change.NewData.Id);
+                    }
+                }
+                BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
+                var revealed = SetDuplicateState(Hidden);
+                PlayniteApi.Database.Games.Update(revealed);
+            }
             if (settings.UpdateAutomatically)
             {
                 IFilter<IEnumerable<Game>> gameFilter = GetGameFilter();
@@ -183,6 +196,7 @@ namespace DuplicateHider
         {
             return new List<MainMenuItem>
             {
+#if DEBUG
                 new MainMenuItem
                 {
                     Description = "Generate Shared Ids",
@@ -216,6 +230,7 @@ namespace DuplicateHider
                         BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
                     }
                 },
+#endif
                 new MainMenuItem
                 {
                     Description = "Hide Duplicates",
