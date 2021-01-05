@@ -124,6 +124,8 @@ namespace DuplicateHider
 
         private void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> e)
         {
+            IFilter<IEnumerable<Game>> gameFilter = GetGameFilter();
+            IFilter<string> nameFilter = GetNameFilter();
             PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
             if (settings.AddHiddenToIgnoreList)
             {
@@ -134,14 +136,31 @@ namespace DuplicateHider
                         settings.IgnoredGames.Add(change.NewData.Id);
                     }
                 }
-                BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
+                BuildIndex(PlayniteApi.Database.Games, gameFilter, nameFilter);
                 var revealed = SetDuplicateState(Hidden);
                 PlayniteApi.Database.Games.Update(revealed);
+                foreach (var change in e.UpdatedItems)
+                {
+                    if (change.OldData.Hidden != change.NewData.Hidden)
+                    {
+                        if (index.TryGetValue(nameFilter.Apply(change.OldData.Name), out var copies)) {
+                            if (copies.Count == 1)
+                            {
+                                if (PlayniteApi.Database.Games.Get(copies[0]) is Game last)
+                                {
+                                    if (last.Hidden)
+                                    {
+                                        last.Hidden = false;
+                                        PlayniteApi.Database.Games.Update(last);
+                                    }
+                                }
+                            } 
+                        }
+                    }
+                }
             }
             if (settings.UpdateAutomatically)
             {
-                IFilter<IEnumerable<Game>> gameFilter = GetGameFilter();
-                IFilter<string> nameFilter = GetNameFilter();
                 foreach (var oldData in (from update in e.UpdatedItems select update.OldData).Filter(gameFilter))
                 {
                     var filteredName = oldData.Name.Filter(nameFilter);
