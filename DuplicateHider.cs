@@ -274,9 +274,57 @@ namespace DuplicateHider
                         PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
                     }
                 }
+#if DEBUG
+                , new MainMenuItem
+                {
+                    Description = "Serialize Index Data",
+                    MenuSection = "@|DuplicateHider",
+                    Action = (context) => {
+                        BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
+                        SortedDictionary<string, List<DebugData>> ts = new SortedDictionary<string, List<DebugData>>();
+                        foreach(var group in index.OrderBy(g => g.Key).Where(g => g.Value.Count > 1))
+                        {
+                            var data = new List<DebugData>();
+                            foreach (var copy in group.Value)
+                            {
+                                if (PlayniteApi.Database.Games.Get(copy) is Game game) {
+                                    if (game != null)
+                                    {
+                                        data.Add(new DebugData() {
+                                            Name = game.Name,
+                                            Installed = game.IsInstalled,
+                                            Score = GetGamePriority(copy),
+                                            SourceName = game.GetSourceName(),
+                                            SourcePriority = GetSourceRank(game)
+                                            }
+                                        );
+                                    }
+                                }
+                          	}
+                            ts.Add(group.Key, data);
+                        }
+                        var path = PlayniteApi.Dialogs.SaveFile("JSON File|*.json");
+                        if (path.Length > 0)
+                        {
+                            var data = JsonConvert.SerializeObject(ts, Formatting.Indented);
+                            File.WriteAllText(path, data);
+                            System.Diagnostics.Process.Start(path);
+                        }
+                    }
+                }
+#endif
             };
         }
-
+#if DEBUG
+        struct DebugData
+        {
+            public string Name;
+            public string SourceName;
+            public int SourcePriority;
+            public int Score;
+            public bool Installed;
+        };
+#endif
         public override List<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
 
