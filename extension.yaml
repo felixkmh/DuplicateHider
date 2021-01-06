@@ -5,3 +5,9 @@ Version: 2.3.0
 Module: DuplicateHider.dll
 Type: GenericPlugin
 Icon: icon.png
+Links:
+  - Name: GitHub
+    Url: https://github.com/felixkmh/DuplicateHider
+UpdaterConfig:
+  GitHubUser: felixkmh
+  GitHubRepo: DuplicateHider
