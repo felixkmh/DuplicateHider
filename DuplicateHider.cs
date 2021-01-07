@@ -399,8 +399,10 @@ namespace DuplicateHider
                     }
                 }
             }
-            duplicates.Sort((a, b) => a.Name.CompareTo(b.Name));
-            return duplicates;
+            return duplicates
+                .OrderByDescending(g => g.IsInstalled)
+                .ThenBy(g => g.GetSourceName())
+                .ToList();
         }
 
         private void UpdateDuplicateState(IEnumerable<Game> games, Visibility visibility)
