@@ -368,28 +368,39 @@ namespace DuplicateHider
                 if (args.Games.Count == 1)
                 {
                     var selected = args.Games[0];
-                    var name = selected.Name.Filter(GetNameFilter());
-                    if (index.TryGetValue(name, out var copies))
+                    var others = GetOtherCopies(selected);
+                    foreach (var copy in others)
                     {
-                        var others = copies.Where(c => c != selected.Id);
-                        foreach (var copyId in others)
+                        entries.Add(new GameMenuItem
                         {
-                            if (PlayniteApi.Database.Games.Get(copyId) is Game copy)
-                            {
-                                entries.Add(new GameMenuItem
-                                {
-                                    Action = (context) => { PlayniteApi.StartGame(copyId); },
-                                    MenuSection = $"Other Copies: {others.Count()}",
-                                    Description = ExpandDisplayString(copy, settings.DisplayString)
-                                });
-                            }
-                        }
+                            Action = context => PlayniteApi.StartGame(copy.Id),
+                            MenuSection = $"Other Copies: {others.Count()}",
+                            Description = ExpandDisplayString(copy, settings.DisplayString)
+                        });
                     }
-                    entries.Sort((a, b) => a.Description.CompareTo(b.Description));
                 }
             }
 
             return entries;
+        }
+
+        private List<Game> GetOtherCopies(Game game)
+        {
+            var name = game.Name.Filter(GetNameFilter());
+            var duplicates = new List<Game>();
+            if (index.TryGetValue(name, out var copies))
+            {
+                var others = copies.Where(c => c != game.Id);
+                foreach (var copyId in others)
+                {
+                    if (PlayniteApi.Database.Games.Get(copyId) is Game copy)
+                    {
+                        duplicates.Add(copy);
+                    }
+                }
+            }
+            duplicates.Sort((a, b) => a.Name.CompareTo(b.Name));
+            return duplicates;
         }
 
         private void UpdateDuplicateState(IEnumerable<Game> games, Visibility visibility)
