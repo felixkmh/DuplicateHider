@@ -401,6 +401,7 @@ namespace DuplicateHider
             }
             return duplicates
                 .OrderByDescending(g => g.IsInstalled)
+                .ThenBy(g => g.Name)
                 .ThenBy(g => g.GetSourceName())
                 .ToList();
         }
