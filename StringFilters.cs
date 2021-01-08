@@ -122,7 +122,15 @@ namespace DuplicateHider
 
         public override string ApplySingle(in string input)
         {
-            return numberRegex.Replace(input, match => ToRoman(int.Parse(match.Value)));
+            return numberRegex.Replace(input, match => {
+                if (int.TryParse(match.Value, out var number))
+                {
+                    return ToRoman(number);
+                } else
+                {
+                    return match.Value;
+                }
+            });
         }
 
         public string ToRoman(int number)
