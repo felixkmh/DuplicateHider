@@ -1,11 +1,11 @@
 AddonId: DuplicateHider_382f8003-8ed0-4e47-ae93-05b43c9c6c32
 IconUrl: https://github.com/felixkmh/DuplicateHider/raw/master/source/icon.png
-Type: Generic
-InstallerManifestUrl: https://github.com/JosefNemec/PlayniteExtensions/raw/master/manifests/Universal_Steam_Metadata.yaml
-ShortDescription: Imports game metadata from Steam store.
-Name: Universal Steam Metadata
-Author: Playnite
+Type: GenericPlugin
+InstallerManifestUrl: https://github.com/felixkmh/DuplicateHider/raw/master/InstallerManifest/DuplicateHider_382f8003-8ed0-4e47-ae93-05b43c9c6c32.yaml
+ShortDescription: Hides duplicate game copies based on source priority.
+Name: DuplicateHider
+Author: felixkmh
 Links:
-    Website: https://github.com/JosefNemec/PlayniteExtensions
-    Support: https://github.com/JosefNemec/PlayniteExtensions/wiki
-SourceUrl: https://github.com/JosefNemec/PlayniteExtensions
+    GitHub: https://github.com/felixkmh/DuplicateHider
+    Support: https://playnite.link/forum/thread-308.html
+SourceUrl: https://github.com/felixkmh/DuplicateHider
