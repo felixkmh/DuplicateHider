@@ -1,7 +1,7 @@
 AddonId: DuplicateHider_382f8003-8ed0-4e47-ae93-05b43c9c6c32
-IconUrl: https://github.com/felixkmh/DuplicateHider/raw/master/source/icon.png
+IconUrl: https://raw.githubusercontent.com/felixkmh/DuplicateHider/master/source/icon.png
 Type: GenericPlugin
-InstallerManifestUrl: https://github.com/felixkmh/DuplicateHider/raw/master/InstallerManifest/DuplicateHider_382f8003-8ed0-4e47-ae93-05b43c9c6c32.yaml
+InstallerManifestUrl: https://raw.githubusercontent.com/felixkmh/DuplicateHider/master/InstallerManifest/DuplicateHider_382f8003-8ed0-4e47-ae93-05b43c9c6c32.yaml
 ShortDescription: Hides duplicate game copies based on source priority.
 Description: DuplicateHider tries to hide all but one copy of the same game, based on the name of the game. This is useful if you own the same game on different platforms, like Steam and GOG, for example. In order to determine which copy stays visible, you can set up a priority list for your game's sources. Higher position in the list means higher priority for games of that source. Hiding duplicates can be done automatically (if the "Update Rank Automatically" option is enabled), or manually using the "Hide Duplicates" and "Reveal Duplicates" menu functions.
 Name: DuplicateHider
