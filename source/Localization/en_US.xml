@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+	<!--Menu Entries-->
+	<sys:String x:Key="LOCHideDuplicatesEntry">English</sys:String>
+	<sys:String x:Key="LOCRevealDuplicatesEntry">English</sys:String>
+	<sys:String x:Key="LOCAddSelectedToIgnoreEntry">English</sys:String>
+	<sys:String x:Key="LOCRemoveSelectedFromIgnoreEntry">English</sys:String>
+	<!--GameMenu Entries-->
+	<sys:String x:Key="LOCOtherCopiesLabel">English</sys:String>
+	<sys:String x:Key="LOCCopyInstalledLabel">English</sys:String>
+	<sys:String x:Key="LOCCopyNotInstalledLabel">English</sys:String>
+	<!--Tool Tips-->
+	<sys:String x:Key="LOCAutomaticUpdateTooltip"></sys:String>
+	<sys:String x:Key="LOCShowOtherCopiesTooltip"></sys:String>
+	<sys:String x:Key="LOCIgnoreManuallyHiddenGamesTooltip"></sys:String>
+	<!--Settings-->
+	<sys:String x:Key="LOCPrioritiesLabel"></sys:String>
+	<sys:String x:Key="LOCIgnoredGamesLabel"></sys:String>
+	<sys:String x:Key="LOCAutomaticUpdateLabel"></sys:String>
+	<sys:String x:Key="LOCIncludedPlatformsLabel"></sys:String>
+	<sys:String x:Key="LOCExcludedSourcesLabel"></sys:String>
+	<sys:String x:Key="LOCExcludedCategoriesLabel"></sys:String>
+	<sys:String x:Key="LOCDisplayStringLabel"></sys:String>
+	<sys:String x:Key="LOCShowOtherCopiesLabel"></sys:String>
+	<sys:String x:Key="LOCIgnoreManuallyHiddenGamesLabel"></sys:String>
+</ResourceDictionary>
