@@ -35,7 +35,7 @@ namespace DuplicateHider
 
         public bool AddHiddenToIgnoreList { get; set; } = false;
 
-        public List<ReplaceFilter> ReplaceFilters { get; set; } = new List<ReplaceFilter>();
+        public List<IFilter<string>> ReplaceFilters { get; set; } = new List<IFilter<string>>();
 
         // Parameterless constructor must exist if you want to use LoadPluginSettings method.
         public DuplicateHiderSettings()
