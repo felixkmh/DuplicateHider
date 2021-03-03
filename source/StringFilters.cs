@@ -40,21 +40,22 @@ namespace DuplicateHider
         }
     }
 
-    class ReplaceFilter : IFilter<string>
+    public class ReplaceFilter : IFilter<string>
     {
         private readonly Regex regex;
         private readonly string _replace;
+
         private ReplaceFilter() { }
 
         public ReplaceFilter(string replace, string find)
         {
-            regex = new Regex(find);
+            regex = new Regex(find, RegexOptions.IgnoreCase);
             _replace = replace;
         }
 
         public ReplaceFilter(string replace, params string[] find)
         {
-            regex = new Regex(string.Join("|", from word in find select Regex.Escape(word)));
+            regex = new Regex(string.Join("|", from word in find select Regex.Escape(word)), RegexOptions.IgnoreCase);
             _replace = replace;
         }
 
