@@ -77,8 +77,9 @@ namespace DuplicateHider
         {
             if (newSettings.UpdateAutomatically)
             {
-                BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
                 PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
+                PlayniteApi.Database.Games.Update(SetDuplicateState(Visible));
+                BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
                 PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             }
@@ -533,7 +534,7 @@ namespace DuplicateHider
 
         IFilter<string> GetNameFilter()
         {
-            var customRules = IFilter<string>.MakeChain(settings.ReplaceFilters);
+            var customRules = IFilter<string>.MakeChain(settings.ReplaceFilters.Cast<IFilter<string>>().ToList());
             return customRules.Append(
                 IFilter<string>.MakeChain
                 (

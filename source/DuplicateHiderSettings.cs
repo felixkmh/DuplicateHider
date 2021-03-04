@@ -4,6 +4,7 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -35,7 +36,115 @@ namespace DuplicateHider
 
         public bool AddHiddenToIgnoreList { get; set; } = false;
 
-        public List<IFilter<string>> ReplaceFilters { get; set; } = new List<IFilter<string>>();
+        public List<ReplaceFilter> ReplaceFilters { get; set; } = new List<ReplaceFilter>();
+
+        public ListBoxItem CreateReplacementFilterItem(ReplaceFilter filter = null)
+        {
+            var item = new ListBoxItem();
+            if (filter is null)
+            {
+                item.Tag = "empty";
+            }
+            var sp = new StackPanel();
+            sp.Orientation = Orientation.Horizontal;
+            var left = new TextBox();
+            left.Tag = "left";
+            left.TextChanged += FilterTextChanged;
+            left.Text = filter is null?string.Empty: Regex.Unescape(filter.regex.ToString());
+            var right = new TextBox();
+            right.Tag = "right";
+            right.TextChanged += FilterTextChanged;
+            right.Text = filter is null ? string.Empty : filter._replace;
+            var arrow = new Label();
+            arrow.Content = "→";
+            sp.Children.Add(left);
+            sp.Children.Add(arrow);
+            sp.Children.Add(right);
+            item.Content = sp;
+            if (filter != null)
+            {
+                var bt = new Button
+                {
+                    Content = "X",
+                    Tag = item,
+                };
+                bt.Click += DeleteReplaceFilterClick;
+                sp.Children.Insert(0, bt);
+            }
+            return item;
+        }
+
+        private void DeleteReplaceFilterClick(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button bt)
+            {
+                plugin.SettingsView.ReplacementRulesListBox.Items.Remove(bt.Tag);
+            }
+        }
+
+        public ReplaceFilter CreateFilterFromListBoxItem(ListBoxItem item)
+        {
+            if (item.Tag as string == "empty")
+            {
+                return null;
+            }
+            if (item.Content is StackPanel sp )
+            {
+                var textboxes = sp.Children.OfType<TextBox>();
+                TextBox left = textboxes.First(b => b.Tag as string == "left");
+                TextBox right = textboxes.First(b => b.Tag as string == "right");
+                if (left.Text.Length > 0)
+                {
+                    return new ReplaceFilter(right.Text, new Regex(Regex.Escape(left.Text), RegexOptions.IgnoreCase));
+                }
+            }
+            return null;
+        }
+
+        private void FilterTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (sender is TextBox tb)
+            {
+                if (tb.Parent is StackPanel sp)
+                {
+                    if (sp.Parent is ListBoxItem item)
+                    {
+                        var textboxes = sp.Children.OfType<TextBox>();
+                        TextBox left = textboxes.First(b => b.Tag as string == "left");
+                        TextBox right = textboxes.First(b => b.Tag as string == "right");
+                        if (left.Text.Length > 0 || right.Text.Length > 0)
+                        {
+                            if (item.Tag as string == "empty")
+                            {
+                                var list = item.Parent as ListBox;
+                                item.Tag = null;
+                                list.Items.Dispatcher.Invoke(() =>
+                                {
+                                    var bt = new Button();
+                                    bt.Content = "X";
+                                    bt.Tag = item;
+                                    bt.Click += DeleteReplaceFilterClick;
+                                    sp.Children.Insert(0, bt);
+                                    list.Items.Add(CreateReplacementFilterItem());
+                                });
+                            }
+                        }
+                        if (left.Text.Length == 0 && right.Text.Length == 0)
+                        {
+                            if (item.Tag as string != "empty")
+                            {
+                                item.Tag = null;
+                                var list = item.Parent as ListBox;
+                                list.Items.Dispatcher.Invoke(() =>
+                                {
+                                    list.Items.Remove(item);
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         // Parameterless constructor must exist if you want to use LoadPluginSettings method.
         public DuplicateHiderSettings()
@@ -62,6 +171,7 @@ namespace DuplicateHider
                 ShowOtherCopiesInGameMenu = savedSettings.ShowOtherCopiesInGameMenu;
                 DisplayString = savedSettings.DisplayString;
                 AddHiddenToIgnoreList = savedSettings.AddHiddenToIgnoreList;
+                ReplaceFilters = savedSettings.ReplaceFilters;
             }
 
             if (Priorities.Count == 0)
@@ -97,6 +207,22 @@ namespace DuplicateHider
                 plugin.SettingsView.AutoUpdateCheckBox.IsChecked = UpdateAutomatically;
                 plugin.SettingsView.ShowCopiesInGameMenu.IsChecked = ShowOtherCopiesInGameMenu;
                 plugin.SettingsView.AddHiddenToIgnoreList.IsChecked = AddHiddenToIgnoreList;
+
+                // Populate Replacement Rules
+                {
+                    foreach (var filter in ReplaceFilters)
+                    {
+                        if (filter is ReplaceFilter rf)
+                        {
+                            plugin.SettingsView.ReplacementRulesListBox.Items.Add(
+                                CreateReplacementFilterItem(rf)
+                            );
+                        }
+                    }
+                    plugin.SettingsView.ReplacementRulesListBox.Items.Add(
+                        CreateReplacementFilterItem()
+                    );
+                }
 
                 // Populate Priority list
                 {
@@ -266,6 +392,23 @@ namespace DuplicateHider
                     ShowOtherCopiesInGameMenu = plugin.SettingsView.ShowCopiesInGameMenu.IsChecked ?? false;
                     AddHiddenToIgnoreList = plugin.SettingsView.AddHiddenToIgnoreList.IsChecked ?? false;
                 }
+
+                // Retrieve Replacement Rules
+                {
+                    ReplaceFilters.Clear();
+                    foreach (var item in plugin.SettingsView.ReplacementRulesListBox.Items)
+                    {
+                        if (item is ListBoxItem lbi)
+                        {
+                            var rule = CreateFilterFromListBoxItem(lbi);
+                            if (!(rule is null))
+                            {
+                                ReplaceFilters.Add(rule);
+                            }
+                        }
+                    }
+                }
+
                 UniqueList<string> updatedPriorites = new UniqueList<string> { };
                 {
                     foreach (ListBoxItem item in plugin.SettingsView.PriorityListBox.Items)

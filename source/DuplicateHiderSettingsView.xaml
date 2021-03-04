@@ -47,6 +47,8 @@
             </Grid>
             <Label Margin="10,5,0,0">Display string for other copies:</Label>
             <TextBox Margin="10,5,10,0" TextWrapping="Wrap" x:Name="DisplayStringTextBox" ToolTip="Right-click to insert placeholder variables"/>
+            <Label Margin="10,5,0,0">Custom replacement rules:</Label>
+            <ListBox KeyDown="ReplacementRulesListBox_KeyDown" PreviewMouseWheel="HandlePreviewMouseWheel" Margin="10,5,10,0" x:Name="ReplacementRulesListBox" ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Extended"/>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

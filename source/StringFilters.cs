@@ -42,8 +42,8 @@ namespace DuplicateHider
 
     public class ReplaceFilter : IFilter<string>
     {
-        private readonly Regex regex;
-        private readonly string _replace;
+        public Regex regex;
+        public string _replace;
 
         private ReplaceFilter() { }
 
@@ -57,6 +57,12 @@ namespace DuplicateHider
         {
             regex = new Regex(string.Join("|", from word in find select Regex.Escape(word)), RegexOptions.IgnoreCase);
             _replace = replace;
+        }
+
+        public ReplaceFilter(string replace, Regex _regex)
+        {
+            _replace = replace;
+            regex = _regex;
         }
 
         public override string ApplySingle(in string input)

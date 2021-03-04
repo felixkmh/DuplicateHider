@@ -44,8 +44,8 @@ namespace DuplicateHider
             return next;
         }
 
-        
 
+        [Newtonsoft.Json.JsonIgnore]
         public IFilter<T> NextFilter { get; protected set; } = null;
 
         public T Apply(in T input)

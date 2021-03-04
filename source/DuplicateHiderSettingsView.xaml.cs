@@ -159,6 +159,19 @@ namespace DuplicateHider
             return null;
         }
 
+        private void HandlePreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                e.Handled = true;
+                var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta);
+                eventArg.RoutedEvent = UIElement.MouseWheelEvent;
+                eventArg.Source = sender;
+                var parent = ((Control)sender).Parent as UIElement;
+                parent.RaiseEvent(eventArg);
+            }
+        }
+
         private void ButtonDown_Click(object sender, RoutedEventArgs e)
         {
             var item = (ListBoxItem)((Button)sender).Tag;
@@ -284,6 +297,31 @@ namespace DuplicateHider
                     if (string.IsNullOrEmpty(comboBox.Text) || found)
                     {
                         comboBox.Items.Add(checkbox);
+                    }
+                }
+            }
+        }
+
+        private void ReplacementRulesListBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (sender is ListBox lb)
+            {
+                if (e.Key == Key.Delete)
+                {
+                    List<object> toDelete = new List<object>();
+                    foreach (var item in lb.SelectedItems)
+                    {
+                        if (item is ListBoxItem lbi)
+                        {
+                            if (lbi.Tag as string != "empty")
+                            {
+                                toDelete.Add(lbi);
+                            }
+                        }
+                    }
+                    foreach (var item in toDelete)
+                    {
+                        lb.Items.Remove(item);
                     }
                 }
             }
