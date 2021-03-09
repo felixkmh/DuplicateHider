@@ -24,9 +24,25 @@ namespace DuplicateHider
         private Dictionary<string, List<Guid>> index { get; set; } = new Dictionary<string, List<Guid>>();
         public DuplicateHiderSettingsView SettingsView { get; private set; }
 
+
         public DuplicateHider(IPlayniteAPI api) : base(api)
         {
             settings = new DuplicateHiderSettings(this);
+            AddCustomElementSupport(new AddCustomElementSupportArgs()
+            {
+                ElementList = new List<string>() {"SourceSelector"},
+                SourceName = "DuplicateHider"
+            });
+        }
+
+
+        public override Control GetGameViewControl(GetGameViewControlArgs args)
+        {
+            if (args.Name.Equals("SourceSelector"))
+            {
+                return new SourceSelector(this);
+            }
+            return null;
         }
 
         #region Events       
@@ -385,7 +401,7 @@ namespace DuplicateHider
             return entries;
         }
 
-        private List<Game> GetOtherCopies(Game game)
+        public List<Game> GetOtherCopies(Game game)
         {
             var name = game.Name.Filter(GetNameFilter());
             var duplicates = new List<Game>();
@@ -402,6 +418,7 @@ namespace DuplicateHider
             }
             return duplicates
                 .OrderByDescending(g => g.IsInstalled)
+                .ThenBy(g => GetGamePriority(g.Id))
                 .ThenBy(g => g.Name)
                 .ThenBy(g => g.GetSourceName())
                 .ToList();
