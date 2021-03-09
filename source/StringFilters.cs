@@ -44,6 +44,7 @@ namespace DuplicateHider
     {
         public Regex regex;
         public string _replace;
+        public bool asRegex = false;
 
         private ReplaceFilter() { }
 

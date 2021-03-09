@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace DuplicateHider
 {
@@ -60,6 +61,25 @@ namespace DuplicateHider
             sp.Children.Add(left);
             sp.Children.Add(arrow);
             sp.Children.Add(right);
+
+            var cb = new CheckBox();
+            cb.IsChecked = filter?.asRegex??false;
+            cb.FlowDirection = FlowDirection.RightToLeft;
+            var hl = new Hyperlink(new Run("Regex"));
+            var tb = new TextBlock();
+            var margin = cb.Margin;
+            margin.Left = 5;
+            cb.Margin = margin;
+
+            var pretext = new Run("");
+            hl.NavigateUri = new Uri("https://docs.microsoft.com/en-us/dotnet/standard/base-types/regular-expressions");
+            hl.Click += Hl_Click;
+            tb.FlowDirection = FlowDirection.LeftToRight;
+            tb.Inlines.Add(pretext);
+            tb.Inlines.Add(hl);
+            cb.Content = tb;
+            sp.Children.Add(cb);
+
             item.Content = sp;
             if (filter != null)
             {
@@ -72,6 +92,14 @@ namespace DuplicateHider
                 sp.Children.Insert(0, bt);
             }
             return item;
+        }
+
+        private void Hl_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Hyperlink hl)
+            {
+                System.Diagnostics.Process.Start(hl.NavigateUri.AbsoluteUri);
+            }
         }
 
         private void DeleteReplaceFilterClick(object sender, RoutedEventArgs e)
@@ -90,12 +118,23 @@ namespace DuplicateHider
             }
             if (item.Content is StackPanel sp )
             {
+                var isRegex = false;
+                if (sp.Children.OfType<CheckBox>().FirstOrDefault() is CheckBox cb)
+                {
+                    isRegex = cb.IsChecked ?? false;
+                }
                 var textboxes = sp.Children.OfType<TextBox>();
                 TextBox left = textboxes.First(b => b.Tag as string == "left");
                 TextBox right = textboxes.First(b => b.Tag as string == "right");
                 if (left.Text.Length > 0)
                 {
-                    return new ReplaceFilter(right.Text, new Regex(Regex.Escape(left.Text), RegexOptions.IgnoreCase));
+                    if (isRegex)
+                    {
+                        return new ReplaceFilter(right.Text, new Regex(left.Text, RegexOptions.IgnoreCase)) { asRegex = true };
+                    } else
+                    {
+                        return new ReplaceFilter(right.Text, new Regex(Regex.Escape(left.Text), RegexOptions.IgnoreCase));
+                    }
                 }
             }
             return null;
