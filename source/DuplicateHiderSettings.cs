@@ -51,7 +51,11 @@ namespace DuplicateHider
             var left = new TextBox();
             left.Tag = "left";
             left.TextChanged += FilterTextChanged;
-            left.Text = filter is null?string.Empty: Regex.Unescape(filter.regex.ToString());
+            left.Text = string.Empty;
+            if (filter is ReplaceFilter rf)
+            {
+                left.Text = filter.asRegex? filter.regex.ToString() : Regex.Unescape(filter.regex.ToString());
+            }
             var right = new TextBox();
             right.Tag = "right";
             right.TextChanged += FilterTextChanged;
