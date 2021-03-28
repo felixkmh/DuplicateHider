@@ -27,7 +27,7 @@ namespace DuplicateHider
             = new ConcurrentDictionary<GameSource, Image>(); 
 
         protected readonly DuplicateHider duplicateHider = null;
-        protected readonly string userIconPath = null;
+        public List<string> UserIconFolderPaths { get; set; } = new List<string>();
 
         public SourceSelector()
         {
@@ -37,10 +37,10 @@ namespace DuplicateHider
         public SourceSelector(DuplicateHider duplicateHider) : this()
         {
             this.duplicateHider = duplicateHider;
-            userIconPath = System.IO.Path.Combine(
+            UserIconFolderPaths.Add(System.IO.Path.Combine(
                 duplicateHider.GetPluginUserDataPath(),
                 "source_icons"
-            );
+            ));
             UpdateGameSourceIcons();
         }
 
@@ -50,7 +50,38 @@ namespace DuplicateHider
             IconStackPanel.Children.Clear();
             foreach (var game in games)
             {
-                IconStackPanel.Children.Add(GetSourceIcon(game));
+                var icon = GetSourceIcon(game);
+                var bt = new Button();
+                bt.Tag = game;
+                bt.Click += Bt_Click;
+                bt.MouseEnter += Bt_MouseEnter;
+                bt.MouseLeave += Bt_MouseLeave;
+                IconStackPanel.Children.Add(icon);
+            }
+        }
+
+        private void Bt_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (sender is Button bt)
+            {
+                bt.Effect = null;
+            }
+        }
+
+        private void Bt_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (sender is Button bt)
+            {
+                var dropShadow = new System.Windows.Media.Effects.DropShadowEffect();
+                bt.Effect = new System.Windows.Media.Effects.DropShadowEffect();
+            }
+        }
+
+        private void Bt_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button bt)
+            {
+                duplicateHider.PlayniteApi.StartGame((bt.Tag as Game).Id);
             }
         }
 
@@ -74,15 +105,26 @@ namespace DuplicateHider
         {
             if (!sourceIconCache.ContainsKey(game.Source))
             {
-                var image = new Image();
-                if (GetSourceIconPath(game) is string path)
+                if (sourceIcons is ResourceDictionary dict)
                 {
-                    image.Source = new BitmapImage(new Uri(path));
-                } else
-                {
-                    image.Source = new BitmapImage(new Uri("/DuplicateHider;component/Resources/default.png"));
+                    if (dict.Contains(game.Source.Name))
+                    {
+                        if (dict[game.Source.Name] is Image icon)
+                        {
+                            sourceIconCache[game.Source] = icon;
+                        }
+                    }
+                } else {
+                    var image = new Image();
+                    if (GetSourceIconPath(game) is string path)
+                    {
+                        image.Source = new BitmapImage(new Uri(path));
+                    } else
+                    {
+                        image.Source = new BitmapImage(new Uri("/DuplicateHider;component/Resources/default.png"));
+                    }
+                    sourceIconCache[game.Source] = image;
                 }
-                sourceIconCache[game.Source] = image;
             }
             return sourceIconCache[game.Source];
         }
@@ -90,10 +132,7 @@ namespace DuplicateHider
         protected string GetSourceIconPath(Game game)
         {
             var name = game.Source != null ? game.Source.Name : "Undefined";
-            List<string> locations = new List<string>() {
-                userIconPath
-            };
-            var path = locations
+            var path = UserIconFolderPaths
                .SelectMany(s => System.IO.Directory.GetFiles(s))
                .Where(f => System.IO.Path.GetFileNameWithoutExtension(f).Equals(name, StringComparison.OrdinalIgnoreCase))
                .FirstOrDefault(f =>
@@ -132,8 +171,6 @@ namespace DuplicateHider
         [Description("Maximum number of icons displayed."), Category("Appearance")]
         public int MaxNumberOfIcons { get; set; } = 4;
 
-        [Description("Width of each source icon."), Category("Appearance")]
-        public Double IconWidth { get; set; } = Double.NaN;
         [Description("Height of each source icon."), Category("Appearance")]
         public Double IconHeight { get; set; } = Double.NaN;
 
@@ -144,18 +181,21 @@ namespace DuplicateHider
             set => IconStackPanel.Orientation = value;
         }
 
-        private ResourceDictionaryLocation sourceIcons;
+        private ResourceDictionary sourceIcons;
 
         [Description("Source icon for each source."), Category("Data")]
-        public ResourceDictionaryLocation SourceIconFolderPath
+        public ResourceDictionary SourceIconFolderPath
         {
             get => sourceIcons;
             set
             {
                 sourceIcons = value;
+                sourceIconCache.Clear();
                 UpdateGameSourceIcons();
             }
         }
 
+        [Description("Height of each source icon."), Category("Data")]
+        public List<ImageSource> Icons { get; set; }
     }
 }

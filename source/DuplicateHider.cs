@@ -48,6 +48,10 @@ namespace DuplicateHider
         #region Events       
         public override void OnApplicationStarted()
         {
+            // Create icon folder
+            if (!Directory.Exists(System.IO.Path.Combine(GetPluginUserDataPath(),"source_icons"))) {
+                Directory.CreateDirectory(System.IO.Path.Combine(GetPluginUserDataPath(), "source_icons"));
+            }
             // Clean orphaned entries from Priorites list
             for (int i = settings.Priorities.Count - 1; i >= 0; --i)
             {

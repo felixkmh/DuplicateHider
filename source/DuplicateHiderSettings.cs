@@ -35,6 +35,7 @@ namespace DuplicateHider
         public HashSet<Guid> IgnoredGames { get; set; } = new HashSet<Guid>();
 
         public bool AddHiddenToIgnoreList { get; set; } = false;
+        public bool PreferUserIcons { get; set; } = false;
 
         public List<ReplaceFilter> ReplaceFilters { get; set; } = new List<ReplaceFilter>();
 
@@ -172,6 +173,7 @@ namespace DuplicateHider
                 DisplayString = savedSettings.DisplayString;
                 AddHiddenToIgnoreList = savedSettings.AddHiddenToIgnoreList;
                 ReplaceFilters = savedSettings.ReplaceFilters;
+                PreferUserIcons = savedSettings.PreferUserIcons;
             }
 
             if (Priorities.Count == 0)
