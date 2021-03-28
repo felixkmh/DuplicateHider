@@ -97,7 +97,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>del $(ProjectDir)$(OutDir)*.xml
-C:\Users\WDAGUtilityAccount\Playnite\build\Release\Toolbox.exe pack $(ProjectDir)$(OutDir) $(ProjectDir)bin
+%25LOCALAPPDATA%25\Playnite\Toolbox.exe pack $(ProjectDir)$(OutDir) $(ProjectDir)bin
 </PostBuildEvent>
   </PropertyGroup>
 </Project>
