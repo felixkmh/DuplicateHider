@@ -16,6 +16,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Playnite.SDK.Models;
 
+// <ContentControl x:Name="DuplicateHider_SourceSelector" DockPanel.Dock="Right" MaxHeight="{Binding ElementName=PART_ImageIcon, Path=Height}"/>
+
 namespace DuplicateHider
 {
     /// <summary>
@@ -23,8 +25,18 @@ namespace DuplicateHider
     /// </summary>
     public partial class SourceSelector : Playnite.SDK.Controls.PluginUserControl
     {
-        protected static ConcurrentDictionary<GameSource, Image> sourceIconCache 
-            = new ConcurrentDictionary<GameSource, Image>(); 
+        protected static ConcurrentDictionary<GameSource, BitmapImage> sourceIconCache 
+            = new ConcurrentDictionary<GameSource, BitmapImage>();
+
+        protected static System.Windows.Media.Effects.DropShadowEffect dropShadow = new System.Windows.Media.Effects.DropShadowEffect
+        {
+            Color = Colors.White,
+            ShadowDepth = 0,
+            BlurRadius = 10
+        };
+
+
+        protected static GameSource defaultGameSource = new GameSource("Undefined");
 
         protected readonly DuplicateHider duplicateHider = null;
         public List<string> UserIconFolderPaths { get; set; } = new List<string>();
@@ -41,92 +53,117 @@ namespace DuplicateHider
                 duplicateHider.GetPluginUserDataPath(),
                 "source_icons"
             ));
-            UpdateGameSourceIcons();
         }
 
-        private void UpdateGameSourceIcons()
+        public override void GameContextChanged(Game oldContext, Game newContext)
         {
-            var games = GetGames();
+            UpdateGameSourceIcons(newContext);
+        }
+
+        private void UpdateGameSourceIcons(Game context)
+        {
+            var games = GetGames(context);
             IconStackPanel.Children.Clear();
             foreach (var game in games)
             {
-                var icon = GetSourceIcon(game);
-                var bt = new Button();
-                bt.Tag = game;
+                if (game == null) continue;
+                var bt = new Button()
+                {
+                    BorderBrush = null,
+                    Foreground = null,
+                    Background = null,
+                    Padding = new Thickness(0),
+                    Margin = new Thickness(0.5,0,0.5,0),
+                    BorderThickness = new Thickness(0),
+                    Tag = game,
+                    ToolTip = game.Source!=null?game.Source.Name:"Undefined",
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+
                 bt.Click += Bt_Click;
-                bt.MouseEnter += Bt_MouseEnter;
-                bt.MouseLeave += Bt_MouseLeave;
-                IconStackPanel.Children.Add(icon);
+                bt.MouseEnter += Icon_MouseEnter;
+                bt.MouseLeave += Icon_MouseLeave;
+                Image icon = new Image()
+                {
+                    Source = GetSourceIcon(game),
+                    Stretch = Stretch.Uniform
+                };
+                bt.Content = icon;
+                RenderOptions.SetBitmapScalingMode(icon, BitmapScalingMode.HighQuality);
+                IconStackPanel.Children.Add(bt);
             }
         }
 
-        private void Bt_MouseLeave(object sender, MouseEventArgs e)
+        private void Icon_MouseLeave(object sender, MouseEventArgs e)
         {
-            if (sender is Button bt)
+            if (sender is Control img)
             {
-                bt.Effect = null;
+                img.Effect = null;
             }
         }
 
-        private void Bt_MouseEnter(object sender, MouseEventArgs e)
+        private void Icon_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (sender is Button bt)
+            if (sender is Control img)
             {
-                var dropShadow = new System.Windows.Media.Effects.DropShadowEffect();
-                bt.Effect = new System.Windows.Media.Effects.DropShadowEffect();
+                img.Effect = dropShadow;
+
             }
         }
 
         private void Bt_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button bt)
+            if (sender is Control bt)
             {
                 duplicateHider.PlayniteApi.StartGame((bt.Tag as Game).Id);
             }
         }
 
-        private IEnumerable<Game> GetGames()
+        private IEnumerable<Game> GetGames(Game game)
         {
             if (duplicateHider is DuplicateHider dh)
             {
-                if (GameContext is Game game)
+                if (game != null)
                 {
-                    return (new Game[] { GameContext })
+                    return (new Game[] { game })
                             .Concat(dh.GetOtherCopies(game))
                             .Distinct()
-                            .Take(MaxNumberOfIcons);
+                            .Take(MaxNumberOfIcons)
+                            .OrderBy(g => duplicateHider.GetGamePriority(g.Id));
                 }
             }
 
-            return new Game[] { GameContext };
+            return new Game[] { game };
         }
 
-        protected Image GetSourceIcon(Game game)
+        protected ImageSource GetSourceIcon(Game game)
         {
-            if (!sourceIconCache.ContainsKey(game.Source))
+            var source = game.Source ?? defaultGameSource;
+            if (!sourceIconCache.ContainsKey(source))
             {
                 if (sourceIcons is ResourceDictionary dict)
                 {
-                    if (dict.Contains(game.Source.Name))
+                    if (dict.Contains(source.Name))
                     {
-                        if (dict[game.Source.Name] is Image icon)
+                        if (dict[source.Name] is BitmapImage icon)
                         {
-                            sourceIconCache[game.Source] = icon;
+                            sourceIconCache[source] = icon;
                         }
                     }
                 } else {
-                    var image = new Image();
+                    BitmapImage image;
                     if (GetSourceIconPath(game) is string path)
                     {
-                        image.Source = new BitmapImage(new Uri(path));
+                        image = new BitmapImage(new Uri(path));
                     } else
                     {
-                        image.Source = new BitmapImage(new Uri("/DuplicateHider;component/Resources/default.png"));
+                        image = new BitmapImage(new Uri("pack://application:,,,/DuplicateHider;component/applogo_white.ico"));
                     }
-                    sourceIconCache[game.Source] = image;
+                    sourceIconCache[source] = image;
                 }
             }
-            return sourceIconCache[game.Source];
+            return sourceIconCache[source];
         }
 
         protected string GetSourceIconPath(Game game)
@@ -191,7 +228,7 @@ namespace DuplicateHider
             {
                 sourceIcons = value;
                 sourceIconCache.Clear();
-                UpdateGameSourceIcons();
+                UpdateGameSourceIcons(GameContext);
             }
         }
 

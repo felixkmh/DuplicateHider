@@ -4,6 +4,7 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -13,7 +14,7 @@ using static DuplicateHider.DuplicateHider.Visibility;
 
 namespace DuplicateHider
 {
-    public class DuplicateHider : Plugin
+    public class DuplicateHider : Plugin, INotifyPropertyChanged
     {
         private static readonly ILogger logger = LogManager.GetLogger();
 
@@ -31,7 +32,8 @@ namespace DuplicateHider
             AddCustomElementSupport(new AddCustomElementSupportArgs()
             {
                 ElementList = new List<string>() {"SourceSelector"},
-                SourceName = "DuplicateHider"
+                SourceName = "DuplicateHider",
+                SettingsRoot = "settings"
             });
         }
 
@@ -103,6 +105,7 @@ namespace DuplicateHider
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
                 PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("settings"));
         }
 
         private void Games_ItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<Game> e)
@@ -496,6 +499,8 @@ namespace DuplicateHider
         static readonly int suffixIdx = regexVariable.GroupNumberFromName("Suffix");
         static readonly int variableIdx = regexVariable.GroupNumberFromName("Variable");
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public string ExpandDisplayString(Game game, string displayString)
         {
             var result = displayString;
@@ -530,7 +535,7 @@ namespace DuplicateHider
             return result.Trim().Replace("_", " \u0331 ");
         }
 
-        private int GetGamePriority(Guid id)
+        public int GetGamePriority(Guid id)
         {
             var rankRange = settings.Priorities.Count;
             if (PlayniteApi.Database.Games.Get(id) is Game game)
