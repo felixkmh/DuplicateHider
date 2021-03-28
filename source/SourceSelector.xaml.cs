@@ -152,13 +152,10 @@ namespace DuplicateHider
                         }
                     }
                 } else {
-                    BitmapImage image;
+                    BitmapImage image = null;
                     if (GetSourceIconPath(game) is string path)
                     {
                         image = new BitmapImage(new Uri(path));
-                    } else
-                    {
-                        image = new BitmapImage(new Uri("pack://application:,,,/DuplicateHider;component/applogo_white.ico"));
                     }
                     sourceIconCache[source] = image;
                 }
@@ -185,7 +182,7 @@ namespace DuplicateHider
 
         protected string GetDefaultIconPath()
         {
-            return null;
+            return "pack://application:,,,/DuplicateHider;component/applogo_white.ico";
         }
 
         protected string GetPluginIconPath(Game game)
