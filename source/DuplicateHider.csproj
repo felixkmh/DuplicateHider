@@ -71,6 +71,7 @@
     <Compile Include="UniqueList.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitignore" />
     <None Include="extension.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -92,7 +93,43 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="applogo_white.ico" />
+    <Resource Include="icons\amazon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\battle.net.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\bethesda.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\epic.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\gog.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\humble.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\itchio.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\origin.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\steam.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\ubisoft connect.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\xbox.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\psn.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\undefined.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
