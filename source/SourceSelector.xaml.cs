@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -61,19 +62,32 @@ namespace DuplicateHider
             UpdateGameSourceIcons(newContext);
         }
 
-        private static string GetResourceIconUri(string sourceName)
+        public static string GetResourceIconUri(string sourceName)
         {
-            var name = Application.ResourceAssembly.GetManifestResourceNames()
+            var source = Uri.EscapeDataString(sourceName);
+            var name = GetResourceNames()
                 .Where(n => n.EndsWith(".ico", StringComparison.OrdinalIgnoreCase))
-                .FirstOrDefault(n => System.IO.Path.GetFileName(n).Equals(sourceName, StringComparison.OrdinalIgnoreCase));
+                .FirstOrDefault(n => System.IO.Path.GetFileName(n).StartsWith(source, StringComparison.OrdinalIgnoreCase));
             if (!string.IsNullOrEmpty(name))
             {
-                return $"pack://application:,,,/DuplicateHider;component/icons/{name}";
+                return $"pack://application:,,,/DuplicateHider;component/{name}";
             }
             else
             {
                 return null;
             }
+        }
+
+        // https://stackoverflow.com/a/2517799
+        public static string[] GetResourceNames()
+        {
+            var asm = Assembly.GetAssembly(typeof(DuplicateHider));
+            string resName = asm.GetName().Name + ".g.resources";
+            using (var stream = asm.GetManifestResourceStream(resName))
+                using (var reader = new System.Resources.ResourceReader(stream))
+                {
+                    return reader.Cast<System.Collections.DictionaryEntry>().Select(entry => (string)entry.Key).ToArray();
+                }
         }
 
         private void UpdateGameSourceIcons(Game context)
@@ -201,7 +215,7 @@ namespace DuplicateHider
             return path is null ? GetDefaultIconPath() : path;
         }
 
-        protected string GetDefaultIconPath()
+        protected static string GetDefaultIconPath()
         {
             return "pack://application:,,,/DuplicateHider;component/icons/undefined.ico";
         }
