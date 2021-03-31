@@ -60,6 +60,21 @@ namespace DuplicateHider
             UpdateGameSourceIcons(newContext);
         }
 
+        private static string GetResourceIconUri(string sourceName)
+        {
+            var name = Application.ResourceAssembly.GetManifestResourceNames()
+                .Where(n => n.EndsWith(".ico", StringComparison.OrdinalIgnoreCase))
+                .FirstOrDefault(n => System.IO.Path.GetFileName(n).Equals(sourceName, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrEmpty(name))
+            {
+                return $"pack://application:,,,/DuplicateHider;component/icons/{name}";
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         private void UpdateGameSourceIcons(Game context)
         {
             var games = GetGames(context);
@@ -172,7 +187,12 @@ namespace DuplicateHider
                .FirstOrDefault(f =>
                     f.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
                  || f.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
-                 || f.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase));
+                 || f.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase)
+                 || f.EndsWith(".ico", StringComparison.OrdinalIgnoreCase));
+            if (path is null)
+            {
+                path = GetResourceIconUri(name);
+            }
             if (path is null)
             {
                 path = GetPluginIconPath(game);
@@ -182,21 +202,24 @@ namespace DuplicateHider
 
         protected string GetDefaultIconPath()
         {
-            return "pack://application:,,,/DuplicateHider;component/applogo_white.ico";
+            return "pack://application:,,,/DuplicateHider;component/icons/undefined.ico";
         }
 
         protected string GetPluginIconPath(Game game)
         {
             if (duplicateHider is DuplicateHider dh)
             {
-                var plugin = dh.PlayniteApi.Addons.Plugins
-                    .OfType<Playnite.SDK.Plugins.LibraryPlugin>()
-                    .FirstOrDefault(p => p.Id == game.PluginId);
-
-                if (plugin is Playnite.SDK.Plugins.LibraryPlugin lp)
+                if (game.PluginId is Guid id)
                 {
-                    var path = lp.LibraryIcon;
-                    return path;
+                    var plugin = dh.PlayniteApi.Addons.Plugins
+                        .OfType<Playnite.SDK.Plugins.LibraryPlugin>()
+                        .FirstOrDefault(p => p.Id == id);
+
+                    if (plugin is Playnite.SDK.Plugins.LibraryPlugin lp)
+                    {
+                        var path = lp.LibraryIcon;
+                        return path;
+                    }
                 }
             }
             return null;
@@ -231,5 +254,9 @@ namespace DuplicateHider
 
         [Description("Height of each source icon."), Category("Data")]
         public List<ImageSource> Icons { get; set; }
+
+
     }
+
+    
 }
