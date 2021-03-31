@@ -42,6 +42,11 @@ namespace DuplicateHider
         protected readonly DuplicateHider duplicateHider = null;
         public List<string> UserIconFolderPaths { get; set; } = new List<string>();
 
+        ~SourceSelector()
+        {
+            duplicateHider.GroupUpdated -= DuplicateHider_GroupUpdated;
+        }
+
         public SourceSelector()
         {
             InitializeComponent();
@@ -50,11 +55,24 @@ namespace DuplicateHider
         public SourceSelector(DuplicateHider duplicateHider, Orientation orientation = Orientation.Horizontal) : this()
         {
             this.duplicateHider = duplicateHider;
+            duplicateHider.GroupUpdated += DuplicateHider_GroupUpdated;
             UserIconFolderPaths.Add(System.IO.Path.Combine(
                 duplicateHider.GetPluginUserDataPath(),
                 "source_icons"
             ));
             IconStackPanel.Orientation = orientation;
+        }
+
+
+        private void DuplicateHider_GroupUpdated(object sender, IEnumerable<Guid> e)
+        {
+            if (GameContext is Game game)
+            {
+                if (e.Any(id => game.Id == id))
+                {
+                    UpdateGameSourceIcons(game);
+                }
+            }
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)
@@ -94,6 +112,7 @@ namespace DuplicateHider
         {
             var games = GetGames(context);
             IconStackPanel.Children.Clear();
+            if (games.Count() < 2) return;
             foreach (var game in games)
             {
                 if (game == null) continue;
@@ -103,10 +122,10 @@ namespace DuplicateHider
                     Foreground = null,
                     Background = null,
                     Padding = new Thickness(0),
-                    Margin = new Thickness(0.5,0,0.5,0),
+                    Margin = new Thickness(2, 0, 2, 0),
                     BorderThickness = new Thickness(0),
                     Tag = game,
-                    ToolTip = game.Source!=null?game.Source.Name:"Undefined",
+                    ToolTip = duplicateHider.ExpandDisplayString(game, (duplicateHider.GetSettings(false) as DuplicateHiderSettings).DisplayString),
                     HorizontalAlignment = HorizontalAlignment.Stretch,
                     VerticalAlignment = VerticalAlignment.Center
                 };
@@ -119,6 +138,7 @@ namespace DuplicateHider
                     Source = GetSourceIcon(game),
                     Stretch = Stretch.Uniform
                 };
+                icon.Opacity = game.IsInstalled ? 1.0 : 0.5;
                 bt.Content = icon;
                 RenderOptions.SetBitmapScalingMode(icon, BitmapScalingMode.HighQuality);
                 IconStackPanel.Children.Add(bt);
@@ -159,8 +179,8 @@ namespace DuplicateHider
                     return (new Game[] { game })
                             .Concat(dh.GetOtherCopies(game))
                             .Distinct()
-                            .Take(MaxNumberOfIcons)
-                            .OrderBy(g => duplicateHider.GetGamePriority(g.Id));
+                            .OrderBy(g => duplicateHider.GetGamePriority(g.Id))
+                            .Take(MaxNumberOfIcons);
                 }
             }
 

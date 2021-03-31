@@ -14,8 +14,10 @@ using static DuplicateHider.DuplicateHider.Visibility;
 
 namespace DuplicateHider
 {
-    public class DuplicateHider : Plugin, INotifyPropertyChanged
+    public class DuplicateHider : Plugin
     {
+        public event EventHandler<IEnumerable<Guid>> GroupUpdated;
+
         private static readonly ILogger logger = LogManager.GetLogger();
 
         private DuplicateHiderSettings settings { get; set; }
@@ -108,7 +110,6 @@ namespace DuplicateHider
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
                 PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             }
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("settings"));
         }
 
         private void Games_ItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<Game> e)
@@ -119,7 +120,7 @@ namespace DuplicateHider
             if (settings.UpdateAutomatically)
             {
                 var filter = GetGameFilter();
-                UpdateDuplicateState(e.AddedItems.Filter<IEnumerable<Game>, IFilter<IEnumerable<Game>>>(filter), Hidden);
+                UpdateDuplicateState(e.AddedItems.Where(g=>g.Name != "New Game").Filter<IEnumerable<Game>, IFilter<IEnumerable<Game>>>(filter), Hidden);
                 var nameFilter = GetNameFilter();
                 foreach (var game in e.RemovedItems.Filter<IEnumerable<Game>, IFilter<IEnumerable<Game>>>(filter))
                 {
@@ -212,6 +213,7 @@ namespace DuplicateHider
                     if (index.TryGetValue(filteredName, out var guids))
                     {
                         guids.InsertSorted(newData.Id, GetGamePriority);
+                        GroupUpdated?.Invoke(this, guids);
                     }
                 }
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
@@ -501,8 +503,6 @@ namespace DuplicateHider
         static readonly int prefixIdx = regexVariable.GroupNumberFromName("Prefix");
         static readonly int suffixIdx = regexVariable.GroupNumberFromName("Suffix");
         static readonly int variableIdx = regexVariable.GroupNumberFromName("Variable");
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public string ExpandDisplayString(Game game, string displayString)
         {
