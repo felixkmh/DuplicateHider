@@ -46,13 +46,14 @@ namespace DuplicateHider
             InitializeComponent();
         }
 
-        public SourceSelector(DuplicateHider duplicateHider) : this()
+        public SourceSelector(DuplicateHider duplicateHider, Orientation orientation = Orientation.Horizontal) : this()
         {
             this.duplicateHider = duplicateHider;
             UserIconFolderPaths.Add(System.IO.Path.Combine(
                 duplicateHider.GetPluginUserDataPath(),
                 "source_icons"
             ));
+            IconStackPanel.Orientation = orientation;
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)

@@ -31,7 +31,7 @@ namespace DuplicateHider
             settings = new DuplicateHiderSettings(this);
             AddCustomElementSupport(new AddCustomElementSupportArgs()
             {
-                ElementList = new List<string>() {"SourceSelector"},
+                ElementList = new List<string>() {"SourceSelector", "SourceSelectorVertical"},
                 SourceName = "DuplicateHider",
                 SettingsRoot = "settings"
             });
@@ -40,9 +40,12 @@ namespace DuplicateHider
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)
         {
-            if (args.Name.Equals("SourceSelector"))
+            if (args.Name.Equals("SourceSelector", StringComparison.OrdinalIgnoreCase))
             {
-                return new SourceSelector(this);
+                return new SourceSelector(this, Orientation.Horizontal);
+            } else if (args.Name.Equals("SourceSelectorVertical", StringComparison.OrdinalIgnoreCase))
+            {
+                return new SourceSelector(this, Orientation.Vertical);
             }
             return null;
         }
