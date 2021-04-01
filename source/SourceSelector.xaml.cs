@@ -212,6 +212,7 @@ namespace DuplicateHider
         private void Bt_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             // TODO: bring up context menu for each individual game
+            e.Handled = true;
         }
 
         private void Icon_MouseLeave(object sender, MouseEventArgs e)
