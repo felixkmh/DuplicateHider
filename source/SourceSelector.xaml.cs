@@ -235,6 +235,7 @@ namespace DuplicateHider
         {
             if (sender is Control bt)
             {
+                duplicateHider.PlayniteApi.MainView.SelectGame(Context.Id);
                 duplicateHider.PlayniteApi.MainView.SelectGame((bt.Tag as Game).Id);
             }
         }
