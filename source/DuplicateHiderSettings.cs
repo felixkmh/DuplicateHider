@@ -348,6 +348,7 @@ namespace DuplicateHider
                     plugin.SettingsView.EnableThemeIconsChechBox.IsChecked = EnableThemeIcons;
                     plugin.SettingsView.UiIntegrationCheckBox.IsChecked = EnableUiIntegration;
                     plugin.SettingsView.PreferUserIconsCheckBox.IsChecked = PreferUserIcons;
+                    plugin.SettingsView.OpenUserIconFolderButton.Click += (_, __) => System.Diagnostics.Process.Start("explorer.exe", plugin.GetUserIconFolderPath());
                 }
             });
         }

@@ -59,7 +59,8 @@ namespace DuplicateHider
         public override void OnApplicationStarted()
         {
             // Create icon folder
-            if (!Directory.Exists(System.IO.Path.Combine(GetPluginUserDataPath(),"source_icons"))) {
+            if (!Directory.Exists(System.IO.Path.Combine(GetPluginUserDataPath(), "source_icons")))
+            {
                 Directory.CreateDirectory(System.IO.Path.Combine(GetPluginUserDataPath(), "source_icons"));
             }
             // Clean orphaned entries from Priorites list
@@ -95,16 +96,20 @@ namespace DuplicateHider
 
             // SourceSelector statics
             SourceSelector.DuplicateHiderInstance = this;
-            SourceSelector.UserIconFolderPaths.Add(System.IO.Path.Combine(
-                GetPluginUserDataPath(),
-                "source_icons"
-            ));
+            SourceSelector.UserIconFolderPaths.Add(GetUserIconFolderPath());
             if (PlayniteApi.Resources.GetResource("DuplicateHider_MaxNumberOfIcons") is Int32 n)
             {
                 SourceSelector.MaxNumberOfIcons = n;
             }
         }
 
+        public string GetUserIconFolderPath()
+        {
+            return Path.Combine(
+                            GetPluginUserDataPath(),
+                            "source_icons"
+                        );
+        }
 
         public override void OnApplicationStopped()
         {
