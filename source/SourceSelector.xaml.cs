@@ -31,7 +31,7 @@ namespace DuplicateHider
         internal static Dictionary<GameSource, BitmapImage> SourceIconCache { get; set; }
             = new Dictionary<GameSource, BitmapImage>();
 
-        internal static Stack<Button> ButtonCache = new Stack<Button>();
+        internal static Cache<Button> ButtonCache { get; set; } = new Cache<Button>(10);
 
         protected Game Context { get; set; } = null;
 
@@ -56,6 +56,16 @@ namespace DuplicateHider
         public SourceSelector()
         {
             InitializeComponent();
+            Unloaded += SourceSelector_Unloaded;
+        }
+
+        private void SourceSelector_Unloaded(object sender, RoutedEventArgs e)
+        {
+            foreach (Button button in IconStackPanel.Children)
+            {
+                ButtonCache.Push(button);
+            }
+            IconStackPanel.Children.Clear();
         }
 
         public override void EndInit()
@@ -86,10 +96,7 @@ namespace DuplicateHider
                     Guid id = cont.Id;
                     var game = DuplicateHiderInstance.PlayniteApi.Database.Games.Get(id);
                     Context = game;
-                    if (IsVisible)
-                    {
-                        UpdateGameSourceIcons(Context);
-                    }
+                    UpdateGameSourceIcons(Context);
                 }
                 catch (Exception)
                 {
@@ -98,6 +105,11 @@ namespace DuplicateHider
             {
                 DataContextChanged -= SourceSelector_DataContextChanged;
                 DuplicateHiderInstance.GroupUpdated -= DuplicateHider_GroupUpdated;
+                foreach(Button bt in IconStackPanel.Children)
+                {
+                    ButtonCache.Push(bt);
+                }
+                IconStackPanel.Children.Clear();
             }
         }
 
@@ -174,7 +186,7 @@ namespace DuplicateHider
                     return;
             for (int i = 0; i < MaxNumberOfIcons; ++i)
             {
-                if (ButtonCache.Count > 0)
+                if (ButtonCache.HasItems)
                 {
                     IconStackPanel.Children.Add(ButtonCache.Pop());
                 } else
@@ -239,7 +251,7 @@ namespace DuplicateHider
                     button = IconStackPanel.Children[i] as Button;
                 } else
                 {
-                    if (ButtonCache.Count > 0)
+                    if (ButtonCache.HasItems)
                     {
                         button = ButtonCache.Pop();
                     } else

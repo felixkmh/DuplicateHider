@@ -54,6 +54,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cache.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="SourceSelector.xaml.cs">
       <DependentUpon>SourceSelector.xaml</DependentUpon>

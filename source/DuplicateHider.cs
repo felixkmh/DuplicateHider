@@ -126,6 +126,8 @@ namespace DuplicateHider
             }
             SourceSelector.SourceIconCache.Clear();
             GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
+            NameFilters = null;
+            GameFilters = null;
         }
 
         private void Games_ItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<Game> e)
@@ -578,31 +580,43 @@ namespace DuplicateHider
             }
         }
 
+        IFilter<string> NameFilters = null;
+
         IFilter<string> GetNameFilter()
         {
-            var customRules = IFilter<string>.MakeChain(settings.ReplaceFilters.Cast<IFilter<string>>().ToList());
-            return customRules.Append(
-                IFilter<string>.MakeChain
-                (
-                    new NumberToRomanFilter(),
-                    new DiacriticsFilter(),
-                    new CaseFilter(CaseFilter.Case.Lower),
-                    new WhiteSpaceFilter(),
-                    new ReplaceFilter("and", "&", "+"),
-                    new ReplaceFilter("goty", "gameoftheyearedition", "gotyedition", "gameoftheyear"),
-                    new SpecialCharFilter()
-                )
-            );
+            if (NameFilters == null)
+            {
+                var customRules = IFilter<string>.MakeChain(settings.ReplaceFilters.Cast<IFilter<string>>().ToList());
+                NameFilters = customRules.Append(
+                    IFilter<string>.MakeChain
+                    (
+                        new NumberToRomanFilter(),
+                        new DiacriticsFilter(),
+                        new CaseFilter(CaseFilter.Case.Lower),
+                        new WhiteSpaceFilter(),
+                        new ReplaceFilter("and", "&", "+"),
+                        new ReplaceFilter("goty", "gameoftheyearedition", "gotyedition", "gameoftheyear"),
+                        new SpecialCharFilter()
+                    )
+                );
+            }
+            return NameFilters;
         }
+
+        static IFilter<IEnumerable<Game>> GameFilters = null;
 
         IFilter<IEnumerable<Game>> GetGameFilter()
         {
-            return IFilter<IEnumerable<Game>>.MakeChain(
-                new PlatformFilter(true, settings.IncludePlatforms),
-                new SourceFilter(false, settings.ExcludeSources),
-                new CategoryFilter(false, settings.ExcludeCategories),
-                new IgnoreFilter(settings.IgnoredGames)
-            );
+            if (GameFilters is null)
+            {
+                GameFilters = IFilter<IEnumerable<Game>>.MakeChain(
+                    new PlatformFilter(true, settings.IncludePlatforms),
+                    new SourceFilter(false, settings.ExcludeSources),
+                    new CategoryFilter(false, settings.ExcludeCategories),
+                    new IgnoreFilter(settings.IgnoredGames)
+                );
+            }
+            return GameFilters;
         }
     }
 }
