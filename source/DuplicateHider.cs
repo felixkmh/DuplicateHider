@@ -110,6 +110,7 @@ namespace DuplicateHider
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
                 PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             }
+            GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
         }
 
         private void Games_ItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<Game> e)
@@ -205,6 +206,7 @@ namespace DuplicateHider
                                 }
                             }
                         }
+                        GroupUpdated?.Invoke(this, guids);
                     }
                 }
                 foreach (var newData in (from update in e.UpdatedItems select update.NewData).Filter(gameFilter))
@@ -548,7 +550,7 @@ namespace DuplicateHider
             return rankRange;
         }
 
-        private int GetSourceRank(Game game)
+        public int GetSourceRank(Game game)
         {
             int index = settings.Priorities.IndexOf(game.GetSourceName());
             if (index > -1)

@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Playnite;
 using Playnite.SDK.Models;
 
 // <ContentControl x:Name="DuplicateHider_SourceSelector" DockPanel.Dock="Right" MaxHeight="{Binding ElementName=PART_ImageIcon, Path=Height}"/>
@@ -28,6 +29,8 @@ namespace DuplicateHider
     {
         protected static ConcurrentDictionary<GameSource, BitmapImage> sourceIconCache 
             = new ConcurrentDictionary<GameSource, BitmapImage>();
+
+        protected Game Context { get; set; } = null;
 
         protected static System.Windows.Media.Effects.DropShadowEffect dropShadow = new System.Windows.Media.Effects.DropShadowEffect
         {
@@ -45,6 +48,8 @@ namespace DuplicateHider
         ~SourceSelector()
         {
             duplicateHider.GroupUpdated -= DuplicateHider_GroupUpdated;
+            IsVisibleChanged -= SourceSelector_IsVisibleChanged;
+            DataContextChanged -= SourceSelector_DataContextChanged;
         }
 
         public SourceSelector()
@@ -55,18 +60,68 @@ namespace DuplicateHider
         public SourceSelector(DuplicateHider duplicateHider, Orientation orientation = Orientation.Horizontal) : this()
         {
             this.duplicateHider = duplicateHider;
-            duplicateHider.GroupUpdated += DuplicateHider_GroupUpdated;
             UserIconFolderPaths.Add(System.IO.Path.Combine(
                 duplicateHider.GetPluginUserDataPath(),
                 "source_icons"
             ));
             IconStackPanel.Orientation = orientation;
+
+            // duplicateHider.GroupUpdated += DuplicateHider_GroupUpdated;
+            IsVisibleChanged += SourceSelector_IsVisibleChanged;
+            DataContextChanged += SourceSelector_DataContextChanged;
+            Context = GameContext;
         }
 
+        protected override void OnVisualParentChanged(DependencyObject oldParent)
+        {
+            
+            base.OnVisualParentChanged(oldParent);
+        }
+
+        private void Parent_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Visibility = Visibility.Collapsed;
+        }
+
+        private void Parent_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Visibility = Visibility.Visible;
+        }
+
+        private void SourceSelector_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue as bool? == true)
+            {
+                duplicateHider.GroupUpdated += DuplicateHider_GroupUpdated;
+                UpdateGameSourceIcons(Context);
+            } else
+            {
+                duplicateHider.GroupUpdated -= DuplicateHider_GroupUpdated;
+            }
+        }
+
+        private void SourceSelector_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            try
+            {
+                dynamic cont = e.NewValue;
+                Guid id = cont.Id;
+                var game = duplicateHider.PlayniteApi.Database.Games.Get(id);
+                Context = game;
+                if (IsVisible)
+                {
+                    UpdateGameSourceIcons(Context);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
 
         private void DuplicateHider_GroupUpdated(object sender, IEnumerable<Guid> e)
         {
-            if (GameContext is Game game)
+            if (Context is Game game)
             {
                 if (e.Any(id => game.Id == id))
                 {
@@ -179,7 +234,7 @@ namespace DuplicateHider
                     return (new Game[] { game })
                             .Concat(dh.GetOtherCopies(game))
                             .Distinct()
-                            .OrderBy(g => duplicateHider.GetGamePriority(g.Id))
+                            .OrderBy(g => duplicateHider.GetSourceRank(g))
                             .Take(MaxNumberOfIcons);
                 }
             }

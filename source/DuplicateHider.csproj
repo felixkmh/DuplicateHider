@@ -131,6 +131,9 @@
   <ItemGroup>
     <Resource Include="icons\undefined.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\twitch.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>del $(ProjectDir)$(OutDir)*.xml
