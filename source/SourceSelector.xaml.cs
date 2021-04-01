@@ -113,9 +113,8 @@ namespace DuplicateHider
                     UpdateGameSourceIcons(Context);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
             }
         }
 
@@ -195,9 +194,24 @@ namespace DuplicateHider
                 };
                 icon.Opacity = game.IsInstalled ? 1.0 : 0.5;
                 bt.Content = icon;
+                bt.MouseRightButtonUp += Bt_MouseRightButtonUp;
+                bt.MouseDoubleClick += Bt_MouseDoubleClick;
                 RenderOptions.SetBitmapScalingMode(icon, BitmapScalingMode.HighQuality);
                 IconStackPanel.Children.Add(bt);
             }
+        }
+
+        private void Bt_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Control bt)
+            {
+                duplicateHider.PlayniteApi.StartGame((bt.Tag as Game).Id);
+            }
+        }
+
+        private void Bt_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            // TODO: bring up context menu for each individual game
         }
 
         private void Icon_MouseLeave(object sender, MouseEventArgs e)
@@ -221,7 +235,7 @@ namespace DuplicateHider
         {
             if (sender is Control bt)
             {
-                duplicateHider.PlayniteApi.StartGame((bt.Tag as Game).Id);
+                duplicateHider.PlayniteApi.MainView.SelectGame((bt.Tag as Game).Id);
             }
         }
 
