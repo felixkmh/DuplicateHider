@@ -99,6 +99,10 @@ namespace DuplicateHider
                 GetPluginUserDataPath(),
                 "source_icons"
             ));
+            if (PlayniteApi.Resources.GetResource("DuplicateHider_MaxNumberOfIcons") is Int32 n)
+            {
+                SourceSelector.MaxNumberOfIcons = n;
+            }
         }
 
 
