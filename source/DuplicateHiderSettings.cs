@@ -35,7 +35,9 @@ namespace DuplicateHider
         public HashSet<Guid> IgnoredGames { get; set; } = new HashSet<Guid>();
 
         public bool AddHiddenToIgnoreList { get; set; } = false;
-        public bool PreferUserIcons { get; set; } = false;
+        public bool PreferUserIcons { get; set; } = true;
+        public bool EnableThemeIcons { get; set; } = true;
+        public bool EnableUiIntegration { get; set; } = false;
 
         public List<ReplaceFilter> ReplaceFilters { get; set; } = new List<ReplaceFilter>();
 
@@ -174,6 +176,8 @@ namespace DuplicateHider
                 AddHiddenToIgnoreList = savedSettings.AddHiddenToIgnoreList;
                 ReplaceFilters = savedSettings.ReplaceFilters;
                 PreferUserIcons = savedSettings.PreferUserIcons;
+                EnableThemeIcons = savedSettings.EnableThemeIcons;
+                EnableUiIntegration = savedSettings.EnableUiIntegration;
             }
 
             if (Priorities.Count == 0)
@@ -339,6 +343,12 @@ namespace DuplicateHider
                         contextMenu.Items.Add(item);
                     }
                 }
+                // Populate UI Integration Settings
+                {
+                    plugin.SettingsView.EnableThemeIconsChechBox.IsChecked = EnableThemeIcons;
+                    plugin.SettingsView.UiIntegrationCheckBox.IsChecked = EnableUiIntegration;
+                    plugin.SettingsView.PreferUserIconsCheckBox.IsChecked = PreferUserIcons;
+                }
             });
         }
 
@@ -386,13 +396,14 @@ namespace DuplicateHider
 
         public void EndEdit()
         {
+            bool requireRestart = false;
             // Apply changed settings
             plugin.SettingsView.AutoUpdateCheckBox.Dispatcher.Invoke(() =>
             {
                 {
-                    UpdateAutomatically = plugin.SettingsView.AutoUpdateCheckBox.IsChecked ?? false;
-                    ShowOtherCopiesInGameMenu = plugin.SettingsView.ShowCopiesInGameMenu.IsChecked ?? false;
-                    AddHiddenToIgnoreList = plugin.SettingsView.AddHiddenToIgnoreList.IsChecked ?? false;
+                    UpdateAutomatically = plugin.SettingsView.AutoUpdateCheckBox.IsChecked ?? UpdateAutomatically;
+                    ShowOtherCopiesInGameMenu = plugin.SettingsView.ShowCopiesInGameMenu.IsChecked ?? ShowOtherCopiesInGameMenu;
+                    AddHiddenToIgnoreList = plugin.SettingsView.AddHiddenToIgnoreList.IsChecked ?? AddHiddenToIgnoreList;
                 }
 
                 // Retrieve Replacement Rules
@@ -492,10 +503,23 @@ namespace DuplicateHider
                 {
                     DisplayString = plugin.SettingsView.DisplayStringTextBox.Text ?? DisplayString;
                 }
+
+                // retrieve UI Integration Settings
+                {
+                    bool prev = EnableUiIntegration;
+
+                    EnableThemeIcons = plugin.SettingsView.EnableThemeIconsChechBox.IsChecked ?? EnableThemeIcons;
+                    EnableUiIntegration = plugin.SettingsView.UiIntegrationCheckBox.IsChecked ?? EnableUiIntegration;
+                    PreferUserIcons = plugin.SettingsView.PreferUserIconsCheckBox.IsChecked ?? PreferUserIcons;
+
+                    if (prev != EnableUiIntegration) requireRestart = true;
+                }
             });
 
             OnSettingsChanged?.Invoke(previousSettings, this);
             plugin.SavePluginSettings(this);
+            if (requireRestart)
+                plugin.PlayniteApi.Dialogs.ShowMessage("Some changes require Playnite to be restartet to take effect.", "DuplicateHider");
         }
 
         public bool VerifySettings(out List<string> errors)
