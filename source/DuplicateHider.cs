@@ -42,12 +42,15 @@ namespace DuplicateHider
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)
         {
-            if (args.Name.Equals("SourceSelector", StringComparison.OrdinalIgnoreCase))
+            if (settings.EnableUiIntegration)
             {
-                return new SourceSelector(this, Orientation.Horizontal);
-            } else if (args.Name.Equals("SourceSelectorVertical", StringComparison.OrdinalIgnoreCase))
-            {
-                return new SourceSelector(this, Orientation.Vertical);
+                if (args.Name.Equals("SourceSelector", StringComparison.OrdinalIgnoreCase))
+                {
+                    return new SourceSelector(Orientation.Horizontal);
+                } else if (args.Name.Equals("SourceSelectorVertical", StringComparison.OrdinalIgnoreCase))
+                {
+                    return new SourceSelector(Orientation.Vertical);
+                }
             }
             return null;
         }
@@ -89,6 +92,13 @@ namespace DuplicateHider
             PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
             settings.OnSettingsChanged += Settings_OnSettingsChanged;
 
+
+            // SourceSelector statics
+            SourceSelector.DuplicateHiderInstance = this;
+            SourceSelector.UserIconFolderPaths.Add(System.IO.Path.Combine(
+                GetPluginUserDataPath(),
+                "source_icons"
+            ));
         }
 
 
@@ -110,6 +120,7 @@ namespace DuplicateHider
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
                 PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             }
+            SourceSelector.SourceIconCache.Clear();
             GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
         }
 
