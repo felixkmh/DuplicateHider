@@ -38,6 +38,7 @@ namespace DuplicateHider
         public bool PreferUserIcons { get; set; } = true;
         public bool EnableThemeIcons { get; set; } = true;
         public bool EnableUiIntegration { get; set; } = false;
+        public bool ShowSingleIcon { get; set; } = false;
 
         public List<ReplaceFilter> ReplaceFilters { get; set; } = new List<ReplaceFilter>();
 
@@ -178,6 +179,7 @@ namespace DuplicateHider
                 PreferUserIcons = savedSettings.PreferUserIcons;
                 EnableThemeIcons = savedSettings.EnableThemeIcons;
                 EnableUiIntegration = savedSettings.EnableUiIntegration;
+                ShowSingleIcon = savedSettings.ShowSingleIcon;
             }
 
             if (Priorities.Count == 0)
@@ -348,6 +350,7 @@ namespace DuplicateHider
                     plugin.SettingsView.EnableThemeIconsChechBox.IsChecked = EnableThemeIcons;
                     plugin.SettingsView.UiIntegrationCheckBox.IsChecked = EnableUiIntegration;
                     plugin.SettingsView.PreferUserIconsCheckBox.IsChecked = PreferUserIcons;
+                    plugin.SettingsView.ShowSingleSourceIconCheckBox.IsChecked = ShowSingleIcon;
                     plugin.SettingsView.OpenUserIconFolderButton.Click += (_, __) => System.Diagnostics.Process.Start("explorer.exe", plugin.GetUserIconFolderPath());
                 }
             });
@@ -512,6 +515,7 @@ namespace DuplicateHider
                     EnableThemeIcons = plugin.SettingsView.EnableThemeIconsChechBox.IsChecked ?? EnableThemeIcons;
                     EnableUiIntegration = plugin.SettingsView.UiIntegrationCheckBox.IsChecked ?? EnableUiIntegration;
                     PreferUserIcons = plugin.SettingsView.PreferUserIconsCheckBox.IsChecked ?? PreferUserIcons;
+                    ShowSingleIcon = plugin.SettingsView.ShowSingleSourceIconCheckBox.IsChecked ?? ShowSingleIcon;
 
                     if (prev != EnableUiIntegration) requireRestart = true;
                 }

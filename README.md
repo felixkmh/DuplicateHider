@@ -47,12 +47,17 @@ The example above used `{Name} [{Installed}{ on 'Source}{, ROM: 'ImageNameNoExt}
 
 ### UI Intgration
 
+![Icon Stack](https://i.ibb.co/NjxdSZC/grafik.png "Icon Stack")
+
 This extension provides a custom UI element that can be intgrated by theme creators.
 To use it, the Theme you are using needs to support it and the _UI Integration_ option must be enabled. Available starting with Planite 9.
+
+The custom UI element consists of a stack of icons associated with the copys of a game. Clicking on an icon will select this version of the game, double clicking launches it. Slightly grayed out icons indicate that a copy is not installed. An expample is shown above.
 
 - _UI Intgration_: Enable UI integration for Themes that support it.
 - _Enable Theme Icons_: Themes can provide their own icons for the different game libraries, like Steam, GOG and so on. If this option is enabled, those will be used if available.
 - _Prefer User Icons_: Users can also supply their own icons by placing them into a special folder. This folder can be opened by pressing the _Open user icon folder_ button. If this option is enabled, existing user icons will always be preferred, only falling back to the ones included with the Theme or the default ones, if no user icon can be found for a given source.
+- _Show icon if there is only one copy_: By default, icons are only displayed when the associated game has at least one additional copy. Enabling this option will always show an icon.
 
 #### User Specified Icons
 

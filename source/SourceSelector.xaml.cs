@@ -181,9 +181,8 @@ namespace DuplicateHider
 
         internal void CreateGameSourceIcons()
         {
-            if (DuplicateHiderInstance.GetSettings(false) is DuplicateHiderSettings settings) 
-                if (!settings.EnableUiIntegration) 
-                    return;
+            if (DuplicateHiderInstance.settings.EnableUiIntegration) 
+                return;
             for (int i = 0; i < MaxNumberOfIcons; ++i)
             {
                 if (ButtonCache.HasItems)
@@ -233,7 +232,7 @@ namespace DuplicateHider
         {
             var games = GetGames(context).ToList();
 
-            if (games.Count < 2)
+            if (games.Count < 2 && !DuplicateHiderInstance.settings.ShowSingleIcon)
             {
                 foreach (Button button in IconStackPanel.Children)
                 {
@@ -263,7 +262,7 @@ namespace DuplicateHider
                 Game game = games[i];
                 button.Visibility = Visibility.Visible;
                 button.DataContext = game;
-                button.ToolTip = DuplicateHiderInstance.ExpandDisplayString(game, (DuplicateHiderInstance.GetSettings(false) as DuplicateHiderSettings).DisplayString);
+                button.ToolTip = DuplicateHiderInstance.ExpandDisplayString(game, DuplicateHiderInstance.settings.DisplayString);
                 if (button.Content is Image icon)
                 {
                     icon.Source = GetSourceIcon(game);
@@ -364,13 +363,8 @@ namespace DuplicateHider
         protected string GetSourceIconPath(Game game)
         {
             var name = game.Source != null ? game.Source.Name : "Undefined";
-            bool enableThemeIcons = false;
-            bool preferUserIcons = false;
-            if (DuplicateHiderInstance.GetSettings(false) is DuplicateHiderSettings settings)
-            {
-                enableThemeIcons = settings.EnableThemeIcons;
-                preferUserIcons = settings.PreferUserIcons;
-            }
+            bool enableThemeIcons = DuplicateHiderInstance.settings.EnableThemeIcons;
+            bool preferUserIcons = DuplicateHiderInstance.settings.PreferUserIcons;
 
             List<string> paths = new List<string>();
 

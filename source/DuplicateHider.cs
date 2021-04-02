@@ -12,6 +12,8 @@ using System.Windows.Controls;
 
 using static DuplicateHider.DuplicateHider.Visibility;
 
+
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("DuplicateHider")]
 namespace DuplicateHider
 {
     public class DuplicateHider : Plugin
@@ -20,7 +22,7 @@ namespace DuplicateHider
 
         private static readonly ILogger logger = LogManager.GetLogger();
 
-        private DuplicateHiderSettings settings { get; set; }
+        internal DuplicateHiderSettings settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("382f8003-8ed0-4e47-ae93-05b43c9c6c32");
 
