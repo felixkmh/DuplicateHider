@@ -77,7 +77,7 @@ into the `DetailsViewItemTemplate.xaml` file where appropriate. See Playnite doc
 
 when placed in a ListViewItem in the DetailsView. See Playnite Documentation to see where else custom UI elements can be used. Go [here](UiIntegrationExamples/) for two better examples.
 
-Next to the horozontal version `DuplicateHider_SourceSelector`, there is also  is also a vertically stacked version with the name `DuplicateHider_SourceSelectorVertical`.
+There are 5 SourceSelectors, ```DuplicateHider_SourceSelector```,```DuplicateHider_SourceSelector1```,```DuplicateHider_SourceSelector2```,```DuplicateHider_SourceSelector3```,```DuplicateHider_SourceSelector4``` that you can use by using their names as the name of a  ```ContentControl``` in a supported template or view. For each source selector, you can provide styles for their ```StackPanel``` and the icons which are just ```Button```s. The styles need to have the keys ```DuplicateHider_IconButtonStyle``` and ```DuplicateHider_IconStackPanelStyle``` (or with the added number for the other ones).
 
 Themes can also supply their own source icons, by adding entries to the resource dictionary and adding the icon files into the appropriate folder. The entries need to have the key  `DuplicateHider_SOURCENAME_Icon`, where _SOURCENAME_ needs to be replaced by the name of the source as seen in the _Priority List_. For example, if you want to add a icon for Uplay aka Ubisoft Connect, you might add
 
