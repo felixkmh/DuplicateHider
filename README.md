@@ -75,7 +75,7 @@ into the `DetailsViewItemTemplate.xaml` file where appropriate. See Playnite doc
 
 ![Icon Stack](https://i.ibb.co/NjxdSZC/grafik.png "Icon Stack")
 
-when placed in a ListViewItem in the DetailsView. See Playnite Documentation to see where else custom UI elements can be used. (This example is very crude and won't look good when a game name is too long.)
+when placed in a ListViewItem in the DetailsView. See Playnite Documentation to see where else custom UI elements can be used. Go [here](UiIntegrationExamples/) for two better examples.
 
 Next to the horozontal version `DuplicateHider_SourceSelector`, there is also  is also a vertically stacked version with the name `DuplicateHider_SourceSelectorVertical`.
 
