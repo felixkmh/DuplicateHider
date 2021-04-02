@@ -32,7 +32,7 @@
                                                     HorizontalContentAlignment="Right"
                                                     Visibility="Collapsed" 
                                                     VerticalContentAlignment="Center"   
-                                                    Margin="0,0,7,7"  
+                                                    Margin="0,4,0,4"  
                                                 />
                             </Border>
                         </Grid>
