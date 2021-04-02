@@ -1,5 +1,5 @@
 ﻿<PluginUserControl x:Class="DuplicateHider.SourceSelector"
                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <StackPanel x:Name="IconStackPanel" Panel.ZIndex="5" Orientation="Horizontal"/>
+    <StackPanel x:Name="IconStackPanel" Style="{DynamicResource DuplicateHider_IconStackPanelStyle}"/>
 </PluginUserControl>

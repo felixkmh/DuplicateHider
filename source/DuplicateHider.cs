@@ -33,30 +33,36 @@ namespace DuplicateHider
         public DuplicateHider(IPlayniteAPI api) : base(api)
         {
             settings = new DuplicateHiderSettings(this);
+            var elements = new List<string>(Constants.NUMBEROFSOURCESELECTORS) { "SourceSelector" };
+            for (int i = 1; i < Constants.NUMBEROFSOURCESELECTORS; ++i)
+            {
+                elements.Add($"SourceSelector{i}");
+            }
+            SourceSelector.ElementNames = elements;
             AddCustomElementSupport(new AddCustomElementSupportArgs()
             {
-                ElementList = new List<string>() {"SourceSelector", "SourceSelectorVertical"},
+                ElementList = elements,
                 SourceName = "DuplicateHider",
                 SettingsRoot = "settings"
             });
         }
 
-
         public override Control GetGameViewControl(GetGameViewControlArgs args)
         {
             if (settings.EnableUiIntegration)
             {
-                if (args.Name.Equals("SourceSelector", StringComparison.OrdinalIgnoreCase))
+                if (args.Name.StartsWith("SourceSelector"))
                 {
-                    return new SourceSelector(Orientation.Horizontal);
-                } else if (args.Name.Equals("SourceSelectorVertical", StringComparison.OrdinalIgnoreCase))
-                {
-                    return new SourceSelector(Orientation.Vertical);
-                }
-                if(args.Name == "Test")
-                {
+                    int n;
+                    if (!int.TryParse(args.Name.Substring(14), out n))
+                    {
+                        n = 0;
+                    }
+                    SourceSelector element = null;
+                    element = new SourceSelector(n, Orientation.Horizontal);
 
-                }
+                    return element;
+                } 
             }
             return null;
         }
@@ -103,10 +109,6 @@ namespace DuplicateHider
             // SourceSelector statics
             SourceSelector.DuplicateHiderInstance = this;
             SourceSelector.UserIconFolderPaths.Add(GetUserIconFolderPath());
-            if (PlayniteApi.Resources.GetResource("DuplicateHider_MaxNumberOfIcons") is Int32 n)
-            {
-                SourceSelector.MaxNumberOfIcons = n;
-            }
         }
 
         public string GetUserIconFolderPath()
@@ -127,6 +129,8 @@ namespace DuplicateHider
 
         private void Settings_OnSettingsChanged(DuplicateHiderSettings oldSettings, DuplicateHiderSettings newSettings)
         {
+            NameFilters = null;
+            GameFilters = null;
             if (newSettings.UpdateAutomatically)
             {
                 PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
@@ -136,9 +140,8 @@ namespace DuplicateHider
                 PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             }
             SourceSelector.SourceIconCache.Clear();
+            SourceSelector.ButtonCaches.ForEach(bc => bc?.Clear());
             GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
-            NameFilters = null;
-            GameFilters = null;
         }
 
         private void Games_ItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<Game> e)
