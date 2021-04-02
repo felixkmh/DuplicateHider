@@ -28,10 +28,11 @@ namespace DuplicateHider
     /// </summary>
     public partial class SourceSelector : Playnite.SDK.Controls.PluginUserControl
     {
-        internal static Dictionary<GameSource, BitmapImage> SourceIconCache { get; set; }
+        internal static readonly Dictionary<GameSource, BitmapImage> SourceIconCache
             = new Dictionary<GameSource, BitmapImage>();
 
-        internal static Cache<Button> ButtonCache { get; set; } = new Cache<Button>(10);
+        internal static readonly UnboundedCache<Button> ButtonCache
+            = new UnboundedCache<Button>(CreateSourceIcon);
 
         protected Game Context { get; set; } = null;
 
@@ -43,14 +44,14 @@ namespace DuplicateHider
         };
 
 
-        protected static GameSource defaultGameSource = new GameSource("Undefined");
+        protected static readonly GameSource defaultGameSource = new GameSource("Undefined");
 
         internal static DuplicateHider DuplicateHiderInstance { get; set; } = null;
         internal static List<string> UserIconFolderPaths { get; set; } = new List<string>();
 
         ~SourceSelector()
         {
-            IsVisibleChanged -= SourceSelector_IsVisibleChanged;
+            
         }
 
         public SourceSelector()
@@ -61,17 +62,32 @@ namespace DuplicateHider
 
         private void SourceSelector_Unloaded(object sender, RoutedEventArgs e)
         {
-            foreach (Button button in IconStackPanel.Children)
-            {
-                ButtonCache.Push(button);
-            }
-            IconStackPanel.Children.Clear();
+            if (e.Source is SourceSelector selector)
+                ButtonCache.Consume(selector.IconStackPanel.Children);
         }
 
         public override void EndInit()
         {
-            CreateGameSourceIcons();
             base.EndInit();
+            // CreateGameSourceIcons();
+            IconStackPanel.Unloaded += IconStackPanel_Unloaded;
+            IconStackPanel.IsEnabledChanged += IconStackPanel_IsEnabledChanged;
+        }
+
+        private static void IconStackPanel_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue as bool? == false && sender is StackPanel panel)
+            {
+                ButtonCache.Consume(panel.Children);
+            }
+        }
+
+        private static void IconStackPanel_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is StackPanel panel)
+            {
+                ButtonCache.Consume(panel.Children);
+            }
         }
 
         public SourceSelector(Orientation orientation = Orientation.Horizontal) : this()
@@ -105,26 +121,26 @@ namespace DuplicateHider
             {
                 DataContextChanged -= SourceSelector_DataContextChanged;
                 DuplicateHiderInstance.GroupUpdated -= DuplicateHider_GroupUpdated;
-                foreach(Button bt in IconStackPanel.Children)
-                {
-                    ButtonCache.Push(bt);
-                }
-                IconStackPanel.Children.Clear();
+                ButtonCache.Consume(IconStackPanel.Children);
             }
         }
 
         private void SourceSelector_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            ButtonCache.Consume(IconStackPanel.Children);
             try
             {
-                dynamic cont = e.NewValue;
-                Guid id = cont.Id;
-                var game = DuplicateHiderInstance.PlayniteApi.Database.Games.Get(id);
-                Context = game;
-                if (IsVisible)
+                if (e.NewValue != null)
                 {
-                    UpdateGameSourceIcons(Context);
-                }
+                    dynamic cont = e.NewValue;
+                    Guid id = cont.Id;
+                    var game = DuplicateHiderInstance.PlayniteApi.Database.Games.Get(id);
+                    Context = game;
+                    if (IsVisible)
+                    {
+                        UpdateGameSourceIcons(Context);
+                    }
+                } 
             }
             catch (Exception)
             {
@@ -181,22 +197,16 @@ namespace DuplicateHider
 
         internal void CreateGameSourceIcons()
         {
-            if (DuplicateHiderInstance.settings.EnableUiIntegration) 
+            if (!DuplicateHiderInstance.settings.EnableUiIntegration) 
                 return;
             for (int i = 0; i < MaxNumberOfIcons; ++i)
             {
-                if (ButtonCache.HasItems)
-                {
-                    IconStackPanel.Children.Add(ButtonCache.Pop());
-                } else
-                {
-                    Button bt = CreateSourceIcon();
-                    IconStackPanel.Children.Add(bt);
-                }
+                    IconStackPanel.Children.Add(ButtonCache.Get());
             }
         }
 
-        private Button CreateSourceIcon()
+
+        private static Button CreateSourceIcon()
         {
             var bt = new Button()
             {
@@ -234,11 +244,7 @@ namespace DuplicateHider
 
             if (games.Count < 2 && !DuplicateHiderInstance.settings.ShowSingleIcon)
             {
-                foreach (Button button in IconStackPanel.Children)
-                {
-                    ButtonCache.Push(button);
-                }
-                IconStackPanel.Children.Clear();
+                ButtonCache.Consume(IconStackPanel.Children);
                 return;
             }
 
@@ -250,13 +256,7 @@ namespace DuplicateHider
                     button = IconStackPanel.Children[i] as Button;
                 } else
                 {
-                    if (ButtonCache.HasItems)
-                    {
-                        button = ButtonCache.Pop();
-                    } else
-                    {
-                        button = CreateSourceIcon();
-                    }
+                    button = ButtonCache.Get();
                     IconStackPanel.Children.Add(button);
                 }
                 Game game = games[i];
@@ -278,7 +278,7 @@ namespace DuplicateHider
 
         }
 
-        private void Bt_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private static void Bt_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (sender is Control bt)
             {
@@ -286,13 +286,13 @@ namespace DuplicateHider
             }
         }
 
-        private void Bt_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        private static void Bt_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             // TODO: bring up context menu for each individual game
             e.Handled = true;
         }
 
-        private void Icon_MouseLeave(object sender, MouseEventArgs e)
+        private static void Icon_MouseLeave(object sender, MouseEventArgs e)
         {
             if (sender is Button bt)
             {
@@ -300,7 +300,7 @@ namespace DuplicateHider
             }
         }
 
-        private void Icon_MouseEnter(object sender, MouseEventArgs e)
+        private static void Icon_MouseEnter(object sender, MouseEventArgs e)
         {
             if (sender is Button bt)
             {
@@ -309,7 +309,7 @@ namespace DuplicateHider
             }
         }
 
-        private void Bt_Click(object sender, RoutedEventArgs e)
+        private static void Bt_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button bt)
             {
@@ -353,6 +353,7 @@ namespace DuplicateHider
                     if (GetSourceIconPath(game) is string path)
                     {
                         image = new BitmapImage(new Uri(path));
+                        image.Freeze();
                     }
                     SourceIconCache[source] = image;
                 }

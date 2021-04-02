@@ -53,6 +53,10 @@ namespace DuplicateHider
                 {
                     return new SourceSelector(Orientation.Vertical);
                 }
+                if(args.Name == "Test")
+                {
+
+                }
             }
             return null;
         }
