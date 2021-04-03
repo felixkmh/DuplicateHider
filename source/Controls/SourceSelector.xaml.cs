@@ -21,20 +21,18 @@ using System.Windows.Media.Effects;
 
 // <ContentControl x:Name="DuplicateHider_SourceSelector" DockPanel.Dock="Right" MaxHeight="{Binding ElementName=PART_ImageIcon, Path=Height}"/>
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("DuplicateHider")]
-namespace DuplicateHider
+namespace DuplicateHider.Controls
 {
     /// <summary>
     /// Interaktionslogik für DHSourceSelector.xaml
     /// </summary>
     public partial class SourceSelector : Playnite.SDK.Controls.PluginUserControl
     {
-        internal static readonly Dictionary<GameSource, BitmapImage> SourceIconCache
-            = new Dictionary<GameSource, BitmapImage>();
+        internal static ConcurrentDictionary<GameSource, BitmapImage> SourceIconCache
+            = new ConcurrentDictionary<GameSource, BitmapImage>();
 
         internal static readonly UnboundedCache<Button>[] ButtonCaches
             = new UnboundedCache<Button>[Constants.NUMBEROFSOURCESELECTORS];
-
-        internal static List<string> ElementNames = new List<string>();
 
         protected Game Context { get; set; } = null;
 
@@ -50,7 +48,7 @@ namespace DuplicateHider
 
         protected static readonly GameSource defaultGameSource = new GameSource("Undefined");
 
-        internal static DuplicateHider DuplicateHiderInstance { get; set; } = null;
+        internal static DuplicateHiderPlugin DuplicateHiderInstance { get; set; } = null;
         internal static List<string> UserIconFolderPaths { get; set; } = new List<string>();
 
         public SourceSelector()
@@ -71,8 +69,7 @@ namespace DuplicateHider
                 ButtonCaches[selectorNumber] = new UnboundedCache<Button>(CreateSourceIcon);
             }
 
-            var suffix = selectorNumber == 0 ? "" : selectorNumber.ToString();
-            string key = $"DuplicateHider_IconStackPanelStyle{suffix}";
+            string key = "DuplicateHider_IconStackPanelStyle".Suffix(number);
             if (DuplicateHiderInstance.PlayniteApi.Resources.
                 GetResource(key) is Style style && style.TargetType == typeof(StackPanel))
             {
@@ -154,6 +151,11 @@ namespace DuplicateHider
             }
         }
 
+        public override void GameContextChanged(Game oldContext, Game newContext)
+        {
+            base.GameContextChanged(oldContext, newContext);
+        }
+
         private void DuplicateHider_GroupUpdated(object sender, IEnumerable<Guid> e)
         {
             if (Context is Game game)
@@ -184,7 +186,7 @@ namespace DuplicateHider
         // https://stackoverflow.com/a/2517799
         internal static string[] GetResourceNames()
         {
-            var asm = Assembly.GetAssembly(typeof(DuplicateHider));
+            var asm = Assembly.GetAssembly(typeof(DuplicateHiderPlugin));
             string resName = asm.GetName().Name + ".g.resources";
             using (var stream = asm.GetManifestResourceStream(resName))
                 using (var reader = new System.Resources.ResourceReader(stream))
@@ -324,7 +326,7 @@ namespace DuplicateHider
 
         private IEnumerable<Game> GetGames(Game game)
         {
-            if (DuplicateHiderInstance is DuplicateHider dh)
+            if (DuplicateHiderInstance is DuplicateHiderPlugin dh)
             {
                 if (game != null)
                 {
@@ -386,7 +388,9 @@ namespace DuplicateHider
 
             var path = paths.FirstOrDefault(p => !string.IsNullOrEmpty(p));
 
-            return string.IsNullOrEmpty(path) ? GetDefaultIconPath() : path;
+            return Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var _) 
+                ? path 
+                : GetDefaultIconPath();
         }
 
         private static string GetThemeIconPath(string sourceName)
@@ -412,12 +416,29 @@ namespace DuplicateHider
 
         protected static string GetDefaultIconPath()
         {
-            return "pack://application:,,,/DuplicateHider;component/icons/undefined.ico";
+            var name = "Default";
+            bool enableThemeIcons = DuplicateHiderInstance.settings.EnableThemeIcons;
+            bool preferUserIcons = DuplicateHiderInstance.settings.PreferUserIcons;
+
+            List<string> paths = new List<string>();
+
+            var userIconPath = GetUserIconPath(name);
+            var themeIconPath = enableThemeIcons ? GetThemeIconPath(name) : null;
+            var resourceIconPath = GetResourceIconUri(name);
+            if (preferUserIcons) paths.Add(userIconPath);
+            if (enableThemeIcons) paths.Add(themeIconPath);
+            paths.Add(resourceIconPath);
+            if (!preferUserIcons) paths.Add(userIconPath);
+
+            var path = paths.FirstOrDefault(p => !string.IsNullOrEmpty(p));
+            return Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var _)
+                ? path 
+                : "pack://application:,,,/DuplicateHider;component/icons/undefined.ico";
         }
 
         protected string GetPluginIconPath(Game game)
         {
-            if (DuplicateHiderInstance is DuplicateHider dh)
+            if (DuplicateHiderInstance is DuplicateHiderPlugin dh)
             {
                 if (game.PluginId is Guid id)
                 {

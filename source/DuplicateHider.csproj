@@ -55,11 +55,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cache.cs" />
+    <Compile Include="Cache\IGeneratorCache.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Controls\DHContentControl.xaml.cs">
+      <DependentUpon>DHContentControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DHWrapper.xaml.cs">
+      <DependentUpon>DHWrapper.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SourceSelector.xaml.cs">
       <DependentUpon>SourceSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DuplicateHider.cs" />
+    <Compile Include="DuplicateHiderPlugin.cs" />
     <Compile Include="DuplicateHiderSettings.cs" />
     <Compile Include="DuplicateHiderSettingsView.xaml.cs">
       <DependentUpon>DuplicateHiderSettingsView.xaml</DependentUpon>
@@ -79,6 +86,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\DHContentControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DHWrapper.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\SourceSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

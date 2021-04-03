@@ -111,5 +111,10 @@ namespace DuplicateHider
             }
             return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(instance));
         }
+
+        public static string Suffix(this string name, int i)
+        {
+            return i == 0 ? name : name + i.ToString();
+        }
     }
 }

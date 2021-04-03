@@ -12,7 +12,7 @@ namespace DuplicateHider
 {
     public class DuplicateHiderSettings : ISettings
     {
-        private readonly DuplicateHider plugin;
+        private readonly DuplicateHiderPlugin plugin;
 
         public delegate void SettingsChanged(DuplicateHiderSettings oldSettings, DuplicateHiderSettings newSettings);
         public event SettingsChanged OnSettingsChanged;
@@ -155,7 +155,7 @@ namespace DuplicateHider
         {
         }
 
-        public DuplicateHiderSettings(DuplicateHider plugin)
+        public DuplicateHiderSettings(DuplicateHiderPlugin plugin)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
             this.plugin = plugin;

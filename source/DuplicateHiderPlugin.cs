@@ -1,44 +1,89 @@
-﻿using Newtonsoft.Json;
+﻿using DuplicateHider.Controls;
+using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
-
-using static DuplicateHider.DuplicateHider.Visibility;
+using System.Windows.Media.Imaging;
+using static DuplicateHider.DuplicateHiderPlugin.Visibility;
 
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("DuplicateHider")]
 namespace DuplicateHider
 {
-    public class DuplicateHider : Plugin
+    public class DuplicateHiderPlugin : Plugin
     {
         public event EventHandler<IEnumerable<Guid>> GroupUpdated;
 
-        private static readonly ILogger logger = LogManager.GetLogger();
+        private readonly ILogger logger;
 
         internal DuplicateHiderSettings settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("382f8003-8ed0-4e47-ae93-05b43c9c6c32");
 
         private Dictionary<string, List<Guid>> index { get; set; } = new Dictionary<string, List<Guid>>();
+
+        internal static readonly ConcurrentDictionary<GameSource, BitmapImage> SourceIconCache
+            = new ConcurrentDictionary<GameSource, BitmapImage>();
+
         public DuplicateHiderSettingsView SettingsView { get; private set; }
 
 
-        public DuplicateHider(IPlayniteAPI api) : base(api)
+        public DuplicateHiderPlugin(IPlayniteAPI api) : base(api)
         {
+            logger = LogManager.GetLogger();
             settings = new DuplicateHiderSettings(this);
             var elements = new List<string>(Constants.NUMBEROFSOURCESELECTORS) { "SourceSelector" };
             for (int i = 1; i < Constants.NUMBEROFSOURCESELECTORS; ++i)
             {
-                elements.Add($"SourceSelector{i}");
+                bool foundStyle = false;
+                bool validStackStyle = true;
+                bool validButtonStyle = true;
+                if (PlayniteApi.Resources.GetResource($"DuplicateHider_IconStackPanelStyle{i}") is Style stackStyle)
+                {
+                    foundStyle = true;
+                    validStackStyle = stackStyle.TargetType == typeof(StackPanel);
+                }
+                if (PlayniteApi.Resources.GetResource($"DuplicateHider_IconButtonStyle{i}") is Style buttonStyle)
+                {
+                    foundStyle = true;
+                    validButtonStyle = buttonStyle.TargetType == typeof(Button);
+                }
+                if (foundStyle && validButtonStyle && validStackStyle)
+                {
+                    elements.Add("SourceSelector".Suffix(i));
+                    System.Diagnostics.Debug.WriteLine($"Added {elements.Last()} as Custom Element.");
+                    logger.Debug($"Added {elements.Last()} as Custom Element.");
+                }
             }
-            SourceSelector.ElementNames = elements;
+
+            for (int i = 0; i < Constants.NUMBEROFSOURCESELECTORS; ++i)
+            {
+                if (PlayniteApi.Resources.GetResource("DuplicateHider_ContentControlStyle".Suffix(i)) is Style style)
+                {
+                    if (style.TargetType == typeof(ContentControl))
+                    {
+                        elements.Add("ContentControl".Suffix(i));
+                        System.Diagnostics.Debug.WriteLine($"Added {elements.Last()} as Custom Element.");
+                        logger.Debug($"Added {elements.Last()} as Custom Element.");
+                    }
+                }
+            }
+
+            SourceSelector.SourceIconCache = SourceIconCache;
+            DHContentControl.SourceIconCache = SourceIconCache;
+
+            SourceSelector.DuplicateHiderInstance = this;
+            DHContentControl.DuplicateHiderInstance = this;
+
             AddCustomElementSupport(new AddCustomElementSupportArgs()
             {
                 ElementList = elements,
@@ -58,11 +103,21 @@ namespace DuplicateHider
                     {
                         n = 0;
                     }
-                    SourceSelector element = null;
-                    element = new SourceSelector(n, Orientation.Horizontal);
+                    SourceSelector element = new SourceSelector(n, Orientation.Horizontal);
 
                     return element;
-                } 
+                } else if (args.Name.StartsWith("ContentControl")) 
+                {
+                    int n;
+                    if (!int.TryParse(args.Name.Substring(14), out n))
+                    {
+                        n = 0;
+                    }
+                    var wrapper = new DHWrapper();
+                    var cc = new DHContentControl();
+                    // wrapper.DH_ContentControl.Style = PlayniteApi.Resources.GetResource("DuplicateHider_ContentControlStyle".Suffix(n)) as Style;
+                    return wrapper;
+                }
             }
             return null;
         }
@@ -107,7 +162,7 @@ namespace DuplicateHider
 
 
             // SourceSelector statics
-            SourceSelector.DuplicateHiderInstance = this;
+
             SourceSelector.UserIconFolderPaths.Add(GetUserIconFolderPath());
         }
 
