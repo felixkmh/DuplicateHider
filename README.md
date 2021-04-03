@@ -61,7 +61,7 @@ The custom UI element consists of a stack of icons associated with the copys of 
 
 #### User Specified Icons
 
-The extension comes with a set of predefined icons for common libraries, but users can also specify their own. For DuplicateHider to find those icons, they need to be named like the sources in the _Priority List_, for example `Steam.ico` or `Ubisoft Connect.png` and then placed into the _source\_icons_ folder that can be foung by pressing the _Open user icon folder_ button in the plugin settings.
+The extension comes with a set of predefined icons for common libraries, but users can also specify their own. For DuplicateHider to find those icons, they need to be named like the sources in the _Priority List_, for example `Steam.ico` or `Ubisoft Connect.png` and then placed into the _source\_icons_ folder that can be found by pressing the _Open user icon folder_ button in the plugin settings.
 
 #### Theme Integration
 
@@ -71,15 +71,15 @@ The custom UI element can be intgrated into a Theme by, for example, placing
 <ContentControl x:Name="DuplicateHider_SourceSelector" DockPanel.Dock="Right" MaxHeight="{Binding ElementName=PART_ImageIcon, Path=Height}"/>
 ```
 
-into the `DetailsViewItemTemplate.xaml` file where appropriate. See Playnite documentation for more information. At runtime, Playnite will replace this by a StackPanel of icons, depending on the GameContext. This might look like this
+into the `DetailsViewItemTemplate.xaml` file where appropriate. See Playnite documentation for more information. At runtime, Playnite will set its content to a Control holding a StackPanel of icons (Buttons), depending on the GameContext. This might look like this
 
 ![Icon Stack](https://i.ibb.co/NjxdSZC/grafik.png "Icon Stack")
 
 when placed in a ListViewItem in the DetailsView. See Playnite Documentation to see where else custom UI elements can be used. Go [here](UiIntegrationExamples/) for two better examples.
 
-Next to the horozontal version `DuplicateHider_SourceSelector`, there is also  is also a vertically stacked version with the name `DuplicateHider_SourceSelectorVertical`.
+There are 5 SourceSelectors, ```DuplicateHider_SourceSelector```, ```DuplicateHider_SourceSelector1```, ```DuplicateHider_SourceSelector2```, ```DuplicateHider_SourceSelector3``` and ```DuplicateHider_SourceSelector4``` that you can use by using their names as the name of a  ```ContentControl``` in a supported template or view. For each SourceSelector, you can provide styles for their ```StackPanel``` and the icons which are just ```Button```s. The styles need to have the keys ```DuplicateHider_IconButtonStyle``` and ```DuplicateHider_IconStackPanelStyle``` (or with the added number for the other ones).
 
-Themes can also supply their own source icons, by adding entries to the resource dictionary and adding the icon files into the appropriate folder. The entries need to have the key  `DuplicateHider_SOURCENAME_Icon`, where _SOURCENAME_ needs to be replaced by the name of the source as seen in the _Priority List_. For example, if you want to add a icon for Uplay aka Ubisoft Connect, you might add
+Themes can also supply their own source icons, by adding entries to the resource dictionary and adding the icon files into the appropriate folder. The entries need to have the key  `DuplicateHider_SOURCENAME_Icon`, where _SOURCENAME_ needs to be replaced by the name of the source as seen in the _Priority List_. For example, if you want to add an icon for Uplay aka Ubisoft Connect, you might add
 
 ```xml
 <BitmapImage x:Key="DuplicateHider_Ubisoft Connect_Icon" UriSource="{ThemeFile 'Images/Icons/ubisoft.png'}" RenderOptions.BitmapScalingMode="Fant" popt:Freeze="True"/>
