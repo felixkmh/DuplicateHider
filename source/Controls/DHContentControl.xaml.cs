@@ -1,4 +1,5 @@
-﻿using Playnite.SDK.Models;
+﻿using Playnite.SDK;
+using Playnite.SDK.Models;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -44,24 +45,48 @@ namespace DuplicateHider.Controls
 
         public class ListData : DependencyObject
         {
-            public BitmapImage Icon { get; set; }
-            public Game Game { get; set; }
-            public Boolean IsCurrent { 
-                get => (Boolean)GetValue(IsCurrentProperty); 
-                set {
-                    SetValue(IsCurrentProperty, value);
-                }
+            public BitmapImage Icon
+            {
+                get => (BitmapImage)GetValue(IconProperty);
+                set => SetValue(IconProperty, value);
             }
+            public Game Game
+            {
+                get => (Game)GetValue(GameProperty);
+                set => SetValue(GameProperty, value);
+            }
+            public String SourceName
+            {
+                get => (String)GetValue(SourceNameProperty);
+                set => SetValue(SourceNameProperty, value);
+            }
+            public Boolean IsCurrent { 
+                get => (Boolean)GetValue(IsCurrentProperty);
+                set => SetValue(IsCurrentProperty, value);
+            }
+            public ICommand LaunchCommand { get; set; }
+            public ICommand SelectCommand { get; set; }
 
             public ListData(BitmapImage image, Game game, bool current = false)
             {
+                var dp = new DockPanel();
+
                 Icon = image;
                 Game = game;
                 IsCurrent = current;
+                SourceName = game.Source?.Name ?? Constants.UNDEFINED_SOURCE;
+                LaunchCommand = new SimpleCommand(() => DuplicateHiderInstance.PlayniteApi.StartGame(Game.Id));
+                SelectCommand = new SimpleCommand(() => DuplicateHiderInstance.PlayniteApi.MainView.SelectGame(Game.Id));
             }
 
             public static readonly DependencyProperty IsCurrentProperty 
                 = DependencyProperty.Register(nameof(IsCurrent), typeof(Boolean), typeof(ListData), new PropertyMetadata(false));
+            public static readonly DependencyProperty GameProperty
+                = DependencyProperty.Register(nameof(Game), typeof(Game), typeof(ListData), new PropertyMetadata(null));
+            public static readonly DependencyProperty IconProperty
+                = DependencyProperty.Register(nameof(Icon), typeof(BitmapImage), typeof(ListData), new PropertyMetadata(null));
+            public static readonly DependencyProperty SourceNameProperty
+                = DependencyProperty.Register(nameof(SourceName), typeof(String), typeof(ListData), new PropertyMetadata("Playnite"));
         }
 
         public ObservableCollection<ListData> Games { get; set; } = new ObservableCollection<ListData>();
@@ -78,7 +103,8 @@ namespace DuplicateHider.Controls
             var copys = GetGames(newContext);
             foreach (var item in copys)
             {
-                Games.Add(new ListData(SourceIconCache.FirstOrDefault((e => e.Key == item.Source)).Value, item, item.Id == newContext.Id));
+                var source = item.Source ?? Constants.DEFAULT_SOURCE;
+                Games.Add(new ListData(SourceIconCache.FirstOrDefault((e => e.Key == source)).Value, item, item.Id == newContext.Id));
             }
         }
 
@@ -91,7 +117,9 @@ namespace DuplicateHider.Controls
                     return (new Game[] { game })
                             .Concat(dh.GetOtherCopies(game))
                             .Distinct()
-                            .OrderBy(g => DuplicateHiderInstance.GetSourceRank(g));
+                            .OrderBy(g => DuplicateHiderInstance.GetGamePriority(g.Id))
+                            .ThenBy(g => g.Hidden?1:-1)
+                            .ThenBy(g => g.Id);
                 }
             }
 

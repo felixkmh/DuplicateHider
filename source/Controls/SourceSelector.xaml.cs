@@ -46,7 +46,7 @@ namespace DuplicateHider.Controls
         };
 
 
-        protected static readonly GameSource defaultGameSource = new GameSource("Undefined");
+        protected static readonly GameSource defaultGameSource = new GameSource(Constants.UNDEFINED_SOURCE);
 
         internal static DuplicateHiderPlugin DuplicateHiderInstance { get; set; } = null;
         internal static List<string> UserIconFolderPaths { get; set; } = new List<string>();
@@ -333,7 +333,9 @@ namespace DuplicateHider.Controls
                     return (new Game[] { game })
                             .Concat(dh.GetOtherCopies(game))
                             .Distinct()
-                            .OrderBy(g => DuplicateHiderInstance.GetSourceRank(g))
+                            .OrderBy(g => DuplicateHiderInstance.GetGamePriority(g.Id))
+                            .ThenByDescending(g=> g.Hidden)
+                            .ThenBy(g => g.Id)
                             .Take(MaxNumberOfIcons);
                 }
             }
@@ -343,7 +345,7 @@ namespace DuplicateHider.Controls
 
         protected ImageSource GetSourceIcon(Game game)
         {
-            var source = game.Source ?? defaultGameSource;
+            var source = game.Source ?? Constants.DEFAULT_SOURCE;
             if (!SourceIconCache.ContainsKey(source))
             {
                 if (sourceIcons is ResourceDictionary dict)
@@ -370,7 +372,7 @@ namespace DuplicateHider.Controls
 
         protected string GetSourceIconPath(Game game)
         {
-            var name = game.Source != null ? game.Source.Name : "Undefined";
+            var name = game.Source != null ? game.Source.Name : Constants.UNDEFINED_SOURCE;
             bool enableThemeIcons = DuplicateHiderInstance.settings.EnableThemeIcons;
             bool preferUserIcons = DuplicateHiderInstance.settings.PreferUserIcons;
 

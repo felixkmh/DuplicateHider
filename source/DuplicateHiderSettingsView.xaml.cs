@@ -44,7 +44,7 @@ namespace DuplicateHider
                 Cursor = Cursors.Arrow
             };
             buttonDown.Click += ButtonDown_Click;
-            Label label = new Label { Content = source != null ? source.Name : "Undefined" };
+            Label label = new Label { Content = source != null ? source.Name : Constants.UNDEFINED_SOURCE };
             StackPanel stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
             stackPanel.Children.Add(buttonUp);
             stackPanel.Children.Add(buttonDown);
