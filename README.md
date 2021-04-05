@@ -101,7 +101,9 @@ class ListData {
 }
 ```
 
-Example Styles can be found [here](UiIntegrationExamples/DuplicateHider_ContentControl_Style_Examples.xaml)
+Example Styles can be found [here](UiIntegrationExamples/DuplicateHider_ContentControl_Style_Examples.xaml). A selfcontained example of multiple DuplicateHider_ContentControls in the DetailsViewGameOverview.xaml can be found [here](UiIntegrationExamples/UiIntegrationDetailsViewExample), which should look like this:
+
+![grafik](https://user-images.githubusercontent.com/24227002/113638466-363a5800-9677-11eb-869d-e73507df7928.png)
 
 Themes can also supply their own source icons, by adding entries to the resource dictionary and adding the icon files into the appropriate folder. The entries need to have the key  `DuplicateHider_SOURCENAME_Icon`, where _SOURCENAME_ needs to be replaced by the name of the source as seen in the _Priority List_. For example, if you want to add an icon for Uplay aka Ubisoft Connect, you might add
 
