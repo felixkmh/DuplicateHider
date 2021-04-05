@@ -75,9 +75,43 @@ into the `DetailsViewItemTemplate.xaml` file where appropriate. See Playnite doc
 
 ![Icon Stack](https://i.ibb.co/NjxdSZC/grafik.png "Icon Stack")
 
-when placed in a ListViewItem in the DetailsView. See Playnite Documentation to see where else custom UI elements can be used. Go [here](UiIntegrationExamples/) for two better examples.
+when placed in a ListViewItem in the DetailsView. See Playnite Documentation to see where else custom UI elements can be used. Go [here](UiIntegrationExamples/) for  better examples.
 
-There are 5 SourceSelectors, ```DuplicateHider_SourceSelector```, ```DuplicateHider_SourceSelector1```, ```DuplicateHider_SourceSelector2```, ```DuplicateHider_SourceSelector3``` and ```DuplicateHider_SourceSelector4``` that you can use by using their names as the name of a  ```ContentControl``` in a supported template or view. For each SourceSelector, you can provide styles for their ```StackPanel``` and the icons which are just ```Button```s. The styles need to have the keys ```DuplicateHider_IconButtonStyle``` and ```DuplicateHider_IconStackPanelStyle``` (or with the added number for the other ones).
+There are up to 10 SourceSelectors, ```DuplicateHider_SourceSelector```, ```DuplicateHider_SourceSelector1```, ```DuplicateHider_SourceSelector2```, and so on that you can use by using their names as the name of a  ```ContentControl``` in a supported template or view. For each SourceSelector, you can provide styles for their ```StackPanel``` and the icons which are just ```Button```s. The styles need to have the keys ```DuplicateHider_IconButtonStyle``` and ```DuplicateHider_IconStackPanelStyle``` (or with the added number for the other ones). SourceSelector utilizes a cache and is suitable for use in the Item Templates for the GridView and DetailsView.
+
+There are also 10 instances of ```DuplicateHider_ContentControl``` (in case you want to use several in the same View), numbered like the SourceSelector. These basically only provide a DataContext and need a Style/Template to do anything. To apply a Style, set it as the Tag of a ContentControl with x:Name="DuplicateHider_ContentControl" (or one of the 9 others). For example:
+
+```xml
+<Style x:Key="DuplicateHider_ContentControlHeader_Style" TargetType="ContentControl"> ... </Style>
+...
+<ContentControl x:Name="DuplicateHider_ContentControl" Tag="{DynamicResource DuplicateHider_ContentControlHeader_Style}"/> 
+```
+
+The Template of the used Style has access to the following DataContext: 
+
+ ```csharp
+DataContext = {
+    ListData CurrentGame;                  // Game currently in view
+    ObversableCollection<ListData> Games;  // Data of copys of current game, inculding itself
+    Boolean MoreThanOneCopy;               // Games.Count() > 1
+}
+
+class ListData {
+    Playnite.SDK.Models.Game Game;
+    Boolean IsCurrent;        // True if this copy eqal to the current GameContext property.
+    BitmapImage Icon;         // Source Icon
+    String SourceName;        // Source name. Use this rather than Game.Source.Name, 
+                              // because Source might be null.
+    ICommand LaunchCommand;
+    ICommand SelectCommand;
+    ICommand InstallCommand;
+    ICommand UninstallCommand;
+}
+```
+
+Example Styles can be found [here](UiIntegrationExamples/DuplicateHider_ContentControl_Style_Examples.xaml). A selfcontained example of multiple DuplicateHider_ContentControls in the DetailsViewGameOverview.xaml can be found [here](UiIntegrationExamples/UiIntegrationDetailsViewExample), which should look like this:
+
+![grafik](https://user-images.githubusercontent.com/24227002/113638466-363a5800-9677-11eb-869d-e73507df7928.png)
 
 Themes can also supply their own source icons, by adding entries to the resource dictionary and adding the icon files into the appropriate folder. The entries need to have the key  `DuplicateHider_SOURCENAME_Icon`, where _SOURCENAME_ needs to be replaced by the name of the source as seen in the _Priority List_. For example, if you want to add an icon for Uplay aka Ubisoft Connect, you might add
 
