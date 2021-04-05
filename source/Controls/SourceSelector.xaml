@@ -1,7 +1,8 @@
 ﻿<PluginUserControl x:Class="DuplicateHider.Controls.SourceSelector"
                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <StackPanel x:Name="IconStackPanel">
-        
+
+    <StackPanel x:Name="IconStackPanel" >
     </StackPanel>
+
 </PluginUserControl>
