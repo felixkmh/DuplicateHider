@@ -1,0 +1,85 @@
+    <Style x:Key="DuplicateHider_ContentControlStyleSimple" TargetType="ContentControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <!--
+                        DataContext has an ObservableCollection called Games
+                        containing all copys of the Game in the current context (inlcuding itself).
+                        Each entry is of Type
+                        ListData {
+                            Playnite.SDK.Models.Game Game;
+                            Boolean IsCurrent;  // True if this copy eqal to the current GameContext property.
+                            BitmapImage Icon;   // Source Icon
+                            String SourceName;  // Source name. Use this rather than Game.Source.Name, 
+                                                // because Source might be null.
+                            ICommand LaunchCommand;
+                            ICommand SelectCommand;
+                            ICommand InstallCommand;
+                            ICommand UninstallCommand;
+                        }
+                    -->
+                    <ItemsControl
+                        x:Name="DH_ListBox"
+                        Focusable="False"
+                        IsTextSearchEnabled="False"
+                        ItemsSource="{Binding Games}"
+                        VirtualizingPanel.VirtualizationMode="Recycling">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ListBoxItem Background="{x:Null}">
+                                    <!--  StackPanel containing icon and source name of a game.  -->
+                                    <StackPanel
+                                        x:Name="_Item"
+                                        Background="{x:Null}"
+                                        Orientation="Horizontal">
+                                        <Image
+                                            MaxHeight="20"
+                                            Margin="5,0,5,0"
+                                            VerticalAlignment="Center"
+                                            DockPanel.Dock="Left"
+                                            RenderOptions.BitmapScalingMode="Fant"
+                                            Source="{Binding Icon}" />
+                                        <TextBlock
+                                            x:Name="_SourceText"
+                                            Margin="5,0,5,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="White"
+                                            Background="{x:Null}"
+                                            Text="{Binding SourceName}" />
+                                        <!--  Binding gestures to commands.  -->
+                                    </StackPanel>
+                                    <ListBoxItem.InputBindings>
+                                        <MouseBinding Command="{Binding LaunchCommand}" Gesture="LeftDoubleClick" />
+                                        <MouseBinding Command="{Binding SelectCommand}" Gesture="LeftClick" />
+                                    </ListBoxItem.InputBindings>
+                                </ListBoxItem>
+                                <DataTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <!--  MouseOver glow effect.  -->
+                                        <Setter TargetName="_Item" Property="Effect">
+                                            <Setter.Value>
+                                                <DropShadowEffect
+                                                    BlurRadius="10"
+                                                    Opacity="1"
+                                                    ShadowDepth="0"
+                                                    Color="White" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                    <!--  Make items for unisntalled games slightly transparent.  -->
+                                    <DataTrigger Binding="{Binding Game.IsInstalled}" Value="False">
+                                        <Setter TargetName="_Item" Property="Opacity" Value="0.5" />
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>

@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cache.cs" />
+    <Compile Include="Cache\IconCache.cs" />
     <Compile Include="Cache\IGeneratorCache.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controls\DHContentControl.xaml.cs">

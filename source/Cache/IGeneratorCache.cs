@@ -6,14 +6,9 @@ using System.Threading.Tasks;
 
 namespace DuplicateHider.Cache
 {
-    interface IGenratorCache<TItem> 
+    interface IGeneratorCache<TItem, TArg>
     {
-
+        TItem GetOrGenerate(TArg arg);
+        void Clear();
     }
-
-    interface IGeneratorCache<TItem, TKey>
-    {
-
-    }
-
 }

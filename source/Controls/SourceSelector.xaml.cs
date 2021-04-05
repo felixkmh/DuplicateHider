@@ -28,9 +28,6 @@ namespace DuplicateHider.Controls
     /// </summary>
     public partial class SourceSelector : Playnite.SDK.Controls.PluginUserControl
     {
-        internal static ConcurrentDictionary<GameSource, BitmapImage> SourceIconCache
-            = new ConcurrentDictionary<GameSource, BitmapImage>();
-
         internal static readonly UnboundedCache<Button>[] ButtonCaches
             = new UnboundedCache<Button>[Constants.NUMBEROFSOURCESELECTORS];
 
@@ -44,12 +41,6 @@ namespace DuplicateHider.Controls
             ShadowDepth = 0,
             BlurRadius = 10
         };
-
-
-        protected static readonly GameSource defaultGameSource = new GameSource(Constants.UNDEFINED_SOURCE);
-
-        internal static DuplicateHiderPlugin DuplicateHiderInstance { get; set; } = null;
-        internal static List<string> UserIconFolderPaths { get; set; } = new List<string>();
 
         public SourceSelector()
         {
@@ -70,7 +61,7 @@ namespace DuplicateHider.Controls
             }
 
             string key = "DuplicateHider_IconStackPanelStyle".Suffix(number);
-            if (DuplicateHiderInstance.PlayniteApi.Resources.
+            if (DuplicateHiderPlugin.DHP.PlayniteApi.Resources.
                 GetResource(key) is Style style && style.TargetType == typeof(StackPanel))
             {
                 IconStackPanel.SetResourceReference(StackPanel.StyleProperty, key);
@@ -108,13 +99,13 @@ namespace DuplicateHider.Controls
         {
             if (e.NewValue as bool? == true)
             {
-                DuplicateHiderInstance.GroupUpdated += DuplicateHider_GroupUpdated;
+                DuplicateHiderPlugin.DHP.GroupUpdated += DuplicateHider_GroupUpdated;
                 DataContextChanged += SourceSelector_DataContextChanged;
                 try
                 {
                     dynamic cont = DataContext;
                     Guid id = cont.Id;
-                    var game = DuplicateHiderInstance.PlayniteApi.Database.Games.Get(id);
+                    var game = DuplicateHiderPlugin.DHP.PlayniteApi.Database.Games.Get(id);
                     Context = game;
                     UpdateGameSourceIcons(Context);
                 }
@@ -124,7 +115,7 @@ namespace DuplicateHider.Controls
             } else
             {
                 DataContextChanged -= SourceSelector_DataContextChanged;
-                DuplicateHiderInstance.GroupUpdated -= DuplicateHider_GroupUpdated;
+                DuplicateHiderPlugin.DHP.GroupUpdated -= DuplicateHider_GroupUpdated;
                 ButtonCaches[selectorNumber].Consume(IconStackPanel.Children);
             }
         }
@@ -138,7 +129,7 @@ namespace DuplicateHider.Controls
                 {
                     dynamic cont = e.NewValue;
                     Guid id = cont.Id;
-                    var game = DuplicateHiderInstance.PlayniteApi.Database.Games.Get(id);
+                    var game = DuplicateHiderPlugin.DHP.PlayniteApi.Database.Games.Get(id);
                     Context = game;
                     if (IsVisible)
                     {
@@ -167,37 +158,9 @@ namespace DuplicateHider.Controls
             }
         }
 
-        internal static string GetResourceIconUri(string sourceName)
-        {
-            var source = Uri.EscapeDataString(sourceName);
-            var name = GetResourceNames()
-                .Where(n => n.EndsWith(".ico", StringComparison.OrdinalIgnoreCase))
-                .FirstOrDefault(n => System.IO.Path.GetFileName(n).StartsWith(source, StringComparison.OrdinalIgnoreCase));
-            if (!string.IsNullOrEmpty(name))
-            {
-                return $"pack://application:,,,/DuplicateHider;component/{name}";
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        // https://stackoverflow.com/a/2517799
-        internal static string[] GetResourceNames()
-        {
-            var asm = Assembly.GetAssembly(typeof(DuplicateHiderPlugin));
-            string resName = asm.GetName().Name + ".g.resources";
-            using (var stream = asm.GetManifestResourceStream(resName))
-                using (var reader = new System.Resources.ResourceReader(stream))
-                {
-                    return reader.Cast<System.Collections.DictionaryEntry>().Select(entry => (string)entry.Key).ToArray();
-                }
-        }
-
         internal void CreateGameSourceIcons()
         {
-            if (!DuplicateHiderInstance.settings.EnableUiIntegration) 
+            if (!DuplicateHiderPlugin.DHP.settings.EnableUiIntegration) 
                 return;
             for (int i = 0; i < MaxNumberOfIcons; ++i)
             {
@@ -211,7 +174,7 @@ namespace DuplicateHider.Controls
             var bt = new Button();
             var suffix = selectorNumber == 0 ? "" : selectorNumber.ToString();
             string key = $"DuplicateHider_IconButtonStyle{suffix}";
-            if (DuplicateHiderInstance.PlayniteApi.Resources.
+            if (DuplicateHiderPlugin.DHP.PlayniteApi.Resources.
                 GetResource(key) is Style style && style.TargetType == typeof(Button))
             {
                 bt.SetResourceReference(Button.StyleProperty, key);
@@ -249,7 +212,7 @@ namespace DuplicateHider.Controls
         {
             var games = GetGames(context).ToList();
 
-            if (games.Count < 2 && !DuplicateHiderInstance.settings.ShowSingleIcon)
+            if (games.Count < 2 && !DuplicateHiderPlugin.DHP.settings.ShowSingleIcon)
             {
                 ButtonCaches[selectorNumber].Consume(IconStackPanel.Children);
                 return;
@@ -269,7 +232,7 @@ namespace DuplicateHider.Controls
                 Game game = games[i];
                 button.Visibility = Visibility.Visible;
                 button.DataContext = game;
-                button.ToolTip = DuplicateHiderInstance.ExpandDisplayString(game, DuplicateHiderInstance.settings.DisplayString);
+                button.ToolTip = DuplicateHiderPlugin.DHP.ExpandDisplayString(game, DuplicateHiderPlugin.DHP.settings.DisplayString);
                 if (button.Content is Image icon)
                 {
                     icon.Source = GetSourceIcon(game);
@@ -289,7 +252,7 @@ namespace DuplicateHider.Controls
         {
             if (sender is Control bt)
             {
-                DuplicateHiderInstance.PlayniteApi.StartGame((bt.DataContext as Game).Id);
+                DuplicateHiderPlugin.DHP.PlayniteApi.StartGame((bt.DataContext as Game).Id);
             }
         }
 
@@ -320,20 +283,20 @@ namespace DuplicateHider.Controls
         {
             if (sender is Button bt)
             {
-                DuplicateHiderInstance.PlayniteApi.MainView.SelectGame((bt.DataContext as Game).Id);
+                DuplicateHiderPlugin.DHP.PlayniteApi.MainView.SelectGame((bt.DataContext as Game).Id);
             }
         }
 
         private IEnumerable<Game> GetGames(Game game)
         {
-            if (DuplicateHiderInstance is DuplicateHiderPlugin dh)
+            if (DuplicateHiderPlugin.DHP is DuplicateHiderPlugin dh)
             {
                 if (game != null)
                 {
                     return (new Game[] { game })
                             .Concat(dh.GetOtherCopies(game))
                             .Distinct()
-                            .OrderBy(g => DuplicateHiderInstance.GetGamePriority(g.Id))
+                            .OrderBy(g => DuplicateHiderPlugin.DHP.GetGamePriority(g.Id))
                             .ThenByDescending(g=> g.Hidden)
                             .ThenBy(g => g.Id)
                             .Take(MaxNumberOfIcons);
@@ -345,117 +308,7 @@ namespace DuplicateHider.Controls
 
         protected ImageSource GetSourceIcon(Game game)
         {
-            var source = game.Source ?? Constants.DEFAULT_SOURCE;
-            if (!SourceIconCache.ContainsKey(source))
-            {
-                if (sourceIcons is ResourceDictionary dict)
-                {
-                    if (dict.Contains(source.Name))
-                    {
-                        if (dict[source.Name] is BitmapImage icon)
-                        {
-                            SourceIconCache[source] = icon;
-                        }
-                    }
-                } else {
-                    BitmapImage image = null;
-                    if (GetSourceIconPath(game) is string path)
-                    {
-                        image = new BitmapImage(new Uri(path));
-                        image.Freeze();
-                    }
-                    SourceIconCache[source] = image;
-                }
-            }
-            return SourceIconCache[source];
-        }
-
-        protected string GetSourceIconPath(Game game)
-        {
-            var name = game.Source != null ? game.Source.Name : Constants.UNDEFINED_SOURCE;
-            bool enableThemeIcons = DuplicateHiderInstance.settings.EnableThemeIcons;
-            bool preferUserIcons = DuplicateHiderInstance.settings.PreferUserIcons;
-
-            List<string> paths = new List<string>();
-
-            var userIconPath = GetUserIconPath(name);
-            var themeIconPath = enableThemeIcons ? GetThemeIconPath(name) : null;
-            var resourceIconPath = GetResourceIconUri(name);
-            var pluginIconPath = GetPluginIconPath(game);
-            if (preferUserIcons) paths.Add(userIconPath);
-            if (enableThemeIcons) paths.Add(themeIconPath);
-            paths.Add(resourceIconPath);
-            if (!preferUserIcons) paths.Add(userIconPath);
-            paths.Add(pluginIconPath);
-
-            var path = paths.FirstOrDefault(p => !string.IsNullOrEmpty(p));
-
-            return Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var _) 
-                ? path 
-                : GetDefaultIconPath();
-        }
-
-        private static string GetThemeIconPath(string sourceName)
-        {
-            if (DuplicateHiderInstance.PlayniteApi.Resources.GetResource($"DuplicateHider_{sourceName}_Icon") is BitmapImage img)
-            {
-                return img.UriSource.ToString();
-            }
-            return null;
-        }
-
-        private static string GetUserIconPath(string sourceName)
-        {
-            return UserIconFolderPaths
-               .SelectMany(s => System.IO.Directory.GetFiles(s))
-               .Where(f => System.IO.Path.GetFileNameWithoutExtension(f).Equals(sourceName, StringComparison.OrdinalIgnoreCase))
-               .FirstOrDefault(f =>
-                    f.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
-                 || f.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
-                 || f.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase)
-                 || f.EndsWith(".ico", StringComparison.OrdinalIgnoreCase));
-        }
-
-        protected static string GetDefaultIconPath()
-        {
-            var name = "Default";
-            bool enableThemeIcons = DuplicateHiderInstance.settings.EnableThemeIcons;
-            bool preferUserIcons = DuplicateHiderInstance.settings.PreferUserIcons;
-
-            List<string> paths = new List<string>();
-
-            var userIconPath = GetUserIconPath(name);
-            var themeIconPath = enableThemeIcons ? GetThemeIconPath(name) : null;
-            var resourceIconPath = GetResourceIconUri(name);
-            if (preferUserIcons) paths.Add(userIconPath);
-            if (enableThemeIcons) paths.Add(themeIconPath);
-            paths.Add(resourceIconPath);
-            if (!preferUserIcons) paths.Add(userIconPath);
-
-            var path = paths.FirstOrDefault(p => !string.IsNullOrEmpty(p));
-            return Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var _)
-                ? path 
-                : "pack://application:,,,/DuplicateHider;component/icons/undefined.ico";
-        }
-
-        protected string GetPluginIconPath(Game game)
-        {
-            if (DuplicateHiderInstance is DuplicateHiderPlugin dh)
-            {
-                if (game.PluginId is Guid id)
-                {
-                    var plugin = dh.PlayniteApi.Addons.Plugins
-                        .OfType<Playnite.SDK.Plugins.LibraryPlugin>()
-                        .FirstOrDefault(p => p.Id == id);
-
-                    if (plugin is Playnite.SDK.Plugins.LibraryPlugin lp)
-                    {
-                        var path = lp.LibraryIcon;
-                        return path;
-                    }
-                }
-            }
-            return null;
+            return DuplicateHiderPlugin.SourceIconCache.GetOrGenerate(game);
         }
 
         [Description("Maximum number of icons displayed."), Category("Appearance")]
@@ -464,11 +317,9 @@ namespace DuplicateHider.Controls
             get => (Int32)GetValue(MaxNumberOfIconsProperty);
             set => SetValue(MaxNumberOfIconsProperty, value); 
         }
+
         public static DependencyProperty MaxNumberOfIconsProperty 
             = DependencyProperty.Register(nameof(MaxNumberOfIcons), typeof(Int32), typeof(SourceSelector), new PropertyMetadata(4));
-        
-        [Description("Height of each source icon."), Category("Appearance")]
-        public Double IconHeight { get; set; } = Double.NaN;
 
         [Description("Orientation of the icon stack."), Category("Appearance")]
         public Orientation IconStackOrientation
@@ -476,26 +327,5 @@ namespace DuplicateHider.Controls
             get => IconStackPanel.Orientation;
             set => IconStackPanel.Orientation = value;
         }
-
-        private ResourceDictionary sourceIcons;
-
-        [Description("Source icon for each source."), Category("Data")]
-        public ResourceDictionary SourceIconFolderPath
-        {
-            get => sourceIcons;
-            set
-            {
-                sourceIcons = value;
-                SourceIconCache.Clear();
-                UpdateGameSourceIcons(GameContext);
-            }
-        }
-
-        [Description("Height of each source icon."), Category("Data")]
-        public List<ImageSource> Icons { get; set; }
-
-
     }
-
-    
 }

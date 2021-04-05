@@ -1,4 +1,5 @@
-﻿using DuplicateHider.Controls;
+﻿using DuplicateHider.Cache;
+using DuplicateHider.Controls;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -25,14 +26,18 @@ namespace DuplicateHider
 
         private readonly ILogger logger;
 
-        internal DuplicateHiderSettings settings { get; set; }
+        internal DuplicateHiderSettings settings { get; private set; }
+        internal static DuplicateHiderPlugin DHP { get; private set; } = null;
+        internal static IPlayniteAPI API { get; private set; } = null;
 
         public override Guid Id { get; } = Guid.Parse("382f8003-8ed0-4e47-ae93-05b43c9c6c32");
 
         private Dictionary<string, List<Guid>> index { get; set; } = new Dictionary<string, List<Guid>>();
 
-        internal static readonly ConcurrentDictionary<GameSource, BitmapImage> SourceIconCache
+        internal static readonly ConcurrentDictionary<GameSource, BitmapImage> _SourceIconCache
             = new ConcurrentDictionary<GameSource, BitmapImage>();
+
+        internal static readonly IconCache SourceIconCache = new IconCache();
 
         public DuplicateHiderSettingsView SettingsView { get; private set; }
 
@@ -40,6 +45,8 @@ namespace DuplicateHider
         public DuplicateHiderPlugin(IPlayniteAPI api) : base(api)
         {
             logger = LogManager.GetLogger();
+            DHP = this;
+            API = api;
             settings = new DuplicateHiderSettings(this);
             var elements = new List<string>(Constants.NUMBEROFSOURCESELECTORS) { "SourceSelector" };
             for (int i = 1; i < Constants.NUMBEROFSOURCESELECTORS; ++i)
@@ -67,22 +74,12 @@ namespace DuplicateHider
 
             for (int i = 0; i < Constants.NUMBEROFSOURCESELECTORS; ++i)
             {
-                if (PlayniteApi.Resources.GetResource("DuplicateHider_ContentControlStyle".Suffix(i)) is Style style)
-                {
-                    if (style.TargetType == typeof(ContentControl))
-                    {
-                        elements.Add("ContentControl".Suffix(i));
-                        System.Diagnostics.Debug.WriteLine($"Added {elements.Last()} as Custom Element.");
-                        logger.Debug($"Added {elements.Last()} as Custom Element.");
-                    }
-                }
+                elements.Add("ContentControl".Suffix(i));
+                System.Diagnostics.Debug.WriteLine($"Added {elements.Last()} as Custom Element.");
+                logger.Debug($"Added {elements.Last()} as Custom Element.");
             }
 
-            SourceSelector.SourceIconCache = SourceIconCache;
-            DHContentControl.SourceIconCache = SourceIconCache;
-
-            SourceSelector.DuplicateHiderInstance = this;
-            DHContentControl.DuplicateHiderInstance = this;
+            DHContentControl.SourceIconCache = _SourceIconCache;
 
             AddCustomElementSupport(new AddCustomElementSupportArgs()
             {
@@ -162,8 +159,7 @@ namespace DuplicateHider
 
 
             // SourceSelector statics
-
-            SourceSelector.UserIconFolderPaths.Add(GetUserIconFolderPath());
+            SourceIconCache.UserIconFolderPaths.Add(GetUserIconFolderPath());
         }
 
         public string GetUserIconFolderPath()
@@ -194,7 +190,7 @@ namespace DuplicateHider
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
                 PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             }
-            SourceSelector.SourceIconCache.Clear();
+            SourceIconCache.Clear();
             SourceSelector.ButtonCaches.ForEach(bc => bc?.Clear());
             GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
         }
@@ -503,8 +499,13 @@ namespace DuplicateHider
 
         public List<Game> GetOtherCopies(Game game)
         {
-            var name = game.Name.Filter(GetNameFilter());
+            var filtered = new[] { game }.AsEnumerable().Filter(GetGameFilter());
             var duplicates = new List<Game>();
+
+            if (filtered.Count() == 0) 
+                return duplicates;
+
+            var name = game.Name.Filter(GetNameFilter());
             if (index.TryGetValue(name, out var copies))
             {
                 var others = copies.Where(c => c != game.Id);
