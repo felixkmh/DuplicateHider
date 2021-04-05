@@ -277,7 +277,7 @@
                                             Text="{Binding SourceName}" />
                                             <!--  Binding gestures to commands.  -->
                                             <StackPanel.InputBindings>
-                                                <MouseBinding Command="{Binding SelectCommand}" Gesture="LeftClick" />
+                                                <MouseBinding Command="{Binding LaunchCommand}" Gesture="LeftClick" />
                                             </StackPanel.InputBindings>
                                         </StackPanel>
                                         <DataTemplate.Triggers>
