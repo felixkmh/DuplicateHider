@@ -75,7 +75,7 @@ into the `DetailsViewItemTemplate.xaml` file where appropriate. See Playnite doc
 
 ![Icon Stack](https://i.ibb.co/NjxdSZC/grafik.png "Icon Stack")
 
-when placed in a ListViewItem in the DetailsView. See Playnite Documentation to see where else custom UI elements can be used. Go [here](UiIntegrationExamples/) for two better examples.
+when placed in a ListViewItem in the DetailsView. See Playnite Documentation to see where else custom UI elements can be used. Go [here](UiIntegrationExamples/) for  better examples.
 
 There are up to 10 SourceSelectors, ```DuplicateHider_SourceSelector```, ```DuplicateHider_SourceSelector1```, ```DuplicateHider_SourceSelector2```, and so on that you can use by using their names as the name of a  ```ContentControl``` in a supported template or view. For each SourceSelector, you can provide styles for their ```StackPanel``` and the icons which are just ```Button```s. The styles need to have the keys ```DuplicateHider_IconButtonStyle``` and ```DuplicateHider_IconStackPanelStyle``` (or with the added number for the other ones). SourceSelector utilizes a cache and is suitable for use in the Item Templates for the GridView and DetailsView.
 
