@@ -111,8 +111,6 @@ namespace DuplicateHider
                         n = 0;
                     }
                     var wrapper = new DHWrapper();
-                    var cc = new DHContentControl();
-                    // wrapper.DH_ContentControl.Style = PlayniteApi.Resources.GetResource("DuplicateHider_ContentControlStyle".Suffix(n)) as Style;
                     return wrapper;
                 }
             }
