@@ -1,3 +1,5 @@
+## WARNING: The new features in this branch as well as the Playnite 9 API that they use are still under active development. So breaking changes are to be expected.
+
 # DuplicateHider
 
 [Playnite Forum Post](https://playnite.link/forum/thread-308.html)  
@@ -131,9 +133,7 @@ class ListData {
 
 The Icons are still cached for this component, but using this in the DetailsViewItemTemplate or GridViewItemTemplate may cause a lot of objects to be created whenever the views are switched or view filters are changed, depending on the used Template.
 
-Example Styles can be found [here](UiIntegrationExamples/DuplicateHider_ContentControl_Style_Examples.xaml). A selfcontained example of multiple DuplicateHider_ContentControls in the DetailsViewGameOverview.xaml can be found [here](UiIntegrationExamples/UiIntegrationDetailsViewExample), which should look like this:
-
-![grafik](https://user-images.githubusercontent.com/24227002/113638466-363a5800-9677-11eb-869d-e73507df7928.png)
+Example Styles can be found [here](UiIntegrationExamples/DuplicateHider_ContentControl_Style_Examples.xaml). A selfcontained example of multiple DuplicateHider_ContentControls in the DetailsViewGameOverview.xaml can be found [here](UiIntegrationExamples/UiIntegrationDetailsViewExample). See [Example Overview](#example-overview).
 
 ### Theme Icons
 
@@ -163,6 +163,6 @@ to the resource dictionary, a Theme can also specify the maximum number of icons
 | [DetailsViewItemTemplate.xaml](UiIntegrationExamples/UiIntegrationSimpleExample/DetailsViewItemTemplate.xaml) | Places clickable Icons next to the game name in the DetailsView. | ![grafik](https://user-images.githubusercontent.com/24227002/113683300-55130b80-96c4-11eb-9f27-366ef4cb4bad.png) |
 | [DetailsViewItemTemplate.xaml](UiIntegrationExamples/UiIntegrationFadingExample/DetailsViewItemTemplate.xaml) | Similar to above example, but here the icons fade in and out when the mouse is over a ListItem. |  |
 | [DetailsViewItemTemplate.xaml](UiIntegrationExamples/UiIntegrationFadingExample2/DetailsViewItemTemplate.xaml) | Similar to above example, but here the width of the StackPanel is also animated such that long game names are pushed away when it appears. |  |
-| [DetailsViewGameOverview.xaml](UiIntegrationExamples/UiIntegrationDetailsViewExample/DetailsViewGameOverview.xaml) | Contains Styles for the DuplicateHider_ContentControl and uses them to display available sources as header and adds a extension to the PlayButton. | ![grafik](https://user-images.githubusercontent.com/24227002/113638466-363a5800-9677-11eb-869d-e73507df7928.png) |
+| [DetailsViewGameOverview.xaml](UiIntegrationExamples/UiIntegrationDetailsViewExample/DetailsViewGameOverview.xaml) | Contains Styles for the DuplicateHider_ContentControl and uses them to display available sources as header and adds an conditional extension to the PlayButton. | ![grafik](https://user-images.githubusercontent.com/24227002/113638466-363a5800-9677-11eb-869d-e73507df7928.png) |
 | [DuplicateHider_ContentControl_Style_Examples.xaml](UiIntegrationExamples/DuplicateHider_ContentControl_Style_Examples.xaml) | Two Styles for DuplicateHider_ContentControl. ```DH_ContentControl_Style``` contains some animations to indicate the current game.| DH_ContentControl_Simple_Style: ![grafik](https://user-images.githubusercontent.com/24227002/113685683-c94eae80-96c6-11eb-9241-3675010d25e6.png) DH_ContentControl_Style: ![grafik](https://user-images.githubusercontent.com/24227002/113685711-d075bc80-96c6-11eb-92d1-c9c2abba3900.png) |
 | [DuplicateHider_SourceSelector_Styles_Example.xaml](UiIntegrationExamples/DuplicateHider_SourceSelector_Styles_Example.xaml) | Contains fairly barebones Styles for the DuplicateHider_SourceSelector. Basically the default Styles if none are provided for a SourceSelector. ```DuplicateHider_IconContentControlStyle``` for the Icons and ```DuplicateHider_IconStackPanelStyle``` for the StackPanel |  | 
