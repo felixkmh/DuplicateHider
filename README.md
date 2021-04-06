@@ -110,7 +110,7 @@ The Template of the used Style has access to the following DataContext:
  ```csharp
 DataContext = {
     ListData CurrentGame;                  // Game currently in view
-    ObversableCollection<ListData> Games;  // Data of copys of current game, inculding itself
+    ObversableCollection<ListData> Games;  // Data of copys of current game, including itself
     Boolean MoreThanOneCopy;               // Games.Count() > 1
 }
 
