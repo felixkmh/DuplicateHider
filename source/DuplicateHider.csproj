@@ -75,6 +75,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Filters\GameFilters.cs" />
     <Compile Include="Filters\IFilter.cs" />
+    <Compile Include="Models\ListData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Filters\StringFilters.cs" />
     <Compile Include="UniqueList.cs" />

@@ -1,4 +1,5 @@
-﻿using Playnite.SDK;
+﻿using DuplicateHider.Models;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Concurrent;
@@ -74,57 +75,6 @@ namespace DuplicateHider.Controls
         {
             
         }
-
-        public class ListData : DependencyObject
-        {
-            public ImageSource Icon
-            {
-                get => (ImageSource)GetValue(IconProperty);
-                set => SetValue(IconProperty, value);
-            }
-            public Game Game
-            {
-                get => (Game)GetValue(GameProperty);
-                set => SetValue(GameProperty, value);
-            }
-            public String SourceName
-            {
-                get => (String)GetValue(SourceNameProperty);
-                set => SetValue(SourceNameProperty, value);
-            }
-            public Boolean IsCurrent { 
-                get => (Boolean)GetValue(IsCurrentProperty);
-                set => SetValue(IsCurrentProperty, value);
-            }
-            public ICommand LaunchCommand { get; set; }
-            public ICommand SelectCommand { get; set; }
-            public ICommand InstallCommand { get; set; }
-            public ICommand UninstallCommand { get; set; }
-
-            public ListData(ImageSource image, Game game, bool current = false)
-            {
-                var dp = new DockPanel();
-
-                Icon = image;
-                Game = game;
-                IsCurrent = current;
-                SourceName = game.Source?.Name ?? Constants.UNDEFINED_SOURCE;
-                LaunchCommand = new SimpleCommand(() => DuplicateHiderPlugin.API.StartGame(Game.Id));
-                SelectCommand = new SimpleCommand(() => DuplicateHiderPlugin.API.MainView.SelectGame(Game.Id));
-                InstallCommand = new SimpleCommand(() => DuplicateHiderPlugin.API.InstallGame(Game.Id));
-                UninstallCommand = new SimpleCommand(() => DuplicateHiderPlugin.API.InstallGame(Game.Id));
-            }
-
-            public static readonly DependencyProperty IsCurrentProperty 
-                = DependencyProperty.Register(nameof(IsCurrent), typeof(Boolean), typeof(ListData), new PropertyMetadata(false));
-            public static readonly DependencyProperty GameProperty
-                = DependencyProperty.Register(nameof(Game), typeof(Game), typeof(ListData), new PropertyMetadata(null));
-            public static readonly DependencyProperty IconProperty
-                = DependencyProperty.Register(nameof(Icon), typeof(ImageSource), typeof(ListData), new PropertyMetadata(null));
-            public static readonly DependencyProperty SourceNameProperty
-                = DependencyProperty.Register(nameof(SourceName), typeof(String), typeof(ListData), new PropertyMetadata("Playnite"));
-        }
-
 
 
         public override void OnApplyTemplate()

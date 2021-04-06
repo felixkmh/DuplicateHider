@@ -18,6 +18,8 @@ using System.Windows.Shapes;
 using Playnite;
 using Playnite.SDK.Models;
 using System.Windows.Media.Effects;
+using DuplicateHider.Models;
+using Playnite.SDK;
 
 // <ContentControl x:Name="DuplicateHider_SourceSelector" DockPanel.Dock="Right" MaxHeight="{Binding ElementName=PART_ImageIcon, Path=Height}"/>
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("DuplicateHider")]
@@ -28,8 +30,8 @@ namespace DuplicateHider.Controls
     /// </summary>
     public partial class SourceSelector : Playnite.SDK.Controls.PluginUserControl
     {
-        internal static readonly UnboundedCache<Button>[] ButtonCaches
-            = new UnboundedCache<Button>[Constants.NUMBEROFSOURCESELECTORS];
+        internal static readonly UnboundedCache<ContentControl>[] ButtonCaches
+            = new UnboundedCache<ContentControl>[Constants.NUMBEROFSOURCESELECTORS];
 
         protected Game Context { get; set; } = null;
 
@@ -57,7 +59,7 @@ namespace DuplicateHider.Controls
 
             if (ButtonCaches[selectorNumber] == null)
             {
-                ButtonCaches[selectorNumber] = new UnboundedCache<Button>(CreateSourceIcon);
+                ButtonCaches[selectorNumber] = new UnboundedCache<ContentControl>(CreateSourceIcon);
             }
 
             string key = "DuplicateHider_IconStackPanelStyle".Suffix(number);
@@ -109,7 +111,7 @@ namespace DuplicateHider.Controls
                     Context = game;
                     UpdateGameSourceIcons(Context);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                 }
             } else
@@ -169,15 +171,14 @@ namespace DuplicateHider.Controls
         }
 
 
-        private Button CreateSourceIcon()
+        private ContentControl CreateSourceIcon()
         {
-            var bt = new Button();
-            var suffix = selectorNumber == 0 ? "" : selectorNumber.ToString();
-            string key = $"DuplicateHider_IconButtonStyle{suffix}";
-            if (DuplicateHiderPlugin.DHP.PlayniteApi.Resources.
-                GetResource(key) is Style style && style.TargetType == typeof(Button))
+            var bt = new ContentControl();
+            string key = $"DuplicateHider_IconButtonStyle".Suffix(selectorNumber);
+            if (DuplicateHiderPlugin.API.Resources.
+                GetResource(key) is Style style && style.TargetType == typeof(ContentControl))
             {
-                bt.SetResourceReference(Button.StyleProperty, key);
+                bt.SetResourceReference(StyleProperty, key);
             } else
             {
                 bt.BorderBrush = null;
@@ -191,21 +192,79 @@ namespace DuplicateHider.Controls
                 bt.MouseEnter += Icon_MouseEnter;
                 bt.MouseLeave += Icon_MouseLeave;
             }
-           
 
-            bt.Click += Bt_Click;
+            bt.DataContext = new ListData();
+
+            bt.MouseLeftButtonUp += Bt_MouseLeftButtonUp;
+            bt.MouseDoubleClick += Bt_MouseDoubleClick;
+            bt.MouseRightButtonUp += Bt_MouseRightButtonUp;
+
             Image icon = new Image()
             {
                 Stretch = Stretch.Uniform
             };
             RenderOptions.SetBitmapScalingMode(icon, BitmapScalingMode.HighQuality);
 
-            bt.MouseRightButtonUp += Bt_MouseRightButtonUp;
-            bt.MouseDoubleClick += Bt_MouseDoubleClick;
 
             bt.Content = icon;
             bt.Visibility = Visibility.Collapsed;
             return bt;
+        }
+
+        private void Bt_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is ContentControl control)
+            {
+                if (control.DataContext is ListData data)
+                {
+                    data.SelectCommand.Execute(null);
+                    e.Handled = true;
+                }
+            }
+        }
+
+        private static void Bt_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is ContentControl control)
+            {
+                if (control.DataContext is ListData data)
+                {
+                    data.LaunchCommand.Execute(null);
+                    e.Handled = true;
+                }
+            }
+        }
+
+        private static void Bt_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            // TODO: bring up context menu for each individual game
+            e.Handled = true;
+        }
+
+        private static void Icon_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (sender is ContentControl bt)
+            {
+                bt.Effect = null;
+            }
+        }
+
+        private static void Icon_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (sender is ContentControl bt)
+            {
+                bt.Effect = dropShadow;
+
+            }
+        }
+
+
+        private static void Bt_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button bt)
+            {
+                DuplicateHiderPlugin.DHP.PlayniteApi.MainView.SelectGame((bt.DataContext as ListData).Game.Id);
+            }
         }
 
         internal void UpdateGameSourceIcons(Game context)
@@ -220,10 +279,10 @@ namespace DuplicateHider.Controls
 
             for(int i = 0; i < games.Count; ++i)
             {
-                Button button = null;
+                ContentControl button = null;
                 if (i < IconStackPanel.Children.Count)
                 {
-                    button = IconStackPanel.Children[i] as Button;
+                    button = IconStackPanel.Children[i] as ContentControl;
                 } else
                 {
                     button = ButtonCaches[selectorNumber].Get();
@@ -231,7 +290,7 @@ namespace DuplicateHider.Controls
                 }
                 Game game = games[i];
                 button.Visibility = Visibility.Visible;
-                button.DataContext = game;
+                button.DataContext = new ListData(game, game.Id == context?.Id);
                 button.ToolTip = DuplicateHiderPlugin.DHP.ExpandDisplayString(game, DuplicateHiderPlugin.DHP.settings.DisplayString);
                 if (button.Content is Image icon)
                 {
@@ -241,50 +300,11 @@ namespace DuplicateHider.Controls
             }
             for (int i = IconStackPanel.Children.Count - 1; i > games.Count - 1; --i)
             {
-                Button button = IconStackPanel.Children[i] as Button;
+                ContentControl button = IconStackPanel.Children[i] as ContentControl;
                 ButtonCaches[selectorNumber].Push(button);
                 IconStackPanel.Children.RemoveAt(i);
             }
 
-        }
-
-        private static void Bt_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (sender is Control bt)
-            {
-                DuplicateHiderPlugin.DHP.PlayniteApi.StartGame((bt.DataContext as Game).Id);
-            }
-        }
-
-        private static void Bt_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            // TODO: bring up context menu for each individual game
-            e.Handled = true;
-        }
-
-        private static void Icon_MouseLeave(object sender, MouseEventArgs e)
-        {
-            if (sender is Button bt)
-            {
-                bt.Effect = null;
-            }
-        }
-
-        private static void Icon_MouseEnter(object sender, MouseEventArgs e)
-        {
-            if (sender is Button bt)
-            {
-                bt.Effect = dropShadow;
-
-            }
-        }
-
-        private static void Bt_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button bt)
-            {
-                DuplicateHiderPlugin.DHP.PlayniteApi.MainView.SelectGame((bt.DataContext as Game).Id);
-            }
         }
 
         private IEnumerable<Game> GetGames(Game game)
