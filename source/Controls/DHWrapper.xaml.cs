@@ -28,14 +28,17 @@ namespace DuplicateHider.Controls
 
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
-            if (Parent is ContentControl parent)
+            if (DH_ContentControl.Style == null)
             {
-                if (parent.Tag is Style style)
+                if (Parent is ContentControl parent)
                 {
-                    DH_ContentControl.Style = style;
+                    if (parent.Tag is Style style)
+                    {
+                        DH_ContentControl.Style = style;
+                    }
                 }
             }
-            base.GameContextChanged(oldContext, newContext);
+            DH_ContentControl.GameContext = newContext;
             DH_ContentControl.GameContextChanged(oldContext, newContext);
         }
 
