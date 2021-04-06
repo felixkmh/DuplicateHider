@@ -131,11 +131,21 @@ namespace DuplicateHider.Controls
                             .Distinct()
                             .OrderBy(g => DuplicateHiderPlugin.DHP.GetGamePriority(g.Id))
                             .ThenBy(g => g.Hidden?1:-1)
-                            .ThenBy(g => g.Id);
+                            .ThenBy(g => g.Id)
+                            .Take(MaxNumberOfIconsCC);
                 }
 
             return new Game[] { };
         }
 
+
+        public Int32 MaxNumberOfIconsCC
+        {
+            get => (Int32)GetValue(MaxNumberOfIconsCCProperty);
+            set => SetValue(MaxNumberOfIconsCCProperty, value);
+        }
+
+        public static DependencyProperty MaxNumberOfIconsCCProperty
+            = DependencyProperty.Register(nameof(MaxNumberOfIconsCC), typeof(Int32), typeof(SourceSelector), new PropertyMetadata(4));
     }
 }

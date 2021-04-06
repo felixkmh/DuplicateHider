@@ -63,7 +63,7 @@ namespace DuplicateHider.Controls
             }
 
             string key = "DuplicateHider_IconStackPanelStyle".Suffix(number);
-            if (DuplicateHiderPlugin.DHP.PlayniteApi.Resources.
+            if (DuplicateHiderPlugin.API.Resources.
                 GetResource(key) is Style style && style.TargetType == typeof(StackPanel))
             {
                 IconStackPanel.SetResourceReference(StackPanel.StyleProperty, key);
@@ -73,6 +73,9 @@ namespace DuplicateHider.Controls
             }
 
             Context = GameContext;
+
+            SetResourceReference(MaxNumberOfIconsProperty, "DuplicateHider_MaxNumberOfIcons".Suffix(number));
+
         }
 
         private void SourceSelector_Unloaded(object sender, RoutedEventArgs e)
