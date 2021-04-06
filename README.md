@@ -112,6 +112,8 @@ DataContext = {
     ListData CurrentGame;                  // Game currently in view
     ObversableCollection<ListData> Games;  // Data of copys of current game, including itself
     Boolean MoreThanOneCopy;               // Games.Count() > 1
+    Boolean SwitchedGroup;                 // True iff the newly selected Game 
+                                           // is not a copy of the previously selected one
 }
 
 class ListData {

@@ -45,7 +45,15 @@ namespace DuplicateHider.Controls
         public static DependencyProperty CurrentGameProperty
             = DependencyProperty.Register(nameof(CurrentGameProperty), typeof(ListData), typeof(DHContentControl), new PropertyMetadata(null));
 
-        internal Game GameContext = null;
+        public Boolean SwitchedGroup
+        {
+            get => (Boolean)GetValue(SwitchedGroupProperty);
+            set => SetValue(SwitchedGroupProperty, value);
+        }
+        public static DependencyProperty SwitchedGroupProperty
+            = DependencyProperty.Register(nameof(SwitchedGroupProperty), typeof(Boolean), typeof(DHContentControl), new PropertyMetadata(true));
+
+        public Game GameContext { get; set; } = null;
 
         public DHContentControl()
         {
@@ -82,27 +90,37 @@ namespace DuplicateHider.Controls
 
         public void GameContextChanged(Game oldContext, Game newContext)
         {
-            GameContext = newContext;
-            UpdateContent(newContext);
-            if (GameContext is Game game)
+            if (newContext?.Id != CurrentGame?.Game?.Id)
             {
-                CurrentGame = new ListData(DuplicateHiderPlugin.SourceIconCache.GetOrGenerate(game), game, true);
+                CurrentGame = new ListData(DuplicateHiderPlugin.SourceIconCache.GetOrGenerate(newContext), newContext, true);
+                UpdateContent(newContext);
             }
+        }
+
+        private object ByAction { get; set; } = false;
+
+        void setAction()
+        {
+            ByAction = true;
         }
 
         private void UpdateContent(Game newContext, bool forceUpdate = false)
         {
-            if (newContext is Game && Games.TryFind(g => g.Game.Id == newContext.Id, out var _) && !forceUpdate)
+            ListData item = null;
+            bool sameGroup = newContext is Game && Games.TryFind(g => g.Game.Id == newContext.Id, out item);
+            SwitchedGroup = !sameGroup;// && (Games.IndexOf(item) == 0 && ByAction);
+            ByAction = false;
+            if (sameGroup && !forceUpdate)
             {
-                foreach (var item in Games)
+                foreach (var copy in Games)
                 {
-                    if (item.Game.Id == newContext.Id)
+                    if (copy.Game.Id == newContext.Id)
                     {
-                        item.IsCurrent = true;
+                        copy.IsCurrent = true;
                     }
                     else
                     {
-                        item.IsCurrent = false;
+                        copy.IsCurrent = false;
                     }
 
                 }
@@ -112,10 +130,10 @@ namespace DuplicateHider.Controls
                 var copys = GetGames(newContext);
                 MoreThanOneCopy = copys.Count() > 1;
                 Games.Clear();
-                foreach (var item in copys)
+                foreach (var copy in copys)
                 {
-                    var source = item.Source ?? Constants.DEFAULT_SOURCE;
-                    Games.Add(new ListData(DuplicateHiderPlugin.SourceIconCache.GetOrGenerate(item), item, item.Id == newContext.Id));
+                    var source = copy.Source ?? Constants.DEFAULT_SOURCE;
+                    Games.Add(new ListData(DuplicateHiderPlugin.SourceIconCache.GetOrGenerate(copy), copy, copy.Id == newContext.Id));
                 }
             }
         }
