@@ -63,7 +63,13 @@ The custom UI element consists of a stack of icons associated with the copys of 
 
 The extension comes with a set of predefined icons for common libraries, but users can also specify their own. For DuplicateHider to find those icons, they need to be named like the sources in the _Priority List_, for example `Steam.ico` or `Ubisoft Connect.png` and then placed into the _source\_icons_ folder that can be found by pressing the _Open user icon folder_ button in the plugin settings.
 
-#### Theme Integration
+## Extension Menu
+
+![Game Menu](https://i.ibb.co/G9r0BZ4/grafik.png "Game Menu")
+
+Under _Extensions_ -> _DuplicateHider_ functions to manually hide and reveal duplicates can be found. Also, currently selected games can either be added or removed from the _Ignore List_.
+
+## Theme Integration
 
 The custom UI element can be intgrated into a Theme by, for example, placing
 
@@ -71,15 +77,19 @@ The custom UI element can be intgrated into a Theme by, for example, placing
 <ContentControl x:Name="DuplicateHider_SourceSelector" DockPanel.Dock="Right" MaxHeight="{Binding ElementName=PART_ImageIcon, Path=Height}"/>
 ```
 
-into the `DetailsViewItemTemplate.xaml` file where appropriate. See Playnite documentation for more information. At runtime, Playnite will set its content to a Control holding a StackPanel of icons (Buttons), depending on the GameContext. This might look like this
+into the `DetailsViewItemTemplate.xaml` file where appropriate. See Playnite documentation for more information. At runtime, Playnite will set its content to a Control holding a StackPanel of icons (ContentControls), depending on the GameContext. This might look like this
 
 ![Icon Stack](https://i.ibb.co/NjxdSZC/grafik.png "Icon Stack")
 
 when placed in a ListViewItem in the DetailsView. See Playnite Documentation to see where else custom UI elements can be used. Go [here](UiIntegrationExamples/) for  better examples.
 
-There are up to 10 SourceSelectors, ```DuplicateHider_SourceSelector```, ```DuplicateHider_SourceSelector1```, ```DuplicateHider_SourceSelector2```, and so on that you can use by using their names as the name of a  ```ContentControl``` in a supported template or view. For each SourceSelector, you can provide styles for their ```StackPanel``` and the icons which are just ```Button```s. The styles need to have the keys ```DuplicateHider_IconButtonStyle``` and ```DuplicateHider_IconStackPanelStyle``` (or with the added number for the other ones). SourceSelector utilizes a cache for the UI elements and Icons and is suitable for use in the Item Templates for the GridView and DetailsView.
+### SourceSelector
 
-There are also 10 instances of ```DuplicateHider_ContentControl``` (in case you want to use several in the same View), numbered like the SourceSelector. These basically only provide a DataContext and need a Style/Template to do anything. To apply a Style, set it as the Tag of a ContentControl with x:Name="DuplicateHider_ContentControl" (or one of the 9 others). For example:
+There are up to 10 SourceSelectors, ```DuplicateHider_SourceSelector```, ```DuplicateHider_SourceSelector1```, ```DuplicateHider_SourceSelector2```, and so on that you can use by using their names as the name of a  ```ContentControl``` in a supported template or view. For each SourceSelector, you can provide styles for their ```StackPanel``` and the icons which are just ```ContentControls```s. The styles need to have the keys ```DuplicateHider_IconButtonStyle``` and ```DuplicateHider_IconStackPanelStyle``` (or with the added number for the other ones). SourceSelector utilizes a cache for the UI elements and Icons and is suitable for use in the Item Templates for the GridView and DetailsView. Example Styles can be found [here](UiIntegrationExamples/DuplicateHider_SourceSelector_Styles_Example.xaml). Each Icon ContentControl has a corresponding ListData object set as its DataContext, see below which Properties are available.
+
+### ContentControl
+
+There are also 10 instances of ```DuplicateHider_ContentControl``` (in case you want to use several in the same View), numbered like the SourceSelector. These basically only provide a DataContext and need a Style/Template to do anything. To apply a Style, set it as the __Tag__ of a ContentControl with x:Name="DuplicateHider_ContentControl" (or one of the 9 others):
 
 ```xml
 <Style x:Key="DuplicateHider_ContentControlHeader_Style" TargetType="ContentControl"> ... </Style>
@@ -115,6 +125,8 @@ Example Styles can be found [here](UiIntegrationExamples/DuplicateHider_ContentC
 
 ![grafik](https://user-images.githubusercontent.com/24227002/113638466-363a5800-9677-11eb-869d-e73507df7928.png)
 
+### Theme Icons
+
 Themes can also supply their own source icons, by adding entries to the resource dictionary and adding the icon files into the appropriate folder. The entries need to have the key  `DuplicateHider_SOURCENAME_Icon`, where _SOURCENAME_ needs to be replaced by the name of the source as seen in the _Priority List_. For example, if you want to add an icon for Uplay aka Ubisoft Connect, you might add
 
 ```xml
@@ -131,8 +143,12 @@ By adding
 
 to the resource dictionary, a Theme can also specify the maximum number of icons per stack. In the example above, it is set to 4, which is also the default if no entry is supplied.
 
-## Extension Menu
-
-![Game Menu](https://i.ibb.co/G9r0BZ4/grafik.png "Game Menu")
-
-Under _Extensions_ -> _DuplicateHider_ functions to manually hide and reveal duplicates can be found. Also, currently selected games can either be added or removed from the _Ignore List_.
+### Example Overview
+| File | Description | Preview |
+|------|-------------|---------|
+| [DetailsViewItemTemplate.xaml](UiIntegrationExamples/UiIntegrationSimpleExample/DetailsViewItemTemplate.xaml) | Places clickable Icons next to the game name in the DetailsView. | ![grafik](https://user-images.githubusercontent.com/24227002/113683300-55130b80-96c4-11eb-9f27-366ef4cb4bad.png) |
+| [DetailsViewItemTemplate.xaml](UiIntegrationExamples/UiIntegrationFadingExample/DetailsViewItemTemplate.xaml) | Similar to above example, but here the icons fade in and out when the mouse is over a ListItem. |  |
+| [DetailsViewItemTemplate.xaml](UiIntegrationExamples/UiIntegrationFadingExample2/DetailsViewItemTemplate.xaml) | Similar to above example, but here the width of the StackPanel is also animated such that long game names are pushed away when it appears. |  |
+| [DetailsViewGameOverview.xaml](UiIntegrationExamples/UiIntegrationDetailsViewExample/DetailsViewGameOverview.xaml) | Contains Styles for the DuplicateHider_ContentControl and uses them to display available sources as header and adds a extension to the PlayButton. | ![grafik](https://user-images.githubusercontent.com/24227002/113638466-363a5800-9677-11eb-869d-e73507df7928.png) |
+| [DuplicateHider_ContentControl_Style_Examples.xaml](UiIntegrationExamples/DuplicateHider_ContentControl_Style_Examples.xaml) | Two Styles for DuplicateHider_ContentControl. ```DH_ContentControl_Style``` contains some animations to indicate the current game.| DH_ContentControl_Simple_Style: ![grafik](https://user-images.githubusercontent.com/24227002/113685683-c94eae80-96c6-11eb-9241-3675010d25e6.png) DH_ContentControl_Style: ![grafik](https://user-images.githubusercontent.com/24227002/113685711-d075bc80-96c6-11eb-92d1-c9c2abba3900.png) |
+| [DuplicateHider_SourceSelector_Styles_Example.xaml](UiIntegrationExamples/DuplicateHider_SourceSelector_Styles_Example.xaml) | Contains fairly barebones Styles for the DuplicateHider_SourceSelector. ```DuplicateHider_IconContentControlStyle``` for the Icons and ```DuplicateHider_IconStackPanelStyle``` for the StackPanel |  | 
