@@ -129,9 +129,7 @@ class ListData {
 
 The Icons are still cached for this component, but using this in the DetailsViewItemTemplate or GridViewItemTemplate may cause a lot of objects to be created whenever the views are switched or view filters are changed, depending on the used Template.
 
-Example Styles can be found [here](UiIntegrationExamples/DuplicateHider_ContentControl_Style_Examples.xaml). A selfcontained example of multiple DuplicateHider_ContentControls in the DetailsViewGameOverview.xaml can be found [here](UiIntegrationExamples/UiIntegrationDetailsViewExample), which should look like this:
-
-![grafik](https://user-images.githubusercontent.com/24227002/113638466-363a5800-9677-11eb-869d-e73507df7928.png)
+Example Styles can be found [here](UiIntegrationExamples/DuplicateHider_ContentControl_Style_Examples.xaml). A selfcontained example of multiple DuplicateHider_ContentControls in the DetailsViewGameOverview.xaml can be found [here](UiIntegrationExamples/UiIntegrationDetailsViewExample). See [Example Overview](#example-overview).
 
 ### Theme Icons
 
