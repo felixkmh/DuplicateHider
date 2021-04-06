@@ -291,6 +291,7 @@ namespace DuplicateHider
                     {
                         if (guids.Remove(oldData.Id))
                         {
+                            updatedIds.Add(oldData.Id);
                             var filtered = (new Game[] { oldData, newData }).AsEnumerable().Filter(gameFilter);
                             if (filtered.Count() < 2)
                             {
