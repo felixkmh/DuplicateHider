@@ -1,3 +1,5 @@
+## WARNING: The new features in this branch as well as the Playnite 9 API that it uses are still under active development. So breaking changes are to be expected.
+
 # DuplicateHider
 
 [Playnite Forum Post](https://playnite.link/forum/thread-308.html)  
