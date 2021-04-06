@@ -316,13 +316,16 @@ namespace DuplicateHider.Controls
             {
                 if (game != null)
                 {
-                    return (new Game[] { game })
+                    var copys = (new Game[] { game })
                             .Concat(dh.GetOtherCopies(game))
                             .Distinct()
                             .OrderBy(g => DuplicateHiderPlugin.DHP.GetGamePriority(g.Id))
-                            .ThenByDescending(g=> g.Hidden)
-                            .ThenBy(g => g.Id)
-                            .Take(MaxNumberOfIcons);
+                            .ThenBy(g => g.Hidden ? 1 : -1)
+                            .ThenBy(g => g.Id);
+                    if (MaxNumberOfIcons > 0)
+                        return copys.Take(MaxNumberOfIcons);
+                    else
+                        return copys;
                 }
             }
 
