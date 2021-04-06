@@ -114,7 +114,7 @@ namespace DuplicateHider
 
         public static string Suffix(this string name, int i)
         {
-            return i == 0 ? name : name + i.ToString();
+            return i == 0 ? name : (name + i.ToString());
         }
     }
 }

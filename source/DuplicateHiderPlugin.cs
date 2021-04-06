@@ -34,12 +34,10 @@ namespace DuplicateHider
 
         private Dictionary<string, List<Guid>> index { get; set; } = new Dictionary<string, List<Guid>>();
 
-        internal static readonly ConcurrentDictionary<GameSource, BitmapImage> _SourceIconCache
-            = new ConcurrentDictionary<GameSource, BitmapImage>();
-
         internal static readonly IconCache SourceIconCache = new IconCache();
 
         public DuplicateHiderSettingsView SettingsView { get; private set; }
+
 
 
         public DuplicateHiderPlugin(IPlayniteAPI api) : base(api)
@@ -48,7 +46,7 @@ namespace DuplicateHider
             DHP = this;
             API = api;
             settings = new DuplicateHiderSettings(this);
-            var elements = new List<string>(Constants.NUMBEROFSOURCESELECTORS) { "SourceSelector" };
+            var elements = new HashSet<string>() { "SourceSelector" };
             for (int i = 1; i < Constants.NUMBEROFSOURCESELECTORS; ++i)
             {
                 bool foundStyle = false;
@@ -66,43 +64,50 @@ namespace DuplicateHider
                 }
                 if (foundStyle && validButtonStyle && validStackStyle)
                 {
-                    elements.Add("SourceSelector".Suffix(i));
-                    System.Diagnostics.Debug.WriteLine($"Added {elements.Last()} as Custom Element.");
-                    logger.Debug($"Added {elements.Last()} as Custom Element.");
+                    var name = "SourceSelector".Suffix(i);
+                    elements.Add(name);
+                    System.Diagnostics.Debug.WriteLine($"Added {name} as Custom Element.");
+                    logger.Debug($"Added {name} as Custom Element.");
                 }
             }
 
             for (int i = 0; i < Constants.NUMBEROFSOURCESELECTORS; ++i)
             {
-                elements.Add("ContentControl".Suffix(i));
-                System.Diagnostics.Debug.WriteLine($"Added {elements.Last()} as Custom Element.");
-                logger.Debug($"Added {elements.Last()} as Custom Element.");
+                string name = "ContentControl".Suffix(i);
+                elements.Add(name);
+                System.Diagnostics.Debug.WriteLine($"Added {name} as Custom Element.");
+                logger.Debug($"Added {name} as Custom Element.");
             }
-
-            DHContentControl.SourceIconCache = _SourceIconCache;
 
             AddCustomElementSupport(new AddCustomElementSupportArgs()
             {
-                ElementList = elements,
+                ElementList = elements.ToList(),
                 SourceName = "DuplicateHider",
                 SettingsRoot = "settings"
             });
         }
 
+        static int GeneratedElements = 0;
+
         public override Control GetGameViewControl(GetGameViewControlArgs args)
         {
             if (settings.EnableUiIntegration)
             {
+                if (args.Name=="SourceSelector")
+                {
+                    System.Diagnostics.Debug.WriteLine("Generated SourceSelector:" + (++GeneratedElements));
+                    return new SourceSelector(0, Orientation.Horizontal);
+                } else
                 if (args.Name.StartsWith("SourceSelector"))
                 {
                     int n;
-                    if (!int.TryParse(args.Name.Substring(14), out n))
+                    if (int.TryParse(args.Name.Substring(14), out n))
                     {
-                        n = 0;
+                        System.Diagnostics.Debug.WriteLine("Generated SourceSelector:" + (++GeneratedElements));
+                        return new SourceSelector(n, Orientation.Horizontal);
                     }
-                    SourceSelector element = new SourceSelector(n, Orientation.Horizontal);
 
-                    return element;
+
                 } else if (args.Name.StartsWith("ContentControl")) 
                 {
                     int n;
@@ -239,16 +244,21 @@ namespace DuplicateHider
             IFilter<string> nameFilter = GetNameFilter();
             if (settings.AddHiddenToIgnoreList)
             {
+                bool dirty = false;
                 foreach (var change in e.UpdatedItems)
                 {
                     if (change.OldData.Hidden != change.NewData.Hidden)
                     {
                         settings.IgnoredGames.Add(change.NewData.Id);
+                        dirty = true;
                     }
                 }
-                BuildIndex(PlayniteApi.Database.Games, gameFilter, nameFilter);
-                var revealed = SetDuplicateState(Hidden);
-                PlayniteApi.Database.Games.Update(revealed);
+                if (dirty)
+                {
+                    BuildIndex(PlayniteApi.Database.Games, gameFilter, nameFilter);
+                    var revealed = SetDuplicateState(Hidden);
+                    PlayniteApi.Database.Games.Update(revealed);
+                }
                 foreach (var change in e.UpdatedItems)
                 {
                     if (change.OldData.Hidden != change.NewData.Hidden)
@@ -269,15 +279,27 @@ namespace DuplicateHider
                     }
                 }
             }
+            HashSet<Guid> updatedIds = new HashSet<Guid>();
             if (settings.UpdateAutomatically)
             {
-                foreach (var oldData in (from update in e.UpdatedItems select update.OldData).Filter(gameFilter))
+                foreach (var change in  e.UpdatedItems)
                 {
+                    var oldData = change.OldData;
+                    var newData = change.NewData;
                     var filteredName = oldData.Name.Filter(nameFilter);
                     if (index.TryGetValue(filteredName, out var guids))
                     {
                         if (guids.Remove(oldData.Id))
                         {
+                            var filtered = (new Game[] { oldData, newData }).AsEnumerable().Filter(gameFilter);
+                            if (filtered.Count() < 2)
+                            {
+                                if (newData.Hidden)
+                                {
+                                    newData.Hidden = false;
+                                    PlayniteApi.Database.Games.Update(newData);
+                                }
+                            }
                             if (guids.Count == 1)
                             {
                                 if (PlayniteApi.Database.Games.Get(guids[0]) is Game game)
@@ -286,8 +308,8 @@ namespace DuplicateHider
                                     PlayniteApi.Database.Games.Update(game);
                                 }
                             }
+                            guids.ForEach(id => updatedIds.Add(id));
                         }
-                        GroupUpdated?.Invoke(this, guids);
                     }
                 }
                 foreach (var newData in (from update in e.UpdatedItems select update.NewData).Filter(gameFilter))
@@ -296,9 +318,10 @@ namespace DuplicateHider
                     if (index.TryGetValue(filteredName, out var guids))
                     {
                         guids.InsertSorted(newData.Id, GetGamePriority);
-                        GroupUpdated?.Invoke(this, guids);
+                        guids.ForEach(id => updatedIds.Add(id));
                     }
                 }
+                GroupUpdated?.Invoke(this, updatedIds);
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
             }
             PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;

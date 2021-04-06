@@ -28,9 +28,6 @@ namespace DuplicateHider.Controls
     /// </summary>
     public partial class DHContentControl : ContentControl
     {
-        internal static ConcurrentDictionary<GameSource, BitmapImage> SourceIconCache
-            = new ConcurrentDictionary<GameSource, BitmapImage>();
-
         public ObservableCollection<ListData> Games { get; set; } = new ObservableCollection<ListData>();
 
         public Boolean MoreThanOneCopy {
@@ -69,6 +66,7 @@ namespace DuplicateHider.Controls
             {
                 Games.Clear();
             }
+            System.Diagnostics.Debug.WriteLine("Called Group Update");
         }
 
         public DHContentControl(int n) : this()
