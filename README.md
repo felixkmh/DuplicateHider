@@ -152,7 +152,7 @@ By adding
 <sys:Int32 x:Key="DuplicateHider_MaxNumberOfIcons">4</sys:Int32>
 ```
 
-to the resource dictionary, a Theme can also specify the maximum number of icons per stack. In the example above, it is set to 4, which is also the default if no entry is supplied. Each ```DuplicateHider_MaxNumberOfIconsN``` will apply to ```DuplicateHider_SourceSelectorN``` and ```DuplicateHider_ContentControlN```. A value less than 1 means no limit on the number of icons.
+to the resource dictionary, a Theme can also specify the maximum number of icons per element. In the example above, it is set to 4, which is also the default if no entry is supplied. Each ```DuplicateHider_MaxNumberOfIconsN``` will apply to ```DuplicateHider_SourceSelectorN``` and ```DuplicateHider_ContentControlN```. A value less than 1 means no limit on the number of icons.
 
 ### Example Overview
 
