@@ -8,7 +8,7 @@
     mc:Ignorable="d">
 
     <Style
-        x:Key="DuplicateHider_IconButtonStyle"
+        x:Key="DuplicateHider_IconContentControlStyle"
         BasedOn="{StaticResource {x:Type ContentControl}}"
         TargetType="ContentControl">
         <Style.Resources>
