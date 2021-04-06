@@ -59,7 +59,7 @@ namespace DuplicateHider
                     foundStyle = true;
                     validStackStyle = stackStyle.TargetType == typeof(StackPanel);
                 }
-                if (PlayniteApi.Resources.GetResource($"DuplicateHider_IconButtonStyle{i}") is Style buttonStyle)
+                if (PlayniteApi.Resources.GetResource($"DuplicateHider_IconContentControlStyle{i}") is Style buttonStyle)
                 {
                     foundStyle = true;
                     validButtonStyle = buttonStyle.TargetType == typeof(Button);

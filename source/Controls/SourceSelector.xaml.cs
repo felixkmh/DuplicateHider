@@ -174,7 +174,7 @@ namespace DuplicateHider.Controls
         private ContentControl CreateSourceIcon()
         {
             var bt = new ContentControl();
-            string key = $"DuplicateHider_IconButtonStyle".Suffix(selectorNumber);
+            string key = $"DuplicateHider_IconContentControlStyle".Suffix(selectorNumber);
             if (DuplicateHiderPlugin.API.Resources.
                 GetResource(key) is Style style && style.TargetType == typeof(ContentControl))
             {
