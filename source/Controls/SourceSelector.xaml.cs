@@ -33,8 +33,6 @@ namespace DuplicateHider.Controls
         internal static readonly UnboundedCache<ContentControl>[] ButtonCaches
             = new UnboundedCache<ContentControl>[Constants.NUMBEROFSOURCESELECTORS];
 
-        protected Game Context { get; set; } = null;
-
         internal int selectorNumber = 0;
 
         protected static DropShadowEffect dropShadow = new DropShadowEffect
@@ -72,8 +70,6 @@ namespace DuplicateHider.Controls
                 IconStackPanel.Orientation = orientation;
             }
 
-            Context = GameContext;
-
             SetResourceReference(MaxNumberOfIconsProperty, "DuplicateHider_MaxNumberOfIcons".Suffix(number));
 
         }
@@ -105,63 +101,33 @@ namespace DuplicateHider.Controls
             if (e.NewValue as bool? == true)
             {
                 DuplicateHiderPlugin.DHP.GroupUpdated += DuplicateHider_GroupUpdated;
-                DataContextChanged += SourceSelector_DataContextChanged;
-                try
-                {
-                    dynamic cont = DataContext;
-                    Guid id = cont.Id;
-                    var game = DuplicateHiderPlugin.DHP.PlayniteApi.Database.Games.Get(id);
-                    Context = game;
-                    UpdateGameSourceIcons(Context);
-                }
-                catch (Exception ex)
-                {
-                }
+                UpdateGameSourceIcons(GameContext);
             } else
             {
-                DataContextChanged -= SourceSelector_DataContextChanged;
                 DuplicateHiderPlugin.DHP.GroupUpdated -= DuplicateHider_GroupUpdated;
                 ButtonCaches[selectorNumber].Consume(IconStackPanel.Children);
-            }
-        }
-
-        private void SourceSelector_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            ButtonCaches[selectorNumber].Consume(IconStackPanel.Children);
-            try
-            {
-                if (e.NewValue != null)
-                {
-                    dynamic cont = e.NewValue;
-                    Guid id = cont.Id;
-                    var game = DuplicateHiderPlugin.DHP.PlayniteApi.Database.Games.Get(id);
-                    Context = game;
-                    if (IsVisible)
-                    {
-                        UpdateGameSourceIcons(Context);
-                    }
-                } 
-            }
-            catch (Exception)
-            {
             }
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
             base.GameContextChanged(oldContext, newContext);
+            if (IsVisible)
+            {
+                UpdateGameSourceIcons(GameContext);
+            }
         }
 
         private void DuplicateHider_GroupUpdated(object sender, IEnumerable<Guid> e)
         {
-            if (Context is Game game)
+            if (GameContext is Game game)
             {
                 if (e.Any(id => game.Id == id))
                 {
                     UpdateGameSourceIcons(game);
+                    System.Diagnostics.Debug.WriteLine("Called Group Update");
                 }
             }
-            System.Diagnostics.Debug.WriteLine("Called Group Update");
         }
 
         internal void CreateGameSourceIcons()
