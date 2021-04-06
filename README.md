@@ -87,6 +87,8 @@ when placed in a ListViewItem in the DetailsView. See Playnite Documentation to 
 
 There are up to 10 SourceSelectors, ```DuplicateHider_SourceSelector```, ```DuplicateHider_SourceSelector1```, ```DuplicateHider_SourceSelector2```, and so on that you can use by using their names as the name of a  ```ContentControl``` in a supported template or view. For each SourceSelector, you can provide styles for their ```StackPanel``` and the icons which are just ```ContentControls```s. The styles need to have the keys ```DuplicateHider_IconContentControlStyle``` and ```DuplicateHider_IconStackPanelStyle``` (or with the added number for the other ones). SourceSelector utilizes a cache for the UI elements and Icons and is suitable for use in the Item Templates for the GridView and DetailsView. Example Styles can be found [here](UiIntegrationExamples/DuplicateHider_SourceSelector_Styles_Example.xaml). Each Icon ContentControl has a corresponding ListData object set as its DataContext, see below which Properties are available.
 
+> __Note__: ```DuplicateHider_SourceSelectorN``` is only registered if either of ```DuplicateHider_IconContentControlStyleN``` or ```DuplicateHider_IconStackPanelStyle``` are found. ```DuplicateHider_SourceSelector``` is always registered.
+
 ### ContentControl
 
 There are also 10 instances of ```DuplicateHider_ContentControl``` (in case you want to use several in the same View), numbered like the SourceSelector. These basically only provide a DataContext and need a Style/Template to do anything. To apply a Style, set it as the __Tag__ of a ContentControl with x:Name="DuplicateHider_ContentControl" (or one of the 9 others):
@@ -142,7 +144,7 @@ By adding
 <sys:Int32 x:Key="DuplicateHider_MaxNumberOfIcons">4</sys:Int32>
 ```
 
-to the resource dictionary, a Theme can also specify the maximum number of icons per stack. In the example above, it is set to 4, which is also the default if no entry is supplied.
+to the resource dictionary, a Theme can also specify the maximum number of icons per stack. In the example above, it is set to 4, which is also the default if no entry is supplied. Each ```DuplicateHider_MaxNumberOfIconsN``` will apply to ```DuplicateHider_SourceSelectorN``` and ```DuplicateHider_ContentControlN```
 
 ### Example Overview
 | File | Description | Preview |
