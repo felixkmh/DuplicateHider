@@ -85,7 +85,13 @@ when placed in a ListViewItem in the DetailsView. See Playnite Documentation to 
 
 ### SourceSelector
 
-There are up to 10 SourceSelectors, ```DuplicateHider_SourceSelector```, ```DuplicateHider_SourceSelector1```, ```DuplicateHider_SourceSelector2```, and so on that you can use by using their names as the name of a  ```ContentControl``` in a supported template or view. For each SourceSelector, you can provide styles for their ```StackPanel``` and the icons which are just ```ContentControls```s. The styles need to have the keys ```DuplicateHider_IconContentControlStyle``` and ```DuplicateHider_IconStackPanelStyle``` (or with the added number for the other ones). SourceSelector utilizes a cache for the UI elements and Icons and is suitable for use in the Item Templates for the GridView and DetailsView. Example Styles can be found [here](UiIntegrationExamples/DuplicateHider_SourceSelector_Styles_Example.xaml). Each Icon ContentControl has a corresponding ListData object set as its DataContext, see below which Properties are available.
+There are up to 10 SourceSelectors, ```DuplicateHider_SourceSelector```, ```DuplicateHider_SourceSelector1```, ```DuplicateHider_SourceSelector2```, and so on that you can use by using their names as the name of a  ```ContentControl``` in a supported template or view. 
+
+For each SourceSelector, you can provide styles for their ```StackPanel``` and the icons which are just ```ContentControls```s. The styles need to have the keys ```DuplicateHider_IconContentControlStyle``` and ```DuplicateHider_IconStackPanelStyle``` (or with the added number for the other ones). 
+
+SourceSelector utilizes a cache for the UI elements and Icons and is suitable for use in the Item Templates for the GridView and DetailsView. 
+
+Example Styles can be found [here](UiIntegrationExamples/DuplicateHider_SourceSelector_Styles_Example.xaml). Each Icon ContentControl has a corresponding ListData object set as its DataContext, see below which Properties are available.
 
 > __Note__: ```DuplicateHider_SourceSelectorN``` is only registered if either ```DuplicateHider_IconContentControlStyleN``` or ```DuplicateHider_IconStackPanelStyleN``` is found. ```DuplicateHider_SourceSelector``` is always registered.
 
@@ -137,6 +143,8 @@ Themes can also supply their own source icons, by adding entries to the resource
 
 to the `Media.xaml` file and place `ubisoft.png` into the `Image/Icons` folder. 
 > __Note__: Theme Icons are disabled by default and need to be enabled in the settings in order for them to be used.
+
+### Icon Number Limit
 
 By adding
 
