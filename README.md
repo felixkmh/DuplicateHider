@@ -91,7 +91,7 @@ For each SourceSelector, you can provide styles for their ```StackPanel``` and t
 
 SourceSelector utilizes a cache for the UI elements and Icons and is suitable for use in the Item Templates for the GridView and DetailsView. 
 
-Example Styles can be found [here](UiIntegrationExamples/DuplicateHider_SourceSelector_Styles_Example.xaml). Each Icon ContentControl has a corresponding ListData object set as its DataContext, see below which Properties are available.
+Example Styles can be found [here](UiIntegrationExamples/DuplicateHider_SourceSelector_Styles_Example.xaml). Each Icon ContentControl has a corresponding ListData object set as its DataContext. An overview of available Properties can be found in the next section.
 
 > __Note__: ```DuplicateHider_SourceSelectorN``` is only registered if either ```DuplicateHider_IconContentControlStyleN``` or ```DuplicateHider_IconStackPanelStyleN``` is found. ```DuplicateHider_SourceSelector``` is always registered.
 
@@ -152,7 +152,7 @@ By adding
 <sys:Int32 x:Key="DuplicateHider_MaxNumberOfIcons">4</sys:Int32>
 ```
 
-to the resource dictionary, a Theme can also specify the maximum number of icons per element. In the example above, it is set to 4, which is also the default if no entry is supplied. Each ```DuplicateHider_MaxNumberOfIconsN``` will apply to ```DuplicateHider_SourceSelectorN``` and ```DuplicateHider_ContentControlN```. A value less than 1 means no limit on the number of icons.
+to the resource dictionary, a Theme can also specify the maximum number of icons per element. In the example above, it is set to 4, which is also the default if no entry is supplied. Each ```DuplicateHider_MaxNumberOfIconsN``` will apply to both ```DuplicateHider_SourceSelectorN``` and ```DuplicateHider_ContentControlN```. A value less than 1 means no limit on the number of icons.
 
 ### Example Overview
 
