@@ -96,7 +96,7 @@ namespace DuplicateHider.Controls
         {
             if (newContext?.Id != CurrentGame?.Game?.Id)
             {
-                CurrentGame = new ListData(DuplicateHiderPlugin.SourceIconCache.GetOrGenerate(newContext), newContext, true);
+                CurrentGame = newContext is Game? new ListData(DuplicateHiderPlugin.SourceIconCache.GetOrGenerate(newContext), newContext, true) : null;
                 UpdateContent(newContext);
             }
         }
