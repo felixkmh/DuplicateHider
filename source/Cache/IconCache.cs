@@ -154,7 +154,7 @@ namespace DuplicateHider.Cache
             paths.Add(resourceIconPath);
             if (!preferUserIcons) paths.Add(userIconPath);
 
-            paths.Add("pack://application:,,,/DuplicateHider;component/icons/Playnite.ico");
+            paths.Add("pack://application:,,,/DuplicateHider;component/icons/playnite.ico");
 
             return paths.Where(p => !string.IsNullOrEmpty(p) && Uri.TryCreate(p, UriKind.RelativeOrAbsolute, out var _));
         }
