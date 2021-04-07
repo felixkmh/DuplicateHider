@@ -93,6 +93,8 @@ For each SourceSelector, you can provide styles for their ```StackPanel``` and t
 
 SourceSelector utilizes a cache for the UI elements and Icons and is suitable for use in the Item Templates for the GridView and DetailsView. 
 
+> __Note__: The icon ui elements are also recycled when a SourceSelector's IsVisible property is false, so when animating the opacity, the Visibility property should be Hidden or Collapsed when the opacity is 0.
+
 Example Styles can be found [here](UiIntegrationExamples/DuplicateHider_SourceSelector_Styles_Example.xaml). Each Icon ContentControl has a corresponding ListData object set as its DataContext. An overview of available Properties can be found in the next section.
 
 > __Note__: ```DuplicateHider_SourceSelectorN``` is only registered if either ```DuplicateHider_IconContentControlStyleN``` or ```DuplicateHider_IconStackPanelStyleN``` is found. ```DuplicateHider_SourceSelector``` is always registered.
