@@ -38,7 +38,7 @@ namespace DuplicateHider
 
         public DuplicateHiderSettingsView SettingsView { get; private set; }
 
-
+        private FileSystemWatcher iconWatcher = null;
 
         public DuplicateHiderPlugin(IPlayniteAPI api) : base(api)
         {
@@ -127,10 +127,18 @@ namespace DuplicateHider
         public override void OnApplicationStarted()
         {
             // Create icon folder
-            if (!Directory.Exists(System.IO.Path.Combine(GetPluginUserDataPath(), "source_icons")))
+            if (!Directory.Exists(GetUserIconFolderPath()))
             {
-                Directory.CreateDirectory(System.IO.Path.Combine(GetPluginUserDataPath(), "source_icons"));
+                Directory.CreateDirectory(GetUserIconFolderPath());
             }
+            iconWatcher = new FileSystemWatcher(GetUserIconFolderPath());
+
+            iconWatcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.CreationTime;
+            iconWatcher.Renamed += IconWatcher_Changed;
+            iconWatcher.Created += IconWatcher_Changed;
+            iconWatcher.Deleted += IconWatcher_Changed;
+            iconWatcher.EnableRaisingEvents = true;
+
             // Clean orphaned entries from Priorites list
             for (int i = settings.Priorities.Count - 1; i >= 0; --i)
             {
@@ -166,6 +174,22 @@ namespace DuplicateHider
             SourceIconCache.UserIconFolderPaths.Add(GetUserIconFolderPath());
         }
 
+        private void IconWatcher_Changed(object sender, FileSystemEventArgs e)
+        {
+            if (e.Name is string)
+            {
+                if (
+                       e.Name.EndsWith(".ico", StringComparison.OrdinalIgnoreCase)
+                    || e.Name.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
+                    || e.Name.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase))
+                {
+                    SourceIconCache.Clear();
+                    GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
+                    System.Diagnostics.Debug.WriteLine($"Name={e.Name}, Type={e.ChangeType}");
+                }
+            }
+        }
+
         public string GetUserIconFolderPath()
         {
             return Path.Combine(
@@ -176,6 +200,7 @@ namespace DuplicateHider
 
         public override void OnApplicationStopped()
         {
+            iconWatcher.EnableRaisingEvents = false;
             PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
             PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
             settings.OnSettingsChanged -= Settings_OnSettingsChanged;
