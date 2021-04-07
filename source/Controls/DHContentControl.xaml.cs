@@ -60,6 +60,12 @@ namespace DuplicateHider.Controls
             InitializeComponent();
             DataContext = this;
             DuplicateHiderPlugin.DHP.GroupUpdated += DHP_GroupUpdated;
+            MouseDown += DHContentControl_MouseDown;
+        }
+
+        private void DHContentControl_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
         }
 
         private void DHP_GroupUpdated(object sender, IEnumerable<Guid> e)
