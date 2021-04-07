@@ -30,17 +30,20 @@ namespace DuplicateHider.Cache
 
         internal BitmapImage generate(Game game)
         {
-
-            if (GetSourceIconPath(game) is string path)
+            foreach (var path in GetSourceIconPaths(game))
             {
-                var image = new BitmapImage();
-                image.BeginInit();
-                image.UriSource = new Uri(path);
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.EndInit();
-                image.Freeze();
-                return image;
+                try
+                {
+                    var image = new BitmapImage();
+                    image.BeginInit();
+                    image.UriSource = new Uri(path);
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.EndInit();
+                    image.Freeze();
+                    return image;
+                } catch (Exception) {}
             }
+
             return default(BitmapImage);
         }
 
@@ -92,7 +95,7 @@ namespace DuplicateHider.Cache
             }
         }
 
-        protected string GetSourceIconPath(Game game)
+        protected IEnumerable<string> GetSourceIconPaths(Game game)
         {
             var name = game.Source != null ? game.Source.Name : Constants.UNDEFINED_SOURCE;
             bool enableThemeIcons = DuplicateHiderPlugin.DHP.settings.EnableThemeIcons;
@@ -110,11 +113,8 @@ namespace DuplicateHider.Cache
             if (!preferUserIcons) paths.Add(userIconPath);
             paths.Add(pluginIconPath);
 
-            var path = paths.FirstOrDefault(p => !string.IsNullOrEmpty(p));
-
-            return Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var _)
-                ? path
-                : GetDefaultIconPath();
+            return paths.Where(p => !string.IsNullOrEmpty(p) && Uri.TryCreate(p, UriKind.RelativeOrAbsolute, out var _))
+                        .Concat(GetDefaultIconPaths());
         }
 
         private static string GetThemeIconPath(string sourceName)
@@ -138,7 +138,7 @@ namespace DuplicateHider.Cache
                  || f.EndsWith(".ico", StringComparison.OrdinalIgnoreCase));
         }
 
-        protected string GetDefaultIconPath()
+        protected IEnumerable<string> GetDefaultIconPaths()
         {
             var name = "Default";
             bool enableThemeIcons = DuplicateHiderPlugin.DHP.settings.EnableThemeIcons;
@@ -154,10 +154,9 @@ namespace DuplicateHider.Cache
             paths.Add(resourceIconPath);
             if (!preferUserIcons) paths.Add(userIconPath);
 
-            var path = paths.FirstOrDefault(p => !string.IsNullOrEmpty(p));
-            return Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var _)
-                ? path
-                : "pack://application:,,,/DuplicateHider;component/icons/undefined.ico";
+            paths.Add("pack://application:,,,/DuplicateHider;component/icons/Playnite.ico");
+
+            return paths.Where(p => !string.IsNullOrEmpty(p) && Uri.TryCreate(p, UriKind.RelativeOrAbsolute, out var _));
         }
 
         protected string GetPluginIconPath(Game game)
