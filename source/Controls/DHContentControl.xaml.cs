@@ -64,17 +64,21 @@ namespace DuplicateHider.Controls
 
         private void DHP_GroupUpdated(object sender, IEnumerable<Guid> e)
         {
-            if (GameContext is Game game)
+            Dispatcher.Invoke(() =>
             {
-                if (e.TryFind(id => GameContext.Id == id, out var _))
+                if (GameContext is Game game)
                 {
-                    UpdateContent(GameContext, true);
+                    if (e.TryFind(id => GameContext.Id == id, out var _))
+                    {
+                        UpdateContent(GameContext, true);
+                    }
                 }
-            } else
-            {
-                Games.Clear();
-            }
-            System.Diagnostics.Debug.WriteLine("Called Group Update");
+                else
+                {
+                    Games.Clear();
+                }
+                System.Diagnostics.Debug.WriteLine("Called Group Update");
+            });
         }
 
         public DHContentControl(int n) : this()

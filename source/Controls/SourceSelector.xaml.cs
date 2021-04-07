@@ -120,14 +120,17 @@ namespace DuplicateHider.Controls
 
         private void DuplicateHider_GroupUpdated(object sender, IEnumerable<Guid> e)
         {
-            if (GameContext is Game game)
+            Dispatcher.Invoke(() =>
             {
-                if (e.Any(id => game.Id == id))
+                if (GameContext is Game game)
                 {
-                    UpdateGameSourceIcons(game);
-                    System.Diagnostics.Debug.WriteLine("Called Group Update");
+                    if (e.Any(id => game.Id == id))
+                    {
+                            UpdateGameSourceIcons(game);
+                        System.Diagnostics.Debug.WriteLine("Called Group Update");
+                    }
                 }
-            }
+            });
         }
 
         internal void CreateGameSourceIcons()
