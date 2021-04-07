@@ -2,6 +2,7 @@
 using DuplicateHider.Controls;
 using Newtonsoft.Json;
 using Playnite.SDK;
+using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
@@ -123,6 +124,15 @@ namespace DuplicateHider
             return null;
         }
 
+        public override List<TopPanelItem> GetTopPanelItems()
+        {
+            return new List<TopPanelItem>() {
+                new TopPanelItem() {
+                    Icon = new Image() { Source = SourceIconCache.GetOrGenerate(new Game()) }, Action = () => PlayniteApi.Dialogs.ShowMessage("Hello World"), ToolTip = "Hello World"
+                } 
+            };
+        }
+
         #region Events       
         public override void OnApplicationStarted()
         {
@@ -160,6 +170,7 @@ namespace DuplicateHider
             }
 
             BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
+            GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
             if (settings.UpdateAutomatically)
             {
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));

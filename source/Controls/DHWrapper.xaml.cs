@@ -26,7 +26,7 @@ namespace DuplicateHider.Controls
             InitializeComponent();
         }
 
-        public override void GameContextChanged(Game oldContext, Game newContext)
+        protected override void OnVisualParentChanged(DependencyObject oldParent)
         {
             if (DH_ContentControl.Style == null)
             {
@@ -38,6 +38,11 @@ namespace DuplicateHider.Controls
                     }
                 }
             }
+            base.OnVisualParentChanged(oldParent);
+        }
+
+        public override void GameContextChanged(Game oldContext, Game newContext)
+        {
             DH_ContentControl.GameContext = newContext;
             DH_ContentControl.GameContextChanged(oldContext, newContext);
             base.GameContextChanged(oldContext, newContext);

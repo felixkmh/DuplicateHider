@@ -109,10 +109,12 @@ namespace DuplicateHider.Controls
             }
         }
 
+
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
             if (IsVisible)
             {
+
                 UpdateGameSourceIcons(GameContext);
             }
             base.GameContextChanged(oldContext, newContext);
@@ -154,9 +156,9 @@ namespace DuplicateHider.Controls
                 bt.SetResourceReference(StyleProperty, key);
             } else
             {
-                bt.BorderBrush = null;
-                bt.Foreground = null;
-                bt.Background = null;
+                bt.BorderBrush = System.Windows.Media.Brushes.Transparent;
+                bt.Foreground = System.Windows.Media.Brushes.Transparent;
+                bt.Background = System.Windows.Media.Brushes.Transparent;
                 bt.Padding = new Thickness(0);
                 bt.Margin = new Thickness(2, 0, 2, 0);
                 bt.BorderThickness = new Thickness(0);

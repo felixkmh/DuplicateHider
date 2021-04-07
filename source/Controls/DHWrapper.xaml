@@ -4,6 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:dh="clr-namespace:DuplicateHider.Controls"
-           mc:Ignorable="d" >
-    <dh:DHContentControl x:Name="DH_ContentControl"/>
+           mc:Ignorable="d" Focusable="False">
+    <dh:DHContentControl x:Name="DH_ContentControl" Focusable="False"/>
 </PluginUserControl>
