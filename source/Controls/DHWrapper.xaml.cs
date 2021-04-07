@@ -40,6 +40,7 @@ namespace DuplicateHider.Controls
             }
             DH_ContentControl.GameContext = newContext;
             DH_ContentControl.GameContextChanged(oldContext, newContext);
+            base.GameContextChanged(oldContext, newContext);
         }
 
     }

@@ -86,12 +86,6 @@ namespace DuplicateHider.Controls
             
         }
 
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-        }
-
         public void GameContextChanged(Game oldContext, Game newContext)
         {
             if (newContext?.Id != CurrentGame?.Game?.Id)
@@ -114,7 +108,7 @@ namespace DuplicateHider.Controls
             {
                 ListData item = null;
                 bool sameGroup = newContext is Game && Games.TryFind(g => g.Game.Id == newContext.Id, out item);
-                SwitchedGroup = !sameGroup;// && (Games.IndexOf(item) == 0 && ByAction);
+                SwitchedGroup = !sameGroup || forceUpdate;// && (Games.IndexOf(item) == 0 && ByAction);
                 ByAction = false;
                 if (sameGroup && !forceUpdate)
                 {

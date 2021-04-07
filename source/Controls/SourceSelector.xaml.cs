@@ -111,11 +111,11 @@ namespace DuplicateHider.Controls
 
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
-            base.GameContextChanged(oldContext, newContext);
             if (IsVisible)
             {
                 UpdateGameSourceIcons(GameContext);
             }
+            base.GameContextChanged(oldContext, newContext);
         }
 
         private void DuplicateHider_GroupUpdated(object sender, IEnumerable<Guid> e)
@@ -162,15 +162,17 @@ namespace DuplicateHider.Controls
                 bt.BorderThickness = new Thickness(0);
                 bt.HorizontalAlignment = HorizontalAlignment.Stretch;
                 bt.VerticalAlignment = VerticalAlignment.Center;
-                bt.MouseEnter += Icon_MouseEnter;
-                bt.MouseLeave += Icon_MouseLeave;
             }
+
+            bt.MouseEnter += Icon_MouseEnter;
+            bt.MouseLeave += Icon_MouseLeave;
 
             bt.DataContext = new ListData();
 
             bt.MouseLeftButtonUp += Bt_MouseLeftButtonUp;
             bt.MouseDoubleClick += Bt_MouseDoubleClick;
             bt.MouseRightButtonUp += Bt_MouseRightButtonUp;
+            bt.MouseDown += Bt_MouseDown;
 
             Image icon = new Image()
             {
@@ -182,6 +184,11 @@ namespace DuplicateHider.Controls
             bt.Content = icon;
             bt.Visibility = Visibility.Collapsed;
             return bt;
+        }
+
+        private void Bt_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
         }
 
         private void Bt_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -227,7 +234,6 @@ namespace DuplicateHider.Controls
             if (sender is ContentControl bt)
             {
                 bt.Effect = dropShadow;
-
             }
         }
 
