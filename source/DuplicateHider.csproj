@@ -147,12 +147,10 @@
     <Resource Include="icons\psn.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\undefined.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="icons\twitch.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="icons\playnite.ico" />
     <Content Include="Localization\en_US.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
