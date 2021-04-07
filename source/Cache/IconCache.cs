@@ -33,7 +33,11 @@ namespace DuplicateHider.Cache
 
             if (GetSourceIconPath(game) is string path)
             {
-                var image = new BitmapImage(new Uri(path));
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.UriSource = new Uri(path);
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.EndInit();
                 image.Freeze();
                 return image;
             }
