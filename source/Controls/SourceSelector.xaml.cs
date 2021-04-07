@@ -239,42 +239,47 @@ namespace DuplicateHider.Controls
 
         internal void UpdateGameSourceIcons(Game context)
         {
-            var games = GetGames(context).ToList();
+            if (context is Game)
+            {
+                var games = GetGames(context).ToList();
 
-            if (games.Count < 2 && !DuplicateHiderPlugin.DHP.settings.ShowSingleIcon)
+                if (games.Count < 2 && !DuplicateHiderPlugin.DHP.settings.ShowSingleIcon)
+                {
+                    ButtonCaches[selectorNumber].Consume(IconStackPanel.Children);
+                    return;
+                }
+
+                for(int i = 0; i < games.Count; ++i)
+                {
+                    ContentControl button = null;
+                    if (i < IconStackPanel.Children.Count)
+                    {
+                        button = IconStackPanel.Children[i] as ContentControl;
+                    } else
+                    {
+                        button = ButtonCaches[selectorNumber].Get();
+                        IconStackPanel.Children.Add(button);
+                    }
+                    Game game = games[i];
+                    button.Visibility = Visibility.Visible;
+                    button.DataContext = new ListData(game, game.Id == context?.Id);
+                    button.ToolTip = DuplicateHiderPlugin.DHP.ExpandDisplayString(game, DuplicateHiderPlugin.DHP.settings.DisplayString);
+                    if (button.Content is Image icon)
+                    {
+                        icon.Source = GetSourceIcon(game);
+                        icon.Opacity = game.IsInstalled ? 1.0 : 0.5;
+                    }
+                }
+                for (int i = IconStackPanel.Children.Count - 1; i > games.Count - 1; --i)
+                {
+                    ContentControl button = IconStackPanel.Children[i] as ContentControl;
+                    ButtonCaches[selectorNumber].Push(button);
+                    IconStackPanel.Children.RemoveAt(i);
+                }
+            } else
             {
                 ButtonCaches[selectorNumber].Consume(IconStackPanel.Children);
-                return;
             }
-
-            for(int i = 0; i < games.Count; ++i)
-            {
-                ContentControl button = null;
-                if (i < IconStackPanel.Children.Count)
-                {
-                    button = IconStackPanel.Children[i] as ContentControl;
-                } else
-                {
-                    button = ButtonCaches[selectorNumber].Get();
-                    IconStackPanel.Children.Add(button);
-                }
-                Game game = games[i];
-                button.Visibility = Visibility.Visible;
-                button.DataContext = new ListData(game, game.Id == context?.Id);
-                button.ToolTip = DuplicateHiderPlugin.DHP.ExpandDisplayString(game, DuplicateHiderPlugin.DHP.settings.DisplayString);
-                if (button.Content is Image icon)
-                {
-                    icon.Source = GetSourceIcon(game);
-                    icon.Opacity = game.IsInstalled ? 1.0 : 0.5;
-                }
-            }
-            for (int i = IconStackPanel.Children.Count - 1; i > games.Count - 1; --i)
-            {
-                ContentControl button = IconStackPanel.Children[i] as ContentControl;
-                ButtonCaches[selectorNumber].Push(button);
-                IconStackPanel.Children.RemoveAt(i);
-            }
-
         }
 
         private IEnumerable<Game> GetGames(Game game)

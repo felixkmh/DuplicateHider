@@ -106,35 +106,41 @@ namespace DuplicateHider.Controls
 
         private void UpdateContent(Game newContext, bool forceUpdate = false)
         {
-            ListData item = null;
-            bool sameGroup = newContext is Game && Games.TryFind(g => g.Game.Id == newContext.Id, out item);
-            SwitchedGroup = !sameGroup;// && (Games.IndexOf(item) == 0 && ByAction);
-            ByAction = false;
-            if (sameGroup && !forceUpdate)
+            if (newContext is Game)
             {
-                foreach (var copy in Games)
+                ListData item = null;
+                bool sameGroup = newContext is Game && Games.TryFind(g => g.Game.Id == newContext.Id, out item);
+                SwitchedGroup = !sameGroup;// && (Games.IndexOf(item) == 0 && ByAction);
+                ByAction = false;
+                if (sameGroup && !forceUpdate)
                 {
-                    if (copy.Game.Id == newContext.Id)
+                    foreach (var copy in Games)
                     {
-                        copy.IsCurrent = true;
-                    }
-                    else
-                    {
-                        copy.IsCurrent = false;
-                    }
+                        if (copy.Game.Id == newContext.Id)
+                        {
+                            copy.IsCurrent = true;
+                        }
+                        else
+                        {
+                            copy.IsCurrent = false;
+                        }
 
+                    }
                 }
-            }
-            else
-            {
-                var copys = GetGames(newContext);
-                MoreThanOneCopy = copys.Count() > 1;
-                Games.Clear();
-                foreach (var copy in copys)
+                else
                 {
-                    var source = copy.Source ?? Constants.DEFAULT_SOURCE;
-                    Games.Add(new ListData(DuplicateHiderPlugin.SourceIconCache.GetOrGenerate(copy), copy, copy.Id == newContext.Id));
+                    var copys = GetGames(newContext);
+                    MoreThanOneCopy = copys.Count() > 1;
+                    Games.Clear();
+                    foreach (var copy in copys)
+                    {
+                        var source = copy.Source ?? Constants.DEFAULT_SOURCE;
+                        Games.Add(new ListData(DuplicateHiderPlugin.SourceIconCache.GetOrGenerate(copy), copy, copy.Id == newContext.Id));
+                    }
                 }
+            } else
+            {
+                Games.Clear();
             }
         }
 
