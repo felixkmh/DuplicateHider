@@ -143,7 +143,7 @@ Themes can also supply their own source icons, by adding entries to the resource
 <BitmapImage x:Key="DuplicateHider_Ubisoft Connect_Icon" UriSource="{ThemeFile 'Images/Icons/ubisoft.png'}" RenderOptions.BitmapScalingMode="Fant" popt:Freeze="True"/>
 ```
 
-to the `Media.xaml` file and place `ubisoft.png` into the `Image/Icons` folder. 
+to the `Media.xaml` file and place `ubisoft.png` into the `Image/Icons` folder. A default icon can be specified by giving it the key ```DuplicateHider_Default_Icon```
 > __Note__: Theme Icons are disabled by default and need to be enabled in the settings in order for them to be used.
 
 ### Icon Number Limit
