@@ -267,7 +267,8 @@
                                             VerticalAlignment="Center"
                                             DockPanel.Dock="Left"
                                             RenderOptions.BitmapScalingMode="Fant"
-                                            Source="{Binding Icon}" />
+                                            Source="{Binding Icon}" 
+                                            x:Name="_IconImage"/>
                                             <TextBlock
                                             x:Name="_SourceText"
                                             Margin="5,0,5,0"
@@ -283,7 +284,16 @@
                                         <DataTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <!--  MouseOver glow effect.  -->
-                                                <Setter TargetName="_Item" Property="Effect">
+                                                <Setter TargetName="_SourceText" Property="Effect">
+                                                    <Setter.Value>
+                                                        <DropShadowEffect
+                                                    BlurRadius="10"
+                                                    Opacity="1"
+                                                    ShadowDepth="0"
+                                                    Color="White" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter TargetName="_IconImage" Property="Effect">
                                                     <Setter.Value>
                                                         <DropShadowEffect
                                                     BlurRadius="10"
@@ -295,7 +305,8 @@
                                             </Trigger>
                                             <!--  Make items for unisntalled games slightly transparent.  -->
                                             <DataTrigger Binding="{Binding Game.IsInstalled}" Value="False">
-                                                <Setter TargetName="_Item" Property="Opacity" Value="0.5" />
+                                                <Setter TargetName="_IconImage" Property="Opacity" Value="0.5" />
+                                                <Setter TargetName="_SourceText" Property="Opacity" Value="0.5" />
                                             </DataTrigger>
                                         </DataTemplate.Triggers>
                                     </DataTemplate>
