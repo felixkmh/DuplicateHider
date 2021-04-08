@@ -128,6 +128,7 @@ namespace DuplicateHider.Cache
 
         private string GetUserIconPath(string sourceName)
         {
+            if (UserIconFolderPaths.Count == 0) UserIconFolderPaths.Add(DuplicateHiderPlugin.DHP.GetUserIconFolderPath());
             return UserIconFolderPaths
                .SelectMany(s => System.IO.Directory.GetFiles(s))
                .Where(f => System.IO.Path.GetFileNameWithoutExtension(f).Equals(sourceName, StringComparison.OrdinalIgnoreCase))

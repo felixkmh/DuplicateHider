@@ -43,7 +43,7 @@ namespace DuplicateHider.Controls
             set => SetValue(CurrentGameProperty, value);
         }
         public static DependencyProperty CurrentGameProperty
-            = DependencyProperty.Register(nameof(CurrentGameProperty), typeof(ListData), typeof(DHContentControl), new PropertyMetadata(null));
+            = DependencyProperty.Register(nameof(CurrentGame), typeof(ListData), typeof(DHContentControl), new PropertyMetadata(null));
 
         public Boolean SwitchedGroup
         {
@@ -51,7 +51,14 @@ namespace DuplicateHider.Controls
             set => SetValue(SwitchedGroupProperty, value);
         }
         public static DependencyProperty SwitchedGroupProperty
-            = DependencyProperty.Register(nameof(SwitchedGroupProperty), typeof(Boolean), typeof(DHContentControl), new PropertyMetadata(true));
+            = DependencyProperty.Register(nameof(SwitchedGroup), typeof(Boolean), typeof(DHContentControl), new PropertyMetadata(true));
+
+        public ICommand OpenMenuCommand {
+            get => (ICommand)GetValue(OpenMenuCommandProperty);
+            set => SetValue(OpenMenuCommandProperty, value);
+        }
+        public static DependencyProperty OpenMenuCommandProperty
+            = DependencyProperty.Register(nameof(OpenMenuCommand), typeof(ICommand), typeof(DHContentControl), new PropertyMetadata(null));
 
         public Game GameContext { get; set; } = null;
 
@@ -61,6 +68,9 @@ namespace DuplicateHider.Controls
             DataContext = this;
             DuplicateHiderPlugin.DHP.GroupUpdated += DHP_GroupUpdated;
             MouseDown += DHContentControl_MouseDown;
+            OpenMenuCommand = new SimpleCommand(() => {
+                
+            });
         }
 
         private void DHContentControl_MouseDown(object sender, MouseButtonEventArgs e)

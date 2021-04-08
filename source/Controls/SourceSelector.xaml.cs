@@ -180,7 +180,7 @@ namespace DuplicateHider.Controls
             {
                 Stretch = Stretch.Uniform
             };
-            RenderOptions.SetBitmapScalingMode(icon, BitmapScalingMode.HighQuality);
+            RenderOptions.SetBitmapScalingMode(icon, BitmapScalingMode.Fant);
 
 
             bt.Content = icon;
