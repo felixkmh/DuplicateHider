@@ -147,6 +147,7 @@ namespace DuplicateHider
             iconWatcher.Renamed += IconWatcher_Changed;
             iconWatcher.Created += IconWatcher_Changed;
             iconWatcher.Deleted += IconWatcher_Changed;
+            iconWatcher.Changed += IconWatcher_Changed;
             iconWatcher.EnableRaisingEvents = true;
 
             // Clean orphaned entries from Priorites list

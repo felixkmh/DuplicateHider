@@ -36,6 +36,7 @@ namespace DuplicateHider.Cache
                 {
                     var image = new BitmapImage();
                     image.BeginInit();
+                    image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
                     image.UriSource = new Uri(path);
                     image.CacheOption = BitmapCacheOption.OnLoad;
                     image.EndInit();
