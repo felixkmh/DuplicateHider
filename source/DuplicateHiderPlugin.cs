@@ -124,15 +124,6 @@ namespace DuplicateHider
             return null;
         }
 
-        public override List<TopPanelItem> GetTopPanelItems()
-        {
-            return new List<TopPanelItem>() {
-                new TopPanelItem() {
-                    Icon = new Image() { Source = SourceIconCache.GetOrGenerate(new Game()) }, Action = () => PlayniteApi.Dialogs.ShowMessage("Hello World"), ToolTip = "Hello World"
-                } 
-            };
-        }
-
         #region Events       
         public override void OnApplicationStarted()
         {
