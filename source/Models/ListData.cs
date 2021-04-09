@@ -45,22 +45,30 @@ namespace DuplicateHider.Models
 
         }
 
-        public ListData(Game game, bool current) 
-            : this(DuplicateHiderPlugin.SourceIconCache.GetOrGenerate(game), game, current)
+        public ListData(Game game, bool current, 
+            ICommand launchCommand = null, 
+            ICommand selectCommand = null, 
+            ICommand installCommand = null, 
+            ICommand uninstallCommand = null) 
+            : this(DuplicateHiderPlugin.SourceIconCache.GetOrGenerate(game), game, current, launchCommand, selectCommand, installCommand, uninstallCommand)
         {
 
         }
 
-        public ListData(ImageSource image, Game game, bool current = false)
+        public ListData(ImageSource image, Game game, bool current = false,
+            ICommand launchCommand = null,
+            ICommand selectCommand = null,
+            ICommand installCommand = null,
+            ICommand uninstallCommand = null)
         {
             Icon = image;
             Game = game;
             IsCurrent = current;
             SourceName = game.Source?.Name ?? Constants.UNDEFINED_SOURCE;
-            LaunchCommand = new SimpleCommand(() => DuplicateHiderPlugin.API.StartGame(Game.Id));
-            SelectCommand = new SimpleCommand(() => DuplicateHiderPlugin.API.MainView.SelectGame(Game.Id));
-            InstallCommand = new SimpleCommand(() => DuplicateHiderPlugin.API.InstallGame(Game.Id));
-            UninstallCommand = new SimpleCommand(() => DuplicateHiderPlugin.API.InstallGame(Game.Id));
+            LaunchCommand = launchCommand ?? new SimpleCommand(() => DuplicateHiderPlugin.API.StartGame(Game.Id));
+            SelectCommand = selectCommand ?? new SimpleCommand(() => DuplicateHiderPlugin.API.MainView.SelectGame(Game.Id));
+            InstallCommand = installCommand ?? new SimpleCommand(() => DuplicateHiderPlugin.API.InstallGame(Game.Id));
+            UninstallCommand = uninstallCommand ?? new SimpleCommand(() => DuplicateHiderPlugin.API.InstallGame(Game.Id));
         }
 
 

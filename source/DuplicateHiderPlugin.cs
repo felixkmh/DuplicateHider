@@ -201,6 +201,12 @@ namespace DuplicateHider
                         );
         }
 
+        public override void OnGameSelected(GameSelectionEventArgs args)
+        {
+            SourceSelector.lastSelected = args.NewValue.FirstOrDefault();
+            GroupUpdated?.Invoke(this, args.OldValue.Select(g => g.Id).Concat(args.NewValue.Select(g => g.Id)).Distinct());
+        }
+
         public override void OnApplicationStopped()
         {
             iconWatcher.EnableRaisingEvents = false;
