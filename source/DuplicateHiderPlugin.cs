@@ -24,6 +24,8 @@ namespace DuplicateHider
     public class DuplicateHiderPlugin : Plugin
     {
         public event EventHandler<IEnumerable<Guid>> GroupUpdated;
+        public struct GameSelectedArgs { public Guid? oldId; public Guid? newId; }
+        public event EventHandler<GameSelectedArgs> GameSelected;
 
         private readonly ILogger logger;
 
@@ -40,6 +42,8 @@ namespace DuplicateHider
         public DuplicateHiderSettingsView SettingsView { get; private set; }
 
         private FileSystemWatcher iconWatcher = null;
+
+        public Guid? CurrentlySelected { get; private set; } = null;
 
         public DuplicateHiderPlugin(IPlayniteAPI api) : base(api)
         {
@@ -201,10 +205,30 @@ namespace DuplicateHider
                         );
         }
 
+        public void SelectGame(Guid? gameId)
+        {
+            if (gameId is Guid id)
+            {
+                PlayniteApi.MainView.SelectGame(id);
+            }
+            if (gameId != CurrentlySelected)
+            {
+                var temp = CurrentlySelected;
+                CurrentlySelected = gameId;
+                GameSelected?.Invoke(this, new GameSelectedArgs() { oldId = temp, newId = gameId });
+            }
+        }
+
         public override void OnGameSelected(GameSelectionEventArgs args)
         {
-            SourceSelector.lastSelected = args.NewValue.FirstOrDefault();
-            GroupUpdated?.Invoke(this, args.OldValue.Select(g => g.Id).Concat(args.NewValue.Select(g => g.Id)).Distinct());
+            var oldId = args.OldValue?.FirstOrDefault()?.Id;
+            var newId = args.NewValue?.FirstOrDefault()?.Id;
+            if  (oldId != newId)
+            {
+                CurrentlySelected = newId;
+                GameSelected?.Invoke(this, new GameSelectedArgs() { oldId = oldId, newId = newId });
+            }
+            // GroupUpdated?.Invoke(this, args.OldValue.Select(g => g.Id).Concat(args.NewValue.Select(g => g.Id)).Distinct());
         }
 
         public override void OnApplicationStopped()

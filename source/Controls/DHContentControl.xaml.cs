@@ -66,11 +66,40 @@ namespace DuplicateHider.Controls
         {
             InitializeComponent();
             DataContext = this;
-            DuplicateHiderPlugin.DHP.GroupUpdated += DHP_GroupUpdated;
             MouseDown += DHContentControl_MouseDown;
+            IsVisibleChanged += DHContentControl_IsVisibleChanged;
             OpenMenuCommand = new SimpleCommand(() => {
                 
             });
+        }
+
+        private void DHContentControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue as bool? == true)
+            {
+                DuplicateHiderPlugin.DHP.GroupUpdated += DHP_GroupUpdated;
+                DuplicateHiderPlugin.DHP.GameSelected += DHP_GameSelected;
+                if (CurrentGame?.Game?.Id != GameContext?.Id)
+                {
+                    CurrentGame = GameContext is Game ? new ListData(GameContext, true) : null;
+                }
+                UpdateContent(GameContext);
+            } else
+            {
+                DuplicateHiderPlugin.DHP.GameSelected -= DHP_GameSelected;
+                DuplicateHiderPlugin.DHP.GroupUpdated -= DHP_GroupUpdated;
+            }
+        }
+
+        private void DHP_GameSelected(object sender, DuplicateHiderPlugin.GameSelectedArgs e)
+        {
+            foreach (var game in Games)
+            {
+                if (game is ListData data)
+                {
+                    data.IsCurrent = e.newId == data.Game.Id;
+                }
+            }
         }
 
         private void DHContentControl_MouseDown(object sender, MouseButtonEventArgs e)
@@ -104,9 +133,12 @@ namespace DuplicateHider.Controls
 
         public void GameContextChanged(Game oldContext, Game newContext)
         {
-            if (newContext?.Id != CurrentGame?.Game?.Id)
+            if (IsVisible)
             {
-                CurrentGame = newContext is Game? new ListData(DuplicateHiderPlugin.SourceIconCache.GetOrGenerate(newContext), newContext, true) : null;
+                if (CurrentGame?.Game?.Id != newContext?.Id)
+                {
+                    CurrentGame = newContext is Game ? new ListData(newContext, true) : null;
+                }
                 UpdateContent(newContext);
             }
         }
@@ -124,7 +156,7 @@ namespace DuplicateHider.Controls
             {
                 ListData item = null;
                 bool sameGroup = newContext is Game && Games.TryFind(g => g.Game.Id == newContext.Id, out item);
-                SwitchedGroup = !sameGroup || (SwitchedGroup && forceUpdate);// || forceUpdate;// && (Games.IndexOf(item) == 0 && ByAction);
+                SwitchedGroup = !sameGroup;// || forceUpdate;// && (Games.IndexOf(item) == 0 && ByAction);
                 ByAction = false;
                 if (sameGroup && !forceUpdate)
                 {
@@ -149,7 +181,7 @@ namespace DuplicateHider.Controls
                     foreach (var copy in copys)
                     {
                         var source = copy.Source ?? Constants.DEFAULT_SOURCE;
-                        Games.Add(new ListData(DuplicateHiderPlugin.SourceIconCache.GetOrGenerate(copy), copy, copy.Id == newContext.Id));
+                        Games.Add(new ListData(copy, copy.Id == DuplicateHiderPlugin.DHP.CurrentlySelected));
                     }
                 }
             } else

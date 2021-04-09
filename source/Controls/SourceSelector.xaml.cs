@@ -34,7 +34,6 @@ namespace DuplicateHider.Controls
         internal static readonly UnboundedCache<ContentControl>[] ButtonCaches
                     = new UnboundedCache<ContentControl>[Constants.NUMBEROFSOURCESELECTORS];
 
-        internal static Game lastSelected = null;
         internal int selectorNumber = 0;
 
         #endregion Internal Fields
@@ -59,6 +58,17 @@ namespace DuplicateHider.Controls
             IsVisibleChanged += SourceSelector_IsVisibleChanged;
             IconStackPanel.Unloaded += IconStackPanel_Unloaded;
             IconStackPanel.IsEnabledChanged += IconStackPanel_IsEnabledChanged;
+        }
+
+        private void DHP_GameSelected(object sender, DuplicateHiderPlugin.GameSelectedArgs e)
+        {
+            foreach (ContentControl control in IconStackPanel.Children)
+            {
+                if (control.DataContext is ListData data)
+                {
+                    data.IsCurrent = data.Game.Id == e.newId;
+                }
+            }
         }
 
         public SourceSelector(int number, Orientation orientation = Orientation.Horizontal) : this()
@@ -155,23 +165,8 @@ namespace DuplicateHider.Controls
                     }
                     Game game = games[i];
                     button.Visibility = Visibility.Visible;
-                    bool isCurrent = lastSelected?.Id == game.Id;
-                    var selectCommand = new SimpleCommand(() =>
-                    {
-                        DuplicateHiderPlugin.API.MainView.SelectGame(game.Id);
-                        lastSelected = game;
-                        foreach (ContentControl other in IconStackPanel.Children)
-                        {
-                            if (other is ContentControl)
-                            {
-                                if (other.DataContext is ListData data)
-                                {
-                                    data.IsCurrent = game.Id == data.Game.Id;
-                                }
-                            }
-                        }
-                    });
-                    ListData listData = new ListData(game: game, current: isCurrent, selectCommand: selectCommand);
+                    bool isCurrent = DuplicateHiderPlugin.DHP.CurrentlySelected == game.Id;
+                    ListData listData = new ListData(game, isCurrent);
 
                     button.DataContext = listData;
 
@@ -367,10 +362,12 @@ namespace DuplicateHider.Controls
             if (e.NewValue as bool? == true)
             {
                 DuplicateHiderPlugin.DHP.GroupUpdated += DuplicateHider_GroupUpdated;
+                DuplicateHiderPlugin.DHP.GameSelected += DHP_GameSelected;
                 UpdateGameSourceIcons(GameContext);
             }
             else
             {
+                DuplicateHiderPlugin.DHP.GameSelected -= DHP_GameSelected;
                 DuplicateHiderPlugin.DHP.GroupUpdated -= DuplicateHider_GroupUpdated;
                 ButtonCaches[selectorNumber].Consume(IconStackPanel.Children);
             }
