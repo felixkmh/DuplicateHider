@@ -1,170 +1,145 @@
-<Style x:Key="DuplicateHider_ContentControlStyle" TargetType="ContentControl">
-    <Setter Property="Template">
-        <Setter.Value>
-            <ControlTemplate TargetType="ContentControl">
-                <Grid>
-                    <!--
-                        DataContext has an ObservableCollection called Games
-                        containing all copys of the Game in the current context (inlcuding itself).
-                        Each entry is of Type
-                        ListData {
-                            Playnite.SDK.Models.Game Game;
-                            Boolean IsCurrent;  // True if this copy eqal to the current GameContext property.
-                            BitmapImage Icon;   // Source Icon
-                            String SourceName;  // Source name. Use this rather than Game.Source.Name, 
-                                                // because Source might be null.
-                            ICommand LaunchCommand;
-                            ICommand SelectCommand;
-                            ICommand InstallCommand;
-                            ICommand UninstallCommand;
-                        }
-                    -->
-                    <ItemsControl
-                        x:Name="DH_ListBox"
-                        Focusable="False"
-                        IsTextSearchEnabled="False"
-                        ItemsSource="{Binding Games}"
-                        VirtualizingPanel.VirtualizationMode="Recycling">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Margin="0,3,0,0" >
-                                    <!--  StackPanel containing icon and source name of a game.  -->
-                                    <StackPanel
-                                        x:Name="_Item"
-                                        Background="Transparent"
-                                        Orientation="Horizontal">
-                                        <Image
-                                            MaxHeight="20"
-                                            Margin="5,0,5,0"
-                                            VerticalAlignment="Center"
-                                            DockPanel.Dock="Left"
-                                            RenderOptions.BitmapScalingMode="Fant"
-                                            Source="{Binding Icon}" />
-                                        <TextBlock
-                                            x:Name="_SourceText"
-                                            Margin="5,0,5,0"
-                                            VerticalAlignment="Center"
-                                            Foreground="White"
-                                            Text="{Binding SourceName}" />
-                                        <!--  Binding gestures to commands.  -->
-                                        <StackPanel.InputBindings>
-                                            <MouseBinding Command="{Binding LaunchCommand}" Gesture="LeftDoubleClick" />
-                                            <MouseBinding Command="{Binding SelectCommand}" Gesture="LeftClick" />
-                                        </StackPanel.InputBindings>
+<Style x:Key="DuplicateHider_ContentControlHeader_Style" TargetType="ContentControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Grid>
+                        <!--
+                            DataContext has an ObservableCollection called Games
+                            containing all copys of the Game in the current context (inlcuding itself).
+                            Each entry is of Type
+                            ListData {
+                                Playnite.SDK.Models.Game Game;
+                                Boolean IsCurrent;  // True if this copy eqal to the current GameContext property.
+                                BitmapImage Icon;   // Source Icon
+                                String SourceName;  // Source name. Use this rather than Game.Source.Name, 
+                                                    // because Source might be null.
+                                ICommand LaunchCommand;
+                                ICommand SelectCommand;
+                                ICommand InstallCommand;
+                                ICommand UninstallCommand;
+                            }
+                        -->
+                        <ItemsControl
+                            x:Name="DH_ListBox"
+                            Focusable="False"
+                            IsTextSearchEnabled="False"
+                            ItemsSource="{Binding Games}"
+                            VirtualizingPanel.VirtualizationMode="Recycling">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="0,3,0,0" >
+                                        <!--  StackPanel containing icon and source name of a game.  -->
+                                        <StackPanel
+                                            x:Name="_Item"
+                                            Background="Transparent"
+                                            Orientation="Horizontal">
+                                            <Image
+                                                MaxHeight="20"
+                                                Margin="5,0,5,0"
+                                                VerticalAlignment="Center"
+                                                DockPanel.Dock="Left"
+                                                RenderOptions.BitmapScalingMode="Fant"
+                                                Source="{Binding Icon}" />
+                                            <TextBlock
+                                                x:Name="_SourceText"
+                                                Margin="5,0,5,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="White"
+                                                Text="{Binding SourceName}" Style="{DynamicResource BaseTextBlockStyle}"/>
+                                            <!--  Binding gestures to commands.  -->
+                                            <StackPanel.InputBindings>
+                                                <MouseBinding Command="{Binding LaunchCommand}" Gesture="LeftDoubleClick" />
+                                                <MouseBinding Command="{Binding SelectCommand}" Gesture="LeftClick" />
+                                            </StackPanel.InputBindings>
+                                        </StackPanel>
+                                        <!--  Rectangle used to indicate the currently selected copy.  -->
+                                        <Rectangle
+                                            x:Name="_Rect"
+                                            Height="2"
+                                            Margin="0,3,0,0"
+                                            VerticalAlignment="Bottom"
+                                            RenderTransformOrigin="0.5,0"
+                                            Visibility="Visible">
+                                            <Rectangle.Fill>
+                                                <SolidColorBrush Color="{StaticResource GlyphColor}" />
+                                            </Rectangle.Fill>
+                                            <Rectangle.RenderTransform>
+                                                <ScaleTransform x:Name="_RectScale" ScaleX="0" />
+                                            </Rectangle.RenderTransform>
+                                        </Rectangle>
                                     </StackPanel>
-                                    <!--  Rectangle used to indicate the currently selected copy.  -->
-                                    <Rectangle
-                                        x:Name="_Rect"
-                                        Height="2"
-                                        Margin="0,3,0,0"
-                                        VerticalAlignment="Bottom"
-                                        RenderTransformOrigin="0.5,0"
-                                        Visibility="Hidden">
-                                        <Rectangle.Fill>
-                                            <SolidColorBrush Color="{StaticResource GlyphColor}" />
-                                        </Rectangle.Fill>
-                                        <Rectangle.RenderTransform>
-                                            <ScaleTransform x:Name="_RectScale" ScaleX="1" />
-                                        </Rectangle.RenderTransform>
-                                    </Rectangle>
-                                </StackPanel>
-                                <DataTemplate.Triggers>
-                                    <!--  Kind of a dumb workaround to prevent the animation when switching to a copy of a game for the first time  -->
-                                    <!--#region Dumb workaround-->
-                                    <MultiDataTrigger>
-                                        <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding IsVisible, ElementName=_Rect}" Value="False" />
-                                            <Condition Binding="{Binding IsCurrent}" Value="False" />
-                                        </MultiDataTrigger.Conditions>
-                                        <MultiDataTrigger.EnterActions>
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="_Rect" Storyboard.TargetProperty="(Rectangle.Visibility)">
-                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
-                                                    </ObjectAnimationUsingKeyFrames>
-                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="_RectScale" Storyboard.TargetProperty="(ScaleTransform.ScaleX)">
-                                                        <DiscreteDoubleKeyFrame KeyTime="0" Value="0" />
-                                                    </DoubleAnimationUsingKeyFrames>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </MultiDataTrigger.EnterActions>
-                                    </MultiDataTrigger>
-                                    <MultiDataTrigger>
-                                        <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding IsVisible, ElementName=_Rect}" Value="False" />
-                                            <Condition Binding="{Binding IsCurrent}" Value="True" />
-                                        </MultiDataTrigger.Conditions>
-                                        <MultiDataTrigger.EnterActions>
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="_Rect" Storyboard.TargetProperty="(Rectangle.Visibility)">
-                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
-                                                    </ObjectAnimationUsingKeyFrames>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </MultiDataTrigger.EnterActions>
-                                    </MultiDataTrigger>
-                                    <!--#endregion-->
-                                    <!--  Animation for the selection bar below the selected item.  -->
-                                    <DataTrigger Binding="{Binding IsCurrent}" Value="True">
-                                        <DataTrigger.EnterActions>
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="_RectScale"
-                                                        Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
-                                                        To="1"
-                                                        Duration="0:0:0.2">
-                                                        <DoubleAnimation.EasingFunction>
-                                                            <CubicEase />
-                                                        </DoubleAnimation.EasingFunction>
-                                                    </DoubleAnimation>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </DataTrigger.EnterActions>
-                                        <DataTrigger.ExitActions>
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="_RectScale"
-                                                        Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
-                                                        To="0"
-                                                        Duration="0:0:0.2">
-                                                        <DoubleAnimation.EasingFunction>
-                                                            <CubicEase />
-                                                        </DoubleAnimation.EasingFunction>
-                                                    </DoubleAnimation>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </DataTrigger.ExitActions>
-                                    </DataTrigger>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <!--  MouseOver glow effect.  -->
-                                        <Setter TargetName="_Item" Property="Effect">
-                                            <Setter.Value>
-                                                <DropShadowEffect
-                                                    BlurRadius="10"
-                                                    Opacity="1"
-                                                    ShadowDepth="0"
-                                                    Color="White" />
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Trigger>
-                                    <!--  Make items for unisntalled games slightly transparent.  -->
-                                    <DataTrigger Binding="{Binding Game.IsInstalled}" Value="False">
-                                        <Setter TargetName="_Item" Property="Opacity" Value="0.5" />
-                                    </DataTrigger>
-                                </DataTemplate.Triggers>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </Grid>
-            </ControlTemplate>
-        </Setter.Value>
-    </Setter>
-</Style>
+                                    <DataTemplate.Triggers>
+                                        <!--  Workaround to prevent the animation when switching to a copy of a game for the first time  -->
+                                        <!--#region Workaround-->
+                                        <DataTrigger Binding="{Binding DataContext.SwitchedGroup, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" Value="True">
+                                            <Setter Property="Rectangle.Visibility" Value="{Binding IsCurrent, Converter={StaticResource BooleanToVisibilityConverter}}" TargetName="_Rect"/>
+                                            <Setter Property="Rectangle.RenderTransform" TargetName="_Rect">
+                                                <Setter.Value>
+                                                    <ScaleTransform x:Name="_RectScale" ScaleX="1" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                        <!--#endregion-->
+                                        <!--  Animation for the selection bar below the selected item.  -->
+                                        <DataTrigger Binding="{Binding IsCurrent}" Value="True">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetName="_RectScale"
+                                                            Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
+                                                            To="1"
+                                                            Duration="0:0:0.2">
+                                                            <DoubleAnimation.EasingFunction>
+                                                                <CubicEase />
+                                                            </DoubleAnimation.EasingFunction>
+                                                        </DoubleAnimation>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetName="_RectScale"
+                                                            Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
+                                                            To="0"
+                                                            Duration="0:0:0.2">
+                                                            <DoubleAnimation.EasingFunction>
+                                                                <CubicEase />
+                                                            </DoubleAnimation.EasingFunction>
+                                                        </DoubleAnimation>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <!--  MouseOver glow effect.  -->
+                                            <Setter TargetName="_Item" Property="Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect
+                                                        BlurRadius="10"
+                                                        Opacity="1"
+                                                        ShadowDepth="0"
+                                                        Color="White" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                        <!--  Make items for unisntalled games slightly transparent.  -->
+                                        <DataTrigger Binding="{Binding Game.IsInstalled}" Value="False">
+                                            <Setter TargetName="_Item" Property="Opacity" Value="0.5" />
+                                        </DataTrigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
