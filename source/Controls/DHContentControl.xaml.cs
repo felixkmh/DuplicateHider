@@ -124,7 +124,7 @@ namespace DuplicateHider.Controls
             {
                 ListData item = null;
                 bool sameGroup = newContext is Game && Games.TryFind(g => g.Game.Id == newContext.Id, out item);
-                SwitchedGroup = !sameGroup || forceUpdate;// && (Games.IndexOf(item) == 0 && ByAction);
+                SwitchedGroup = !sameGroup || (SwitchedGroup && forceUpdate);// || forceUpdate;// && (Games.IndexOf(item) == 0 && ByAction);
                 ByAction = false;
                 if (sameGroup && !forceUpdate)
                 {
