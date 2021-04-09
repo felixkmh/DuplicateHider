@@ -14,6 +14,7 @@
                                VerticalAlignment="Center" HorizontalAlignment="Center"
                                Stretch="{Settings CoverArtStretch}" />
                         <Border Background="#AA000000" x:Name="BorderDarken" Visibility="Collapsed" />
+                        <ContentControl x:Name="DuplicateHider_SourceSelector" Margin="10,10,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" MaxHeight="30"/>
                         <TextBlock Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis"
                                    Visibility="{Settings Fullscreen.ShowGameTitles}"
                                    Style="{DynamicResource TextBlockBaseStyle}"
@@ -21,7 +22,6 @@
                                    HorizontalAlignment="Stretch" VerticalAlignment="Bottom"
                                    TextAlignment="Center" Padding="5"                                    
                                    Background="{DynamicResource ControlBackgroundDarkBrush}"/>
-                        <ContentControl x:Name="DuplicateHider_SourceSelector" Margin="10,10,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" MaxHeight="30"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <MultiDataTrigger>
