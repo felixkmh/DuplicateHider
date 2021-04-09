@@ -89,7 +89,7 @@ when placed in a ListViewItem in the DetailsView. See Playnite Documentation to 
 
 There are up to 10 SourceSelectors, ```DuplicateHider_SourceSelector```, ```DuplicateHider_SourceSelector1```, ```DuplicateHider_SourceSelector2```, and so on that you can use by using their names as the name of a  ```ContentControl``` in a supported template or view. 
 
-For each SourceSelector, you can provide styles for their ```StackPanel``` and the icons which are just ```ContentControls```s with an Image as its content. The styles need to have the keys ```DuplicateHider_IconContentControlStyle``` and ```DuplicateHider_IconStackPanelStyle``` (or with the added number for the other ones). 
+For each SourceSelector, you can provide styles for their ```StackPanel``` and the icons which are just ```ContentControls```s (with the Icon as its content if no style is provided). The styles need to have the keys ```DuplicateHider_IconContentControlStyle``` and ```DuplicateHider_IconStackPanelStyle``` (or with the added number for the other ones). 
 
 SourceSelector utilizes a cache for the UI elements and Icons and is suitable for use in the Item Templates for the GridView and DetailsView. 
 
@@ -109,7 +109,7 @@ There are also 10 instances of ```DuplicateHider_ContentControl``` (in case you 
 <ContentControl x:Name="DuplicateHider_ContentControl" Tag="{DynamicResource DuplicateHider_ContentControlHeader_Style}"/> 
 ```
 
-The Template of the used Style has access to the following DataContext: 
+The styled ContentControl has access to the following DataContext: 
 
  ```csharp
 DataContext = {
@@ -122,7 +122,7 @@ DataContext = {
 
 class ListData {
     Playnite.SDK.Models.Game Game;
-    Boolean IsCurrent;        // True if this copy eqal to the current GameContext property.
+    Boolean IsCurrent;        // True if this copy is the current GameContext property.
     BitmapImage Icon;         // Source Icon
     String SourceName;        // Source name. Use this rather than Game.Source.Name, 
                               // because Source might be null.
