@@ -190,7 +190,7 @@ namespace DuplicateHider
 
             if (!settings.SupressThemeIconNotification && !settings.EnableThemeIcons)
             {
-                var foundThemIcons = PlayniteApi.Database.Sources.Where(
+                var foundThemIcons = PlayniteApi.Database.Sources.Concat(new[] { Constants.DEFAULT_SOURCE }).Where(
                     s => PlayniteApi.Resources.GetResource($"DuplicateHider_{s.Name}_Icon") is BitmapImage img
                 ).Select(s=>s.Name);
                 if (foundThemIcons.Count() > 0)
@@ -209,12 +209,12 @@ namespace DuplicateHider
 
                             window.Height = 400;
                             window.Width = 400;
-                            window.Title = "Icon Preview";
+                            window.Title = "Theme Icon Preview";
 
                             window.Content = new Windows.IconPreview();
 
                             var iconData = new List<Windows.PreviewData>();
-                            foreach (var source in PlayniteApi.Database.Sources)
+                            foreach (var source in PlayniteApi.Database.Sources.Concat(new[] { Constants.DEFAULT_SOURCE }))
                             {
                                 if (PlayniteApi.Resources.GetResource($"DuplicateHider_{source.Name}_Icon") is BitmapImage img)
                                 {
