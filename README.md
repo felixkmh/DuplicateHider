@@ -109,7 +109,7 @@ There are also 10 instances of ```DuplicateHider_ContentControl``` (in case you 
 <ContentControl x:Name="DuplicateHider_ContentControl" Tag="{DynamicResource DuplicateHider_ContentControlHeader_Style}"/> 
 ```
 
-The styled ContentControl has access to the following DataContext: 
+The styled ContentControl has access to the following DataContext:
 
  ```csharp
 DataContext = {

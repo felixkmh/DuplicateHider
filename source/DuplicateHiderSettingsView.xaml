@@ -51,11 +51,11 @@
             <ListBox KeyDown="ReplacementRulesListBox_KeyDown" PreviewMouseWheel="HandlePreviewMouseWheel" Margin="10,5,10,0" x:Name="ReplacementRulesListBox" ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Extended"/>
             <Label Content="UI Integration:" Margin="10,10,0,0"/>
             <Button x:Name="OpenUserIconFolderButton" Content="Open user icon folder" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
-            <CheckBox x:Name="UiIntegrationCheckBox" Content="UI Integration" Margin="10,5,0,0"/>
-            <CheckBox x:Name="EnableThemeIconsChechBox" Content="Enable Theme Icons" Margin="10,5,0,0"/>
-            <CheckBox x:Name="PreferUserIconsCheckBox" Content="Prefer User Icons" Margin="10,5,0,0"/>
-            <CheckBox x:Name="ShowSingleSourceIconCheckBox" Content="Show icon if there is only one copy" Margin="10,5,0,0"/>
-            <CheckBox x:Name="SuppressNotificationCheckBox" Content="Suppress Theme Icon notification" Margin="10,5,0,10"/>
+            <CheckBox x:Name="UiIntegrationCheckBox" Content="UI Integration" Margin="10,5,0,0" ToolTip="Enables custom ui elements depending on whether they are supported by the current Theme."/>
+            <CheckBox x:Name="EnableThemeIconsChechBox" Content="Enable Theme Icons" Margin="10,5,0,0" ToolTip="If enabled, icons included with the current Theme are used for the custom ui elements."/>
+            <CheckBox x:Name="PreferUserIconsCheckBox" Content="Prefer User Icons" Margin="10,5,0,0" ToolTip="If enabled, icons placed in the user icon folder are always given priority when looking for source icons."/>
+            <CheckBox x:Name="ShowSingleSourceIconCheckBox" Content="Show icon if there is only one copy" Margin="10,5,0,0" ToolTip="Indicates to the Theme that you do not want to have custom ui elements if there are no extra copies of a game."/>
+            <CheckBox x:Name="SuppressNotificationCheckBox" Content="Suppress Theme Icon notification" Margin="10,5,0,10" ToolTip="If enabled, you will not be notified if Theme Icons are found in the current Theme."/>
         </StackPanel>
     </ScrollViewer>
 </UserControl>
