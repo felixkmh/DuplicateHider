@@ -199,6 +199,15 @@ namespace DuplicateHider.Controls
             return DuplicateHiderPlugin.SourceIconCache.GetOrGenerate(game);
         }
 
+        protected override void OnVisualParentChanged(DependencyObject oldParent)
+        {
+            if (Parent is null && !(oldParent is null))
+            {
+                ButtonCaches[selectorNumber].Consume(IconStackPanel.Children);
+            }
+            base.OnVisualParentChanged(oldParent);
+        }
+
         #endregion Protected Methods
 
         #region Private Methods
