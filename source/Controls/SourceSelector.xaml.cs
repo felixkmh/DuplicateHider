@@ -322,7 +322,9 @@ namespace DuplicateHider.Controls
                     if (e.Any(id => game.Id == id))
                     {
                         UpdateGameSourceIcons(game);
-                        System.Diagnostics.Debug.WriteLine("Called Group Update");
+#if DEBUG
+                        System.Diagnostics.Debug.WriteLine("Called Group Update"); 
+#endif
                     }
                 }
             });

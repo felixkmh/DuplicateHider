@@ -71,8 +71,10 @@ namespace DuplicateHider
                 {
                     var name = "SourceSelector".Suffix(i);
                     elements.Add(name);
-                    System.Diagnostics.Debug.WriteLine($"Added {name} as Custom Element.");
+#if DEBUG
+                    System.Diagnostics.Debug.WriteLine($"Added {name} as Custom Element."); 
                     logger.Debug($"Added {name} as Custom Element.");
+#endif
                 }
             }
 
@@ -80,8 +82,10 @@ namespace DuplicateHider
             {
                 string name = "ContentControl".Suffix(i);
                 elements.Add(name);
-                System.Diagnostics.Debug.WriteLine($"Added {name} as Custom Element.");
+#if DEBUG
+                System.Diagnostics.Debug.WriteLine($"Added {name} as Custom Element."); 
                 logger.Debug($"Added {name} as Custom Element.");
+#endif
             }
 
             AddCustomElementSupport(new AddCustomElementSupportArgs()
@@ -100,7 +104,9 @@ namespace DuplicateHider
             {
                 if (args.Name=="SourceSelector")
                 {
-                    System.Diagnostics.Debug.WriteLine("Generated SourceSelector:" + (++GeneratedElements));
+#if DEBUG
+                    System.Diagnostics.Debug.WriteLine("Generated SourceSelector:" + (++GeneratedElements)); 
+#endif
                     return new SourceSelector(0, Orientation.Horizontal);
                 } else
                 if (args.Name.StartsWith("SourceSelector"))
@@ -108,7 +114,9 @@ namespace DuplicateHider
                     int n;
                     if (int.TryParse(args.Name.Substring(14), out n))
                     {
-                        System.Diagnostics.Debug.WriteLine("Generated SourceSelector:" + (++GeneratedElements));
+#if DEBUG
+                        System.Diagnostics.Debug.WriteLine("Generated SourceSelector:" + (++GeneratedElements)); 
+#endif
                         return new SourceSelector(n, Orientation.Horizontal);
                     }
 
@@ -192,7 +200,9 @@ namespace DuplicateHider
                 {
                     SourceIconCache.Clear();
                     GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
-                    System.Diagnostics.Debug.WriteLine($"Name={e.Name}, Type={e.ChangeType}");
+#if DEBUG
+                    System.Diagnostics.Debug.WriteLine($"Name={e.Name}, Type={e.ChangeType}"); 
+#endif
                 }
             }
         }

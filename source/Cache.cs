@@ -51,7 +51,9 @@ namespace DuplicateHider
                 ++Generated;
                 item = generate.Invoke();
             }
-            System.Diagnostics.Debug.WriteLine($"Recycled={Recycled}, Generated={Generated}, Count={Count}");
+#if DEBUG
+            System.Diagnostics.Debug.WriteLine($"Recycled={Recycled}, Generated={Generated}, Count={Count}"); 
+#endif
             return item;
         }
 

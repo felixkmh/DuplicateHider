@@ -122,7 +122,9 @@ namespace DuplicateHider.Controls
                 {
                     Games.Clear();
                 }
-                System.Diagnostics.Debug.WriteLine("Called Group Update");
+#if DEBUG
+                System.Diagnostics.Debug.WriteLine("Called Group Update"); 
+#endif
             });
         }
 
