@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="DuplicateHider.Windows.IconPreview"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DuplicateHider.Windows"
+             mc:Ignorable="d" 
+             >
+    <Grid>
+        <ListBox ItemsSource="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <ListBoxItem HorizontalAlignment="Stretch" Focusable="False">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding SourceName}" Style="{DynamicResource BaseTextBlockStyle}" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3"/>
+                            <Image Source="{Binding SourceIcon}" Height="30" Width="30" RenderOptions.BitmapScalingMode="Fant" Grid.Column="1" VerticalAlignment="Center" Margin="3" HorizontalAlignment="Right"/>
+                        </Grid>
+                    </ListBoxItem>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>       
+    </Grid>
+</UserControl>

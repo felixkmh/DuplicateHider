@@ -187,6 +187,66 @@ namespace DuplicateHider
 
             // SourceSelector statics
             SourceIconCache.UserIconFolderPaths.Add(GetUserIconFolderPath());
+
+            if (!settings.SupressThemeIconNotification && !settings.EnableThemeIcons)
+            {
+                var foundThemIcons = PlayniteApi.Database.Sources.Where(
+                    s => PlayniteApi.Resources.GetResource($"DuplicateHider_{s.Name}_Icon") is BitmapImage img
+                ).Select(s=>s.Name);
+                if (foundThemIcons.Count() > 0)
+                {
+                    PlayniteApi.Notifications.Add(new NotificationMessage(
+                        "DHFOUNDTHEMEICONS", $"DuplicateHider:\nFound Icons in current Theme, but \"Theme Icon\" option is disabled.\nFound icons for " +
+                            $"{string.Join(", ", foundThemIcons)}. " +
+                            $"{(settings.PreferUserIcons?"\nMight be overriden by user icons because of \"Prefer User Icons\" option.":"")}" +
+                            $"\nClick here for a preview.", 
+                        NotificationType.Info, () => 
+                        {
+                            var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+                            {
+                                ShowMinimizeButton = false, ShowCloseButton = true, ShowMaximizeButton = false
+                            });
+
+                            window.Height = 400;
+                            window.Width = 400;
+                            window.Title = "Icon Preview";
+
+                            window.Content = new Windows.IconPreview();
+
+                            var iconData = new List<Windows.PreviewData>();
+                            foreach (var source in PlayniteApi.Database.Sources)
+                            {
+                                if (PlayniteApi.Resources.GetResource($"DuplicateHider_{source.Name}_Icon") is BitmapImage img)
+                                {
+                                    iconData.Add(new Windows.PreviewData() { SourceIcon = img, SourceName = source.Name });
+                                }
+                            }
+                            window.DataContext = iconData;
+                            window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+                            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                            window.ShowDialog();
+                        })
+                    );
+                    PlayniteApi.Notifications.Add(new NotificationMessage(
+                        "DHENABLETHEMEICONS", "Click here to enable Theme Icons.", NotificationType.Info, () =>
+                        {
+                            var oldSettings = settings.Copy();
+                            settings.EnableThemeIcons = true;
+                            Settings_OnSettingsChanged(oldSettings, settings);
+                            PlayniteApi.Notifications.Remove("DHFOUNDTHEMEICONS");
+                            PlayniteApi.Notifications.Remove("DHSUPRESSNOTIFICATION");
+                        })
+                    );
+                    PlayniteApi.Notifications.Add(new NotificationMessage(
+                        "DHSUPRESSNOTIFICATION", "Click here to suppress this notification in the future.", NotificationType.Info, () => 
+                        {
+                            var oldSettings = settings.Copy();
+                            settings.SupressThemeIconNotification = true;
+                            Settings_OnSettingsChanged(oldSettings, settings);
+                        })
+                    );
+                }
+            }
         }
 
         private void IconWatcher_Changed(object sender, FileSystemEventArgs e)

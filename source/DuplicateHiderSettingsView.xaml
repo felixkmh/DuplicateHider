@@ -54,7 +54,8 @@
             <CheckBox x:Name="UiIntegrationCheckBox" Content="UI Integration" Margin="10,5,0,0"/>
             <CheckBox x:Name="EnableThemeIconsChechBox" Content="Enable Theme Icons" Margin="10,5,0,0"/>
             <CheckBox x:Name="PreferUserIconsCheckBox" Content="Prefer User Icons" Margin="10,5,0,0"/>
-            <CheckBox x:Name="ShowSingleSourceIconCheckBox" Content="Show icon if there is only one copy" Margin="10,5,0,10"/>
+            <CheckBox x:Name="ShowSingleSourceIconCheckBox" Content="Show icon if there is only one copy" Margin="10,5,0,0"/>
+            <CheckBox x:Name="SuppressNotificationCheckBox" Content="Suppress Theme Icon notification" Margin="10,5,0,10"/>
         </StackPanel>
     </ScrollViewer>
 </UserControl>
