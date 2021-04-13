@@ -16,7 +16,10 @@
                 <ControlTemplate TargetType="CalendarItem">
                     <Border Background="{TemplateBinding Background}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            BorderBrush="{TemplateBinding BorderBrush}">
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Effect="{DynamicResource DefaultDropShadow}"
+                            Margin="{DynamicResource DropShadowThickness}"
+                            >
                         <DockPanel Name="PART_Root" LastChildFill="True" >
                             <Button x:Name="PART_PreviousButton" DockPanel.Dock="Left"
                                     FontWeight="Bold" FontFamily="Marlett" Padding="4,2,4,2"
@@ -126,7 +129,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CalendarDayButton}">
-                    <Border Background="Transparent">
+                    <Border Background="Transparent" x:Name="DayBorder" CornerRadius="5" Margin="5">
                         <ContentPresenter
                         Content="{TemplateBinding ContentControl.Content}"
                         ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
@@ -138,16 +141,17 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsToday" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource GlyphBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource WindowBackgourndBrushHighlightHover}" />
                         </Trigger>
                         <Trigger Property="IsInactive" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource TextBrushDarker}" />
                         </Trigger>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource GlyphBrush}" />
-                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource GlyphBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource WindowBackgourndBrushHighlight}" TargetName="DayBorder" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -188,28 +192,37 @@
                 <ControlTemplate TargetType="DatePicker">
                     <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{DynamicResource ButtonCornerRadius}"
-                            Padding="{TemplateBinding Padding}">
+                            CornerRadius="{DynamicResource ControlCornerRadius}"
+                            Padding="{TemplateBinding Padding}"
+                            Background="{DynamicResource ButtonDefaultBrush}"
+                            >
                         <DockPanel>
                             <Popup x:Name="PART_Popup" StaysOpen="False"
                                    AllowsTransparency="True" Placement="Bottom"
-                                   PlacementTarget="{Binding ElementName=PART_TextBox}" />
+                                   PlacementTarget="{Binding ElementName=PART_TextBox}" 
+                                   >
+                                <Popup.PlacementRectangle>
+                                    <Rect X="{StaticResource DropShadowRadiusNegative}" Width="{StaticResource DropShadowRadius}"
+                                          Y="{StaticResource DropShadowRadiusNegative}" Height="{StaticResource DropShadowRadius}"/>
+                                </Popup.PlacementRectangle>
+                            </Popup>
                             <ToggleButton x:Name="PART_Button" DockPanel.Dock="Right" Content="🗓"
-                                          BorderThickness="0" Padding="5,0,5,0"
-                                          IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                          BorderThickness="0" Padding="0,0,0,0"
+                                          IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                          />
                             <DatePickerTextBox x:Name="PART_TextBox" DockPanel.Dock="Left"
                                                Background="Transparent" BorderThickness="0"/>
                         </DockPanel>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger SourceName="PART_TextBox"  Property="IsFocused" Value="True">
-                            <Setter Property="BorderBrush" Value="{DynamicResource GlyphBrush}" TargetName="Border" />
+                            <Setter Property="Background" Value="{DynamicResource ButtonSelectedBrush}" TargetName="Border" />
                         </Trigger>
                         <Trigger SourceName="PART_Button"  Property="IsFocused" Value="True">
-                            <Setter Property="BorderBrush" Value="{DynamicResource GlyphBrush}" TargetName="Border" />
+                            <Setter Property="Background" Value="{DynamicResource ButtonSelectedBrush}" TargetName="Border" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" Value="{DynamicResource GlyphBrush}" TargetName="Border" />
+                            <Setter Property="Background" Value="{DynamicResource ButtonHoveredBrush}" TargetName="Border" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -230,7 +243,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DatePickerTextBox}">
                     <Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}" CornerRadius="{DynamicResource ButtonCornerRadius}"
+                            Background="{TemplateBinding Background}" CornerRadius="{DynamicResource ControlCornerRadius}"
                             Style="{DynamicResource HighlightBorder}">
                         <Grid>
                             <ScrollViewer x:Name="PART_ContentHost"

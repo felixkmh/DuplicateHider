@@ -9,7 +9,5 @@
     <Style TargetType="{x:Type Popup}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="AllowsTransparency" Value="True" />
-        <!--<Setter Property="Effect" Value="{DynamicResource DefaultDropShadow}"/>
-        <Setter Property="Margin" Value="{DynamicResource DropShadowThickness}"/>-->
     </Style>
 </ResourceDictionary>

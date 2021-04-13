@@ -2,16 +2,16 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="HighlightBorder" TargetType="Border" BasedOn="{StaticResource {x:Type Border}}">
-        <Setter Property="CornerRadius" Value="{DynamicResource ButtonCornerRadius}" />
+        <Setter Property="Border.CornerRadius" Value="{DynamicResource ButtonCornerRadius}" />
         <Setter Property="BorderThickness" Value="{DynamicResource ControlBorderThickness}" />
         <Setter Property="BorderBrush" Value="{DynamicResource NormalBorderBrush}" />
-        <Setter Property="Background" Value="{DynamicResource WindowBackgourndBrushBright}"/>
+        <Setter Property="Border.Background" Value="{DynamicResource ButtonDefaultBrush}"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="BorderBrush" Value="{DynamicResource GlyphBrush}" />
+                <Setter Property="Border.Background" Value="{DynamicResource ButtonHoverBrush}" />
             </Trigger>
             <Trigger Property="IsFocused" Value="True">
-                <Setter Property="BorderBrush" Value="{DynamicResource GlyphBrush}" />
+                <Setter Property="Border.Background" Value="{DynamicResource ButtonSelectedBrush}" />
             </Trigger>
         </Style.Triggers>
     </Style>                  

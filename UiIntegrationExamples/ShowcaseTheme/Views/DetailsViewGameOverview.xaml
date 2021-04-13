@@ -58,18 +58,24 @@
                                                         FontSize="{DynamicResource FontSizeLargest}" Margin="0,0,10,0" TextWrapping="Wrap"
                                                         VerticalAlignment="Center"
                                                         Foreground="{DynamicResource TextBrush}" Effect="{DynamicResource TextDropShadow}">
-                                                    
+
                                                 </TextBlock>
                                             </DockPanel>
                                             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top"
                                                     Orientation="Horizontal" Margin="0,15,0,0">
-                                                <Button Name="PART_ButtonPlayAction"
-                                                            Width="150" Height="40" Style="{DynamicResource PlayButton}" />
-                                                <Button Name="PART_ButtonContextAction" 
-                                                            Width="150" Height="40" />
-                                                <ContentControl Background="Black" Panel.ZIndex="1"
-                                                        x:Name="DuplicateHider_ContentControl2" 
-                                                        Tag="{DynamicResource DuplicateHider_PlayButtonExt}"/>
+                                                <StackPanel x:Name="PlayButtonStack" Background="Transparent" Orientation="Horizontal">
+                                                    <Button Name="PART_ButtonPlayAction"
+                                                                Width="150" Height="40" Style="{DynamicResource PlayButton}" Panel.ZIndex="2"/>
+                                                    <Button Name="PART_ButtonContextAction" 
+                                                                Width="150" Height="40" Panel.ZIndex="2"/>
+                                                    <ContentControl Background="Transparent" Panel.ZIndex="1"
+                                                            x:Name="DuplicateHider_ContentControl2" 
+                                                            Tag="{DynamicResource DuplicateHider_PlayButtonExt}">
+                                                        <ContentControl.LayoutTransform>
+                                                            <ScaleTransform x:Name="PlayExtButtonScale" ScaleX="0"/>
+                                                        </ContentControl.LayoutTransform>
+                                                    </ContentControl>
+                                                </StackPanel>
                                                 <Button Name="PART_ButtonMoreActions"
                                                     Content="{DynamicResource LOCMoreAction}"
                                                     Width="150" Height="40" Margin="10,0,0,0" />
@@ -217,6 +223,39 @@
                             </Grid>
                         </ScrollViewer>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" SourceName="PlayButtonStack" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.1" 
+                                                         To="1" 
+                                                         Storyboard.TargetProperty="(ScaleTransform.ScaleX)" 
+                                                         Storyboard.TargetName="PlayExtButtonScale">
+                                            <DoubleAnimation.EasingFunction>
+                                                <QuadraticEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation BeginTime="0:0:0.5" Duration="0:0:0.1" 
+                                                         To="0" 
+                                                         Storyboard.TargetProperty="(ScaleTransform.ScaleX)" 
+                                                         Storyboard.TargetName="PlayExtButtonScale"
+                                                         >
+                                            <DoubleAnimation.EasingFunction>
+                                                <QuadraticEase EasingMode="EaseIn"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -227,93 +266,95 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <StackPanel Orientation="Vertical" Visibility="{Binding MoreThanOneCopy, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <ToggleButton 
-                            x:Name="Toggler" 
-                            Style="{DynamicResource ExpanderDownHeaderStyle}" 
-                            BorderBrush="{DynamicResource NormalBorderBrush}" 
-                            Height="40" Width="35"
-                            >
-                            <ToggleButton.Background>
-                                <SolidColorBrush Color="{DynamicResource MainColorDark}"/>
-                            </ToggleButton.Background>
-                        </ToggleButton>
-                        <Canvas x:Name="PlayOptions" Width="{Binding ActualWidth, ElementName=Toggler}"
-                                Visibility="{Binding IsChecked, ElementName=Toggler, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <ItemsControl
-                                Width="185"
-                                Margin="-150,0,0,0"
-                                x:Name="DH_ListBox"
-                                Focusable="False"
-                                IsTextSearchEnabled="False"
-                                ItemsSource="{Binding Games}"
-                                VirtualizingPanel.VirtualizationMode="Recycling"
-                                BorderBrush="{DynamicResource NormalBorderBrush}" 
-                                BorderThickness="{DynamicResource ControlBorderThickness}"
-                                Background="{DynamicResource ButtonBackgroundBrush}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <!--  StackPanel containing icon and source name of a game.  -->
-                                        <StackPanel Background="{StaticResource ControlBackgroundBrush}" Margin="5,5,5,5"
-                                        x:Name="_Item"
-                                        Orientation="Horizontal">
-                                            <Image
-                                            MaxHeight="20"
-                                            Margin="5,0,5,0"
-                                            VerticalAlignment="Center"
-                                            DockPanel.Dock="Left"
-                                            RenderOptions.BitmapScalingMode="Fant"
-                                            Source="{Binding Icon}" 
-                                            x:Name="_IconImage"/>
-                                            <TextBlock
-                                            x:Name="_SourceText"
-                                            Margin="5,0,5,0"
-                                            VerticalAlignment="Center"
-                                            Foreground="White"
-                                            Background="{x:Null}"
-                                            Text="{Binding SourceName}" />
-                                            <!--  Binding gestures to commands.  -->
-                                            <StackPanel.InputBindings>
-                                                <MouseBinding Command="{Binding LaunchCommand}" Gesture="LeftClick" />
-                                            </StackPanel.InputBindings>
-                                        </StackPanel>
-                                        <DataTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <!--  MouseOver glow effect.  -->
-                                                <Setter TargetName="_SourceText" Property="Effect">
-                                                    <Setter.Value>
-                                                        <DropShadowEffect
-                                                    BlurRadius="10"
-                                                    Opacity="1"
-                                                    ShadowDepth="0"
-                                                    Color="White" />
-                                                    </Setter.Value>
-                                                </Setter>
-                                                <Setter TargetName="_IconImage" Property="Effect">
-                                                    <Setter.Value>
-                                                        <DropShadowEffect
-                                                    BlurRadius="10"
-                                                    Opacity="1"
-                                                    ShadowDepth="0"
-                                                    Color="White" />
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Trigger>
-                                            <!--  Make items for unisntalled games slightly transparent.  -->
-                                            <DataTrigger Binding="{Binding Game.IsInstalled}" Value="False">
-                                                <Setter TargetName="_IconImage" Property="Opacity" Value="0.5" />
-                                                <Setter TargetName="_SourceText" Property="Opacity" Value="0.5" />
-                                            </DataTrigger>
-                                        </DataTemplate.Triggers>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </Canvas>
+                    <StackPanel Orientation="Vertical" Visibility="{Binding MoreThanOneCopy, Converter={StaticResource BooleanToVisibilityConverter}}" Width="38">
+                        <Border Background="{DynamicResource WindowBackgourndBrush}" 
+                                BorderThickness="{DynamicResource ControlBorderThickness}" CornerRadius="0,5,5,0" Margin="-5,0,0,0" Width="38">
+                            <ToggleButton 
+                                x:Name="Toggler" 
+                                Style="{DynamicResource ExpanderDownHeaderStyle}" 
+                                Height="40" Width="30" BorderThickness="{DynamicResource ControlBorderThickness}"
+                                Background="Transparent"
+                                HorizontalContentAlignment="Right"
+                                >
+                            </ToggleButton>
+                        </Border>
+                        <Popup x:Name="PlayOptions" Width="Auto"
+                               IsOpen="{Binding IsChecked, ElementName=Toggler, Delay=100}"
+                               Placement="Bottom" PlacementRectangle="-150,40,0,0"
+                               Effect="{DynamicResource DefaultDropShadow}"
+                               Margin="{DynamicResource DropShadowThickness}"
+                               AllowsTransparency="True"
+                               StaysOpen="False"
+                                >
+                                
+                            <Border Background="{DynamicResource ButtonOpaqueBrush}"
+                                    Effect="{DynamicResource DefaultDropShadow}"
+                                    Margin="{DynamicResource DropShadowThickness}"
+                                    Width="185" CornerRadius="0,0,5,5">
+                                <ScrollViewer MaxHeight="220">
+                                    <ItemsControl
+                                        x:Name="DH_ListBox"
+                                        Focusable="False"
+                                        IsTextSearchEnabled="False"
+                                        ItemsSource="{Binding Games}"
+                                        BorderBrush="{DynamicResource NormalBorderBrush}" 
+                                        BorderThickness="{DynamicResource ControlBorderThickness}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <!--  StackPanel containing icon and source name of a game.  -->
+                                                <Grid>
+                                                    <Border x:Name="SelectionBorder" 
+                                                            OpacityMask="{DynamicResource LeftFadingBrush}"
+                                                            CornerRadius="5"/>
+                                                    <StackPanel Background="{StaticResource ControlBackgroundBrush}" Margin="5.5,7.5,5.5,7.5"
+                                                    x:Name="_Item"
+                                                    Orientation="Horizontal">
+                                                        
+                                                        <Image
+                                                        MaxHeight="20"
+                                                        Margin="5,0,5,0"
+                                                        VerticalAlignment="Center"
+                                                        DockPanel.Dock="Left"
+                                                        RenderOptions.BitmapScalingMode="Fant"
+                                                        Source="{Binding Icon}" 
+                                                        x:Name="_IconImage"/>
+                                                        <TextBlock
+                                                        x:Name="_SourceText"
+                                                        Margin="5,0,5,0"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="White"
+                                                        Background="{x:Null}"
+                                                        Text="{Binding SourceName}" />
+                                                        <!--  Binding gestures to commands.  -->
+                                                        <StackPanel.InputBindings>
+                                                            <MouseBinding Command="{Binding LaunchCommand}" Gesture="LeftClick" />
+                                                        </StackPanel.InputBindings>
+                                                    </StackPanel>
+                                                </Grid>
+                                                <DataTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <!--  MouseOver glow effect.  -->
+                                                        <Setter TargetName="SelectionBorder" 
+                                                                Property="Background" 
+                                                                Value="{DynamicResource WindowBackgourndBrushHighlightHover}"/>
+                                                    </Trigger>
+                                                    <!--  Make items for unisntalled games slightly transparent.  -->
+                                                    <DataTrigger Binding="{Binding Game.IsInstalled}" Value="False">
+                                                        <Setter TargetName="_IconImage" Property="Opacity" Value="0.5" />
+                                                        <Setter TargetName="_SourceText" Property="Opacity" Value="0.5" />
+                                                    </DataTrigger>
+                                                </DataTemplate.Triggers>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Border>
+                        </Popup>
                     </StackPanel>
                 </ControlTemplate>
             </Setter.Value>
@@ -359,7 +400,8 @@
                                             x:Name="_ItemBorder" 
                                             Background="Transparent" 
                                             BorderThickness="0"
-                                            OpacityMask="{DynamicResource BottomFadingBrush}"/>
+                                            OpacityMask="{DynamicResource BottomFadingBrush}"
+                                            Margin="0,0,0,2"/>
                                         <StackPanel Margin="0,3,0,0" >
                                             <!--  StackPanel containing icon and source name of a game.  -->
                                             <StackPanel
@@ -388,10 +430,11 @@
                                                 Margin="0,3,0,0"
                                                 VerticalAlignment="Bottom"
                                                 RenderTransformOrigin="0.5,0"
-                                                Visibility="Visible">
-                                                <Rectangle.Fill>
+                                                Visibility="Visible"
+                                                Fill="{DynamicResource WindowBackgourndBrushHighlight}">
+                                                <!--<Rectangle.Fill>
                                                     <SolidColorBrush Color="{StaticResource GlyphColor}" />
-                                                </Rectangle.Fill>
+                                                </Rectangle.Fill>-->
                                                 <Rectangle.RenderTransform>
                                                     <ScaleTransform x:Name="_RectScale" ScaleX="0" />
                                                 </Rectangle.RenderTransform>

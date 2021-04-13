@@ -78,7 +78,8 @@
                     <Border BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}"
-                            Grid.IsSharedSizeScope="True">
+                            Grid.IsSharedSizeScope="True"
+                            Effect="{DynamicResource DefaultDropShadow}">
                         <ItemsPresenter />
                     </Border>
                 </ControlTemplate>
@@ -119,8 +120,9 @@
                             <SearchBox x:Name="PART_TextMainSearch"
                                         Margin="5,6,0,6" DockPanel.Dock="Left"
                                         WindowChrome.IsHitTestVisibleInChrome="True"
-                                        Width="300" />
-                            
+                                        Width="300">
+                            </SearchBox>
+
                             <StackPanel x:Name="PART_PanelMainItems" Orientation="Horizontal"
                                         VerticalAlignment="Stretch" Margin="0,6,0,6"/>
 
@@ -134,7 +136,7 @@
                                             <Setter.Value>
                                                 <ControlTemplate>
                                                     <Border Style="{DynamicResource HighlightBorder}"
-                                                            Background="{TemplateBinding Background}">
+                                                            Background="{TemplateBinding Background}" x:Name="FilterBorder">
                                                         <StackPanel Orientation="Horizontal" Margin="6,0,6,0">
                                                             <TextBlock Text="&#xef29;"
                                                                        FontFamily="{DynamicResource FontIcoFont}" FontSize="20"
@@ -149,10 +151,13 @@
                                                     <ControlTemplate.Triggers>
                                                         <Trigger Property="Tag" Value="{StaticResource True}">
                                                             <Setter Property="Visibility" Value="Visible" TargetName="TextFilter" />
-                                                            <Setter Property="Background" Value="{DynamicResource NormalBrush}" />
+                                                            <Setter Property="Background" Value="{DynamicResource ButtonDefaultBrush}" TargetName="FilterBorder"/>
                                                         </Trigger>
                                                         <Trigger Property="Tag" Value="{StaticResource False}">
                                                             <Setter Property="Visibility" Value="Collapsed" TargetName="TextFilter" />
+                                                        </Trigger>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{DynamicResource ButtonHoveredBrush}" TargetName="FilterBorder"/>
                                                         </Trigger>
                                                     </ControlTemplate.Triggers>
                                                 </ControlTemplate>
@@ -195,7 +200,7 @@
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
                                             <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+                                                <Setter Property="Background" Value="{DynamicResource ButtonHoveredBrush}"/>
                                             </Trigger>
                                         </Style.Triggers>
                                     </Style>

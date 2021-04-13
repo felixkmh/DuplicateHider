@@ -25,22 +25,18 @@
     <Style x:Key="FilterPanelFilterSearchBox" TargetType="SearchBox" BasedOn="{StaticResource {x:Type SearchBox}}">
         <Setter Property="Margin" Value="8,0,6,0" />
         <Setter Property="ShowImage" Value="False" />
-        <Setter Property="Background" Value="{DynamicResource WindowBackgourndBrushBright}"/>
     </Style>
     
     <Style x:Key="FilterPanelFilterSelectionBox" TargetType="FilterSelectionBox" BasedOn="{StaticResource {x:Type FilterSelectionBox}}">
         <Setter Property="Margin" Value="8,0,6,0" />
-        <Setter Property="Background" Value="{DynamicResource WindowBackgourndBrushBright}"/>
     </Style>
     
     <Style x:Key="FilterPanelFilterEnumSelectionBox" TargetType="FilterEnumSelectionBox" BasedOn="{StaticResource {x:Type FilterEnumSelectionBox}}">
         <Setter Property="Margin" Value="8,0,6,0" />
-        <Setter Property="Background" Value="{DynamicResource WindowBackgourndBrushBright}"/>
     </Style>
     
     <Style x:Key="FilterPanelFilterStringSelectionBox" TargetType="FilterStringSelectionBox" BasedOn="{StaticResource {x:Type FilterStringSelectionBox}}">
         <Setter Property="Margin" Value="8,0,6,0" />
-        <Setter Property="Background" Value="{DynamicResource WindowBackgourndBrushBright}"/>
     </Style>
 
     <Style x:Key="FilterPresetButtonAction" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
@@ -52,12 +48,11 @@
     </Style>
 
     <Style TargetType="{x:Type FilterPanel}">
-        <Setter Property="Background" Value="{DynamicResource WindowBackgourndBrushLight}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type FilterPanel}">
                     <Border BorderBrush="{DynamicResource PanelSeparatorBrush}"
-                            d:DesignWidth="200">
+                            d:DesignWidth="200" Background="{DynamicResource WindowBackgourndBrushLight}">
                         <Border.Style>
                             <Style TargetType="Border">
                                 <Setter Property="BorderThickness" Value="1,0,0,0" />
@@ -71,7 +66,6 @@
                                 </Style.Triggers>
                             </Style>
                         </Border.Style>
-                        <!--<DockPanel Background="{TemplateBinding Background}" Effect="{DynamicResource DefaultDropShadow}">-->
                         <DockPanel Background="{TemplateBinding Background}">
                             <DockPanel Margin="10,8,5,5" DockPanel.Dock="Top">
                                 <Button Content="r" FontFamily="Marlett"

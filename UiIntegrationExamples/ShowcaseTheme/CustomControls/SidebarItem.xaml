@@ -23,7 +23,10 @@
                             Padding="{Binding IconPadding}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            ToolTip="{Binding Name}">
+                            ToolTip="{Binding Name}"
+                            CornerRadius="{DynamicResource ButtonCornerRadius}"
+                                >
+
                             <Viewbox>
                                 <ContentPresenter HorizontalAlignment="Stretch"
                                               VerticalAlignment="Stretch" />
@@ -35,12 +38,10 @@
         </Setter>
         <Style.Triggers>
             <DataTrigger Binding="{Binding Selected}" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource GlyphBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource GlyphBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource ButtonSelectedBrush}" />
             </DataTrigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource HoverBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource GlyphBrush}" />
+                <Setter Property="Background" Value="{DynamicResource ButtonHoveredBrush}" />
             </Trigger>
             <DataTrigger Binding="{Settings SidebarPosition}" Value="Right">
                 <Setter Property="BorderThickness" Value="0,0,3,0" />

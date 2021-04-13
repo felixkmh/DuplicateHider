@@ -14,5 +14,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource PopupBorderBrush}" />
         <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
         <Setter Property="BorderThickness" Value="{DynamicResource PopupBorderThickness}" />
+        <Setter Property="Effect" Value="{DynamicResource DefaultDropShadow}"/>
+        <Setter Property="Margin" Value="{DynamicResource DropShadowThickness}"/>
     </Style>
 </ResourceDictionary>

@@ -10,10 +10,10 @@
     <Style x:Key="StandardWindowStyle" TargetType="WindowBase">
         <Setter Property="Background" Value="{DynamicResource WindowBackgourndBrush}" />
         <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WindowBackgourndBrush}"/>
         <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
         <Setter Property="TextOptions.TextRenderingMode" Value="Auto" />
-        <Setter Property="Effect" Value="{DynamicResource DefaultDropShadow}"/>
-        <Setter Property="Margin" Value="{DynamicResource DropShadowThickness}"/>
+        <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome CaptionHeight="25" CornerRadius="0" ResizeBorderThickness="4"
@@ -27,10 +27,10 @@
                         <sys:Boolean x:Key="True">True</sys:Boolean>
                     </ControlTemplate.Resources>
                     <AdornerDecorator>
-                        <Border x:Name="WindowBorder" BorderBrush="{DynamicResource PopupBorderBrush}" CornerRadius="0"
+                        <Border x:Name="WindowBorder" BorderBrush="{DynamicResource WindowBackgourndBrush}" CornerRadius="0"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{TemplateBinding Background}">
-                            <Grid>
+                            <Grid x:Name="ContentGrid" Background="{TemplateBinding Background}">
                                 <ContentPresenter Margin="0,25,0,0"/>
                                 <DockPanel DockPanel.Dock="Top" LastChildFill="False">
                                     <DockPanel DockPanel.Dock="Top" LastChildFill="False">
@@ -47,13 +47,31 @@
                         </Border>
                     </AdornerDecorator>
                     <ControlTemplate.Triggers>
+                        <!--<Trigger Property="WindowStyle" Value="None">
+                            <Setter Property="Effect" Value="{DynamicResource DefaultDropShadow}" TargetName="WindowBorder"/>
+                            <Setter Property="Margin" Value="{DynamicResource DropShadowThickness}" TargetName="WindowBorder"/>
+                            <Setter Property="AllowsTransparency" Value="True"/>
+                        </Trigger>-->
+                        <Trigger Property="WindowStyle" Value="None">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="WindowStyle">
+                                            <DiscreteObjectKeyFrame Value="{x:Static WindowStyle.SingleBorderWindow}" KeyTime="0:0:0.0"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" Storyboard.TargetName="WindowBorder">
+                                            <DiscreteThicknessKeyFrame Value="-1" KeyTime="0:0:0.001"/>
+                                        </ThicknessAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
                         <Trigger Property="WindowState" Value="Maximized">
                             <Setter Property="Content" Value="2" TargetName="PART_ButtonMaximize"/>
                             <Setter Property="Padding" Value="8" TargetName="WindowBorder"/>
                         </Trigger>
                         <DataTrigger Binding="{Binding HasChildWindow, Mode=OneWay, RelativeSource={RelativeSource Self}, TargetNullValue=False}" Value="True">
-                            <Setter Property="BorderBrush" Value="{DynamicResource NormalBorderBrush}" TargetName="WindowBorder"/>
-                            <Setter Property="Opacity" Value="0.4" />
+                            <Setter Property="Opacity" Value="0.4" TargetName="ContentGrid" />
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -15,12 +15,11 @@
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
         <Setter Property="Padding" Value="2,1,2,1" />
-        <Setter Property="ClipToBounds" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBox}">
                     <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}" CornerRadius="{DynamicResource ControlCornerRadius}">
+                            Background="{TemplateBinding Background}">
                         <ScrollViewer Focusable="False"
                                       HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                                       VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
@@ -46,20 +45,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                    <Grid x:Name="ItemGrid">
+                    <Grid>
                         <Border x:Name="HoverRectangle" IsHitTestVisible="False" Visibility="Collapsed"
                                 Background="{DynamicResource HoverBrush}" CornerRadius="{DynamicResource ControlCornerRadius}" />
                         <Border x:Name="SelectedRectangle" IsHitTestVisible="False" Visibility="Collapsed"
                                 Background="{DynamicResource GlyphBrush}" CornerRadius="{DynamicResource ControlCornerRadius}"/>
-                        <!--<Border Effect="{DynamicResource DefaultDropShadow}">-->
-                        <Border>
-                            <Border x:Name="BackgroundBorder" BorderThickness="0" 
-                                    Background="{DynamicResource WindowBackgourndBrushHighlight}" 
-                                    OpacityMask="{DynamicResource LeftFadingBrush}"
-                                    Visibility="Collapsed"
-                                    />
-                        </Border>
-                        <Border Padding="{TemplateBinding Padding}" Background="Transparent" x:Name="ItemBorder">
+                        <Border Padding="{TemplateBinding Padding}" Background="Transparent">
                             <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               Margin="3,0,0,0" />
@@ -67,31 +58,25 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True">
-                            <!--<Setter Property="Visibility" Value="Visible" TargetName="SelectedRectangle" />-->
-                            <!--<Setter Property="Border.Background" Value="{DynamicResource WindowBackgourndBrushHighlight}" TargetName="ItemBorder"/>-->
-                            <Setter Property="Visibility" Value="Visible" TargetName="BackgroundBorder"/>
-                            <Setter Property="Opacity" Value="{DynamicResource HoverBackgroundOpacity}" TargetName="BackgroundBorder"/>
+                            <Setter Property="Visibility" Value="Visible" TargetName="SelectedRectangle" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter Property="Visibility" Value="Visible" TargetName="SelectedRectangle" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsMouseOver" Value="True" />
                                 <Condition Property="Selector.IsSelected" Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter Property="Visibility" Value="Visible" TargetName="BackgroundBorder"/>
-                            <Setter Property="Opacity" Value="{DynamicResource HoverBackgroundOpacity}" TargetName="BackgroundBorder"/>
+                            <Setter Property="Visibility" Value="Visible" TargetName="HoverRectangle" />
                         </MultiTrigger>
-                        <Trigger Property="IsSelected" Value="true">
-                            <!--<Setter Property="Visibility" Value="Visible" TargetName="SelectedRectangle" />-->
-                            <Setter Property="Visibility" Value="Visible" TargetName="BackgroundBorder"/>
-                            <Setter Property="Opacity" Value="1" TargetName="BackgroundBorder"/>
-                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
             <Trigger Property="Selector.IsSelected" Value="True">
-                <!--<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />-->
+                <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
             </Trigger>
         </Style.Triggers>
     </Style>

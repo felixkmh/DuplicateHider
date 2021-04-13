@@ -13,12 +13,13 @@
     <sys:Double x:Key="FontSizeLargest">29</sys:Double>
     <FontFamily x:Key="FontFamily">Trebuchet MS</FontFamily>
     <Thickness x:Key="PopupBorderThickness">0</Thickness>
-    <Thickness x:Key="ControlBorderThickness">1</Thickness>
-    <sys:Double x:Key="EllipseBorderThickness">1</sys:Double>
-    <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
+    <Thickness x:Key="ControlBorderThickness">0</Thickness>
+    <sys:Double x:Key="EllipseBorderThickness">0</sys:Double>
+    <CornerRadius x:Key="ControlCornerRadius">5</CornerRadius>
     <Thickness x:Key="SidebarItemPadding">8</Thickness>
-    <CornerRadius x:Key="ButtonCornerRadius">0</CornerRadius>
-    
+    <CornerRadius x:Key="ButtonCornerRadius">5</CornerRadius>
+    <CornerRadius x:Key="TextBoxCornerRadius">10</CornerRadius>
+    <CornerRadius x:Key="GridItemCornerRadius">20</CornerRadius>
     
     <Color x:Key="BlackColor">#FF000000</Color>
     <Color x:Key="WhiteColor">#FFFFFFFF</Color>
@@ -31,7 +32,7 @@
     <Color x:Key="GlyphColor">#00CCCC</Color>
     <Color x:Key="HighlightGlyphColor">#007A7A</Color>
     <Color x:Key="PopupBackgroundColor">#171e26</Color>
-    <Color x:Key="PopupBorderColor">#3e6184</Color>
+    <Color x:Key="PopupBorderColor">#00000000</Color>
     <Color x:Key="BackgroundToneColor">#1F1F1F</Color>
     <Color x:Key="GridItemBackgroundColor">#292929</Color>
     <Color x:Key="PanelSeparatorColor">#00000000</Color>
@@ -44,20 +45,21 @@
     <SolidColorBrush x:Key="TextBrushDark" Color="{DynamicResource TextColorDark}" />
     <SolidColorBrush x:Key="NormalBrush" Color="{DynamicResource MainColor}" />
     <SolidColorBrush x:Key="NormalBrushDark" Color="{DynamicResource MainColorDark}" />
-    <SolidColorBrush x:Key="NormalBorderBrush" Color="#5555CDFF" />
+    <SolidColorBrush x:Key="NormalBorderBrush" Color="#553A3A3A" />
     <SolidColorBrush x:Key="HoverBrush" Color="{DynamicResource HighlightGlyphColor}" />
-    <SolidColorBrush x:Key="GlyphBrush" Color="{DynamicResource GlyphColor}" />
+    <!--<SolidColorBrush x:Key="GlyphBrush" Color="{DynamicResource GlyphColor}" />-->
+    <ImageBrush x:Key="GlyphBrush" ImageSource="{ThemeFile 'Images/noise/highlight1.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="1"/>
     <SolidColorBrush x:Key="HighlightGlyphBrush" Color="{DynamicResource HighlightGlyphColor}" />
     <SolidColorBrush x:Key="PopupBorderBrush" Color="{DynamicResource TransparentColor}" />
     <SolidColorBrush x:Key="TooltipBackgroundBrush" Color="{DynamicResource BackgroundToneColor}" />
     <!--<SolidColorBrush x:Key="ButtonBackgroundBrush" Color="#292929" />-->
-    <ImageBrush x:Key="ButtonBackgroundBrush" ImageSource="{ThemeFile 'Images/dithered/background_0.png'}" TileMode="FlipXY" Viewport="0,0,200,200" ViewportUnits="Absolute"/>
-    <ImageBrush x:Key="PlayButtonBackgroundBrush" ImageSource="{ThemeFile 'Images/dithered/background_highlight1.png'}" TileMode="FlipXY" Viewport="0,0,200,200" ViewportUnits="Absolute"/>
+    <ImageBrush x:Key="ButtonBackgroundBrush" ImageSource="{ThemeFile 'Images/noise/background2.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.9"/>
+    <ImageBrush x:Key="PlayButtonBackgroundBrush" ImageSource="{ThemeFile 'Images/noise/highlight1.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.85"/>
     <!--<SolidColorBrush x:Key="GridItemBackgroundBrush" Color="{DynamicResource GridItemBackgroundColor}" />-->
-    <ImageBrush x:Key="GridItemBackgroundBrush" ImageSource="{ThemeFile 'Images/dithered/background_0.png'}" TileMode="FlipXY" Viewport="0,0,400,400" ViewportUnits="Absolute"/>
+    <ImageBrush x:Key="GridItemBackgroundBrush" ImageSource="{ThemeFile 'Images/noise/background0.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute"/>
     <SolidColorBrush x:Key="PanelSeparatorBrush" Color="{DynamicResource PanelSeparatorColor}" />
     <!--<SolidColorBrush x:Key="PopupBackgroundBrush" Color="#1F1F1F" />-->
-    <ImageBrush x:Key="PopupBackgroundBrush" ImageSource="{ThemeFile 'Images/dithered/background_0.png'}" TileMode="FlipXY" Viewport="0,0,200,200" ViewportUnits="Absolute"/>
+    <ImageBrush x:Key="PopupBackgroundBrush" ImageSource="{ThemeFile 'Images/noise/background0.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute"/>
 
     <SolidColorBrush x:Key="PositiveRatingBrush" Color="#78ffa0" />
     <SolidColorBrush x:Key="NegativeRatingBrush" Color="#ff6b6b" />
@@ -71,20 +73,37 @@
     </LinearGradientBrush>
 
     <!--<SolidColorBrush x:Key="WindowBackgourndBrush" Color="{DynamicResource MainColorDark}" />-->
-    <ImageBrush x:Key="WindowBackgourndBrushTransparent" ImageSource="{ThemeFile 'Images/dithered/background_0.png'}" TileMode="FlipXY" Viewport="0,0,200,200" ViewportUnits="Absolute" Opacity="0.85"/>
-    <ImageBrush x:Key="WindowBackgourndBrush" ImageSource="{ThemeFile 'Images/dithered/background_0.png'}" TileMode="FlipXY" Viewport="0,0,200,200" ViewportUnits="Absolute"/>
-    <ImageBrush x:Key="WindowBackgourndBrushLight" ImageSource="{ThemeFile 'Images/dithered/background_1.png'}" TileMode="FlipXY" Viewport="0,0,200,200" ViewportUnits="Absolute" Opacity="0.85"/>
-    <ImageBrush x:Key="WindowBackgourndBrushBright" ImageSource="{ThemeFile 'Images/dithered/background_2.png'}" TileMode="FlipXY" Viewport="0,0,200,200" ViewportUnits="Absolute" Opacity="0.85"/>
-    <ImageBrush x:Key="WindowBackgourndBrushBrighter" ImageSource="{ThemeFile 'Images/dithered/background_3.png'}" TileMode="FlipXY" Viewport="0,0,200,200" ViewportUnits="Absolute" Opacity="0.85"/>
-    <ImageBrush x:Key="WindowBackgourndBrushHighlight" ImageSource="{ThemeFile 'Images/dithered/background_highlight1.png'}" TileMode="FlipXY" Viewport="0,0,200,200" ViewportUnits="Absolute" Opacity="0.9"/>
-    <ImageBrush x:Key="WindowBackgourndBrushHighlightHover" ImageSource="{ThemeFile 'Images/dithered/background_highlight0.png'}" TileMode="FlipXY" Viewport="0,0,200,200" ViewportUnits="Absolute"/>
+    <ImageBrush x:Key="WindowBackgourndBrushTransparent" ImageSource="{ThemeFile 'Images/noise/background0.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.85"/>
+    <ImageBrush x:Key="WindowBackgourndBrush" ImageSource="{ThemeFile 'Images/noise/background0.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.9"/>
+    <ImageBrush x:Key="WindowBackgourndBrushLight" ImageSource="{ThemeFile 'Images/noise/background1.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.85"/>
+    <ImageBrush x:Key="WindowBackgourndBrushBright" ImageSource="{ThemeFile 'Images/noise/background2.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.85"/>
+    <ImageBrush x:Key="WindowBackgourndBrushBrighter" ImageSource="{ThemeFile 'Images/noise/background3.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.85"/>
+    <ImageBrush x:Key="WindowBackgourndBrushHighlight" ImageSource="{ThemeFile 'Images/noise/highlight1.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.85"/>
+    <ImageBrush x:Key="WindowBackgourndBrushHighlightHover" ImageSource="{ThemeFile 'Images/noise/highlight0.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute"/>
 
-    <LinearGradientBrush x:Key="LeftFadingBrush" StartPoint="0,0" EndPoint="1,0">
+    <ImageBrush x:Key="ButtonOpaqueBrush" ImageSource="{ThemeFile 'Images/noise/background1.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="1"/>
+    <ImageBrush x:Key="ButtonDefaultBrush" ImageSource="{ThemeFile 'Images/noise/background2_5.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.8"/>
+    <ImageBrush x:Key="ButtonHoveredBrush" ImageSource="{ThemeFile 'Images/noise/background3.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.9"/>
+    <ImageBrush x:Key="ButtonSelectedBrush" ImageSource="{ThemeFile 'Images/noise/background2_5.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.75"/>
+
+    <!--<SolidColorBrush x:Key="ButtonHoveredBrush" Color="Red"/>-->
+
+    <LinearGradientBrush x:Key="LeftFadingBrush" StartPoint="0,0" EndPoint="1,0.1">
         <GradientStop Color="Black" Offset="0.1"/>
         <GradientStop Color="Transparent" Offset="1"/>
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="BottomFadingBrush" StartPoint="0,1" EndPoint="0,0">
         <GradientStop Color="Black" Offset="0.1"/>
+        <GradientStop Color="Transparent" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="TopFadingBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="Black" Offset="0.1"/>
+        <GradientStop Color="Transparent" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="CenterFadingBrushHorizontal" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="Transparent" Offset="0"/>
+        <GradientStop Color="Black" Offset="0.4"/>
+        <GradientStop Color="Black" Offset="0.6"/>
         <GradientStop Color="Transparent" Offset="1"/>
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="WindowBackgourndBrush2" StartPoint="0,0" EndPoint="0,1" >
@@ -95,8 +114,9 @@
 
     <sys:Double x:Key="HoverBackgroundOpacity">0.6</sys:Double>
     <DropShadowEffect x:Key="TextDropShadow" BlurRadius="4" ShadowDepth="0" Color="Black" RenderingBias="Quality" Opacity="0.5"/>
-    <sys:Double x:Key="DropShadowRadius">20</sys:Double>
-    <DropShadowEffect x:Key="DefaultDropShadow" BlurRadius="{DynamicResource DropShadowRadius}" ShadowDepth="0" Color="Black" RenderingBias="Performance" Opacity="0.8"/>
+    <sys:Double x:Key="DropShadowRadius">22</sys:Double>
+    <sys:Double x:Key="DropShadowRadiusNegative">-25</sys:Double>
+    <DropShadowEffect x:Key="DefaultDropShadow" BlurRadius="{DynamicResource DropShadowRadius}" ShadowDepth="0" Color="Black" RenderingBias="Performance" Opacity="0.45"/>
     <Thickness x:Key="DropShadowThickness" 
                Left="{StaticResource DropShadowRadius}" 
                Top="{StaticResource DropShadowRadius}" 

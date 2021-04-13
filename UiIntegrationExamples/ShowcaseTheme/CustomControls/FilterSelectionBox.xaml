@@ -9,35 +9,37 @@
     <Style TargetType="{x:Type FilterSelectionBox}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Height" Value="24" />
-        <Setter Property="Background" Value="{DynamicResource WindowBackgourndBrushBright}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type FilterSelectionBox}">
                     <Border BorderThickness="{DynamicResource ControlBorderThickness}"
-                            CornerRadius="{DynamicResource ButtonCornerRadius}"
-                            Background="{DynamicResource WindowBackgourndBrushBright}"
+                            CornerRadius="{DynamicResource ControlCornerRadius}"
+                            Style="{DynamicResource HighlightBorder}"
+                            Background="{DynamicResource ButtonDefaultBrush}"
                             x:Name="Root">
-                        <Grid Background="{TemplateBinding Background}">
+                        <Grid>
                             <DockPanel>
-                                <Viewbox Margin="0,0,2,0" DockPanel.Dock="Right">
+                                <Viewbox Margin="0,0,2,0" DockPanel.Dock="Right" x:Name="Box">
                                     <TextBlock Text="6" FontFamily="Marlett"
                                                Foreground="{DynamicResource GlyphBrush}"
-                                               VerticalAlignment="Center"/>
+                                               VerticalAlignment="Center" 
+                                               Background="Transparent"/>
                                 </Viewbox>
                                 <TextBlock x:Name="PART_TextFilterString"
                                            Style="{StaticResource BaseTextBlockStyle}"
                                            TextTrimming="CharacterEllipsis" HorizontalAlignment="Stretch" 
                                            VerticalAlignment="Center" DockPanel.Dock="Left"
-                                           Margin="5,0,0,0"/>
+                                           Margin="5,0,0,0" 
+                                           Background="Transparent"/>
                             </DockPanel>
                             <ToggleButton x:Name="MainToggle"
                                           BorderThickness="0" Focusable="False"
                                           HorizontalContentAlignment="Stretch"
                                           Background="Transparent" />
                             <TextBox x:Name="PART_TextFilterInput" BorderThickness="0"
-                                     VerticalAlignment="Center" Margin="1,0,30,0"/>
+                                     VerticalAlignment="Center" Margin="1,0,30,0" Background="Transparent"/>
                             <Button x:Name="PART_ButtonClearFilter"
-                                    Margin="0,0,20,0" FontSize="18"
+                                    Margin="0,0,28,0" FontSize="18"
                                     Background="Transparent" HorizontalAlignment="Right"
                                     BorderThickness="0" Padding="3,0,3,0"
                                     ContentTemplate="{DynamicResource ClearTextIconTemplate}">
@@ -54,15 +56,26 @@
                             </Button>
                             <Popup Placement="Bottom" Focusable="False" AllowsTransparency="True" Name="Popup"
                                    IsOpen="{Binding IsChecked, ElementName=MainToggle, Mode=TwoWay, Delay=100}" StaysOpen="False"
-                                   MaxHeight="300" Width="{Binding ActualWidth, ElementName=MainToggle}">
-                                <Border Background="{DynamicResource WindowBackgourndBrushLight}"
+                                   MaxHeight="300" >
+                                <Border Background="{DynamicResource PopupBackgroundBrush}"
                                         BorderThickness="{DynamicResource PopupBorderThickness}"
-                                        BorderBrush="{DynamicResource PopupBorderBrush}">
+                                        BorderBrush="{DynamicResource PopupBorderBrush}"
+                                        Width="{Binding ActualWidth, ElementName=MainToggle}"
+                                        Effect="{DynamicResource DefaultDropShadow}"
+                                        Margin="{DynamicResource DropShadowThickness}">
                                     <ItemsControl x:Name="PART_ItemsPanel" />
                                 </Border>
                             </Popup>
                         </Grid>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True" SourceName="Root">
+                            <Setter Property="Background" Value="{DynamicResource ButtonSelectedBrush}" TargetName="Root"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True" SourceName="Root">
+                            <Setter Property="Background" Value="{DynamicResource ButtonHoveredBrush}" TargetName="Root"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

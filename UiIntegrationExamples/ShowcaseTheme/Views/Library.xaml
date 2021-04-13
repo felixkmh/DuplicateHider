@@ -5,7 +5,6 @@
                     mc:Ignorable="d">
 
     <Style TargetType="{x:Type Library}">
-        <Setter Property="Background" Value="Yellow" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Library}">

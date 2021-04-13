@@ -22,7 +22,7 @@
     
     <Style TargetType="{x:Type Slider}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource ButtonDefaultBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource NormalBorderBrush}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -35,7 +35,7 @@
                         </Grid.RowDefinitions>
                         <TickBar x:Name="TopTick" Visibility="Collapsed" Height="4" Placement="Top"
                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"  Fill="{DynamicResource GlyphBrush}" />
-                        <Border x:Name="Border" Grid.Row="1" Margin="0" Height="6" CornerRadius="{DynamicResource ButtonCornerRadius}"
+                        <Border x:Name="Border" Grid.Row="1" Margin="0" Height="6" CornerRadius="{DynamicResource ControlCornerRadius}"
                                 Background="{TemplateBinding Background}" BorderBrush="{DynamicResource NormalBorderBrush}"
                                 BorderThickness="{DynamicResource ControlBorderThickness}" />
                         <Track Grid.Row="1" x:Name="PART_Track">

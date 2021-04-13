@@ -12,7 +12,8 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="0"
-                            d:DesignWidth="1280" d:DesignHeight="960">
+                            d:DesignWidth="1280" d:DesignHeight="960"
+                            >
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition />

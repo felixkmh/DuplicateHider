@@ -9,14 +9,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                    <Grid Background="{DynamicResource GridItemBackgroundBrush}"
+                    <Grid Background="Transparent"
                           Margin="{Settings ItemSpacingMargin}"
                           x:Name="ItemGrid">
                         <Border x:Name="SelectionBorder" BorderThickness="3" Margin="-3" 
                                 BorderBrush="{DynamicResource GlyphBrush}"
                                 OpacityMask="{DynamicResource BottomFadingBrush}"
-                                Opacity="0"/>
-                        <ContentPresenter />
+                                Opacity="0" CornerRadius="{DynamicResource GridItemCornerRadius}"/>
+                        <ContentPresenter/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">

@@ -38,9 +38,10 @@
                                 <ContentControl x:Name="DuplicateHider_SourceSelector" 
                                                         HorizontalAlignment="Right" 
                                                         HorizontalContentAlignment="Right"
-                                                        Visibility="Collapsed" 
+                                                        Visibility="Visible" 
                                                         VerticalContentAlignment="Center"   
                                                         Margin="0,0,0,0"  
+                                                        Opacity="0"
                                                     >
                                 </ContentControl>
                             </ContentControl>
@@ -62,11 +63,8 @@
                                             Storyboard.TargetName="DummyScale" 
                                             Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
                                             To="1" Duration="0:0:0.15"/>
-                                        <ObjectAnimationUsingKeyFrames  
-                                            Storyboard.TargetName="DuplicateHider_SourceSelector"
-                                            Storyboard.TargetProperty="Visibility">
-                                            <DiscreteObjectKeyFrame Value="{x:Static Visibility.Visible}" KeyTime="0"/>
-                                        </ObjectAnimationUsingKeyFrames>
+                                        
+                                        
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -82,11 +80,8 @@
                                             Storyboard.TargetName="DummyScale" 
                                             Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
                                             To="0" Duration="0:0:0.15"/>
-                                        <ObjectAnimationUsingKeyFrames  
-                                            Storyboard.TargetName="DuplicateHider_SourceSelector"
-                                            Storyboard.TargetProperty="Visibility">
-                                            <DiscreteObjectKeyFrame Value="{x:Static Visibility.Collapsed}" KeyTime="0:0:0.15"/>
-                                        </ObjectAnimationUsingKeyFrames>
+                                        
+                                        
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>

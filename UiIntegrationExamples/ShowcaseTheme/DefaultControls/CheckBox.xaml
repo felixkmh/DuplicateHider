@@ -8,7 +8,7 @@
 
     <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource NormalBorderBrush}" />
         <Setter Property="BorderThickness" Value="{DynamicResource ControlBorderThickness}" />
@@ -18,17 +18,17 @@
                     <Border Background="{TemplateBinding Background}"
                             Padding="{TemplateBinding Padding}">
                         <StackPanel Orientation="Horizontal">
-                            <Border x:Name="BulletBorder" CornerRadius="{DynamicResource ButtonCornerRadius}"
-                                    BorderThickness="{TemplateBinding BorderThickness}" Background="{DynamicResource ButtonBackgroundBrush}"
-                                    Style="{DynamicResource HighlightBorder}" >
-                                <Grid Width="18" Height="18" Background="{DynamicResource NormalBrushDark}">
+                            <Border x:Name="BulletBorder" CornerRadius="{DynamicResource ControlCornerRadius}"
+                                    BorderThickness="{TemplateBinding BorderThickness}" Background="{DynamicResource ButtonDefaultBrush}"
+                                     >
+                                <Grid Width="18" Height="18">
                                     <Viewbox x:Name="CheckIcon" Visibility="Collapsed">
                                         <TextBlock Text="b" FontFamily="Marlett" Foreground="{DynamicResource GlyphBrush}"
-                                                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent"/>
                                     </Viewbox>
                                     <Viewbox x:Name="IndeterminateIcon" Visibility="Collapsed" Margin="2">
                                         <TextBlock Text="g" FontFamily="Marlett" Foreground="{DynamicResource GlyphBrush}"
-                                                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent"/>
                                     </Viewbox>
                                 </Grid>
                             </Border>                            
@@ -46,11 +46,11 @@
                         <Trigger Property="IsChecked" Value="True">
                             <Setter Property="Visibility" Value="Visible" TargetName="CheckIcon" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" Value="{DynamicResource GlyphBrush}" TargetName="BulletBorder" />
-                        </Trigger>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="BorderBrush" Value="{DynamicResource GlyphBrush}" TargetName="BulletBorder" />
+                            <Setter Property="Background" Value="{DynamicResource ButtonSelectedBrush}" TargetName="BulletBorder" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource ButtonHoveredBrush}" TargetName="BulletBorder" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

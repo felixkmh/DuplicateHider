@@ -11,17 +11,18 @@
                     <TextBlock FontSize="{TemplateBinding FontSize}"
                                Foreground="{TemplateBinding Foreground}"
                                Text="{TemplateBinding Content}"
+                               
                                TextWrapping="Wrap"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+                <Setter Property="Background" Value="{DynamicResource ButtonHoveredBrush}" />
                 <Setter Property="Cursor" Value="Hand" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource TextBrushDarker}" />
+                <Setter Property="Background" Value="{DynamicResource ButtonSelectedBrush}" />
             </Trigger>
         </Style.Triggers>
     </Style>

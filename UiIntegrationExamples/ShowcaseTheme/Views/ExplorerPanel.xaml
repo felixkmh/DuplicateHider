@@ -10,10 +10,7 @@
                 <ControlTemplate TargetType="{x:Type ExplorerPanel}">
                     <Border BorderBrush="{DynamicResource PanelSeparatorBrush}"
                             d:DesignWidth="200"
-                            d:DesignHeight="400"
-                            Background="{DynamicResource WindowBackgourndBrushLight}"
-                            >
-                            <!--Effect="{DynamicResource DefaultDropShadow}"-->
+                            d:DesignHeight="400">
                         <Border.Style>
                             <Style TargetType="Border">
                                 <Setter Property="BorderThickness" Value="1,0,0,0" />
@@ -30,7 +27,7 @@
                         <DockPanel Background="{TemplateBinding Background}">
                             <ComboBox Name="PART_SelectFields"
                                   DockPanel.Dock="Top" Margin="5,8,5,8" />
-                            <ListBox Name="PART_SelectItems" Style="{DynamicResource ListBox}"
+                            <ListBox Name="PART_SelectItems"
                                  DockPanel.Dock="Top" Margin="5,0,5,8"                                      
                                  BorderThickness="0"
                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
