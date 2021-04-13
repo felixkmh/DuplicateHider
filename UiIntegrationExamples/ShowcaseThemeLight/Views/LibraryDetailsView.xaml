@@ -1,0 +1,89 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                    mc:Ignorable="d">
+
+    <Style TargetType="{x:Type LibraryDetailsView}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type LibraryDetailsView}">
+                    <Grid d:DesignWidth="1280" d:DesignHeight="960" ClipToBounds="True"
+                               d:DataContext="{x:Static DesignMainViewModel.DesignIntance}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition x:Name="LeftColumn"/>
+                            <ColumnDefinition Width="2"/>
+                            <ColumnDefinition x:Name="RightColumn"/>
+                        </Grid.ColumnDefinitions>
+                        <Canvas Width="{Settings DetailsListWitdh, Mode=TwoWay}" Visibility="Collapsed" x:Name="Proxy"/>
+                        <Grid x:Name="DetailsList" Grid.Column="0">
+                            <ExtendedListBox x:Name="PART_ListGames"
+                                         BorderBrush="{DynamicResource PanelSeparatorBrush}"
+                                         ItemContainerStyle="{DynamicResource DetailsViewItemStyle}"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                         ScrollViewer.PanningMode="VerticalOnly"
+                                         Background="{DynamicResource WindowBackgourndBrushLight}" 
+                                         HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <ExtendedListBox.Style>
+                                    <Style TargetType="ExtendedListBox" BasedOn="{StaticResource {x:Type ExtendedListBox}}">
+                                        <Setter Property="BorderThickness" Value="0,0,1,0" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Settings DetailsListPosition}" Value="Right">
+                                                <Setter Property="BorderThickness" Value="1,0,0,0" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Settings ShowPanelSeparators}" Value="False">
+                                                <Setter Property="BorderThickness" Value="0" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ExtendedListBox.Style>
+                                <ExtendedListBox.GroupStyle>
+                                    <GroupStyle ContainerStyle="{StaticResource DetailsViewGroupStyle}"/>
+                                </ExtendedListBox.GroupStyle>
+                                <ExtendedListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <GameListItem Style="{StaticResource DetailsViewItemTemplate}" />
+                                    </DataTemplate>
+                                </ExtendedListBox.ItemTemplate>
+                            </ExtendedListBox>
+                            <TextBlock FontSize="{StaticResource FontSizeLarge}" Margin="0,15,0,0"
+                                       Text="{DynamicResource LOCNoItemsFound}" TextWrapping="Wrap"                                     
+                                       TextAlignment="Center" HorizontalAlignment="Center">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Items.Count, ElementName=PART_ListGames, Mode=OneWay}" Value="0">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="{DynamicResource WindowBackgourndBrushLight}"/>
+                        <DetailsViewGameOverview x:Name="PART_ControlGameView" Grid.Column="2" Panel.ZIndex="-1"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Settings DetailsListPosition}" Value="Right">
+                            <Setter Property="Grid.Column" TargetName="DetailsList" Value="2"/>
+                            <Setter Property="Grid.Column" TargetName="PART_ControlGameView" Value="0"/>
+                            <Setter Property="ColumnDefinition.Width" TargetName="RightColumn" Value="{Binding Width,ElementName=Proxy,Mode=OneWay}"/>
+                            <Setter Property="Width" TargetName="DetailsList" Value="0"/>
+                            <Setter Property="Width" TargetName="DetailsList" Value="Auto"/>
+                            <Setter Property="Width" TargetName="PART_ControlGameView" Value="0"/>
+                            <Setter Property="Width" TargetName="PART_ControlGameView" Value="Auto"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Settings DetailsListPosition}" Value="Left">
+                            <Setter Property="ColumnDefinition.Width" TargetName="LeftColumn" Value="{Binding Width, ElementName=Proxy,Mode=OneWay}"/>
+                            <Setter Property="Width" TargetName="DetailsList" Value="0"/>
+                            <Setter Property="Width" TargetName="DetailsList" Value="Auto"/>
+                            <Setter Property="Width" TargetName="PART_ControlGameView" Value="0"/>
+                            <Setter Property="Width" TargetName="PART_ControlGameView" Value="Auto"/>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
