@@ -23,7 +23,7 @@
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value="0.5" />
+                <Setter Property="Opacity" Value="1" />
             </Trigger>
         </Style.Triggers>
     </Style>

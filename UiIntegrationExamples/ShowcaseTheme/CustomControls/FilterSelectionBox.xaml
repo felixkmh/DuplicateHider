@@ -18,24 +18,25 @@
                             Background="{DynamicResource ButtonDefaultBrush}"
                             x:Name="Root">
                         <Grid>
-                            <DockPanel>
+                            <ToggleButton x:Name="MainToggle"
+                                          BorderThickness="0" Focusable="False"
+                                          HorizontalContentAlignment="Right"
+                                          Background="Transparent" />
+                            <DockPanel IsHitTestVisible="False">
                                 <Viewbox Margin="0,0,2,0" DockPanel.Dock="Right" x:Name="Box">
                                     <TextBlock Text="6" FontFamily="Marlett"
                                                Foreground="{DynamicResource GlyphBrush}"
                                                VerticalAlignment="Center" 
-                                               Background="Transparent"/>
+                                               Background="Transparent"
+                                               />
                                 </Viewbox>
                                 <TextBlock x:Name="PART_TextFilterString"
                                            Style="{StaticResource BaseTextBlockStyle}"
                                            TextTrimming="CharacterEllipsis" HorizontalAlignment="Stretch" 
                                            VerticalAlignment="Center" DockPanel.Dock="Left"
-                                           Margin="5,0,0,0" 
+                                           Margin="5,0,2,0"
                                            Background="Transparent"/>
                             </DockPanel>
-                            <ToggleButton x:Name="MainToggle"
-                                          BorderThickness="0" Focusable="False"
-                                          HorizontalContentAlignment="Stretch"
-                                          Background="Transparent" />
                             <TextBox x:Name="PART_TextFilterInput" BorderThickness="0"
                                      VerticalAlignment="Center" Margin="1,0,30,0" Background="Transparent"/>
                             <Button x:Name="PART_ButtonClearFilter"
@@ -74,6 +75,16 @@
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True" SourceName="Root">
                             <Setter Property="Background" Value="{DynamicResource ButtonHoveredBrush}" TargetName="Root"/>
+                            <Setter Property="Margin" TargetName="PART_TextFilterString">
+                                <Setter.Value>
+                                    <Thickness Right="20" Left="5"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Margin" TargetName="PART_TextFilterInput">
+                                <Setter.Value>
+                                    <Thickness Right="50" Left="1"/>
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -18,7 +18,11 @@
                             Background="{DynamicResource ButtonDefaultBrush}"
                             x:Name="Root">
                         <Grid>
-                            <DockPanel>
+                            <ToggleButton x:Name="MainToggle"
+                                          BorderThickness="0" Focusable="False"
+                                          HorizontalContentAlignment="Right"
+                                          Background="Transparent" />
+                            <DockPanel IsHitTestVisible="False">
                                 <Viewbox Margin="0,0,2,0" DockPanel.Dock="Right">
                                     <TextBlock Text="6" FontFamily="Marlett"
                                                Foreground="{DynamicResource GlyphBrush}"
@@ -31,10 +35,6 @@
                                            VerticalAlignment="Center" DockPanel.Dock="Left"
                                            Margin="5,0,0,0" Background="Transparent"/>
                             </DockPanel>
-                            <ToggleButton x:Name="MainToggle"
-                                          BorderThickness="0" Focusable="False"
-                                          HorizontalContentAlignment="Stretch"
-                                          Background="Transparent" />
                             <Button x:Name="PART_ButtonClearFilter"
                                     Margin="0,0,28,0" FontSize="18"
                                     Background="Transparent" HorizontalAlignment="Right"
@@ -71,6 +71,11 @@
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True" SourceName="Root">
                             <Setter Property="Background" Value="{DynamicResource ButtonHoveredBrush}" TargetName="Root"/>
+                            <Setter Property="Margin" TargetName="PART_TextFilterString">
+                                <Setter.Value>
+                                    <Thickness Right="20" Left="5"/>
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
