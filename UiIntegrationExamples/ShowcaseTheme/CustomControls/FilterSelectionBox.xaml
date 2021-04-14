@@ -38,7 +38,8 @@
                                            Background="Transparent"/>
                             </DockPanel>
                             <TextBox x:Name="PART_TextFilterInput" BorderThickness="0"
-                                     VerticalAlignment="Center" Margin="1,0,30,0" Background="Transparent"/>
+                                     VerticalAlignment="Center" Margin="1,0,30,0" Background="Transparent">
+                            </TextBox>
                             <Button x:Name="PART_ButtonClearFilter"
                                     Margin="0,0,28,0" FontSize="18"
                                     Background="Transparent" HorizontalAlignment="Right"

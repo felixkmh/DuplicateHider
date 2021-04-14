@@ -13,13 +13,14 @@
         <Setter Property="CaretBrush" Value="{DynamicResource TextBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Background" Value="{DynamicResource WindowBackgourndBrushBright}"/>
+        <Setter Property="Border.Visibility" Value="Visible"/>
         <Setter Property="BorderBrush" Value="{DynamicResource NormalBorderBrush}"/>
         <Setter Property="BorderThickness" Value="{DynamicResource ControlBorderThickness}" />
         <Setter Property="Padding" Value="3" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}"
+                    <Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}" Visibility="{TemplateBinding Border.Visibility}"
                             Background="{TemplateBinding Background}" CornerRadius="{DynamicResource ControlCornerRadius}"
                             Style="{DynamicResource HighlightBorder}" BorderBrush="{TemplateBinding BorderBrush}">
                         <ScrollViewer x:Name="PART_ContentHost"
@@ -27,6 +28,9 @@
                                       HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"/>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource ButtonHoveredBrush}" TargetName="Border"/>
+                        </Trigger>
                         <Trigger Property="IsFocused" Value="True">
                             <Setter Property="Background" Value="{DynamicResource ButtonSelectedBrush}" TargetName="Border" />
                         </Trigger>
@@ -34,10 +38,5 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource ButtonHoveredBrush}" />
-            </Trigger>
-        </Style.Triggers>
     </Style>
 </ResourceDictionary>
