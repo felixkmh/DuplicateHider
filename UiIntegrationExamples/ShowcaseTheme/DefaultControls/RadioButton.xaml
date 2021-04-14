@@ -21,7 +21,8 @@
                                 <Grid Width="18" Height="18">
                                     <Ellipse x:Name="BulletBorder" Width="18" Height="18"
                                             Stroke="{DynamicResource NormalBorderBrush}"
-                                            StrokeThickness="{DynamicResource EllipseBorderThickness}" />
+                                            StrokeThickness="{DynamicResource EllipseBorderThickness}" 
+                                             Fill="{DynamicResource ButtonDefaultBrush}"/>
                                     <Viewbox x:Name="CheckIcon" Visibility="Collapsed" >
                                         <TextBlock Text="h" FontFamily="Marlett" Foreground="{DynamicResource GlyphBrush}"
                                                     HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -39,9 +40,11 @@
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Stroke" Value="{DynamicResource GlyphBrush}" TargetName="BulletBorder" />
+                            <Setter Property="Fill" TargetName="BulletBorder" Value="{DynamicResource ButtonHoveredBrush}"/>
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
                             <Setter Property="Stroke" Value="{DynamicResource GlyphBrush}" TargetName="BulletBorder" />
+                            <Setter Property="Fill" TargetName="BulletBorder" Value="{DynamicResource ButtonSelectedBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
