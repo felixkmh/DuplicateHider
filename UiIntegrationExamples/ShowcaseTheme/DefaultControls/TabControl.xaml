@@ -100,7 +100,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
                     <Grid x:Name="TabGrid">
-                        <Border x:Name="SelectedBorder" Visibility="Collapsed" Margin="1,0,1,0"
+                        <Border x:Name="SelectedBorder" Visibility="Hidden" Margin="1,0,1,0"
                                 SnapsToDevicePixels="True"
                                 BorderThickness="0,0,0,2" BorderBrush="{DynamicResource GlyphBrush}"/>
                         <TextBlock x:Name="TextContent" Padding="5" Style="{DynamicResource BaseTextBlockStyle}"

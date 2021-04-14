@@ -7,8 +7,6 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
         <Setter Property="TextOptions.TextRenderingMode" Value="Auto" />
-        <Setter Property="Effect" Value="{DynamicResource DefaultDropShadow}"/>
-        <Setter Property="Margin" Value="{DynamicResource DropShadowThickness}"/>
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome CaptionHeight="25" CornerRadius="0" ResizeBorderThickness="4"

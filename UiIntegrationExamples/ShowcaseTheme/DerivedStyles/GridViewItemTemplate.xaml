@@ -14,18 +14,18 @@
                                 Background="Transparent"
                                 x:Name="OutsideBorder" CornerRadius="{DynamicResource GridItemCornerRadius}"
                                 >
+                            <Border.OpacityMask>
+                                <VisualBrush Visual="{Binding ElementName=Mask}"/>
+                            </Border.OpacityMask>
                             <StackPanel Name="PART_PanelHost"
                                         d:DataContext="{x:Static DesignMainViewModel.DesignSelectedGameIntance}">
-                                <StackPanel.OpacityMask>
-                                    <VisualBrush Visual="{Binding ElementName=Mask}"/>
-                                </StackPanel.OpacityMask>
                                 <Grid Width="{Settings GridItemWidth}"
                                   Height="{Settings GridItemHeight}">
                                     <Image Name="PART_ImageCover"
                                            RenderOptions.BitmapScalingMode="Fant" StretchDirection="Both"
                                            HorizontalAlignment="Center" VerticalAlignment="Center"
                                            Stretch="{Settings CoverArtStretch}" />
-                                    <Border Background="#99000000" x:Name="TextGameName" Visibility="Collapsed">
+                                    <Border Background="#99000000" x:Name="TextGameName" Visibility="Hidden">
                                         <TextBlock Text="{Binding DisplayName}"
                                                TextWrapping="Wrap"
                                                Style="{StaticResource BaseTextBlockStyle}"
@@ -34,10 +34,13 @@
                                     </Border>
                                     <Border OpacityMask="{DynamicResource BottomFadingBrush}"
                                             Background="{DynamicResource WindowBackgourndBrushHighlight}" 
-                                            x:Name="BorderMouseOver" Visibility="Collapsed" 
+                                            x:Name="BorderMouseOver" Visibility="Hidden" 
                                             Opacity="0.75"/>
+                                    <Border Background="{DynamicResource WindowBackgourndBrushLight}" 
+                                            x:Name="DarkenBorder" Visibility="Hidden"  Opacity="0.9"
+                                            />
                                     <Viewbox VerticalAlignment="Center" HorizontalAlignment="Center"
-                                             Name="GameControls"  Visibility="Collapsed">
+                                             Name="GameControls"  Visibility="Hidden">
                                         <StackPanel Orientation="Horizontal">
                                             <Button Name="PART_ButtonPlay" Style="{StaticResource SimpleButton}"
                                                     Margin="20,0,2,0" VerticalAlignment="Center"
@@ -48,11 +51,11 @@
                                         </StackPanel>
                                     </Viewbox>
                                     <Grid MaxHeight="25" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5">
-                                        <Border CornerRadius="8" Background="{DynamicResource ButtonDefaultBrush}" Opacity="0.8"/>
+                                        <Border CornerRadius="8" Background="{DynamicResource WindowBackgourndBrushLight}" Opacity="0.7"/>
                                         <ContentControl x:Name="DuplicateHider_SourceSelector" />
                                     </Grid>
                                 </Grid>
-                                <TextBlock Text="{Binding DisplayName}"
+                                <TextBlock Text="{Binding DisplayName}" x:Name="LowerText"
                                        Style="{DynamicResource BaseTextBlockStyle}"                                                                   
                                        TextAlignment="Center" TextTrimming="CharacterEllipsis"
                                        VerticalAlignment="Center"
@@ -72,7 +75,8 @@
                                 <Condition Binding="{Binding IsInstalled}" Value="False" />
                                 <Condition Binding="{Settings DarkenUninstalledGamesGrid}" Value="True" />
                             </MultiDataTrigger.Conditions>
-                            <Setter Property="Visibility" Value="Visible" TargetName="BorderMouseOver" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="DarkenBorder" />
+                            <Setter Property="Opacity" Value="0.6" TargetName="LowerText" />
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>

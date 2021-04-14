@@ -29,6 +29,7 @@
             <Trigger Property="IsMouseOver" Value="true">
                 <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
                 <Setter Property="BorderBrush" Value="{DynamicResource TextBrush}" />
+                <Setter Property="Background" Value="{DynamicResource WindowBackgourndBrushHighlightHover}"/>
             </Trigger>
         </Style.Triggers>
     </Style>

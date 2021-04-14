@@ -267,7 +267,7 @@
             <Setter.Value>
                 <ControlTemplate>
                     <StackPanel Orientation="Vertical" Visibility="{Binding MoreThanOneCopy, Converter={StaticResource BooleanToVisibilityConverter}}" Width="38">
-                        <Border Background="{DynamicResource WindowBackgourndBrush}" 
+                        <Border Background="{DynamicResource WindowBackgourndBrushLight}" x:Name="ButtonBorder"
                                 BorderThickness="{DynamicResource ControlBorderThickness}" CornerRadius="0,5,5,0" Margin="-5,0,0,0" Width="38">
                             <ToggleButton 
                                 x:Name="Toggler" 
@@ -279,7 +279,7 @@
                             </ToggleButton>
                         </Border>
                         <Popup x:Name="PlayOptions" Width="Auto"
-                               IsOpen="{Binding IsChecked, ElementName=Toggler, Delay=100}"
+                               IsOpen="{Binding IsChecked, ElementName=Toggler, Delay=110}"
                                Placement="Bottom" PlacementRectangle="-150,40,0,0"
                                Effect="{DynamicResource DefaultDropShadow}"
                                Margin="{DynamicResource DropShadowThickness}"
@@ -291,7 +291,7 @@
                                     Effect="{DynamicResource DefaultDropShadow}"
                                     Margin="{DynamicResource DropShadowThickness}"
                                     Width="185" CornerRadius="0,0,5,5">
-                                <ScrollViewer MaxHeight="220">
+                                <ScrollViewer MaxHeight="216">
                                     <ItemsControl
                                         x:Name="DH_ListBox"
                                         Focusable="False"
@@ -307,22 +307,22 @@
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <!--  StackPanel containing icon and source name of a game.  -->
-                                                <Grid>
+                                                <Grid Background="Transparent">
                                                     <Border x:Name="SelectionBorder" 
                                                             OpacityMask="{DynamicResource LeftFadingBrush}"
                                                             CornerRadius="5"/>
-                                                    <StackPanel Background="{StaticResource ControlBackgroundBrush}" Margin="5.5,7.5,5.5,7.5"
+                                                    <StackPanel Background="{StaticResource ControlBackgroundBrush}" Margin="6,8,6,8"
                                                     x:Name="_Item"
                                                     Orientation="Horizontal">
-                                                        
                                                         <Image
-                                                        MaxHeight="20"
-                                                        Margin="5,0,5,0"
-                                                        VerticalAlignment="Center"
-                                                        DockPanel.Dock="Left"
-                                                        RenderOptions.BitmapScalingMode="Fant"
-                                                        Source="{Binding Icon}" 
-                                                        x:Name="_IconImage"/>
+                                                            Height="20"
+                                                            Width="20"
+                                                            Margin="5,0,5,0"
+                                                            RenderOptions.BitmapScalingMode="Fant"
+                                                            Source="{Binding Icon}" 
+                                                            x:Name="_IconImage"
+                                                            Stretch="Uniform"
+                                                        />
                                                         <TextBlock
                                                         x:Name="_SourceText"
                                                         Margin="5,0,5,0"
@@ -348,6 +348,9 @@
                                                         <Setter TargetName="_IconImage" Property="Opacity" Value="0.5" />
                                                         <Setter TargetName="_SourceText" Property="Opacity" Value="0.5" />
                                                     </DataTrigger>
+                                                    <DataTrigger Binding="{Binding IsCurrent}" Value="True">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
                                                 </DataTemplate.Triggers>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
@@ -356,6 +359,11 @@
                             </Border>
                         </Popup>
                     </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True" SourceName="ButtonBorder">
+                            <Setter Property="Background" TargetName="ButtonBorder" Value="{DynamicResource WindowBackgourndBrushBright}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

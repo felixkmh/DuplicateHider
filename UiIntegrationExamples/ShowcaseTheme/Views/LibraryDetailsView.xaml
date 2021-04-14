@@ -8,22 +8,16 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type LibraryDetailsView}">
-                    <Grid d:DesignWidth="1280" d:DesignHeight="960" ClipToBounds="True"
+                    <DockPanel d:DesignWidth="1280" d:DesignHeight="960"
                                d:DataContext="{x:Static DesignMainViewModel.DesignIntance}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition x:Name="LeftColumn"/>
-                            <ColumnDefinition Width="2"/>
-                            <ColumnDefinition x:Name="RightColumn"/>
-                        </Grid.ColumnDefinitions>
-                        <Canvas Width="{Settings DetailsListWitdh, Mode=TwoWay}" Visibility="Collapsed" x:Name="Proxy"/>
-                        <Grid x:Name="DetailsList" Grid.Column="0">
+                        <Grid DockPanel.Dock="{Settings DetailsListPosition}"
+                              Width="{Settings DetailsListWitdh}">
                             <ExtendedListBox x:Name="PART_ListGames"
                                          BorderBrush="{DynamicResource PanelSeparatorBrush}"
                                          ItemContainerStyle="{DynamicResource DetailsViewItemStyle}"
                                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                          ScrollViewer.PanningMode="VerticalOnly"
-                                         Background="{DynamicResource WindowBackgourndBrushLight}" 
-                                         HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
+                                             Background="{DynamicResource WindowBackgourndBrushLight}">
                                 <ExtendedListBox.Style>
                                     <Style TargetType="ExtendedListBox" BasedOn="{StaticResource {x:Type ExtendedListBox}}">
                                         <Setter Property="BorderThickness" Value="0,0,1,0" />
@@ -47,7 +41,7 @@
                                 </ExtendedListBox.ItemTemplate>
                             </ExtendedListBox>
                             <TextBlock FontSize="{StaticResource FontSizeLarge}" Margin="0,15,0,0"
-                                       Text="{DynamicResource LOCNoItemsFound}" TextWrapping="Wrap"                                     
+                                       Text="{DynamicResource LOCNoItemsFound}" TextWrapping="Wrap"                                       
                                        TextAlignment="Center" HorizontalAlignment="Center">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
@@ -61,27 +55,8 @@
                                 </TextBlock.Style>
                             </TextBlock>
                         </Grid>
-                        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="{DynamicResource WindowBackgourndBrushLight}"/>
-                        <DetailsViewGameOverview x:Name="PART_ControlGameView" Grid.Column="2" Panel.ZIndex="-1"/>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Settings DetailsListPosition}" Value="Right">
-                            <Setter Property="Grid.Column" TargetName="DetailsList" Value="2"/>
-                            <Setter Property="Grid.Column" TargetName="PART_ControlGameView" Value="0"/>
-                            <Setter Property="ColumnDefinition.Width" TargetName="RightColumn" Value="{Binding Width,ElementName=Proxy,Mode=OneWay}"/>
-                            <Setter Property="Width" TargetName="DetailsList" Value="0"/>
-                            <Setter Property="Width" TargetName="DetailsList" Value="Auto"/>
-                            <Setter Property="Width" TargetName="PART_ControlGameView" Value="0"/>
-                            <Setter Property="Width" TargetName="PART_ControlGameView" Value="Auto"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Settings DetailsListPosition}" Value="Left">
-                            <Setter Property="ColumnDefinition.Width" TargetName="LeftColumn" Value="{Binding Width, ElementName=Proxy,Mode=OneWay}"/>
-                            <Setter Property="Width" TargetName="DetailsList" Value="0"/>
-                            <Setter Property="Width" TargetName="DetailsList" Value="Auto"/>
-                            <Setter Property="Width" TargetName="PART_ControlGameView" Value="0"/>
-                            <Setter Property="Width" TargetName="PART_ControlGameView" Value="Auto"/>
-                        </DataTrigger>
-                    </ControlTemplate.Triggers>
+                        <DetailsViewGameOverview x:Name="PART_ControlGameView" DockPanel.Dock="Left" />
+                    </DockPanel>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

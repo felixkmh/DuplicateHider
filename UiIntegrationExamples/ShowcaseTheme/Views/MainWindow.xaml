@@ -43,7 +43,7 @@
                                          DockPanel.Dock="{Settings SidebarPosition}" />                             
                                 <ContentControl Name="PART_ContentView"
                                                 DockPanel.Dock="Top" />
-                            </DockPanel>                            
+                            </DockPanel>
                             <NotificationPanel x:Name="PART_Notifications"  
                                                WindowChrome.IsHitTestVisibleInChrome="True"
                                                Width="260"

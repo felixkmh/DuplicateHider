@@ -194,7 +194,7 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{DynamicResource ControlCornerRadius}"
                             Padding="{TemplateBinding Padding}"
-                            Background="{DynamicResource ButtonDefaultBrush}"
+                            Background="{DynamicResource WindowBackgourndBrushBright}"
                             >
                         <DockPanel>
                             <Popup x:Name="PART_Popup" StaysOpen="False"

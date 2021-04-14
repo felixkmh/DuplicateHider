@@ -10,42 +10,23 @@
                 <ControlTemplate TargetType="{x:Type GameListItem}">
                     <Border Name="PART_PanelHost" Padding="10,3,0,3" Background="Transparent"
                             d:DataContext="{x:Static DesignMainViewModel.DesignSelectedGameIntance}">
-                        <Grid>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <DockPanel Grid.Column="0">
-                                    <Image Name="PART_ImageIcon"
+                        <DockPanel>
+                            <ContentControl x:Name="DuplicateHider_SourceSelector" 
+                                                            Visibility="Collapsed" 
+                                                HorizontalAlignment="Right"
+                                                            VerticalContentAlignment="Center"   
+                                                            Margin="0,0,0,0"  
+                                                            Opacity="0" DockPanel.Dock="Right"
+                                                            Height="{Settings DetailsViewListIconSize}"
+                                                        />
+                            <Image Name="PART_ImageIcon"
                                            Height="{Settings DetailsViewListIconSize}"
                                            RenderOptions.BitmapScalingMode="Fant"
                                            DockPanel.Dock="Left" Margin="0,0,8,0" />
-                                    <TextBlock Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis"
+                            <TextBlock Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis"
                                                VerticalAlignment="Center" DockPanel.Dock="Left">
-                                    </TextBlock>
-                                </DockPanel>
-                                <!--Emtpy element to animate the space required by the icons without distorting them.-->
-                                <ContentControl Grid.Column="1" Width="{Binding ActualWidth, ElementName=DuplicateHider_SourceSelector}">
-                                    <ContentControl.LayoutTransform>
-                                        <ScaleTransform ScaleX="0" x:Name="DummyScale"/>
-                                    </ContentControl.LayoutTransform>
-                                </ContentControl>
-                            </Grid>
-                            <ContentControl Height="{Binding ElementName=PART_ImageIcon, Path=Height}">
-                                <!--Set top/bot margin to control icon size.-->
-                                <!--When removing fading effect, set Visibility to Visible.-->
-                                <ContentControl x:Name="DuplicateHider_SourceSelector" 
-                                                        HorizontalAlignment="Right" 
-                                                        HorizontalContentAlignment="Right"
-                                                        Visibility="Visible" 
-                                                        VerticalContentAlignment="Center"   
-                                                        Margin="0,0,0,0"  
-                                                        Opacity="0"
-                                                    >
-                                </ContentControl>
-                            </ContentControl>
-                        </Grid>
+                            </TextBlock>
+                        </DockPanel>
                     </Border>
                     <!--Fade effect. Remove or comment out <ControlTemplate.Triggers> section to deactivate animation.-->
                     <!--Check DuplicateHider_SourceSelector Visibility if animation is removed.-->
@@ -59,12 +40,11 @@
                                             Storyboard.TargetName="DuplicateHider_SourceSelector" 
                                             Storyboard.TargetProperty="Opacity"
                                             To="1" Duration="0:0:0.15" />
-                                        <DoubleAnimation 
-                                            Storyboard.TargetName="DummyScale" 
-                                            Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
-                                            To="1" Duration="0:0:0.15"/>
-                                        
-                                        
+                                        <ObjectAnimationUsingKeyFrames
+                                            Storyboard.TargetName="DuplicateHider_SourceSelector"
+                                            Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -76,12 +56,11 @@
                                             Storyboard.TargetName="DuplicateHider_SourceSelector" 
                                             Storyboard.TargetProperty="Opacity"
                                             To="0" Duration="0:0:0.15" />
-                                        <DoubleAnimation 
-                                            Storyboard.TargetName="DummyScale" 
-                                            Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
-                                            To="0" Duration="0:0:0.15"/>
-                                        
-                                        
+                                        <ObjectAnimationUsingKeyFrames
+                                            Storyboard.TargetName="DuplicateHider_SourceSelector"
+                                            Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.15" Value="{x:Static Visibility.Collapsed}"/>
+                                        </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>

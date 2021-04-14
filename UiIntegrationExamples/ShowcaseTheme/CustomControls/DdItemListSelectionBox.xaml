@@ -15,7 +15,7 @@
                     <Border BorderThickness="{DynamicResource ControlBorderThickness}"
                             CornerRadius="{DynamicResource ControlCornerRadius}"
                             Style="{DynamicResource HighlightBorder}"
-                            Background="{DynamicResource ButtonDefaultBrush}"
+                            Background="{DynamicResource WindowBackgourndBrushBright}"
                             x:Name="Root">
                         <Grid>
                             <DockPanel>

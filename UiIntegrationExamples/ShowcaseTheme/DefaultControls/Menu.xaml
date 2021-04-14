@@ -44,7 +44,7 @@
     <ControlTemplate x:Key="{x:Static MenuItem.TopLevelHeaderTemplateKey}" TargetType="{x:Type MenuItem}">
         <Border x:Name="Border">
             <Grid>
-                <Border x:Name="HoverBorder" Background="{DynamicResource HoverBrush}" Visibility="Collapsed"  />
+                <Border x:Name="HoverBorder" Background="{DynamicResource HoverBrush}" Visibility="Hidden"  />
                 <TextBlock VerticalAlignment="Center" Padding="5" Style="{DynamicResource BaseTextBlockStyle}"
                            Foreground="{TemplateBinding Foreground}">
                     <ContentPresenter ContentSource="Header" RecognizesAccessKey="True" />
@@ -82,7 +82,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Border x:Name="HoverBorder" Grid.Column="0" Grid.ColumnSpan="4"
-                    Background="{DynamicResource HoverBrush}" Visibility="Collapsed"  />
+                    Background="{DynamicResource HoverBrush}" Visibility="Hidden"  />
             <ContentPresenter x:Name="Icon" Grid.Column="0" Margin="4,0,-5,0"
                               MaxHeight="16" MaxWidth="16"
                               VerticalAlignment="Center" ContentSource="Icon" />
