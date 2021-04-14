@@ -51,7 +51,8 @@
                                                HorizontalAlignment="Left" VerticalAlignment="Stretch"
                                                AnimatedVisibility.Visibility="{Settings NotificationPanelVisible}"
                                                AnimatedVisibility.Visible="{StaticResource VisibilityOn}"
-                                               AnimatedVisibility.Collapsed="{StaticResource VisibilityOff}"/>
+                                               AnimatedVisibility.Collapsed="{StaticResource VisibilityOff}"
+                                               Effect="{DynamicResource DefaultDropShadow}"/>
                         </Grid>
                     </Border>
                 </ControlTemplate>
