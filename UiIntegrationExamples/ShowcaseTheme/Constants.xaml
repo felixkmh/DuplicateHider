@@ -108,6 +108,14 @@
         <GradientStop Color="Black" Offset="0.6"/>
         <GradientStop Color="Transparent" Offset="1"/>
     </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="CenterFadingBrushVertical" StartPoint="0,0" EndPoint="1,0" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.CachingHint="Cache">
+        <GradientStop Color="Transparent" Offset="0"/>
+        <GradientStop Color="Black" Offset="0.5"/>
+        <GradientStop Color="Black" Offset="0.5"/>
+        <GradientStop Color="Transparent" Offset="1"/>
+    </LinearGradientBrush>
+    
     <LinearGradientBrush x:Key="WindowBackgourndBrush2" StartPoint="0,0" EndPoint="0,1" >
         <GradientStop Color="{DynamicResource MainColorDark}" Offset="0.0"/>
         <GradientStop Color="#FF3C3B3A" Offset="0.07"/>

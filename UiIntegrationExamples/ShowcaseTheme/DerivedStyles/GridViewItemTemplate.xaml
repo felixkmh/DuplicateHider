@@ -39,6 +39,10 @@
                                     <Border Background="{DynamicResource WindowBackgourndBrushLight}" 
                                             x:Name="DarkenBorder" Visibility="Hidden"  Opacity="0.9"
                                             />
+                                    <Grid MaxHeight="25" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5">
+                                        <Border CornerRadius="8" Background="{DynamicResource WindowBackgourndBrushLight}" Opacity="0.7"/>
+                                        <ContentControl x:Name="DuplicateHider_SourceSelector" />
+                                    </Grid>
                                     <Viewbox VerticalAlignment="Center" HorizontalAlignment="Center"
                                              Name="GameControls"  Visibility="Hidden">
                                         <StackPanel Orientation="Horizontal">
@@ -50,10 +54,6 @@
                                                     Content="&#xef4f;" FontFamily="{StaticResource FontIcoFont}" />
                                         </StackPanel>
                                     </Viewbox>
-                                    <Grid MaxHeight="25" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5">
-                                        <Border CornerRadius="8" Background="{DynamicResource WindowBackgourndBrushLight}" Opacity="0.7"/>
-                                        <ContentControl x:Name="DuplicateHider_SourceSelector" />
-                                    </Grid>
                                 </Grid>
                                 <TextBlock Text="{Binding DisplayName}" x:Name="LowerText"
                                        Style="{DynamicResource BaseTextBlockStyle}"                                                                   
