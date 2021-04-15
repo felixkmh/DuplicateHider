@@ -21,7 +21,7 @@
 
                             <Border Background="{DynamicResource ControlBackgroundDarkBrush}"
                                     VerticalAlignment="Center"
-                                    BorderThickness="0" BorderBrush="{DynamicResource ControlBackgroundBrush}"
+                                    BorderThickness="3" BorderBrush="{DynamicResource ControlBackgroundBrush}"
                                     Grid.Column="0" Margin="0,0,10,0" Width="24" Height="24">
                                 <Viewbox x:Name="CheckIcon" Visibility="Collapsed">
                                     <TextBlock Text="b" FontFamily="Marlett" Foreground="White"
@@ -40,7 +40,7 @@
                         <Border x:Name="BorderFocus" Margin="-3"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 BorderBrush="{DynamicResource SelectionBrush}"
-                                BorderThickness="0" Visibility="Hidden" />
+                                BorderThickness="3" Visibility="Hidden" />
 
                     </Grid>
                     <ControlTemplate.Triggers>

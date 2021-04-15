@@ -19,19 +19,19 @@
                                 <RowDefinition Height="Auto" x:Name="BotGridRow"/>
                             </Grid.RowDefinitions>
 
-                            <Border Grid.RowSpan="3" Panel.ZIndex="5" Margin="0" Grid.Row="0" SnapsToDevicePixels="True">
+                            <Border Grid.RowSpan="3" Panel.ZIndex="5" Margin="0" Grid.Row="0" SnapsToDevicePixels="True" x:Name="BlurBorders">
                                 <Border.OpacityMask>
                                     <VisualBrush Visual="{Binding ElementName=BlurMask}" Stretch="None"/>
                                 </Border.OpacityMask>
                                 <DockPanel>
                                     <Border Effect="{DynamicResource DefaultBlur}" Margin="0,0,0,0" DockPanel.Dock="Top" Height="110" VerticalAlignment="Top">
                                         <Border.Background>
-                                            <VisualBrush Visual="{Binding ElementName=GameGrid}" Stretch="None" AlignmentY="Top"/>
+                                            <VisualBrush Visual="{Binding ElementName=GameGrid}" Stretch="None" AlignmentY="Top" AlignmentX="Center"/>
                                         </Border.Background>
                                     </Border>
                                     <Border Effect="{DynamicResource DefaultBlur}" Margin="0,0,0,0" DockPanel.Dock="Bottom" Height="100" VerticalAlignment="Bottom">
                                         <Border.Background>
-                                            <VisualBrush Visual="{Binding ElementName=GameGrid}" Stretch="None" AlignmentY="Bottom"/>
+                                            <VisualBrush Visual="{Binding ElementName=GameGrid}" Stretch="None" AlignmentY="Bottom" AlignmentX="Center"/>
                                         </Border.Background>
                                     </Border>
                                 </DockPanel>
@@ -259,6 +259,11 @@
                         <Notifications x:Name="PART_ElemNotifications" Grid.RowSpan="3"
                                        VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Settings Fullscreen.EnableMainBackgroundImage}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="BlurBorders"/>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

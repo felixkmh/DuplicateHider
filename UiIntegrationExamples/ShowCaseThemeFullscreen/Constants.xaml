@@ -107,8 +107,8 @@
 
     </LinearGradientBrush>
 
-    <BlurEffect x:Key="DefaultBlur" Radius="90" KernelType="Gaussian" RenderingBias="Performance"/>
-    <DropShadowEffect x:Key="DefaultDropShadow" ShadowDepth="0" Color="Black" Opacity="0.8" RenderingBias="Performance" BlurRadius="30"/>
+    <BlurEffect x:Key="DefaultBlur" Radius="70" KernelType="Gaussian" RenderingBias="Performance"/>
+    <DropShadowEffect x:Key="DefaultDropShadow" ShadowDepth="0" Color="Black" Opacity="0.75" RenderingBias="Performance" BlurRadius="20"/>
 
 
     <!--<SolidColorBrush x:Key="GameDetailsBackgroundBrush" Color="#ff6b6b" />-->
