@@ -7,7 +7,7 @@
     <Style x:Key="ListGameItemStyle" TargetType="ListBoxItem">        
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="False" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
@@ -16,16 +16,50 @@
                         <Storyboard x:Key="FocusedOn">
                             <DoubleAnimation Storyboard.TargetName="ScaleTransform"
                                              Storyboard.TargetProperty="ScaleX"
-                                             To="1.08" Duration="0:0:0.5">
+                                             By="0.15" Duration="0:0:0.5">
                                 <DoubleAnimation.EasingFunction>
                                     <ElasticEase Oscillations="1"/>
                                 </DoubleAnimation.EasingFunction>
                             </DoubleAnimation>
                             <DoubleAnimation Storyboard.TargetName="ScaleTransform"
                                              Storyboard.TargetProperty="ScaleY"
-                                             To="1.08" Duration="0:0:0.5">
+                                             By="0.15" Duration="0:0:0.5">
                                 <DoubleAnimation.EasingFunction>
                                     <ElasticEase Oscillations="1"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation Storyboard.TargetName="ScaleTransform"
+                                             Storyboard.TargetProperty="ScaleX"
+                                             By="0.01" Duration="0:0:3" RepeatBehavior="0:0:30" AutoReverse="True">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation Storyboard.TargetName="ScaleTransform"
+                                             Storyboard.TargetProperty="ScaleY"
+                                             By="0.01" Duration="0:0:5" RepeatBehavior="0:0:30" AutoReverse="True">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation
+                                Storyboard.TargetName="TranslateTransform"
+                                Storyboard.TargetProperty="X"
+                                Duration="0:0:5"  
+                                RepeatBehavior="0:0:30" AutoReverse="True"
+                                From="-2.5" To="2.5" FillBehavior="Stop">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation
+                                Storyboard.TargetName="TranslateTransform"
+                                Storyboard.TargetProperty="Y"
+                                Duration="0:0:6"  
+                                RepeatBehavior="0:0:30" AutoReverse="True"
+                                From="-2.5" To="2.5" FillBehavior="Stop">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
                                 </DoubleAnimation.EasingFunction>
                             </DoubleAnimation>
                         </Storyboard>
@@ -44,15 +78,38 @@
                                     <ElasticEase Oscillations="1"/>
                                 </DoubleAnimation.EasingFunction>
                             </DoubleAnimation>
+                            <DoubleAnimation
+                                Storyboard.TargetName="TranslateTransform"
+                                Storyboard.TargetProperty="X"
+                                Duration="0:0:0.4"  
+                                To="0">
+                            </DoubleAnimation>
+                            <DoubleAnimation
+                                Storyboard.TargetName="TranslateTransform"
+                                Storyboard.TargetProperty="Y"
+                                Duration="0:0:0.4"  
+                                To="0">
+                            </DoubleAnimation>
                         </Storyboard>
                     </ControlTemplate.Resources>
-                    <Grid Margin="{Settings FullscreenItemSpacingMargin}"
-                          RenderTransformOrigin="0.5,0.5"
+                    <Grid Margin="{Settings FullscreenItemSpacingMargin}" x:Name="Grid" RenderTransformOrigin="0.5,0.5"
                           d:DataContext="{x:Static DesignMainViewModel.DesignSelectedGameIntance}">
                         <Grid.RenderTransform>
-                            <ScaleTransform x:Name="ScaleTransform" ScaleX="1" ScaleY="1" />
+                            <TransformGroup>
+                                <ScaleTransform x:Name="ScaleTransform" ScaleX="1" ScaleY="1" />
+                                <TranslateTransform x:Name="TranslateTransform" X="0" Y="0"/>
+                            </TransformGroup>
                         </Grid.RenderTransform>
-                        <ContentPresenter />
+                        <Border x:Name="DropShadowBorder" 
+                                Background="{DynamicResource DropShadowImage}" 
+                                RenderTransformOrigin="0.5,0.5" 
+                                Visibility="Hidden"
+                                IsHitTestVisible="False">
+                            <Border.RenderTransform>
+                                <ScaleTransform ScaleX="2.7" ScaleY="2.7"/>
+                            </Border.RenderTransform>
+                        </Border>
+                        <ContentPresenter x:Name="Content"/>
                         <!--<Border CornerRadius="3" BorderThickness="3" BorderBrush="{DynamicResource ControlBackgroundBrush}"
                                 Margin="-3"/>-->
                         <Border x:Name="MainBorder" BorderThickness="7" BorderBrush="{DynamicResource SelectionBrush}"
@@ -66,13 +123,20 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="DropShadowBorder" />
+                            <!--<Setter Property="Effect" TargetName="Content">
+                                <Setter.Value>
+                                    <DropShadowEffect BlurRadius="50" ShadowDepth="0" Opacity="1" Color="Black"/>
+                                </Setter.Value>
+                            </Setter>-->
                             <Setter Property="Canvas.ZIndex" Value="90" />
                             <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource FocusedOff}" />
+                                <StopStoryboard BeginStoryboardName="focusOnAnim"/>
+                                <BeginStoryboard Storyboard="{StaticResource FocusedOff}" x:Name="focusOffAnim"/>
                             </Trigger.ExitActions>
                             <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource FocusedOn}" />
+                                <StopStoryboard BeginStoryboardName="focusOffAnim"/>
+                                <BeginStoryboard Storyboard="{StaticResource FocusedOn}" x:Name="focusOnAnim"/>
                             </Trigger.EnterActions>
                         </Trigger>
                     </ControlTemplate.Triggers>

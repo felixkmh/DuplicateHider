@@ -17,14 +17,20 @@
     </Style>
 
     <Style TargetType="{x:Type Thumb}">
-        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MainBackgourndBrushLight}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Rectangle x:Name="HoverRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                Width="Auto" Height="Auto" Stroke="{x:Null}"
-                                Margin="4.5,1,4.5,1" MinHeight="20"
-                                Fill="{TemplateBinding Background}" />                
+                    <Grid>
+                        <Rectangle x:Name="NormalRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                    Width="Auto" Height="Auto" Stroke="{x:Null}"
+                                    Margin="4.5,1,4.5,1" MinHeight="20"
+                                    Fill="{DynamicResource MainBackgourndBrushLight}" />
+                        <Rectangle x:Name="HoverRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                    Width="Auto" Height="Auto" Stroke="{x:Null}"
+                                    Margin="4.5,1,4.5,1" MinHeight="20"
+                                    Fill="{TemplateBinding Background}" />                
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Fill" Value="{DynamicResource GlyphBrush}" TargetName="HoverRectangle" />
@@ -72,7 +78,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="ScrollViewerEx">
         <Setter Property="Template">
             <Setter.Value>
@@ -106,6 +112,10 @@
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
                             <Setter Property="Background" Value="{DynamicResource GlyphBrush}" TargetName="PART_VerticalScrollBar" />
                             <Setter Property="Background" Value="{DynamicResource GlyphBrush}" TargetName="PART_HorizontalScrollBar" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource MainBackgourndBrushLight}" TargetName="PART_VerticalScrollBar" />
+                            <Setter Property="Background" Value="{DynamicResource MainBackgourndBrushLight}" TargetName="PART_HorizontalScrollBar" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

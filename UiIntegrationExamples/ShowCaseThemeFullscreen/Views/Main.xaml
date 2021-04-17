@@ -19,23 +19,42 @@
                                 <RowDefinition Height="Auto" x:Name="BotGridRow"/>
                             </Grid.RowDefinitions>
 
-                            <Border Grid.RowSpan="3" Panel.ZIndex="5" Margin="0" Grid.Row="0" SnapsToDevicePixels="True" x:Name="BlurBorders">
+                            <Border 
+                                Grid.RowSpan="3" Panel.ZIndex="5" 
+                                Margin="0" Grid.Row="0" SnapsToDevicePixels="False" 
+                                x:Name="BlurBorders" >
                                 <Border.OpacityMask>
                                     <VisualBrush Visual="{Binding ElementName=BlurMask}" Stretch="None"/>
                                 </Border.OpacityMask>
-                                <DockPanel>
-                                    <Border Effect="{DynamicResource DefaultBlur}" Margin="0,0,0,0" DockPanel.Dock="Top" Height="110" VerticalAlignment="Top">
-                                        <Border.Background>
-                                            <VisualBrush Visual="{Binding ElementName=GameGrid}" Stretch="None" AlignmentY="Top" AlignmentX="Center"/>
-                                        </Border.Background>
+                                <DockPanel Effect="{DynamicResource DefaultBlur}">
+                                    <Border RenderTransformOrigin="0.5,0" 
+                                            Margin="0,0,0,0" DockPanel.Dock="Top" Height="55" VerticalAlignment="Top">
+                                        <Border.RenderTransform>
+                                            <ScaleTransform ScaleY="2"/>
+                                        </Border.RenderTransform>
+                                        <Border Height="55">
+                                            <Border.Background>
+                                                <VisualBrush Visual="{Binding ElementName=GameGrid}" Stretch="None" AlignmentY="Top" AlignmentX="Center" RenderOptions.BitmapScalingMode="LowQuality"/>
+                                            </Border.Background>
+                                        </Border>
                                     </Border>
-                                    <Border Effect="{DynamicResource DefaultBlur}" Margin="0,0,0,0" DockPanel.Dock="Bottom" Height="100" VerticalAlignment="Bottom">
-                                        <Border.Background>
-                                            <VisualBrush Visual="{Binding ElementName=GameGrid}" Stretch="None" AlignmentY="Bottom" AlignmentX="Center"/>
-                                        </Border.Background>
+
+                                    <Border RenderTransformOrigin="0.5,1"
+                                            Margin="0,0,0,0" DockPanel.Dock="Bottom" Height="50" VerticalAlignment="Bottom">
+                                        <Border.RenderTransform>
+                                            <ScaleTransform ScaleY="2"/>
+                                        </Border.RenderTransform>
+                                        <Border Height="50">
+                                            <Border.Background>
+                                                <VisualBrush Visual="{Binding ElementName=GameGrid}" Stretch="None" AlignmentY="Bottom" AlignmentX="Center" RenderOptions.BitmapScalingMode="LowQuality"/>
+                                            </Border.Background>
+                                        </Border>
                                     </Border>
                                 </DockPanel>
                             </Border>
+
+                            <Border Grid.Row="1" HorizontalAlignment="Right" Width="70" Background="{DynamicResource RightDropShadowBrush}"
+                                    Focusable="False" IsHitTestVisible="False"/>
 
                             <Grid Grid.RowSpan="3" x:Name="BlurMask" Panel.ZIndex="-5" SnapsToDevicePixels="True">
                                 <Grid.RowDefinitions>
@@ -54,17 +73,18 @@
                                     <RowDefinition Height="100" />
                                 </Grid.RowDefinitions>
                                 <Border Background="{DynamicResource MainBackgourndBrush}"/>
+                                
                                 <Border Background="{DynamicResource MainBackgourndBrush}" Grid.Row="2"/>
                             </Grid>
 
-                            <Border Grid.RowSpan="3" Panel.ZIndex="-5" Background="{DynamicResource MainBackgourndBrush}">
+                            <Border Grid.RowSpan="3" Panel.ZIndex="-5" Background="{DynamicResource MainBackgourndBrush}" Opacity="0.5" Focusable="False">
                             </Border>
 
                             <FadeImage x:Name="PART_ImageBackground" Grid.RowSpan="3"
                                        HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
                             <Grid Grid.Row="0" Background="{DynamicResource TopBarBackgroundBrush}"
-                                  Height="110" Panel.ZIndex="10" x:Name="TopBar" Effect="{DynamicResource DefaultDropShadow}" SnapsToDevicePixels="True">
+                                  Height="110" Panel.ZIndex="10" x:Name="TopBar" SnapsToDevicePixels="True">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="100" />
                                     <ColumnDefinition Width="*" />
@@ -151,9 +171,9 @@
                                 </ButtonEx>
                             </Grid>
 
-                            <DockPanel Grid.Row="1" x:Name="GameGrid">
+                            <DockPanel Grid.Row="1" x:Name="GameGrid" Background="Transparent" ClipToBounds="True">
                                 <Filters x:Name="PART_ElemFilters"
-                                         DockPanel.Dock="Left" Focusable="False" Effect="{DynamicResource DefaultDropShadow}"/>
+                                         DockPanel.Dock="Left" Focusable="False"/>
 
                                 <FiltersAdditional x:Name="PART_ElemFiltersAdditional"
                                                    DockPanel.Dock="Left" Focusable="False" />
@@ -161,10 +181,33 @@
                                 <ContentControl x:Name="PART_ContentFilterItems"
                                             DockPanel.Dock="Left" Focusable="False" />
 
-                                <ListBoxEx x:Name="PART_ListGameItems" Margin="25,0,25,0" Padding="0,0,0,0"
-                                           Background="Transparent" BorderThickness="0"
-                                           DockPanel.Dock="Right"
-                                           KeyboardNavigation.DirectionalNavigation="Once" ClipToBounds="False"/>
+                                <Canvas DockPanel.Dock="Left">
+                                    <Border x:Name="FilterShadow" 
+                                            Background="{DynamicResource LeftDropShadowBrush}" 
+                                            IsHitTestVisible="False"
+                                            Focusable="False"
+                                            Opacity="0.5" 
+                                            VerticalAlignment="Stretch"
+                                            Width="70"
+                                            Margin="0,0,0,0"
+                                            DockPanel.Dock="Left"
+                                            Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}, Path=ActualHeight}">
+                                    </Border>
+                                </Canvas>
+
+                                <Grid DockPanel.Dock="Right" ClipToBounds="False"> 
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="0"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ListBoxEx x:Name="PART_ListGameItems" Margin="0,0,0,0" Padding="0,0,0,0"
+                                           Background="Transparent" BorderThickness="0,0,0,0" BorderBrush="Transparent"
+                                           Panel.ZIndex="100" Grid.Column="1"
+                                           KeyboardNavigation.DirectionalNavigation="Once" ClipToBounds="False"
+                                           >
+                                    </ListBoxEx>
+                                </Grid>
                             </DockPanel>
 
                             <TextBlock Grid.Row="1" FontSize="40"
@@ -183,7 +226,7 @@
                             </TextBlock>
 
                             <Grid Grid.Row="2" Background="{DynamicResource TopBarBackgroundBrush}" Panel.ZIndex="10"
-                              Height="100" Effect="{DynamicResource DefaultDropShadow}" x:Name="BottomBar" SnapsToDevicePixels="True">
+                              Height="100" x:Name="BottomBar" SnapsToDevicePixels="True">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="100" />
                                     <ColumnDefinition Width="Auto" />
@@ -250,6 +293,23 @@
                             </Grid>
                         </Grid>
 
+                        <Border x:Name="BottomShadow" 
+                                Background="{DynamicResource BottomDropShadowBrush}" 
+                                Opacity="0.5" 
+                                VerticalAlignment="Bottom"
+                                Height="70"
+                                Margin="0,0,0,100">
+                        </Border>
+
+                        <Border x:Name="TopShadow" 
+                                Background="{DynamicResource TopDropShadowBrush}" 
+                                Opacity="0.5" 
+                                VerticalAlignment="Top"
+                                Height="70"
+                                Margin="0,110,0,0"
+                                >
+                        </Border>
+                        
                         <GameDetails x:Name="PART_ElemGameDetails" Grid.RowSpan="3"
                                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
@@ -258,9 +318,11 @@
 
                         <Notifications x:Name="PART_ElemNotifications" Grid.RowSpan="3"
                                        VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+
+                        
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Settings Fullscreen.EnableMainBackgroundImage}" Value="False">
+                        <DataTrigger Binding="{Settings Fullscreen.EnableMainBackgroundImage}" Value="True">
                             <Setter Property="Visibility" Value="Collapsed" TargetName="BlurBorders"/>
                         </DataTrigger>
                     </ControlTemplate.Triggers>

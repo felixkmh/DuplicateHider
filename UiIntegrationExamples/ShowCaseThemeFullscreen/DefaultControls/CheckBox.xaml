@@ -49,6 +49,7 @@
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
                             <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource GlyphLightBrush}" />
                             <Setter Property="Visibility" Value="Visible" TargetName="BorderFocus" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">

@@ -24,7 +24,7 @@
     <SolidColorBrush x:Key="TextBrush" Color="{DynamicResource TextColor}" />
     <SolidColorBrush x:Key="TextBrushDark" Color="{DynamicResource TextColorDark}" />
     <ImageBrush x:Key="GlyphBrush" ImageSource="{ThemeFile 'Images/noise/highlight1.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute"/>
-    <ImageBrush x:Key="GlyphLightBrush" ImageSource="{ThemeFile 'Images/noise/highlight0.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute"/>
+    <ImageBrush x:Key="GlyphLightBrush" ImageSource="{ThemeFile 'Images/noise/highlight1.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute"/>
     <ImageBrush x:Key="ControlBackgroundBrush" ImageSource="{ThemeFile 'Images/noise/background3.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute"/>
     <ImageBrush x:Key="ControlBackgroundDarkBrush" ImageSource="{ThemeFile 'Images/noise/background2.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" />
     <ImageBrush x:Key="SelectionLightBrush" ImageSource="{ThemeFile 'Image/noise/highlight1.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute"/>
@@ -41,45 +41,22 @@
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
     </Style>
 
-    <!--<RadialGradientBrush x:Key="MainBackgourndBrush" GradientOrigin="0.5,0.1" Center="0.5,0.2" RadiusX="0.5" RadiusY="0.7">
-        <RadialGradientBrush.GradientStops>
-            <GradientStop Color="#FF091F51" Offset="0" />
-            <GradientStop Color="#FF0B1027" Offset="1.0" />
-        </RadialGradientBrush.GradientStops>
-    </RadialGradientBrush>-->
     <ImageBrush x:Key="MainBackgourndBrush" ImageSource="{ThemeFile 'Images/noise/background0.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute"/>
     <ImageBrush x:Key="MainBackgourndBrushLight" ImageSource="{ThemeFile 'Images/noise/background2.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute"/>
 
-    <!--<LinearGradientBrush x:Key="TopBarBackgroundBrush" StartPoint="-0.5,0.5" EndPoint="1,0.5" >
-        <GradientStop Color="#FF091F51" Offset="0"/>
-        <GradientStop Color="#AA0B1027" Offset="1.0"/>
-    </LinearGradientBrush>-->
-    <ImageBrush x:Key="TopBarBackgroundBrush" Opacity="0.6" ImageSource="{ThemeFile 'Images/noise/background1.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute"/>
+    <ImageBrush x:Key="TopBarBackgroundBrush" Opacity="0.8" ImageSource="{ThemeFile 'Images/noise/background0.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute"/>
 
-    <!--<LinearGradientBrush x:Key="BottomBarBackgroundBrush" StartPoint="-0.5,0.5" EndPoint="1.5,1" >
-        <GradientStop Color="#FF091F51" Offset="0"/>
-        <GradientStop Color="#AA0B1027" Offset="1.0"/>
-    </LinearGradientBrush>-->
-    <ImageBrush x:Key="BottomBarBackgroundBrush" Opacity="0.6" ImageSource="{ThemeFile 'Images/noise/background1.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute"/>
+    <ImageBrush x:Key="BottomBarBackgroundBrush" Opacity="0.8" ImageSource="{ThemeFile 'Images/noise/background0.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute"/>
 
-    <!--<LinearGradientBrush x:Key="OverlayMenuBackgroundBrush" StartPoint="0.5,0" EndPoint="0.5,1.5" >
-        <GradientStop Color="#FF091F51" Offset="0"/>
-        <GradientStop Color="#FF000623" Offset="1.0"/>
-    </LinearGradientBrush>-->
     <ImageBrush x:Key="OverlayMenuBackgroundBrush" Opacity="1" ImageSource="{ThemeFile 'Images/noise/background1.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute"/>
 
-    <!--<LinearGradientBrush x:Key="SelectionBrush" StartPoint="0.5,-0.5" EndPoint="1,1.5" >
-        <GradientStop Color="{DynamicResource GlyphColor}" Offset="0"/>
-        <GradientStop Color="{DynamicResource GlyphLightColor}" Offset="1.0"/>
-    </LinearGradientBrush>-->
     <ImageBrush x:Key="SelectionBrush" ImageSource="{ThemeFile 'Images/noise/highlight1.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute"/>
 
-    <!--<LinearGradientBrush x:Key="GameDetailsBackgroundBrush" StartPoint="0.5,0" EndPoint="0.5,0.4" >
-        <GradientStop Color="#00091F51" Offset="0.0"/>
-        <GradientStop Color="#EE0B1027" Offset="0.8"/>
-    </LinearGradientBrush>-->
     <ImageBrush x:Key="GameDetailsBackgroundBrush" Opacity="0.85" ImageSource="{ThemeFile 'Images/noise/background0.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute"/>
 
+    <ImageBrush x:Key="DropShadowImage" ImageSource="{ThemeFile 'Images/dropShadow.png'}" Stretch="Fill"/>
+    <ImageBrush x:Key="DropShadowHighlightImage" ImageSource="{ThemeFile 'Images/dropShadowHighlight.png'}" Stretch="Fill"/>
+    
     <LinearGradientBrush x:Key="BottomFadeBrush" StartPoint="0,1" EndPoint="0,0" >
         <GradientStop Color="Black" Offset="0.2"/>
         <GradientStop Color="Transparent" Offset="1"/>
@@ -107,9 +84,13 @@
 
     </LinearGradientBrush>
 
-    <BlurEffect x:Key="DefaultBlur" Radius="70" KernelType="Gaussian" RenderingBias="Performance"/>
+    <BlurEffect x:Key="DefaultBlur" Radius="40" KernelType="Gaussian" RenderingBias="Performance"/>
     <DropShadowEffect x:Key="DefaultDropShadow" ShadowDepth="0" Color="Black" Opacity="0.75" RenderingBias="Performance" BlurRadius="20"/>
 
+    <ImageBrush x:Key="BottomDropShadowBrush" ImageSource="{ThemeFile 'Images/bottomDropShadow.png'}"/>
+    <ImageBrush x:Key="TopDropShadowBrush" ImageSource="{ThemeFile 'Images/topDropShadow.png'}"/>
+    <ImageBrush x:Key="LeftDropShadowBrush" ImageSource="{ThemeFile 'Images/leftDropShadow.png'}"/>
+    <ImageBrush x:Key="RightDropShadowBrush" ImageSource="{ThemeFile 'Images/rightDropShadow.png'}"/>
 
     <!--<SolidColorBrush x:Key="GameDetailsBackgroundBrush" Color="#ff6b6b" />-->
 </ResourceDictionary>

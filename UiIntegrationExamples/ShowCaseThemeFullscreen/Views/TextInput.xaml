@@ -19,6 +19,7 @@
         <Setter Property="Margin" Value="0,0,0,50" />
         <Setter Property="FontSize" Value="26" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Background" Value="{DynamicResource MainBackgourndBrushLight}"/>
     </Style>
 
     <Style x:Key="TextInputOptionsBorder" TargetType="Border">

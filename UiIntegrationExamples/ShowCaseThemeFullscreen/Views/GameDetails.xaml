@@ -15,7 +15,9 @@
                           d:DesignHeight="{StaticResource DesignHeight}"
                           d:DataContext="{x:Static DesignMainViewModel.DesignSelectedGameIntance}"
                           KeyboardNavigation.DirectionalNavigation="Contained"
-                          KeyboardNavigation.TabNavigation="Contained">
+                          KeyboardNavigation.TabNavigation="Contained"
+                          FocusManager.FocusedElement="{Binding ElementName=PART_ButtonContext}"
+                          Focusable="True">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="350" />
@@ -24,8 +26,9 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="4*" />
-                            <RowDefinition Height="4*" />
+                            <RowDefinition Height="7*" />
                         </Grid.RowDefinitions>
+
 
                         <Border x:Name="CoverMask" CornerRadius="{Binding CornerRadius, ElementName=CoverBorder}" BorderThickness="0" Background="Black"
                                 Margin="14" Grid.Column="1" Grid.Row="1"
@@ -46,21 +49,23 @@
                                    />
 
                         <Border Background="{DynamicResource MainBackgourndBrush}" CornerRadius="30,30,0,0" x:Name="InfoPanelBackground"
-                                Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Opacity="1" Margin="0,360,0,0" Effect="{DynamicResource DefaultDropShadow}">
+                                Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Opacity="1" Margin="0,500,0,0" Effect="{DynamicResource DefaultDropShadow}">
                         </Border>
 
 
-                        <Canvas Grid.ColumnSpan="4" Grid.RowSpan="2" Margin="220,840,30,30" x:Name="CoverCanvas">
+                        <Canvas Grid.ColumnSpan="4" Grid.RowSpan="2" Margin="220,840,30,30" x:Name="CoverCanvas" Focusable="False">
                             <Border x:Name="CoverBorder" CornerRadius="25" BorderThickness="0" BorderBrush="{DynamicResource MainBackgourndBrush}"
                                     Background="{DynamicResource MainBackgourndBrush}"
-                                    Effect="{DynamicResource DefaultDropShadow}">
+                                    Effect="{DynamicResource DefaultDropShadow}"
+                                    Focusable="False">
                                 <Grid>
-                                    <Image x:Name="PART_ImageCover" Width="320" Stretch="UniformToFill">
+                                    <Image x:Name="PART_ImageCover" Width="320" Stretch="UniformToFill" Focusable="False">
                                         <Image.OpacityMask>
                                             <VisualBrush Visual="{Binding ElementName=CoverMask}"/>
                                         </Image.OpacityMask>
                                     </Image>
                                     <Image 
+                                        Focusable="False"
                                         VerticalAlignment="Top"
                                         HorizontalAlignment="Right"
                                         Margin="15"
@@ -76,12 +81,14 @@
                         </Canvas>
 
 
-                        
 
                         <DockPanel x:Name="InfoPanel" Grid.Column="2" Grid.Row="1" LastChildFill="False"
-                                   Margin="20,300,20,20"
-                                   HorizontalAlignment="Left">
+                                   Margin="20,440,20,20"
+                                   HorizontalAlignment="Left"
+                                   FocusManager.FocusedElement="{Binding ElementName=PART_ButtonContext}">
 
+                            <ButtonEx x:Name="DummyButton" DockPanel.Dock="Top" Opacity="0" Width="0" Height="0" HorizontalAlignment="Left"></ButtonEx>
+                            
                             <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
                                        Text="{Binding DisplayName}"
                                        Foreground="White" FontFamily="{DynamicResource FontTitilliumWebBold}"
@@ -130,7 +137,7 @@
                                 </StackPanel>
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" x:Name="ButtonPanel">
                                 <ButtonEx x:Name="PART_ButtonContext"
                                           Margin="2,2,2,2" BorderThickness="2" MinWidth="220" HorizontalContentAlignment="Center" />
 
@@ -174,18 +181,16 @@
                                         </Style>
                                     </ContentControl.Tag>
                                 </ContentControl>
-
-
                             </StackPanel>
                         </DockPanel>
                         <Image x:Name="DoubleArrow" Source="{ThemeFile 'Images/doubleArrow.png'}" Height="10" Width="25" Stretch="Fill" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="1" VerticalAlignment="Bottom" Margin="5" RenderOptions.BitmapScalingMode="Fant" Opacity="0.8"/>
-                        <ScrollViewerEx Margin="0,20,0,0" x:Name="Description" Grid.Column="2" Grid.Row="1" VerticalAlignment="Bottom" Height="280"
+                        <ScrollViewerEx Margin="0,20,0,0" x:Name="Description" Grid.Column="2" Grid.Row="1" VerticalAlignment="Bottom" Height="420"
                                         RenderTransformOrigin="0.5,1">
                             <ScrollViewer.RenderTransform>
                                 <ScaleTransform x:Name="DescScale" ScaleY="0"/>
                             </ScrollViewer.RenderTransform>
                             <HtmlTextView x:Name="PART_HtmlDescription"
-                                            HtmlFontSize="16"
+                                            HtmlFontSize="20"
                                             HtmlForeground="{DynamicResource TextColor}"
                                             LinkForeground="{DynamicResource GlyphColor}"
                                             FocusVisualStyle="{x:Null}" Focusable="True" Visibility="Visible"
@@ -193,6 +198,38 @@
                         </ScrollViewerEx>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" SourceName="DummyButton" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="CoverCanvas"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         Duration="0:0:0.5" To="0" />
+                                        <DoubleAnimation Storyboard.TargetName="InfoPanel"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         Duration="0:0:0.5" To="0" />
+                                        <DoubleAnimation Storyboard.TargetName="InfoPanelBackground"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         Duration="0:0:0.5" To="0" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="CoverCanvas"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         Duration="0:0:0.5" To="1" />
+                                        <DoubleAnimation Storyboard.TargetName="InfoPanel"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         Duration="0:0:0.5" To="1" />
+                                        <DoubleAnimation Storyboard.TargetName="InfoPanelBackground"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         Duration="0:0:0.5" To="1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
                         <Trigger Property="IsFocused" SourceName="PART_HtmlDescription" Value="True">
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
@@ -202,10 +239,10 @@
                                                             Storyboard.TargetProperty="Margin"
                                                             >
                                             <ThicknessAnimation.To>
-                                                <Thickness>210,580,30,30</Thickness>
+                                                <Thickness>210,485,30,30</Thickness>
                                             </ThicknessAnimation.To>
                                             <ThicknessAnimation.EasingFunction>
-                                                <QuadraticEase></QuadraticEase>
+                                                <ElasticEase Oscillations="1" Springiness="5" EasingMode="EaseOut"></ElasticEase>
                                             </ThicknessAnimation.EasingFunction>
                                         </ThicknessAnimation>
                                         <ThicknessAnimation Duration="0:0:0.2" 
@@ -254,7 +291,7 @@
                                                 <Thickness>210,840,30,30</Thickness>
                                             </ThicknessAnimation.To>
                                             <ThicknessAnimation.EasingFunction>
-                                                <QuadraticEase></QuadraticEase>
+                                                <ElasticEase Oscillations="1" Springiness="5" EasingMode="EaseOut"></ElasticEase>
                                             </ThicknessAnimation.EasingFunction>
                                         </ThicknessAnimation>
                                         <ThicknessAnimation Duration="0:0:0.2" 
@@ -262,7 +299,7 @@
                                                             Storyboard.TargetProperty="Margin"
                                                             >
                                             <ThicknessAnimation.To>
-                                                <Thickness>0,360,0,0</Thickness>
+                                                <Thickness>0,500,0,0</Thickness>
                                             </ThicknessAnimation.To>
                                             <ThicknessAnimation.EasingFunction>
                                                 <QuadraticEase></QuadraticEase>
@@ -273,7 +310,7 @@
                                                             Storyboard.TargetProperty="Margin"
                                                             >
                                             <ThicknessAnimation.To>
-                                                <Thickness>20,300,20,20</Thickness>
+                                                <Thickness>20,440,20,20</Thickness>
                                             </ThicknessAnimation.To>
                                             <ThicknessAnimation.EasingFunction>
                                                 <QuadraticEase></QuadraticEase>
@@ -281,7 +318,7 @@
                                         </ThicknessAnimation>
                                         <DoubleAnimation Duration="0:0:0.2" To="0" Storyboard.TargetProperty="ScaleY" Storyboard.TargetName="DescScale">
                                             <DoubleAnimation.EasingFunction>
-                                            <QuadraticEase></QuadraticEase>
+                                                <QuadraticEase></QuadraticEase>
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                         <DoubleAnimation Duration="0:0:0.2" To="0.8" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="DoubleArrow">

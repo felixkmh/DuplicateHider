@@ -19,9 +19,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Thumb">
-                    <Rectangle  Width="{TemplateBinding Width}" Height="Auto"
-                                Fill="{TemplateBinding Foreground}" />
-          
+                    <Grid>
+                        <Rectangle  Width="{TemplateBinding Width}" Height="Auto"
+                                    Fill="{DynamicResource GlyphBrush}" />
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
