@@ -64,9 +64,9 @@
                                            RenderOptions.BitmapScalingMode="Fant" Margin="0,0,10,0" />
                                     <TextBlock Text="{Binding Game.DisplayName}" FontSize="{DynamicResource FontSizeLarger}"
                                                TextWrapping="Wrap" DockPanel.Dock="Left"
-                                               VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}">
+                                               VerticalAlignment="Center" Foreground="WhiteSmoke">
                                         <TextBlock.Effect>
-                                            <DropShadowEffect ShadowDepth="3"/>
+                                            <DropShadowEffect ShadowDepth="0"/>
                                         </TextBlock.Effect>
                                     </TextBlock>
                                 </DockPanel>
