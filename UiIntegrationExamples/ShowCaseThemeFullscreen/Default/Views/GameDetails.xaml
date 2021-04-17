@@ -45,12 +45,24 @@
 
                         <FadeImage HorizontalAlignment="Center" VerticalAlignment="Top"
                                    Grid.ColumnSpan="4" Grid.RowSpan="2"
-                                   x:Name="PART_ImageBackground" 
+                                   x:Name="PART_ImageBackground"  Background="{DynamicResource MainBackgourndBrush}"
                                    />
 
-                        <Border Background="{DynamicResource MainBackgourndBrush}" CornerRadius="30,30,0,0" x:Name="InfoPanelBackground"
-                                Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Opacity="1" Margin="0,500,0,0" Effect="{DynamicResource DefaultDropShadow}">
+                        <Border CornerRadius="30,30,0,0" x:Name="InfoPanelBackgroundBlur"
+                                Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Opacity="1" Margin="{Binding Margin, ElementName=InfoPanelBackground, Mode=OneWay}" Effect="{DynamicResource DefaultBlur}">
+                            <Border.Background>
+                                <VisualBrush Visual="{Binding ElementName=PART_ImageBackground}" Stretch="None" AlignmentY="Bottom"/>
+                            </Border.Background>
                         </Border>
+
+                        <Border Background="{DynamicResource BottomDropShadowBrush}" x:Name="InfoPanelBottomShadow"
+                                Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Opacity="{Binding Opacity, ElementName=InfoPanelBackgroundBlur}" Height="30" VerticalAlignment="Bottom">
+                        </Border>
+
+                        <Border Background="{DynamicResource MainBackgourndBrush}" CornerRadius="30,30,0,0" x:Name="InfoPanelBackground"
+                                Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Opacity="0.65" Margin="0,500,0,0" Effect="{DynamicResource DefaultDropShadow}">
+                        </Border>
+
 
 
                         <Canvas Grid.ColumnSpan="4" Grid.RowSpan="2" Margin="220,840,30,30" x:Name="CoverCanvas" Focusable="False">
@@ -211,6 +223,9 @@
                                         <DoubleAnimation Storyboard.TargetName="InfoPanelBackground"
                                                          Storyboard.TargetProperty="Opacity"
                                                          Duration="0:0:0.5" To="0" />
+                                        <DoubleAnimation Storyboard.TargetName="InfoPanelBackgroundBlur"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         Duration="0:0:0.5" To="0" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -224,6 +239,9 @@
                                                          Storyboard.TargetProperty="Opacity"
                                                          Duration="0:0:0.5" To="1" />
                                         <DoubleAnimation Storyboard.TargetName="InfoPanelBackground"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         Duration="0:0:0.5" To="0.8" />
+                                        <DoubleAnimation Storyboard.TargetName="InfoPanelBackgroundBlur"
                                                          Storyboard.TargetProperty="Opacity"
                                                          Duration="0:0:0.5" To="1" />
                                     </Storyboard>

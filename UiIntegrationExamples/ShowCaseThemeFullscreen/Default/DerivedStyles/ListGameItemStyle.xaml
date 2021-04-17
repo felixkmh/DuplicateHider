@@ -30,14 +30,14 @@
                             </DoubleAnimation>
                             <DoubleAnimation Storyboard.TargetName="ScaleTransform"
                                              Storyboard.TargetProperty="ScaleX"
-                                             By="0.01" Duration="0:0:3" RepeatBehavior="0:0:30" AutoReverse="True">
+                                             By="0.01" Duration="0:0:4" RepeatBehavior="0:0:24" AutoReverse="True">
                                 <DoubleAnimation.EasingFunction>
                                     <SineEase EasingMode="EaseInOut"/>
                                 </DoubleAnimation.EasingFunction>
                             </DoubleAnimation>
                             <DoubleAnimation Storyboard.TargetName="ScaleTransform"
                                              Storyboard.TargetProperty="ScaleY"
-                                             By="0.01" Duration="0:0:5" RepeatBehavior="0:0:30" AutoReverse="True">
+                                             By="0.01" Duration="0:0:6" RepeatBehavior="0:0:24" AutoReverse="True">
                                 <DoubleAnimation.EasingFunction>
                                     <SineEase EasingMode="EaseInOut"/>
                                 </DoubleAnimation.EasingFunction>
@@ -45,8 +45,8 @@
                             <DoubleAnimation
                                 Storyboard.TargetName="TranslateTransform"
                                 Storyboard.TargetProperty="X"
-                                Duration="0:0:5"  
-                                RepeatBehavior="0:0:30" AutoReverse="True"
+                                Duration="0:0:6"  
+                                RepeatBehavior="0:0:24" AutoReverse="True"
                                 From="-2.5" To="2.5" FillBehavior="Stop">
                                 <DoubleAnimation.EasingFunction>
                                     <SineEase EasingMode="EaseInOut"/>
@@ -55,8 +55,8 @@
                             <DoubleAnimation
                                 Storyboard.TargetName="TranslateTransform"
                                 Storyboard.TargetProperty="Y"
-                                Duration="0:0:6"  
-                                RepeatBehavior="0:0:30" AutoReverse="True"
+                                Duration="0:0:4"  
+                                RepeatBehavior="0:0:24" AutoReverse="True"
                                 From="-2.5" To="2.5" FillBehavior="Stop">
                                 <DoubleAnimation.EasingFunction>
                                     <SineEase EasingMode="EaseInOut"/>
