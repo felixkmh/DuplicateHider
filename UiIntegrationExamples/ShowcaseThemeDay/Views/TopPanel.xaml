@@ -185,7 +185,7 @@
                                                                     Margin="20,0,0,0"
                                                                     HorizontalAlignment="Right"
                                                                     VerticalAlignment="Bottom"
-                                                                    Background="OrangeRed">
+                                                                    Background="White">
                                                                 <TextBlock Text="{Api Notifications.Count}" FontSize="12"                                                               
                                                                            Foreground="{DynamicResource TextBrush}"
                                                                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
