@@ -174,7 +174,7 @@ to the resource dictionary, a Theme can also specify the maximum number of icons
 
 ### Showcase Themes
 
-Some Themes ([Night](UiIntegrationExamples/ShowcaseThemeNight), [Day](UiIntegrationExamples/ShowcaseThemeDay), [Fullscreen](UiIntegrationExamples/ShowcaseThemeFullscreen)) showing some possibilites of using the custom ui elements provided by DuplicateHider.
+Some Themes ([Night](UiIntegrationExamples/ShowcaseThemeNight), [Day](UiIntegrationExamples/ShowcaseThemeDay), [Fullscreen](UiIntegrationExamples/ShowCaseThemeFullscreen)) showing some possibilites of using the custom ui elements provided by DuplicateHider.
 
 Preview:
 |View|Preview|
