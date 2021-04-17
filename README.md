@@ -179,6 +179,6 @@ Some Themes ([Night](UiIntegrationExamples/ShowcaseThemeNight), [Day](UiIntegrat
 Preview:
 |View|Preview|
 |----|-------|
-|Desktop - DetailsView|![DetailsView](UiIntegrationExamples/ShowcaseTheme/ShowcaseThemeDetailsView.png)|
-|Desktop - DetailsView Playbutton Extension|![DetailsViewPlayButton](UiIntegrationExamples/ShowcaseTheme/ShowcaseThemeDetailsViewButtonExtension.png)|
-|Desktop - GridView|![GridView](UiIntegrationExamples/ShowcaseTheme/ShowcaseThemeGridView.png)|
+|Desktop - DetailsView|![DetailsView](UiIntegrationExamples/ShowcaseThemeNight/ShowcaseThemeDetailsView.png)|
+|Desktop - DetailsView Playbutton Extension|![DetailsViewPlayButton](UiIntegrationExamples/ShowcaseThemeNight/ShowcaseThemeDetailsViewButtonExtension.png)|
+|Desktop - GridView|![GridView](UiIntegrationExamples/ShowcaseThemeNight/ShowcaseThemeGridView.png)|
