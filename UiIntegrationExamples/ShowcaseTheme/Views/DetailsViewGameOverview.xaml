@@ -41,7 +41,7 @@
                                     </Grid.RowDefinitions>
 
 
-                                    <Border Grid.Row="1" Background="{DynamicResource WindowBackgourndBrushLight}" Margin="-20,145,-20,0">
+                                    <Border Grid.Row="1" Background="{DynamicResource WindowBackgourndBrushBright}" Margin="-20,145,-20,0">
                                     </Border>
 
                                     <DockPanel Margin="0,20,0,5" MaxWidth="1024" Grid.Row="1" Panel.ZIndex="1"
