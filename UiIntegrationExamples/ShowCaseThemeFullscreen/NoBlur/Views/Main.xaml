@@ -21,7 +21,7 @@
 
                             
 
-                            <Border Grid.Row="1" HorizontalAlignment="Right" Width="70" Background="{DynamicResource RightDropShadowBrush}"
+                            <Border Grid.Row="1" HorizontalAlignment="Right" Width="70" Background="{DynamicResource RightDropShadowBrush}" Opacity="0.5"
                                     Focusable="False" IsHitTestVisible="False"/>
 
 
