@@ -172,9 +172,9 @@ to the resource dictionary, a Theme can also specify the maximum number of icons
 | [GameDetails.xaml](UiIntegrationExamples/UiIntegrationFullscreenExample/GameDetails.xaml) | Example for a DetailsView in a fullscreen theme using ```DuplicateHider_ContentControl```. | ![grafik](https://user-images.githubusercontent.com/24227002/113946801-8ba66e80-9809-11eb-8a2e-b9b537d5a2be.png) |
 | [DetailsView<br/>ItemTemplate.xaml](UiIntegrationExamples/UiIntegrationAnimatedSourceSelectorExample/DetailsViewItemTemplate.xaml) | Example for SourceSelector in DetailsViewItemTemplate with highlighting and animations revealing the source name on hover. | ![grafik](https://user-images.githubusercontent.com/24227002/114274054-fb407780-9a1c-11eb-97ff-e505f4b9af66.png) |
 
-### Showcase Theme
+### Showcase Themes
 
-A [Theme](UiIntegrationExamples/ShowcaseTheme) showing some possibilites of using the custom ui elements provided by DuplicateHider.
+Some Themes ([Night](UiIntegrationExamples/ShowcaseThemeNight), [Day](UiIntegrationExamples/ShowcaseThemeDay), [Fullscreen](UiIntegrationExamples/ShowcaseThemeFullscreen)) showing some possibilites of using the custom ui elements provided by DuplicateHider.
 
 Preview:
 |View|Preview|
