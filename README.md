@@ -122,7 +122,7 @@ DataContext = {
 
 class ListData {
     Playnite.SDK.Models.Game Game;
-    Boolean IsCurrent;        // True if this copy is the current GameContext property.
+    Boolean IsCurrent;        // True if this copy is currently in view.
     BitmapImage Icon;         // Source Icon
     String SourceName;        // Source name. Use this rather than Game.Source.Name, 
                               // because Source might be null.
