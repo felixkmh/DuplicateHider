@@ -91,9 +91,10 @@ namespace DuplicateHider
             AddCustomElementSupport(new AddCustomElementSupportArgs()
             {
                 ElementList = elements.ToList(),
-                SourceName = "DuplicateHider",
-                SettingsRoot = "settings"
+                SourceName = "DuplicateHider"
             });
+
+            AddSettingsSupport(new AddSettingsSupportArgs { SettingsRoot = "settings", SourceName = "DuplicateHider" });
         }
 
         static int GeneratedElements = 0;
