@@ -19,7 +19,7 @@
     <Color x:Key="TextColor">#FFEBEBEB</Color>
     <Color x:Key="TextColorDark">#FF757575</Color>
 
-    <CornerRadius x:Key="GridItemCornerRadius">8</CornerRadius>
+    <CornerRadius x:Key="GridItemCornerRadius">0</CornerRadius>
     
     <SolidColorBrush x:Key="TextBrush" Color="{DynamicResource TextColor}" />
     <SolidColorBrush x:Key="TextBrushDark" Color="{DynamicResource TextColorDark}" />
@@ -84,7 +84,7 @@
 
     </LinearGradientBrush>
 
-    <BlurEffect x:Key="DefaultBlur" Radius="40" KernelType="Gaussian" RenderingBias="Performance"/>
+    <BlurEffect x:Key="DefaultBlur" Radius="50" KernelType="Gaussian" RenderingBias="Performance"/>
     <DropShadowEffect x:Key="DefaultDropShadow" ShadowDepth="0" Color="Black" Opacity="0.75" RenderingBias="Performance" BlurRadius="20"/>
 
     <ImageBrush x:Key="BottomDropShadowBrush" ImageSource="{ThemeFile 'Images/bottomDropShadow.png'}"/>

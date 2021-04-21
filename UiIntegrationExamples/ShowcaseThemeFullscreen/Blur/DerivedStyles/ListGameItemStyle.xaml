@@ -28,7 +28,7 @@
                                     <ElasticEase Oscillations="1"/>
                                 </DoubleAnimation.EasingFunction>
                             </DoubleAnimation>
-                            <DoubleAnimation Storyboard.TargetName="ScaleTransform"
+                            <!--<DoubleAnimation Storyboard.TargetName="ScaleTransform"
                                              Storyboard.TargetProperty="ScaleX"
                                              By="0.01" Duration="0:0:4" RepeatBehavior="0:0:24" AutoReverse="True">
                                 <DoubleAnimation.EasingFunction>
@@ -61,7 +61,7 @@
                                 <DoubleAnimation.EasingFunction>
                                     <SineEase EasingMode="EaseInOut"/>
                                 </DoubleAnimation.EasingFunction>
-                            </DoubleAnimation>
+                            </DoubleAnimation>-->
                         </Storyboard>
                         <Storyboard x:Key="FocusedOff">
                             <DoubleAnimation Storyboard.TargetName="ScaleTransform"

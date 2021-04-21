@@ -19,7 +19,7 @@
     <Color x:Key="TextColor">#FFEBEBEB</Color>
     <Color x:Key="TextColorDark">#FF757575</Color>
 
-    <CornerRadius x:Key="GridItemCornerRadius">8</CornerRadius>
+    <CornerRadius x:Key="GridItemCornerRadius">0</CornerRadius>
     
     <SolidColorBrush x:Key="TextBrush" Color="{DynamicResource TextColor}" />
     <SolidColorBrush x:Key="TextBrushDark" Color="{DynamicResource TextColorDark}" />

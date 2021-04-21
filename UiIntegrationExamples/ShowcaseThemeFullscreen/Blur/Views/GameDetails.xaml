@@ -28,7 +28,9 @@
                             <RowDefinition Height="4*" />
                             <RowDefinition Height="7*" />
                         </Grid.RowDefinitions>
-
+                        <Grid.Effect>
+                            <BlurEffect x:Name="GridBlur" Radius="0" KernelType="Gaussian" RenderingBias="Performance"/>
+                        </Grid.Effect>
 
                         <Border x:Name="CoverMask" CornerRadius="{Binding CornerRadius, ElementName=CoverBorder}" BorderThickness="0" Background="Black"
                                 Margin="14" Grid.Column="1" Grid.Row="1"

@@ -273,7 +273,7 @@
                                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
                         <GameStatus x:Name="PART_ElemGameStatus" Grid.RowSpan="3"
-                                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Opacity="0"/>
 
                         <Notifications x:Name="PART_ElemNotifications" Grid.RowSpan="3"
                                        VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
@@ -281,6 +281,27 @@
                         
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsVisible" Value="True" SourceName="PART_ElemGameStatus">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PART_ElemGameStatus" 
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         Duration="0:0:0.5"
+                                                         To="1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PART_ElemGameStatus" 
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         Duration="0:0:0.5"
+                                                         To="0"/>                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
