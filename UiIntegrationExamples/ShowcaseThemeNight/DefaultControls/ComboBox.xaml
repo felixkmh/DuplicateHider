@@ -60,10 +60,10 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource ButtonSelectedBrush}" TargetName="Border" />
+                            <Setter Property="Background" Value="{DynamicResource InputSelectedBrush}" TargetName="Border" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource ButtonHoveredBrush}" TargetName="Border" />
+                            <Setter Property="Background" Value="{DynamicResource InputHoveredBrush}" TargetName="Border" />
                         </Trigger>
                         <Trigger Property="IsEditable" Value="True">
                             <Setter Property="IsTabStop" Value="False" />

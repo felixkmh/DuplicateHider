@@ -120,7 +120,8 @@
                             <SearchBox x:Name="PART_TextMainSearch"
                                         Margin="5,6,0,6" DockPanel.Dock="Left"
                                         WindowChrome.IsHitTestVisibleInChrome="True"
-                                        Width="300">
+                                        Width="300"
+                                        Style="{DynamicResource TopPanelSearchBox}">
                             </SearchBox>
 
                             <StackPanel x:Name="PART_PanelMainItems" Orientation="Horizontal"
@@ -136,7 +137,8 @@
                                             <Setter.Value>
                                                 <ControlTemplate>
                                                     <Border Style="{DynamicResource HighlightBorder}"
-                                                            Background="{TemplateBinding Background}" x:Name="FilterBorder">
+                                                            Background="{TemplateBinding Background}" x:Name="FilterBorder" 
+                                                            CornerRadius="{DynamicResource ButtonCornerRadius}">
                                                         <StackPanel Orientation="Horizontal" Margin="6,0,6,0">
                                                             <TextBlock Text="&#xef29;"
                                                                        FontFamily="{DynamicResource FontIcoFont}" FontSize="20"
@@ -227,6 +229,15 @@
                             </StackPanel>                    
                         </DockPanel>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True" SourceName="PART_ElemMainMenu">
+                            <Setter Property="Effect" TargetName="PART_ElemMainMenu">
+                                <Setter.Value>
+                                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.7" Color="{DynamicResource GlyphColor}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

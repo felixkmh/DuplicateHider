@@ -27,7 +27,7 @@
                         <sys:Boolean x:Key="True">True</sys:Boolean>
                     </ControlTemplate.Resources>
                     <AdornerDecorator>
-                        <Border x:Name="WindowBorder" BorderBrush="{DynamicResource WindowBackgourndBrush}" CornerRadius="0"
+                        <Border x:Name="WindowBorder" BorderBrush="{TemplateBinding Background}" CornerRadius="0"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{TemplateBinding Background}">
                             <Grid x:Name="ContentGrid" Background="{TemplateBinding Background}">

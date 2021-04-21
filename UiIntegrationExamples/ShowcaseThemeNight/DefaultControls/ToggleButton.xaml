@@ -27,7 +27,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
-                            <Setter Property="Background" Value="{DynamicResource ButtonSelectedBrush}" TargetName="Border" />
+                            <Setter Property="Background" Value="{DynamicResource InputSelectedBrush}" TargetName="Border" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -36,7 +36,7 @@
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
-                <Setter Property="Background" Value="{DynamicResource ButtonHoveredBrush}" />
+                <Setter Property="Background" Value="{DynamicResource InputHoveredBrush}" />
             </Trigger>
         </Style.Triggers>
     </Style>

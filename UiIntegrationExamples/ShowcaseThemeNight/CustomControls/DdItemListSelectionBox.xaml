@@ -15,7 +15,7 @@
                     <Border BorderThickness="{DynamicResource ControlBorderThickness}"
                             CornerRadius="{DynamicResource ControlCornerRadius}"
                             Style="{DynamicResource HighlightBorder}"
-                            Background="{DynamicResource WindowBackgourndBrushBright}"
+                            Background="{DynamicResource InputDefaultBrush}"
                             x:Name="Root">
                         <Grid>
                             <DockPanel>
@@ -63,7 +63,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True" SourceName="Root">
-                            <Setter Property="Background" Value="{DynamicResource ButtonHoveredBrush}" TargetName="Root"/>
+                            <Setter Property="Background" Value="{DynamicResource InputHoveredBrush}" TargetName="Root"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

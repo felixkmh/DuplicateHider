@@ -12,10 +12,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type FilterStringSelectionBox}">
-                    <Border BorderThickness="{DynamicResource ControlBorderThickness}"
-                            CornerRadius="{DynamicResource ControlCornerRadius}"
-                            Style="{DynamicResource HighlightBorder}"
-                            Background="{DynamicResource ButtonDefaultBrush}"
+                    <ContentControl BorderThickness="{DynamicResource InputBorderThickness}"
+                            Style="{DynamicResource HighlightContentControl}"
+                            BorderBrush="{DynamicResource InputDefaultBrush}"
+                            Background="Transparent"
                             x:Name="Root">
                         <Grid>
                             <ToggleButton x:Name="MainToggle"
@@ -57,7 +57,7 @@
                             </DockPanel>
                             <Popup Placement="Bottom" Focusable="False" AllowsTransparency="True" Name="Popup"
                                    IsOpen="{Binding IsChecked, ElementName=MainToggle, Mode=TwoWay, Delay=100}" StaysOpen="False"
-                                   MaxHeight="300">
+                                   MaxHeight="300" PlacementTarget="{Binding ElementName=MainToggle}">
                                 <Border Background="{DynamicResource PopupBackgroundBrush}"
                                         BorderThickness="{DynamicResource PopupBorderThickness}"
                                         BorderBrush="{DynamicResource PopupBorderBrush}"
@@ -69,13 +69,26 @@
                                 </Border>
                             </Popup>
                         </Grid>
-                    </Border>
+                    </ContentControl>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True" SourceName="MainToggle">
-                            <Setter Property="Background" Value="{DynamicResource ButtonSelectedBrush}" TargetName="Root"/>
+                            <!--<Setter Property="Background" Value="{DynamicResource InputSelectedBrush}" TargetName="Root"/>-->
+                            <!--Force Popup Position Update-->
+                            <Trigger.EnterActions>
+                                <BeginStoryboard x:Name="PopupFollow">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="1:0:0" AutoReverse="True" RepeatBehavior="Forever"
+                                                         Storyboard.TargetName="Popup" Storyboard.TargetProperty="VerticalOffset"
+                                                         To="1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <StopStoryboard BeginStoryboardName="PopupFollow"/>
+                            </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True" SourceName="Root">
-                            <Setter Property="Background" Value="{DynamicResource ButtonHoveredBrush}" TargetName="Root"/>
+                            <!--<Setter Property="Background" Value="{DynamicResource InputHoveredBrush}" TargetName="Root"/>-->
                             <Setter Property="Margin" TargetName="PART_TextFilterString">
                                 <Setter.Value>
                                     <Thickness Right="20" Left="5"/>
