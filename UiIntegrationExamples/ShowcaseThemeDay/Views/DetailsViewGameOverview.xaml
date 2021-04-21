@@ -41,7 +41,7 @@
                                     </Grid.RowDefinitions>
 
 
-                                    <Border Grid.Row="1" Background="{DynamicResource WindowBackgourndBrushBright}" Margin="-20,145,-20,0">
+                                    <Border Grid.Row="1" Background="{DynamicResource WindowBackgourndBrushBrighter}" Margin="-20,145,-20,0">
                                     </Border>
 
                                     <DockPanel Margin="0,20,0,5" MaxWidth="1024" Grid.Row="1" Panel.ZIndex="1"
@@ -66,7 +66,7 @@
                                                         Text="{Binding Game.DisplayName}" DockPanel.Dock="Left"
                                                         FontSize="{DynamicResource FontSizeLargest}" Margin="0,0,10,0" TextWrapping="Wrap"
                                                         VerticalAlignment="Center"
-                                                        Foreground="WhiteSmoke" Effect="{DynamicResource TextDropShadow}">
+                                                        Foreground="{DynamicResource TextBrushAlt}" Effect="{DynamicResource TextDropShadow}">
 
                                                 </TextBlock>
                                             </DockPanel>
@@ -86,28 +86,18 @@
                                                     </ContentControl>
                                                 </StackPanel>
                                                 <Button Name="PART_ButtonMoreActions"
-                                                    Content="{DynamicResource LOCMoreAction}"
-                                                    Width="150" Height="40" Margin="10,0,0,0" />
+                                                    Content="..."
+                                                    Width="{Binding ActualWidth, ElementName=PART_ButtonEditGame, Mode=OneWay}" Height="40" Margin="10,0,0,0" />
                                                 <Button x:Name="PART_ButtonEditGame"
                                                     Margin="10,0,0,0" Height="40" Focusable="False"
                                                     Content="&#xeded;" FontFamily="{DynamicResource FontIcoFont}">
-                                                    <Button.Style>
-                                                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                                                            <Setter Property="Visibility" Value="Collapsed" />
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=StackPanel}}"  Value="True">
-                                                                    <Setter Property="Visibility" Value="Visible" />
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Button.Style>
                                                 </Button>
-                                                <Label Name="PART_ElemLastPlayed" Content="{DynamicResource LOCLastPlayed}" VerticalAlignment="Center" Margin="10,0,5,0" Foreground="{DynamicResource TextBrush}"/>
-                                                <TextBlock Name="PART_TextLastActivity"  VerticalAlignment="Center" Margin="1,0,5,0" Foreground="{DynamicResource GlyphBrush}"/>
-                                                <Label Name="PART_ElemPlayTime" Content="{DynamicResource LOCTimePlayed}" VerticalAlignment="Center" Margin="10,0,5,0" Foreground="{DynamicResource TextBrush}" />
-                                                <TextBlock Name="PART_TextPlayTime" VerticalAlignment="Center" Margin="1,0,5,0" Foreground="{DynamicResource GlyphBrush}"/>
-                                                <Label Name="PART_ElemCompletionStatus" Content="{DynamicResource LOCCompletionStatus}" VerticalAlignment="Center" Margin="10,0,5,0" Foreground="{DynamicResource TextBrush}"/>
-                                                <TextBlock Name="PART_TextCompletionStatus" VerticalAlignment="Center" Margin="1,0,5,0" Foreground="{DynamicResource GlyphBrush}"/>
+                                                <Label Name="PART_ElemLastPlayed" Content="{DynamicResource LOCLastPlayed}" VerticalAlignment="Center" Margin="10,0,5,0" Foreground="LightGray"/>
+                                                <TextBlock Name="PART_TextLastActivity"  VerticalAlignment="Center" Margin="1,0,5,0" Foreground="{DynamicResource WindowBackgourndBrushHighlight}"/>
+                                                <Label Name="PART_ElemPlayTime" Content="{DynamicResource LOCTimePlayed}" VerticalAlignment="Center" Margin="10,0,5,0" Foreground="LightGray" />
+                                                <TextBlock Name="PART_TextPlayTime" VerticalAlignment="Center" Margin="1,0,5,0" Foreground="{DynamicResource WindowBackgourndBrushHighlight}"/>
+                                                <Label Name="PART_ElemCompletionStatus" Content="{DynamicResource LOCCompletionStatus}" VerticalAlignment="Center" Margin="10,0,5,0" Foreground="LightGray"/>
+                                                <TextBlock Name="PART_TextCompletionStatus" VerticalAlignment="Center" Margin="1,0,5,0" Foreground="{DynamicResource WindowBackgourndBrushHighlight}"/>
                                             </StackPanel>
                                         </StackPanel>
                                     </DockPanel>

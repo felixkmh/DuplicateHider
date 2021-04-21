@@ -15,10 +15,41 @@
     
     <Style x:Key="FilterPanelLabel" TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
         <Setter Property="Margin" Value="8,10,6,4" />
+        <Setter Property="Panel.ZIndex" Value="5"/>
+        <Setter Property="IsHitTestVisible" Value="False"/>
         <Style.Triggers>
             <Trigger Property="Tag" Value="{StaticResource False}">
                 <Setter Property="Opacity" Value="0.6"/>
+                <!--<Setter Property="Margin" Value="15,12,6,-20"/>-->
             </Trigger>
+            <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="{StaticResource False}">
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                                Duration="0:0:0.25"
+                                                To="15,12,6,-20" >
+                                <ThicknessAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseInOut"/>
+                                </ThicknessAnimation.EasingFunction>
+                            </ThicknessAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+                <DataTrigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                                Duration="0:0:0.25"
+                                                To="8,10,6,4" >
+                                <ThicknessAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseInOut"/>
+                                </ThicknessAnimation.EasingFunction>
+                            </ThicknessAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.ExitActions>
+            </DataTrigger>
         </Style.Triggers>
     </Style>
     
@@ -75,7 +106,7 @@
                                 <Button DockPanel.Dock="Left" Content="{StaticResource LOCClearFilters}"                                        
                                         HorizontalAlignment="Left"
                                         Style="{StaticResource SimpleButton}"
-                                        Name="PART_ButtonClear"/>
+                                        Name="PART_ButtonClear" Foreground="{DynamicResource TextBrush}"/>
                             </DockPanel>
                             <DockPanel DockPanel.Dock="Top" Margin="8,0,6,5">
                                 <Button x:Name="PART_ButtonDeleteFilter"

@@ -33,7 +33,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                <Setter Property="Foreground" Value="{DynamicResource GlyphBrush}" />
                 <Setter Property="Background" Value="{DynamicResource ButtonHoveredBrush}" />
             </Trigger>
         </Style.Triggers>

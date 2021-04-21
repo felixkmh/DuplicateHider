@@ -48,12 +48,10 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Button Name="PART_ButtonPlay" Style="{StaticResource SimpleButton}"
                                                     Margin="20,0,2,0" VerticalAlignment="Center"
-                                                    Content="&#xec74;" FontFamily="{StaticResource FontIcoFont}" 
-                                                    Foreground="WhiteSmoke"/>
+                                                    Content="&#xec74;" FontFamily="{StaticResource FontIcoFont}"/>
                                             <Button Name="PART_ButtonInfo" Style="{StaticResource SimpleButton}"
                                                     Margin="2,0,20,0" VerticalAlignment="Center"
-                                                    Content="&#xef4f;" FontFamily="{StaticResource FontIcoFont}" 
-                                                    Foreground="WhiteSmoke"/>
+                                                    Content="&#xef4f;" FontFamily="{StaticResource FontIcoFont}"/>
                                         </StackPanel>
                                     </Viewbox>
                                 </Grid>
