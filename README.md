@@ -63,7 +63,7 @@ The custom UI element consists of a stack of icons associated with the copys of 
 
 #### User Specified Icons
 
-The extension comes with a set of predefined icons for common libraries, but users can also specify their own. For DuplicateHider to find those icons, they need to be named like the sources in the _Priority List_, for example `Steam.ico` or `Ubisoft Connect.png` and then placed into the _source\_icons_ folder that can be found by pressing the _Open user icon folder_ button in the plugin settings.
+The extension comes with a set of predefined icons for common libraries (from https://icon-icons.com/pack/Material-Design/2248, under the [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0) License), but users can also specify their own. For DuplicateHider to find those icons, they need to be named like the sources in the _Priority List_, for example `Steam.ico` or `Ubisoft Connect.png` and then placed into the _source\_icons_ folder that can be found by pressing the _Open user icon folder_ button in the plugin settings.
 
 ## Extension Menu
 
