@@ -179,8 +179,9 @@ Some Themes ([Night](UiIntegrationExamples/ShowcaseThemeNight), [Day](UiIntegrat
 Preview:
 |View|Preview|
 |----|-------|
-|Desktop - DetailsView| ![grafik](https://user-images.githubusercontent.com/24227002/115125046-00299c00-9fc6-11eb-9a30-0babb68ad462.png) |
-|Desktop - DetailsView (Day)|![grafik](https://user-images.githubusercontent.com/24227002/115125204-d9b83080-9fc6-11eb-9bb0-c107f5199166.png)|
+|Desktop - DetailsView (Night)| ![grafik](https://user-images.githubusercontent.com/24227002/115793144-ea541680-a3cb-11eb-9138-957c8b33bd81.png) |
+|Desktop - DetailsView (Dawn)|![grafik](https://user-images.githubusercontent.com/24227002/115793248-15d70100-a3cc-11eb-8e6e-363005e21931.png) |
+|Desktop - DetailsView (Day)|![grafik](https://user-images.githubusercontent.com/24227002/115793329-399a4700-a3cc-11eb-862d-03d6f72fe27b.png) |
 |Desktop - DetailsView Playbutton Extension|![grafik](https://user-images.githubusercontent.com/24227002/115125089-44b53780-9fc6-11eb-8e5a-8e262761aa26.png)|
 |Desktop - GridView|![grafik](https://user-images.githubusercontent.com/24227002/115125061-16375c80-9fc6-11eb-963d-2c99a5b69c2f.png)|
 |Fullscreen - MainView|![grafik](https://user-images.githubusercontent.com/24227002/115125139-8a720000-9fc6-11eb-8f6f-76b3d5e015e6.png)|
