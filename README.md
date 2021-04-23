@@ -181,7 +181,7 @@ Preview:
 |----|-------|
 |Desktop - DetailsView (Night)| ![grafik](https://user-images.githubusercontent.com/24227002/115793144-ea541680-a3cb-11eb-9138-957c8b33bd81.png) |
 |Desktop - DetailsView (Dawn)|![grafik](https://user-images.githubusercontent.com/24227002/115793248-15d70100-a3cc-11eb-8e6e-363005e21931.png) |
-|Desktop - DetailsView (Day)|![grafik](https://user-images.githubusercontent.com/24227002/115793329-399a4700-a3cc-11eb-862d-03d6f72fe27b.png) |
+|Desktop - DetailsView (Day)|![grafik](https://user-images.githubusercontent.com/24227002/115825347-936d3200-a409-11eb-8d97-06e27bfd94ec.png)|
 |Desktop - DetailsView Playbutton Extension|![grafik](https://user-images.githubusercontent.com/24227002/115125089-44b53780-9fc6-11eb-8e5a-8e262761aa26.png)|
 |Desktop - GridView|![grafik](https://user-images.githubusercontent.com/24227002/115125061-16375c80-9fc6-11eb-963d-2c99a5b69c2f.png)|
 |Fullscreen - MainView|![grafik](https://user-images.githubusercontent.com/24227002/115794407-3f912780-a3ce-11eb-9c0d-febe88603ad2.png)|
