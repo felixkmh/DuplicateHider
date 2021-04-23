@@ -30,7 +30,7 @@
     <Color x:Key="WhiteColor">#FFFFFFFF</Color>
     <Color x:Key="TextColor">#363636</Color>
     <Color x:Key="TextColorAlt">#f2f2f2</Color>
-    <Color x:Key="TextColorDarker">#797979</Color>
+    <Color x:Key="TextColorDarker">#5a5a5a</Color>
     <Color x:Key="TextColorDark">#FF000000</Color>
     <Color x:Key="MainColor">#474747</Color>
     <Color x:Key="MainColorDark">#1C1C1C</Color>
