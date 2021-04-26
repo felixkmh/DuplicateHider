@@ -475,6 +475,31 @@ namespace DuplicateHider
         static readonly int suffixIdx = regexVariable.GroupNumberFromName("Suffix");
         static readonly int variableIdx = regexVariable.GroupNumberFromName("Variable");
 
+        public static IList<KeyValuePair<string, string>> GetGameVariables()
+        {
+            var vars = new List<KeyValuePair<string, string>>();
+
+            vars.Add(new KeyValuePair<string, string> ("Installed", "{'Installed'}"));
+            vars.Add(new KeyValuePair<string, string>("SourceName", "{'SourceName'}"));
+
+
+            foreach (var variable in typeof(ExpandableVariables).GetFields())
+            {
+                vars.Add(new KeyValuePair<string, string>(variable.Name, ((string)variable.GetRawConstantValue()).Replace("{", "{'").Replace("}", "'}")));
+            }
+
+            var t = typeof(Game);
+
+            foreach (var variable in typeof(Game).GetProperties())
+            {
+                if (!vars.TryFind(s => s.Key.Contains(variable.Name) || s.Value.Contains(variable.Name), out var _))
+                    if (variable.PropertyType == typeof(string) || variable.PropertyType == typeof(int?) || variable.PropertyType == typeof(float?) || variable.PropertyType == typeof(DateTime?))
+                        vars.Add(new KeyValuePair<string, string>(variable.Name, "{'" + variable.Name + "'}"));
+            }
+
+            return vars;
+        }
+
         public string ExpandDisplayString(Game game, string displayString)
         {
             var result = displayString;
@@ -494,6 +519,20 @@ namespace DuplicateHider
                     {
                         expanded = expanded.Replace("{Source}", game.GetSourceName());
                         expanded = expanded.Replace("{Installed}", game.IsInstalled ? "Installed" : "Not installed");
+                        var type = typeof(Game).GetFields();
+                        foreach (var field in typeof(Game).GetProperties())
+                        {
+                            if (field.PropertyType == typeof(string) || field.PropertyType == typeof(int?) || field.PropertyType == typeof(float?) || field.PropertyType == typeof(DateTime?))
+                            {
+                                if (field.PropertyType == typeof(DateTime?))
+                                {
+                                    expanded = expanded.Replace("{" + field.Name + "}", ((DateTime?)field.GetValue(game))?.ToString("d") ?? string.Empty);
+                                } else
+                                {
+                                    expanded = expanded.Replace("{" + field.Name + "}", field.GetValue(game)?.ToString()??string.Empty);
+                                }
+                            }
+                        }
                     }
                     if (expanded.Length != 0 && expanded != variable)
                     {

@@ -359,26 +359,16 @@ namespace DuplicateHider
                     textBox.Text = DisplayString ?? "";
                     var contextMenu = textBox.ContextMenu = new ContextMenu();
 
-                    var installedItem = new MenuItem();
-                    installedItem.Header = "Installed";
-                    installedItem.Click += InsertVariable;
-                    installedItem.Tag = "{'Installed'}";
-                    contextMenu.Items.Add(installedItem);
-
-                    var sourceItem = new MenuItem();
-                    sourceItem.Header = "SourceName";
-                    sourceItem.Click += InsertVariable;
-                    sourceItem.Tag = "{'Source'}";
-                    contextMenu.Items.Add(sourceItem);
-
-                    foreach (var variable in typeof(ExpandableVariables).GetFields())
+                    foreach (var variable in DuplicateHider.GetGameVariables())
                     {
                         var item = new MenuItem();
-                        item.Header = variable.Name;
+                        item.Header = variable.Key;
                         item.Click += InsertVariable;
-                        item.Tag = ((string)variable.GetRawConstantValue()).Replace("{", "{'").Replace("}", "'}");
+                        item.Tag = variable.Value;
                         contextMenu.Items.Add(item);
                     }
+
+
                 }
             });
         }
