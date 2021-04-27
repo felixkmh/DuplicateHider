@@ -36,6 +36,7 @@ namespace DuplicateHider
         public HashSet<Guid> IgnoredGames { get; set; } = new HashSet<Guid>();
 
         public bool AddHiddenToIgnoreList { get; set; } = false;
+        public bool EnableUiIntegration { get; set; } = false;
 
         public List<ReplaceFilter> ReplaceFilters { get; set; } = new List<ReplaceFilter>();
 
@@ -215,6 +216,7 @@ namespace DuplicateHider
                 DisplayString = savedSettings.DisplayString;
                 AddHiddenToIgnoreList = savedSettings.AddHiddenToIgnoreList;
                 ReplaceFilters = savedSettings.ReplaceFilters;
+                EnableUiIntegration = savedSettings.EnableUiIntegration;
             }
 
             if (Priorities.Count == 0)
@@ -250,6 +252,7 @@ namespace DuplicateHider
                 plugin.SettingsView.AutoUpdateCheckBox.IsChecked = UpdateAutomatically;
                 plugin.SettingsView.ShowCopiesInGameMenu.IsChecked = ShowOtherCopiesInGameMenu;
                 plugin.SettingsView.AddHiddenToIgnoreList.IsChecked = AddHiddenToIgnoreList;
+                plugin.SettingsView.EnableUiIntegrationCheckbox.IsChecked = EnableUiIntegration;
 
                 // Populate Replacement Rules
                 {
@@ -367,8 +370,6 @@ namespace DuplicateHider
                         item.Tag = variable.Value;
                         contextMenu.Items.Add(item);
                     }
-
-
                 }
             });
         }
@@ -424,6 +425,7 @@ namespace DuplicateHider
                     UpdateAutomatically = plugin.SettingsView.AutoUpdateCheckBox.IsChecked ?? false;
                     ShowOtherCopiesInGameMenu = plugin.SettingsView.ShowCopiesInGameMenu.IsChecked ?? false;
                     AddHiddenToIgnoreList = plugin.SettingsView.AddHiddenToIgnoreList.IsChecked ?? false;
+                    EnableUiIntegration = plugin.SettingsView.EnableUiIntegrationCheckbox.IsChecked ?? false;
                 }
 
                 // Retrieve Replacement Rules

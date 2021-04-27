@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Playnite.SDK;
+using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
@@ -7,7 +8,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Media;
+using System.Windows.Threading;
 
 using static DuplicateHider.DuplicateHider.Visibility;
 
@@ -62,6 +70,34 @@ namespace DuplicateHider
             PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
             settings.OnSettingsChanged += Settings_OnSettingsChanged;
 
+            playButtonExt.Checked += (_,__) => { 
+                playButtonExt.Content = "-";
+                var others = GetOtherCopies(PlayniteApi.MainView.SelectedGames.FirstOrDefault());
+                playButtonExt.Visibility = others.Count < 1 ? System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
+
+                otherCopiesPanel.Children.Clear();
+                othersCount = others.Count;
+
+                foreach (Game game in others)
+                {
+                    var display = new StackPanel() { Orientation = Orientation.Horizontal };
+                    TextBlock text = new TextBlock() { Text = ExpandDisplayString(game, settings.DisplayString), Opacity = game.IsInstalled ? 1 : 0.7 };
+                    display.Children.Add(text);
+                    Button element = new Button() { Content = display, HorizontalContentAlignment = HorizontalAlignment.Left, Margin = new Thickness(0, 0, 0, 2) };
+                    element.Click += (___, ____) => { PlayniteApi.StartGame(game.Id); };
+                    otherCopiesPanel.Children.Add(element);
+                }
+            };
+            playButtonExt.Unchecked += (_, __) => {
+                playButtonExt.Content = $"+{(othersCount == 1 ? "" : othersCount.ToString())}";
+            };
+
+            playButtonExtPopup.SetBinding(Popup.IsOpenProperty, new Binding("IsChecked") { Mode = BindingMode.TwoWay, Delay = 200, Source = playButtonExt });
+            playButtonExtPopup.PlacementTarget = playButtonExt;
+            playButtonExtPopup.Placement = PlacementMode.Bottom;
+            playButtonExtPopup.Child = new ScrollViewer() { Content = otherCopiesPanel, MaxHeight = 200, VerticalScrollBarVisibility = ScrollBarVisibility.Auto};
+            playButtonExtPopup.StaysOpen = false;
+            otherCopiesPanel.Background = Brushes.Transparent;
         }
 
 
@@ -71,6 +107,66 @@ namespace DuplicateHider
             PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
             settings.OnSettingsChanged -= Settings_OnSettingsChanged;
             SavePluginSettings(settings);
+        }
+
+        Button playButton = null;
+        ToggleButton playButtonExt = new ToggleButton() { Content = "+" };
+        Popup playButtonExtPopup = new Popup();
+        StackPanel otherCopiesPanel = new StackPanel();
+        int othersCount = 0;
+        public override void OnGameSelected(GameSelectionEventArgs args)
+        {
+            if (settings.EnableUiIntegration)
+            {
+                if (playButton == null)
+                {
+                    Task.Run(() =>
+                    {
+                        Thread.Sleep(500);
+                        var op = Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action( () => {
+                            var detailsView = UiIntegration.FindVisualChildren(Application.Current.MainWindow, "PART_ViewDetails").FirstOrDefault();
+                            if (detailsView != null)
+                            {
+                                playButton = UiIntegration.FindVisualChildren<Button>(detailsView, "PART_ButtonContextAction").FirstOrDefault();
+                            }
+                        }));
+                        op.Completed += Op_Completed;
+                    });
+                }
+                if (index.Count == 0 && settings.UpdateAutomatically)
+                {
+                    BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
+                }
+                var others = GetOtherCopies(args.NewValue.FirstOrDefault());
+                playButtonExt.Visibility = others.Count < 1 ? System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
+                othersCount = others.Count;
+                playButtonExt.Content = $"+{(others.Count == 1 ? "" : others.Count.ToString())}";
+            }
+        }
+
+        private void Op_Completed(object sender, EventArgs e)
+        {
+            if (playButton is Button)
+            {
+                playButtonExtPopup.HorizontalOffset = -playButton.Width -playButton.Margin.Right;
+                playButtonExtPopup.VerticalOffset = 2;
+                if (playButton.Parent is Panel panel)
+                {
+                    if (playButtonExt.Parent is Panel oldPanel)
+                    {
+                        oldPanel.Children.Remove(playButtonExt);
+                    }
+
+                    playButtonExt.Width = playButton.Height;
+                    playButtonExt.Height = playButton.Height;
+
+                    var playButtonIdx = panel.Children.IndexOf(playButton);
+                    panel.Dispatcher.Invoke(() => { 
+                        panel.Children.Insert(playButtonIdx + 1, playButtonExt);
+                    });
+
+                }
+            }
         }
 
         private void Settings_OnSettingsChanged(DuplicateHiderSettings oldSettings, DuplicateHiderSettings newSettings)
@@ -387,6 +483,7 @@ namespace DuplicateHider
 
         private List<Game> GetOtherCopies(Game game)
         {
+            if (game == null) return new List<Game>();
             var name = game.Name.Filter(GetNameFilter());
             var duplicates = new List<Game>();
             if (index.TryGetValue(name, out var copies))
@@ -402,6 +499,7 @@ namespace DuplicateHider
             }
             return duplicates
                 .OrderByDescending(g => g.IsInstalled)
+                .ThenBy(g => GetGamePriority(g.Id))
                 .ThenBy(g => g.Name)
                 .ThenBy(g => g.GetSourceName())
                 .ToList();
