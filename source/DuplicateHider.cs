@@ -141,6 +141,9 @@ namespace DuplicateHider
                 playButtonExt.Visibility = others.Count < 1 ? System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
                 othersCount = others.Count;
                 playButtonExt.Content = $"+{(others.Count == 1 ? "" : others.Count.ToString())}";
+            } else
+            {
+                playButtonExt.Visibility = System.Windows.Visibility.Collapsed;
             }
         }
 
