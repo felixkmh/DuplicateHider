@@ -94,6 +94,9 @@ namespace DuplicateHider
 
             playButtonExtPopup.SetBinding(Popup.IsOpenProperty, new Binding("IsChecked") { Mode = BindingMode.TwoWay, Delay = 200, Source = playButtonExt });
             playButtonExtPopup.PlacementTarget = playButtonExt;
+            playButtonExt.Padding = new Thickness(0);
+            playButtonExt.HorizontalContentAlignment = HorizontalAlignment.Center;
+            playButtonExt.VerticalContentAlignment = VerticalAlignment.Center;
             playButtonExtPopup.Placement = PlacementMode.Bottom;
             playButtonExtPopup.Child = new ScrollViewer() { Content = otherCopiesPanel, MaxHeight = 200, VerticalScrollBarVisibility = ScrollBarVisibility.Auto};
             playButtonExtPopup.StaysOpen = false;
@@ -178,6 +181,8 @@ namespace DuplicateHider
             {
                 PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Visible));
+                gameFilters = null;
+                nameFilters = null;
                 BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
                 PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
@@ -672,31 +677,43 @@ namespace DuplicateHider
             }
         }
 
+        IFilter<string> nameFilters = null;
+
         IFilter<string> GetNameFilter()
         {
-            var customRules = IFilter<string>.MakeChain(settings.ReplaceFilters.Cast<IFilter<string>>().ToList());
-            return customRules.Append(
-                IFilter<string>.MakeChain
-                (
-                    new NumberToRomanFilter(),
-                    new DiacriticsFilter(),
-                    new CaseFilter(CaseFilter.Case.Lower),
-                    new WhiteSpaceFilter(),
-                    new ReplaceFilter("and", "&", "+"),
-                    new ReplaceFilter("goty", "gameoftheyearedition", "gotyedition", "gameoftheyear"),
-                    new SpecialCharFilter()
-                )
-            );
+            if (nameFilters == null)
+            {
+                var customRules = IFilter<string>.MakeChain(settings.ReplaceFilters.Cast<IFilter<string>>().ToList());
+                nameFilters = customRules.Append(
+                    IFilter<string>.MakeChain
+                    (
+                        new NumberToRomanFilter(),
+                        new DiacriticsFilter(),
+                        new CaseFilter(CaseFilter.Case.Lower),
+                        new WhiteSpaceFilter(),
+                        new ReplaceFilter("and", "&", "+"),
+                        new ReplaceFilter("goty", "gameoftheyearedition", "gotyedition", "gameoftheyear"),
+                        new SpecialCharFilter()
+                    )
+                );
+            }
+            return nameFilters;
         }
+
+        IFilter<IEnumerable<Game>> gameFilters = null;
 
         IFilter<IEnumerable<Game>> GetGameFilter()
         {
-            return IFilter<IEnumerable<Game>>.MakeChain(
-                new PlatformFilter(true, settings.IncludePlatforms),
-                new SourceFilter(false, settings.ExcludeSources),
-                new CategoryFilter(false, settings.ExcludeCategories),
-                new IgnoreFilter(settings.IgnoredGames)
-            );
+            if (gameFilters == null)
+            {
+                gameFilters = IFilter<IEnumerable<Game>>.MakeChain(
+                    new PlatformFilter(true, settings.IncludePlatforms),
+                    new SourceFilter(false, settings.ExcludeSources),
+                    new CategoryFilter(false, settings.ExcludeCategories),
+                    new IgnoreFilter(settings.IgnoredGames)
+                );
+            }
+            return gameFilters;
         }
     }
 }
