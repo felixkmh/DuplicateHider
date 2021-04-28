@@ -165,6 +165,7 @@ namespace DuplicateHider
 
                     playButtonExt.Width = playButton.Height;
                     playButtonExt.Height = playButton.Height;
+                    otherCopiesPanel.MinWidth = playButton.Width + playButton.Margin.Right + playButtonExt.Width;
 
                     var playButtonIdx = panel.Children.IndexOf(playButton);
                     panel.Dispatcher.Invoke(() => { 
