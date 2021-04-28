@@ -119,7 +119,7 @@ namespace DuplicateHider
         int othersCount = 0;
         public override void OnGameSelected(GameSelectionEventArgs args)
         {
-            if (settings.EnableUiIntegration)
+            if (settings.EnableUiIntegration && PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
             {
                 if (playButton == null)
                 {
