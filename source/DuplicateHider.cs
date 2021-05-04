@@ -154,26 +154,87 @@ namespace DuplicateHider
         {
             if (playButton is Button)
             {
-                playButtonExtPopup.HorizontalOffset = -playButton.Width -playButton.Margin.Right;
+                if (!double.IsNaN(playButton.Width))
+                {
+                    playButtonExtPopup.HorizontalOffset = -playButton.Width -playButton.Margin.Right;
+                } else
+                {
+                    playButtonExtPopup.HorizontalOffset = -playButton.ActualWidth - playButton.Margin.Right;
+                }
                 playButtonExtPopup.VerticalOffset = 2;
                 if (playButton.Parent is StackPanel panel)
                 {
-                    if (playButtonExt.Parent is Panel oldPanel)
-                    {
-                        oldPanel.Children.Remove(playButtonExt);
-                    }
-
-                    playButtonExt.Width = playButton.Height;
-                    playButtonExt.Height = playButton.Height;
-                    otherCopiesPanel.MinWidth = playButton.Width + playButton.Margin.Right + playButtonExt.Width;
-
-                    var playButtonIdx = panel.Children.IndexOf(playButton);
-                    panel.Dispatcher.Invoke(() => { 
-                        panel.Children.Insert(playButtonIdx + 1, playButtonExt);
-                    });
-
+                    InsertPlaybuttonExt(panel);
+                } else if (playButton.Parent is Grid grid)
+                {
+                    InsertPlaybuttonExt(grid);
                 }
             }
+        }
+
+        private bool InsertPlaybuttonExt(StackPanel panel)
+        {
+            if (playButtonExt.Parent is Panel oldPanel)
+            {
+                oldPanel.Children.Remove(playButtonExt);
+            }
+
+            playButtonExt.Width = playButton.Height;
+            playButtonExt.Height = playButton.Height;
+            var minWidth = playButton.Width + playButton.Margin.Right + playButtonExt.Width;
+            if (!double.IsNaN(minWidth))
+            {
+                otherCopiesPanel.MinWidth = minWidth;
+            }
+
+            var playButtonIdx = panel.Children.IndexOf(playButton);
+            panel.Dispatcher.Invoke(() => {
+                panel.Children.Insert(playButtonIdx + 1, playButtonExt);
+            });
+            return false;
+        }
+
+        private bool InsertPlaybuttonExt(Grid grid)
+        {
+            if (playButtonExt.Parent is Panel oldPanel)
+            {
+                oldPanel.Children.Remove(playButtonExt);
+            }
+
+            playButtonExt.Width = playButton.Height;
+            playButtonExt.Height = playButton.Height;
+
+            var minWidth = playButton.Width + playButton.Margin.Right + playButtonExt.Width;
+            if (!double.IsNaN(minWidth))
+            {
+                otherCopiesPanel.MinWidth = minWidth;
+            }
+
+
+            grid.Dispatcher.Invoke(() => { 
+
+                var playButtonIdx = grid.Children.IndexOf(playButton);
+                var playButtonRow = Grid.GetRow(playButton);
+                var playButtonColumn = Grid.GetColumn(playButton);
+                var playButtonRowSpan = Grid.GetRowSpan(playButton);
+                var playButtonColumnSpan = Grid.GetColumnSpan(playButton);
+
+                grid.Children.Remove(playButton);
+
+                StackPanel sp = new StackPanel();
+                grid.Children.Insert(playButtonIdx, sp);
+
+                Grid.SetColumn(sp, playButtonColumn);
+                Grid.SetRow(sp, playButtonRow);
+                Grid.SetRowSpan(sp, playButtonRowSpan);
+                Grid.SetColumnSpan(sp, playButtonColumnSpan);
+
+                sp.Children.Add(playButton);
+                sp.Children.Add(playButtonExt);
+                sp.Orientation = Orientation.Horizontal;
+            });
+
+            return false;
         }
 
         private void Settings_OnSettingsChanged(DuplicateHiderSettings oldSettings, DuplicateHiderSettings newSettings)
