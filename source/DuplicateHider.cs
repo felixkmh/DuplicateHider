@@ -156,7 +156,7 @@ namespace DuplicateHider
             {
                 playButtonExtPopup.HorizontalOffset = -playButton.Width -playButton.Margin.Right;
                 playButtonExtPopup.VerticalOffset = 2;
-                if (playButton.Parent is Panel panel)
+                if (playButton.Parent is StackPanel panel)
                 {
                     if (playButtonExt.Parent is Panel oldPanel)
                     {
