@@ -90,8 +90,7 @@
                             </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True" SourceName="Root">
-                            <Setter Property="Margin" TargetName="PART_TextFilterString" Value="0,0,20,0"/>
-                            <Setter Property="Margin" TargetName="PART_TextFilterInput" Value="1,0,50,0"/>
+                            <Setter Property="Margin" TargetName="PART_TextFilterString" Value="5,0,20,0"/>
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -99,6 +98,7 @@
                                 <Condition Property="Visibility" SourceName="PART_TextFilterInput" Value="Visible"/>
                             </MultiTrigger.Conditions>
                             <Setter Property="Background" Value="{DynamicResource InputHoveredBrush}" TargetName="Root"/>
+                            <Setter Property="Margin" TargetName="PART_TextFilterInput" Value="1,0,50,0"/>
                         </MultiTrigger>
                         <Trigger Property="IsFocused" Value="True" SourceName="PART_TextFilterInput">
                             <Setter Property="Background" Value="{DynamicResource InputSelectedBrush}" TargetName="Root"/>

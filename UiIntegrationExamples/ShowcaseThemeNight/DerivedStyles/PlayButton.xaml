@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="PlayButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="Background" Value="{DynamicResource PlayButtonBackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource WindowBackgourndBrushHighlight}" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
         <Setter Property="BorderBrush" Value="{DynamicResource NormalBorderBrush}" />
         <Setter Property="BorderThickness" Value="{DynamicResource ControlBorderThickness}" />
@@ -14,6 +14,8 @@
                         <Border x:Name="DefaultBorder" BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"  Background="{TemplateBinding Background}"
                                 Opacity="1" CornerRadius="{DynamicResource ButtonCornerRadius}"/>
+                        <!--<Ellipse Fill="{DynamicResource ButtonDefaultBrush}" StrokeThickness="0" Margin="0,-25,0,0"/>-->
+                        <!--<Image Source="{ThemeFile 'Images/playIcon.png'}" HorizontalAlignment="Left" Margin="0,0,0,0" RenderOptions.BitmapScalingMode="Fant"/>-->
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True" />
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -29,7 +31,12 @@
             <Trigger Property="IsMouseOver" Value="true">
                 <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
                 <Setter Property="BorderBrush" Value="{DynamicResource TextBrush}" />
-                <Setter Property="Background" Value="{DynamicResource WindowBackgourndBrushHighlightHover}"/>
+                <Setter Property="Background" Value="{DynamicResource WindowBackgourndBrushHighlight}"/>
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect BlurRadius="15" ShadowDepth="0" Color="{DynamicResource GlyphColor}"/>
+                    </Setter.Value>
+                </Setter>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -49,11 +56,11 @@
                                 <SolidColorBrush Color="{DynamicResource MainColorDark}"/>
                             </ToggleButton.Background>
                         </ToggleButton>
-                        <Canvas x:Name="PlayOptions" Width="{Binding ActualWidth, ElementName=Toggler}"
-                                Visibility="{Binding IsChecked, ElementName=Toggler, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Popup x:Name="PlayOptions" Width="{Binding ActualWidth, ElementName=Toggler}"
+                                IsOpen="{Binding IsChecked, ElementName=Toggler, Mode=TwoWay, Delay=200}"
+                               Placement="Bottom" PlacementTarget="{Binding ElementName=Toggler}">
                             <ItemsControl
                                 Width="185"
-                                Margin="-150,0,0,0"
                                 x:Name="DH_ListBox"
                                 Focusable="False"
                                 IsTextSearchEnabled="False"
@@ -113,7 +120,7 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-                        </Canvas>
+                        </Popup>
                     </StackPanel>
                 </ControlTemplate>
             </Setter.Value>

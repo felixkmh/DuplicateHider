@@ -9,19 +9,34 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DetailsViewGameOverview}">
                     <Grid>
+                        <Image Stretch="UniformToFill" x:Name="TopBackground"
+                                           Source="{Binding Game.DisplayBackgroundImage, Converter={StaticResource ImageStringToImageConverter}}" 
+                                           Margin="0,0,0,-145" VerticalAlignment="Top" Height="{Binding ActualHeight, ElementName=BackgroundMask}">
+                            <Image.OpacityMask>
+                                <VisualBrush Visual="{Binding ElementName=BackgroundMask}" AutoLayoutContent="False" TileMode="None">
+                                    <VisualBrush.Transform>
+                                        <TransformGroup>
+                                            <TranslateTransform Y="{Binding ElementName=ScrollViewer, Path=ContentVerticalOffset}"/>
+                                            <ScaleTransform ScaleY="-1"/>
+                                            <TranslateTransform Y="{Binding ActualHeight, ElementName=BackgroundMask}"/>
+                                        </TransformGroup>
+                                    </VisualBrush.Transform>
+                                </VisualBrush>
+                            </Image.OpacityMask>
+                        </Image>
                         <ContentControl x:Name="DuplicateHider_ContentControl1" Panel.ZIndex="1"
                                             VerticalAlignment="Top" 
                                             HorizontalAlignment="Center" 
                                             Margin="0,10,0,0" 
                                             Tag="{DynamicResource DuplicateHider_ContentControlHeader_Style}"/>
-                        <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                        <ScrollViewer HorizontalScrollBarVisibility="Disabled" x:Name="ScrollViewer"
                                   VerticalScrollBarVisibility="Auto"
                                   Style="{DynamicResource DetailsScrollViewer}"
                                   d:DesignWidth="1280"
                                   d:DesignHeight="1280"
                                   d:DataContext="{x:Static DesignMainViewModel.DesignSelectedGameDetailsIntance}">
-                            <Grid Background="Transparent">
-                                <FadeImage x:Name="PART_ImageBackground" Stretch="Uniform"
+                            <Grid Background="Transparent" x:Name="MainGrid">
+                                <!--<FadeImage x:Name="PART_ImageBackground" Stretch="Uniform" Visibility="Hidden"
                                        HorizontalAlignment="Center" VerticalAlignment="Top">
                                     <FadeImage.ImageOpacityMask>
                                         <RadialGradientBrush GradientOrigin="0.5,0" Center="0.5,0" RadiusX="2" RadiusY="0.9" x:Name="FadeMask">
@@ -31,7 +46,9 @@
                                             </RadialGradientBrush.GradientStops>
                                         </RadialGradientBrush>
                                     </FadeImage.ImageOpacityMask>
-                                </FadeImage>
+                                </FadeImage>-->
+
+                                
 
                                 <Grid HorizontalAlignment="Stretch" Margin="20,0,20,0">
                                     <Grid.RowDefinitions>
@@ -40,11 +57,21 @@
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
 
+                                    <!--<Image Stretch="UniformToFill"
+                                           Source="{Binding Game.DisplayBackgroundImage, Converter={StaticResource ImageStringToImageConverter}}" 
+                                           Margin="-20,0,-20,-145" VerticalAlignment="Top"/>-->
 
-                                    <Border Grid.Row="1" Background="{DynamicResource WindowBackgourndBrushBrighter}" Margin="-20,145,-20,0">
+                                    <Border Background="{DynamicResource ButtonOpaqueBrush}" x:Name="BackgroundMask"
+                                            Margin="-20,0,-20,50" Opacity="1" Grid.RowSpan="2">
+                                        <Border.RenderTransform>
+                                            <TranslateTransform Y="-5000"/>
+                                        </Border.RenderTransform>
                                     </Border>
 
-                                    <DockPanel Margin="0,20,0,5" MaxWidth="1024" Grid.Row="1" Panel.ZIndex="1"
+                                    <Border Grid.Row="1" Background="{DynamicResource WindowBackgourndBrushBrighter}" Margin="-20,0,-20,0" Height="50" VerticalAlignment="Bottom">
+                                    </Border>
+
+                                    <DockPanel Margin="0,20,0,5" MaxWidth="1024" Grid.Row="1" Panel.ZIndex="1" x:Name="TitlePanel"
                                            Background="Transparent">
                                         <Image Name="PART_ImageCover" VerticalAlignment="Bottom" Panel.ZIndex="20"
                                             DockPanel.Dock="Right"
@@ -74,7 +101,7 @@
                                                     Orientation="Horizontal" Margin="0,15,0,0" Background="Transparent">
                                                 <StackPanel x:Name="PlayButtonStack" Background="Transparent" Orientation="Horizontal">
                                                     <Button Name="PART_ButtonPlayAction"
-                                                                Width="150" Height="40" Style="{DynamicResource PlayButton}" Panel.ZIndex="2"/>
+                                                                Width="150" Height="40" Style="{DynamicResource PlayButton}" Panel.ZIndex="2" Margin="0,0,0,0"/>
                                                     <Button Name="PART_ButtonContextAction" 
                                                                 Width="150" Height="40" Panel.ZIndex="2"/>
                                                     <ContentControl Background="Transparent" Panel.ZIndex="1"
@@ -102,7 +129,7 @@
                                         </StackPanel>
                                     </DockPanel>
 
-                                    <Border Grid.Row="2" Background="{DynamicResource WindowBackgourndBrush}" Margin="-20,0,-20,0">
+                                    <Border Grid.Row="2" Background="{DynamicResource WindowBackgourndBrushLight}" Margin="-20,0,-20,0">
                                     </Border>
                                     
                                     <DockPanel MaxWidth="1024" Grid.Row="2">
@@ -329,7 +356,8 @@
                         </Border>
                         <Popup x:Name="PlayOptions" Width="Auto"
                                IsOpen="{Binding IsChecked, ElementName=Toggler, Delay=110}"
-                               Placement="Bottom" PlacementRectangle="-150,40,0,0"
+                               Placement="Bottom" PlacementTarget="{Binding ElementName=ButtonBorder}"
+                               HorizontalOffset="-147.5"
                                Effect="{DynamicResource DefaultDropShadow}"
                                Margin="{DynamicResource DropShadowThickness}"
                                AllowsTransparency="True"

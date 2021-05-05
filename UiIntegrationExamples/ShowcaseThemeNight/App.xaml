@@ -60,6 +60,7 @@
         <ResourceDictionary Source="CustomControls/FilterSelectionBox.xaml" />
         <ResourceDictionary Source="CustomControls/FilterStringSelectionBox.xaml" />
         <ResourceDictionary Source="CustomControls/SearchBox.xaml" />
+        <ResourceDictionary Source="CustomControls/TopPanelItem.xaml" />
         <!--Derived Styles-->
         <ResourceDictionary Source="DerivedStyles/TextBlockGameScore.xaml" />
         <ResourceDictionary Source="DerivedStyles/PropertyItemButton.xaml" />
