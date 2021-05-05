@@ -34,18 +34,21 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <Image Name="PART_ImageCover"
-                               RenderOptions.BitmapScalingMode="Fant"
-                               Height="350" HorizontalAlignment="Center"
-                               Grid.Row="1" Grid.Column="1" Effect="{DynamicResource DefaultDropShadow}"
+                        <Grid Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"
                                RenderTransformOrigin="0.5,0.5">
-                            <Image.RenderTransform>
+                            <Grid.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform x:Name="CoverScale"/>
                                     <TranslateTransform x:Name="CoverTranslate"/>
                                 </TransformGroup>
-                            </Image.RenderTransform>
-                        </Image>
+                            </Grid.RenderTransform>
+                            <Image Name="PART_ImageCover"
+                                   RenderOptions.BitmapScalingMode="Fant"
+                                   Height="380" 
+                                   Effect="{DynamicResource DefaultDropShadow}"
+                                   >
+                            </Image>
+                        </Grid>
 
                         <TextBlock Name="PART_TextStatus" TextWrapping="Wrap"
                                    Style="{StaticResource TextBlockBaseStyle}"
@@ -67,7 +70,7 @@
                                                          Storyboard.TargetProperty="ScaleX"
                                                          To="1.1"
                                                          AutoReverse="True"
-                                                         RepeatBehavior="0:1:0">
+                                                         RepeatBehavior="0:0:15">
                                             <DoubleAnimation.EasingFunction>
                                                 <QuadraticEase EasingMode="EaseInOut"/>
                                             </DoubleAnimation.EasingFunction>
@@ -77,7 +80,7 @@
                                                          Storyboard.TargetProperty="ScaleY"
                                                          To="1.1"
                                                          AutoReverse="True"
-                                                         RepeatBehavior="0:1:0">
+                                                         RepeatBehavior="0:0:15">
                                             <DoubleAnimation.EasingFunction>
                                                 <QuadraticEase EasingMode="EaseInOut"/>
                                             </DoubleAnimation.EasingFunction>
@@ -88,7 +91,7 @@
                                                          From="-5"
                                                          To="5"
                                                          AutoReverse="True"
-                                                         RepeatBehavior="0:1:0">
+                                                         RepeatBehavior="0:0:15">
                                             <DoubleAnimation.EasingFunction>
                                                 <QuadraticEase EasingMode="EaseInOut"/>
                                             </DoubleAnimation.EasingFunction>
@@ -99,7 +102,7 @@
                                                          From="-5"
                                                          To="5"
                                                          AutoReverse="True"
-                                                         RepeatBehavior="0:1:0">
+                                                         RepeatBehavior="0:0:15">
                                             <DoubleAnimation.EasingFunction>
                                                 <QuadraticEase EasingMode="EaseInOut"/>
                                             </DoubleAnimation.EasingFunction>

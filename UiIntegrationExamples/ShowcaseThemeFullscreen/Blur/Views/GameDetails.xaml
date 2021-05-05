@@ -210,6 +210,8 @@
                                             FocusVisualStyle="{x:Null}" Focusable="True" Visibility="Visible"
                                             />
                         </ScrollViewerEx>
+                        
+                        
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" SourceName="DummyButton" Value="True">

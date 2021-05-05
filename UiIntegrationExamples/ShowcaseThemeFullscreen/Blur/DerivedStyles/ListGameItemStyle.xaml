@@ -16,14 +16,14 @@
                         <Storyboard x:Key="FocusedOn">
                             <DoubleAnimation Storyboard.TargetName="ScaleTransform"
                                              Storyboard.TargetProperty="ScaleX"
-                                             By="0.15" Duration="0:0:0.5">
+                                             To="1.15" Duration="0:0:0.5">
                                 <DoubleAnimation.EasingFunction>
                                     <ElasticEase Oscillations="1"/>
                                 </DoubleAnimation.EasingFunction>
                             </DoubleAnimation>
                             <DoubleAnimation Storyboard.TargetName="ScaleTransform"
                                              Storyboard.TargetProperty="ScaleY"
-                                             By="0.15" Duration="0:0:0.5">
+                                             To="1.15" Duration="0:0:0.5">
                                 <DoubleAnimation.EasingFunction>
                                     <ElasticEase Oscillations="1"/>
                                 </DoubleAnimation.EasingFunction>

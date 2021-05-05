@@ -39,7 +39,7 @@
         <ResourceDictionary Source="Views/Main.xaml" />
         <ResourceDictionary Source="Views/MainMenu.xaml" />
         <ResourceDictionary Source="Views/MessageBox.xaml" />
-        <ResourceDictionary Source="Views/Notifications.xaml" />
+        <ResourceDictionary Source="Views/NotificationsMenu.xaml" />
         <ResourceDictionary Source="Views/SettingsMenus.xaml" />
         <ResourceDictionary Source="Views/TextInput.xaml" />
       </ResourceDictionary.MergedDictionaries>
