@@ -126,6 +126,7 @@ class ListData {
     BitmapImage Icon;         // Source Icon
     String SourceName;        // Source name. Use this rather than Game.Source.Name, 
                               // because Source might be null.
+    String DisplayString;     // Expanded display string as defined in plugin settings.
     ICommand LaunchCommand;
     ICommand SelectCommand;
     ICommand InstallCommand;
