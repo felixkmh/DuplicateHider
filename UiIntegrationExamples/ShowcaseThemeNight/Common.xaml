@@ -307,4 +307,123 @@
         <Setter Property="Opacity" Value="1" />
         <Setter Property="Background" Value="Transparent" />
     </Style>
+
+    <Style x:Key="DuplicateHider_PlayButtonExt" TargetType="{x:Type ContentControl}" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <StackPanel Orientation="Vertical" Visibility="{Binding MoreThanOneCopy, Converter={StaticResource BooleanToVisibilityConverter}}" Width="38">
+                        <Border Background="{DynamicResource WindowBackgourndBrushLight}" x:Name="ButtonBorder"
+                                BorderThickness="{DynamicResource ControlBorderThickness}" CornerRadius="0,5,5,0" Margin="-5,0,0,0" Width="38">
+                            <ToggleButton 
+                                x:Name="Toggler" 
+                                Style="{DynamicResource ExpanderDownHeaderStyle}" 
+                                Height="40" Width="30" BorderThickness="{DynamicResource ControlBorderThickness}"
+                                Background="Transparent"
+                                HorizontalContentAlignment="Right"
+                                >
+                            </ToggleButton>
+                        </Border>
+                        <Popup x:Name="PlayOptions" Width="Auto"
+                               IsOpen="{Binding IsChecked, ElementName=Toggler, Delay=150}"
+                               Placement="Bottom" PlacementTarget="{Binding ElementName=ButtonBorder}"
+                               HorizontalOffset="-147.5"
+                               Effect="{DynamicResource DefaultDropShadow}"
+                               Margin="{DynamicResource DropShadowThickness}"
+                               AllowsTransparency="True"
+                               StaysOpen="False"
+                                >
+
+                            <Border Background="{DynamicResource ButtonOpaqueBrush}"
+                                    Effect="{DynamicResource DefaultDropShadow}"
+                                    Margin="{DynamicResource DropShadowThickness}" 
+                                    CornerRadius="0,0,5,5"
+                                    MinWidth="185"
+                                    MaxWidth="370"
+                                    x:Name="Background">
+                                <ScrollViewer MaxHeight="216" 
+                                              HorizontalScrollBarVisibility="Disabled" 
+                                              x:Name="ScrollViewer" 
+                                              VerticalScrollBarVisibility="Auto">
+                                    <ItemsControl
+                                        HorizontalContentAlignment="Left"
+                                        x:Name="DH_ListBox"
+                                        Focusable="False"
+                                        IsTextSearchEnabled="False"
+                                        ItemsSource="{Binding Games}"
+                                        BorderBrush="{DynamicResource NormalBorderBrush}" 
+                                        BorderThickness="{DynamicResource ControlBorderThickness}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <!--  StackPanel containing icon and source name of a game.  -->
+                                                <Grid Background="Transparent" x:Name="_Item" HorizontalAlignment="Stretch">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Border x:Name="SelectionBorder" 
+                                                            OpacityMask="{DynamicResource LeftFadingBrush}"
+                                                            CornerRadius="5" Grid.ColumnSpan="2"/>
+                                                    <Image
+                                                        Height="20"
+                                                        Width="20"
+                                                        Margin="5,8,5,8"
+                                                        RenderOptions.BitmapScalingMode="Fant"
+                                                        Source="{Binding Icon}" 
+                                                        x:Name="_IconImage"
+                                                        Stretch="Uniform"
+                                                        Grid.Column="0"
+                                                    />
+                                                    <TextBlock
+                                                    Grid.Column="1"
+                                                    x:Name="_SourceText"
+                                                    Padding="3,8,5,8"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="{DynamicResource TextBrush}"
+                                                    Background="{x:Null}"
+                                                    Text="{Binding DisplayString}" 
+                                                    TextTrimming="CharacterEllipsis"
+                                                    />
+                                                    <!--  Binding gestures to commands.  -->
+                                                    <Grid.InputBindings>
+                                                        <MouseBinding Command="{Binding LaunchCommand}" Gesture="LeftClick" />
+                                                    </Grid.InputBindings>
+                                                </Grid>
+                                                <DataTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <!--  MouseOver glow effect.  -->
+                                                        <Setter TargetName="SelectionBorder" 
+                                                                Property="Background" 
+                                                                Value="{DynamicResource WindowBackgourndBrushHighlight}"/>
+                                                    </Trigger>
+                                                    <!--  Make items for unisntalled games slightly transparent.  -->
+                                                    <DataTrigger Binding="{Binding Game.IsInstalled}" Value="False">
+                                                        <Setter TargetName="_IconImage" Property="Opacity" Value="0.5" />
+                                                        <Setter TargetName="_SourceText" Property="Opacity" Value="0.5" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding IsCurrent}" Value="True">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </DataTemplate.Triggers>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Border>
+                        </Popup>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True" SourceName="ButtonBorder">
+                            <Setter Property="Background" TargetName="ButtonBorder" Value="{DynamicResource WindowBackgourndBrushBright}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
