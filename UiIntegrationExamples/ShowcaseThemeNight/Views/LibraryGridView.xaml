@@ -14,11 +14,12 @@
                         <GridViewGameOverview x:Name="PART_ControlGameView"
                                               Width="{Settings GrdiDetailsWitdh}"
                                               DockPanel.Dock="{Settings GridViewDetailsPosition}" />                   
-                        <Grid DockPanel.Dock="Left" Background="{DynamicResource WindowBackgourndBrushBright}">
+                        <Grid DockPanel.Dock="Left" Background="Transparent">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
+                            <Border Grid.RowSpan="2" Background="{DynamicResource WindowBackgourndBrushLight}" Opacity="0.55"/>
                             <ExtendedListBox x:Name="PART_ListGames" Padding="5"
                                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                              ScrollViewer.PanningMode="VerticalOnly"

@@ -11,7 +11,8 @@
                     <Grid>
                         <Image Stretch="UniformToFill" x:Name="TopBackground"
                                            Source="{Binding Game.DisplayBackgroundImage, Converter={StaticResource ImageStringToImageConverter}}" 
-                                           Margin="0,0,0,-145" VerticalAlignment="Top" Height="{Binding ActualHeight, ElementName=BackgroundMask}">
+                                           Margin="0,0,0,-145" VerticalAlignment="Top" Height="{Binding ActualHeight, ElementName=BackgroundMask}"
+                               HorizontalAlignment="Center" StretchDirection="Both">
                             <Image.OpacityMask>
                                 <VisualBrush Visual="{Binding ElementName=BackgroundMask}" AutoLayoutContent="False" TileMode="None">
                                     <VisualBrush.Transform>
@@ -68,7 +69,18 @@
                                         </Border.RenderTransform>
                                     </Border>
 
-                                    <Border Grid.Row="1" Background="{DynamicResource WindowBackgourndBrushBrighter}" Margin="-20,0,-20,0" Height="50" VerticalAlignment="Bottom">
+                                    <Border Background="{DynamicResource DropShadowBrushLeft}"
+                                            Margin="-20,0,0,50" Opacity="0.5" Grid.RowSpan="2" HorizontalAlignment="Left" Width="50">
+                                    </Border>
+                                    <Border Background="{DynamicResource DropShadowBrushRight}" 
+                                            Margin="0,0,-20,50" Opacity="0.5" Grid.RowSpan="2" HorizontalAlignment="Right" Width="50">
+                                    </Border>
+                                    <Border Background="{DynamicResource DropShadowBrushBot}" 
+                                            Margin="-20,0,-20,50" Opacity="0.65" Grid.RowSpan="2" VerticalAlignment="Bottom" Height="50">
+                                    </Border>
+
+                                    <Border Grid.Row="1" Background="{DynamicResource WindowBackgourndBrushBrighter}" Margin="-20,0,-20,0" Height="50" VerticalAlignment="Bottom"
+                                            Opacity="0.9">
                                     </Border>
 
                                     <DockPanel Margin="0,20,0,5" MaxWidth="1024" Grid.Row="1" Panel.ZIndex="1" x:Name="TitlePanel"

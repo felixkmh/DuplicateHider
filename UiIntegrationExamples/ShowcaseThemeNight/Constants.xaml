@@ -85,16 +85,17 @@
     <ImageBrush x:Key="WindowBackgourndBrushLight" ImageSource="{ThemeFile 'Images/noise/background0.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.8" RenderOptions.BitmapScalingMode="LowQuality" RenderOptions.CachingHint="Cache"/>
     <ImageBrush x:Key="WindowBackgourndBrushBright" ImageSource="{ThemeFile 'Images/noise/background1.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.85" RenderOptions.BitmapScalingMode="LowQuality" RenderOptions.CachingHint="Cache"/>
     <ImageBrush x:Key="WindowBackgourndBrushBrighter" ImageSource="{ThemeFile 'Images/noise/background2.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.8" RenderOptions.BitmapScalingMode="LowQuality" RenderOptions.CachingHint="Cache"/>
+    <ImageBrush x:Key="WindowBackgourndBrushBrightest" ImageSource="{ThemeFile 'Images/noise/background3.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.8" RenderOptions.BitmapScalingMode="LowQuality" RenderOptions.CachingHint="Cache"/>
     <ImageBrush x:Key="WindowBackgourndBrushHighlight" ImageSource="{ThemeFile 'Images/noise/highlight1.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.7" RenderOptions.BitmapScalingMode="LowQuality" RenderOptions.CachingHint="Cache"/>
     <ImageBrush x:Key="WindowBackgourndBrushHighlightHover" ImageSource="{ThemeFile 'Images/noise/highlight0.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" RenderOptions.BitmapScalingMode="LowQuality" RenderOptions.CachingHint="Cache" Opacity="0.7"/>
     <ImageBrush x:Key="WindowBackgourndBrushHighlightFade" ImageSource="{ThemeFile 'Images/noise/highlight1_fade.png'}" Opacity="0.6" RenderOptions.CachingHint="Cache"/>
     <ImageBrush x:Key="WindowBackgourndBrushHighlightHoverFade" ImageSource="{ThemeFile 'Images/noise/highlight0_fade.png'}" ViewportUnits="Absolute" RenderOptions.CachingHint="Cache" Opacity="0.6"/>
     
     <ImageBrush x:Key="ButtonOpaqueBrush" ImageSource="{ThemeFile 'Images/noise/background1.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="1" RenderOptions.BitmapScalingMode="LowQuality" RenderOptions.CachingHint="Cache"/>
-    <ImageBrush x:Key="ButtonDefaultBrush" ImageSource="{ThemeFile 'Images/noise/background1.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.8" RenderOptions.BitmapScalingMode="LowQuality" RenderOptions.CachingHint="Cache"/>
-    <ImageBrush x:Key="ButtonHoveredBrush" ImageSource="{ThemeFile 'Images/noise/background2.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.9" RenderOptions.BitmapScalingMode="LowQuality" RenderOptions.CachingHint="Cache"/>
-    <ImageBrush x:Key="ButtonSelectedBrush" ImageSource="{ThemeFile 'Images/noise/background2_5.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.75" RenderOptions.BitmapScalingMode="LowQuality" RenderOptions.CachingHint="Cache"/>
-
+    <ImageBrush x:Key="ButtonDefaultBrush" ImageSource="{ThemeFile 'Images/noise/background2.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.8" RenderOptions.BitmapScalingMode="LowQuality" RenderOptions.CachingHint="Cache"/>
+    <ImageBrush x:Key="ButtonHoveredBrush" ImageSource="{ThemeFile 'Images/noise/background2_5.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.9" RenderOptions.BitmapScalingMode="LowQuality" RenderOptions.CachingHint="Cache"/>
+    <ImageBrush x:Key="ButtonSelectedBrush" ImageSource="{ThemeFile 'Images/noise/background3.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.75" RenderOptions.BitmapScalingMode="LowQuality" RenderOptions.CachingHint="Cache"/>
+    <ImageBrush x:Key="BackgroundImage" ImageSource="{ThemeFile 'Images/Background.png'}" TileMode="None" Stretch="Fill"/>
 
     <ImageBrush x:Key="InputOpaqueBrush" ImageSource="{ThemeFile 'Images/noise/background1.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="1" RenderOptions.BitmapScalingMode="LowQuality" RenderOptions.CachingHint="Cache"/>
     <ImageBrush x:Key="InputDefaultBrush" ImageSource="{ThemeFile 'Images/noise/background1.png'}" TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.5" RenderOptions.BitmapScalingMode="LowQuality" RenderOptions.CachingHint="Cache"/>
@@ -103,6 +104,11 @@
     <SolidColorBrush x:Key="InputBorderBrush" Color="Gray"/>
     <SolidColorBrush x:Key="InputBorderHighlightBrush" Color="{DynamicResource GlyphColor}"/>
     <!--<SolidColorBrush x:Key="ButtonHoveredBrush" Color="Red"/>-->
+
+    <ImageBrush x:Key="DropShadowBrushRight" ImageSource="{ThemeFile 'Images/rightDropShadow.png'}"/>
+    <ImageBrush x:Key="DropShadowBrushLeft" ImageSource="{ThemeFile 'Images/leftDropShadow.png'}"/>
+    <ImageBrush x:Key="DropShadowBrushTop" ImageSource="{ThemeFile 'Images/topDropShadow.png'}"/>
+    <ImageBrush x:Key="DropShadowBrushBot" ImageSource="{ThemeFile 'Images/bottomDropShadow.png'}"/>
 
     <LinearGradientBrush x:Key="LeftFadingBrush" StartPoint="0,0" EndPoint="1,0.1" RenderOptions.BitmapScalingMode="LowQuality" RenderOptions.CachingHint="Cache">
         <GradientStop Color="Black" Offset="0.1"/>

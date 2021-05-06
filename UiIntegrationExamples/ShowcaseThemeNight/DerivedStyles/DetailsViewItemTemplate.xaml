@@ -13,17 +13,17 @@
                         <DockPanel>
                             <ContentControl x:Name="DuplicateHider_SourceSelector" 
                                                             Visibility="Collapsed" 
-                                                HorizontalAlignment="Right"
+                                                            HorizontalAlignment="Right"
                                                             VerticalContentAlignment="Center"   
                                                             Margin="0,0,0,0"  
                                                             Opacity="0" DockPanel.Dock="Right"
-                                                            Height="{Settings DetailsViewListIconSize}"
+                                                            Height="{Binding Height, ElementName=PART_ImageIcon, Mode=OneWay}"
                                                         />
                             <Image Name="PART_ImageIcon"
                                            Height="{Settings DetailsViewListIconSize}"
                                            RenderOptions.BitmapScalingMode="Fant"
                                            DockPanel.Dock="Left" Margin="0,0,8,0" />
-                            <TextBlock Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis"
+                            <TextBlock Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis" x:Name="DisplayName"
                                                VerticalAlignment="Center" DockPanel.Dock="Left">
                             </TextBlock>
                         </DockPanel>
@@ -31,6 +31,9 @@
                     <!--Fade effect. Remove or comment out <ControlTemplate.Triggers> section to deactivate animation.-->
                     <!--Check DuplicateHider_SourceSelector Visibility if animation is removed.-->
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsVisible" SourceName="PART_ImageIcon" Value="False">
+                            <Setter Property="Height" TargetName="DuplicateHider_SourceSelector" Value="{Binding ActualHeight, ElementName=DisplayName, Mode=OneWay}"/>
+                        </Trigger>
                         <!--Fade in effect when mouse enters ListItem.-->
                         <Trigger Property="IsMouseOver" Value="True">
                             <Trigger.EnterActions>
