@@ -30,6 +30,7 @@ namespace DuplicateHider.Models
             get => (String)GetValue(SourceNameProperty);
             set => SetValue(SourceNameProperty, value);
         }
+        public String DisplayString { get; set; }
         public Boolean IsCurrent
         {
             get => (Boolean)GetValue(IsCurrentProperty);
@@ -65,6 +66,7 @@ namespace DuplicateHider.Models
             Game = game;
             IsCurrent = current;
             SourceName = game.Source?.Name ?? Constants.UNDEFINED_SOURCE;
+            DisplayString = DuplicateHiderPlugin.DHP.ExpandDisplayString(game, DuplicateHiderPlugin.DHP.settings.DisplayString);
             LaunchCommand = launchCommand ?? new SimpleCommand(() => DuplicateHiderPlugin.API.StartGame(Game.Id));
             SelectCommand = selectCommand ?? new SimpleCommand(() => DuplicateHiderPlugin.DHP.SelectGame(Game.Id));
             InstallCommand = installCommand ?? new SimpleCommand(() => DuplicateHiderPlugin.API.InstallGame(Game.Id));

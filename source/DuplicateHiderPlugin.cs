@@ -747,6 +747,7 @@ namespace DuplicateHider
 
         public string ExpandDisplayString(Game game, string displayString)
         {
+            if (game == null || displayString == null) return string.Empty;
             var result = displayString;
             const int MAX_RECURSION = 5;
             int recursion = 0;
