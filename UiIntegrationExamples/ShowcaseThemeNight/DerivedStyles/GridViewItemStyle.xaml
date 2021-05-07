@@ -33,7 +33,7 @@
                                         <DoubleAnimation Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
                                                          Storyboard.TargetName="ScaleTransform"
                                                          Duration="0:0:0.4"
-                                                         To="1.08">
+                                                         To="1.025">
                                             <DoubleAnimation.EasingFunction>
                                                 <ElasticEase Oscillations="1"/>
                                             </DoubleAnimation.EasingFunction>
@@ -41,7 +41,7 @@
                                         <DoubleAnimation Storyboard.TargetProperty="(ScaleTransform.ScaleY)"
                                                          Storyboard.TargetName="ScaleTransform"
                                                          Duration="0:0:0.4"
-                                                         To="1.08">
+                                                         To="1.025">
                                             <DoubleAnimation.EasingFunction>
                                                 <ElasticEase Oscillations="1"/>
                                             </DoubleAnimation.EasingFunction>
@@ -81,13 +81,13 @@
                                         <DoubleAnimation Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
                                                          Storyboard.TargetName="ScaleTransform"
                                                          Duration="0:0:0.1"
-                                                         To="1.11">
+                                                         To="1.05">
 
                                         </DoubleAnimation>
                                         <DoubleAnimation Storyboard.TargetProperty="(ScaleTransform.ScaleY)"
                                                          Storyboard.TargetName="ScaleTransform"
                                                          Duration="0:0:0.1"
-                                                         To="1.11">
+                                                         To="1.05">
 
                                         </DoubleAnimation>
                                     </Storyboard>

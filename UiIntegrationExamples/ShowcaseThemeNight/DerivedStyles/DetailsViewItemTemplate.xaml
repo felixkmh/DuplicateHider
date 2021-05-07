@@ -18,6 +18,7 @@
                                                             Margin="0,0,0,0"  
                                                             Opacity="0" DockPanel.Dock="Right"
                                                             Height="{Binding Height, ElementName=PART_ImageIcon, Mode=OneWay}"
+                                                            RenderOptions.BitmapScalingMode="Fant"
                                                         />
                             <Image Name="PART_ImageIcon"
                                            Height="{Settings DetailsViewListIconSize}"
