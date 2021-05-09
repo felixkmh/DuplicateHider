@@ -130,6 +130,7 @@ namespace DuplicateHider
                             var detailsView = UiIntegration.FindVisualChildren(Application.Current.MainWindow, "PART_ViewDetails").FirstOrDefault();
                             if (detailsView != null)
                             {
+                                detailsView.Unloaded += (sender, e) => { playButton = null; };
                                 playButton = UiIntegration.FindVisualChildren<Button>(detailsView, "PART_ButtonContextAction").FirstOrDefault();
                             }
                         }));
