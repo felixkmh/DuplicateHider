@@ -143,10 +143,10 @@
     </LinearGradientBrush>
 
     <sys:Double x:Key="HoverBackgroundOpacity">0.6</sys:Double>
-    <DropShadowEffect x:Key="TextDropShadow" BlurRadius="4" ShadowDepth="0" Color="Black" RenderingBias="Quality" Opacity="0.5"/>
+    <DropShadowEffect x:Key="TextDropShadow" BlurRadius="4" ShadowDepth="0" Color="Black" RenderingBias="Quality" Opacity="0.55"/>
     <sys:Double x:Key="DropShadowRadius">22</sys:Double>
     <sys:Double x:Key="DropShadowRadiusNegative">-22</sys:Double>
-    <DropShadowEffect x:Key="DefaultDropShadow" BlurRadius="{DynamicResource DropShadowRadius}" ShadowDepth="0" Color="Black" RenderingBias="Quality" Opacity="0.5"/>
+    <DropShadowEffect x:Key="DefaultDropShadow" BlurRadius="{DynamicResource DropShadowRadius}" ShadowDepth="0" Color="Black" RenderingBias="Quality" Opacity="0.55"/>
     <Thickness x:Key="DropShadowThickness" 
                Left="{StaticResource DropShadowRadius}" 
                Top="{StaticResource DropShadowRadius}" 

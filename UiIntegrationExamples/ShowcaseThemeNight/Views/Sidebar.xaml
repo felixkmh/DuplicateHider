@@ -17,7 +17,11 @@
                                     DockPanel.Dock="Top" Padding="5" Cursor="Hand"
                                     WindowChrome.IsHitTestVisibleInChrome="True">
                                 <Image Source="{ThemeFile 'Images/applogo.png'}"
-                                       RenderOptions.BitmapScalingMode="Fant" />
+                                       RenderOptions.BitmapScalingMode="Fant" RenderTransformOrigin="0.5,0.5" >
+                                    <Image.RenderTransform>
+                                        <ScaleTransform x:Name="IconScale"/>
+                                    </Image.RenderTransform>
+                                </Image>
                             </Border>
 
                             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden"
@@ -28,6 +32,36 @@
                         </DockPanel>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" SourceName="PART_ElemMainMenu" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.1" 
+                                                         Storyboard.TargetName="IconScale"
+                                                         Storyboard.TargetProperty="ScaleX"
+                                                         To="1.05"/>
+                                        <DoubleAnimation Duration="0:0:0.1" 
+                                                         Storyboard.TargetName="IconScale"
+                                                         Storyboard.TargetProperty="ScaleY"
+                                                         To="1.05"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.1" 
+                                                         Storyboard.TargetName="IconScale"
+                                                         Storyboard.TargetProperty="ScaleX"
+                                                         To="1.0"/>
+                                        <DoubleAnimation Duration="0:0:0.1" 
+                                                         Storyboard.TargetName="IconScale"
+                                                         Storyboard.TargetProperty="ScaleY"
+                                                         To="1.0"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
                         <DataTrigger Binding="{Settings SidebarPosition}" Value="Right">
                             <Setter Property="Margin" Value="0,20,0,5" TargetName="PART_ElemMainMenu" />
                             <Setter Property="BorderThickness" Value="1,0,0,0" TargetName="BorderContentHolder" />

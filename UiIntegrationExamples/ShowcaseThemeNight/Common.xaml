@@ -382,7 +382,7 @@
                                                     <TextBlock
                                                     Grid.Column="1"
                                                     x:Name="_SourceText"
-                                                    Padding="3,8,5,8"
+                                                    Padding="3,8,7,8"
                                                     VerticalAlignment="Center"
                                                     Foreground="{DynamicResource TextBrush}"
                                                     Background="{x:Null}"
