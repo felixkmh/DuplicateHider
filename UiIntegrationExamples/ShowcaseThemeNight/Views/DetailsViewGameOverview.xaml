@@ -85,7 +85,7 @@
 
                                     <DockPanel Margin="0,20,0,5" MaxWidth="1024" Grid.Row="1" Panel.ZIndex="1" x:Name="TitlePanel"
                                            Background="Transparent">
-                                        <Image Name="PART_ImageCover" VerticalAlignment="Bottom" Panel.ZIndex="20"
+                                        <Image Name="PART_ImageCover" VerticalAlignment="Bottom" Panel.ZIndex="20" MaxWidth="220"
                                             DockPanel.Dock="Right"
                                             Height="{Settings GameDetailsCoverHeight}"
                                             StretchDirection="Both" Stretch="Uniform"
