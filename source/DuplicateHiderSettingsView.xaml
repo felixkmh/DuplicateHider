@@ -5,57 +5,72 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" Grid.Row="0" Margin="12,10,6,0">
-                    <Label Margin="0" VerticalAlignment="Top">
-                        <TextBlock>Priorites:</TextBlock>
-                    </Label>
-                    <ListBox x:Name="PriorityListBox" Margin="0,5,0,0" MaxHeight="400" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
+    <TabControl>
+        <TabItem Header="Common">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Grid.Row="0" Margin="12,10,6,0">
+                            <Label Margin="0" VerticalAlignment="Top">
+                                <TextBlock>Priorites:</TextBlock>
+                            </Label>
+                            <ListBox x:Name="PriorityListBox" Margin="0,5,0,0" MaxHeight="400" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Top" Grid.Column="1" Grid.Row="0" Margin="6,10,6,0">
+                            <CheckBox x:Name="AutoUpdateCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">Update Rank Automatically
+                                <CheckBox.ToolTip>If enabled, DuplicateHider will re-evaluate the rank of a copy when it changes, always keeping the copy with the highest rank visible while hiding all other copies</CheckBox.ToolTip>
+                            </CheckBox>
+                            <CheckBox x:Name="ShowCopiesInGameMenu" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0">Show Copies in Game Menu
+                                <CheckBox.ToolTip>If enabled, other copies of a game can be started using a games context menu.</CheckBox.ToolTip>
+                            </CheckBox>
+                            <Label Margin="0,10,0,0">Included Platforms:</Label>
+                            <ComboBox x:Name="PlatformComboBox" Margin="0,10,0,0" StaysOpenOnEdit="True" IsSynchronizedWithCurrentItem="False" IsEditable="True" PreviewKeyUp="PlatformComboBox_PreviewKeyUp"  DropDownClosed="PlatformComboBox_DropDownClosed" IsTextSearchEnabled="False"/>
+                            <Label Margin="0,10,0,0">Excluded Sources:</Label>
+                            <ComboBox x:Name="SourceComboBox" Margin="0,10,0,0" StaysOpenOnEdit="True" IsSynchronizedWithCurrentItem="False" IsEditable="True" PreviewKeyUp="SourceComboBox_PreviewKeyUp" DropDownClosed="SourceComboBox_DropDownClosed"  IsTextSearchEnabled="False"/>
+                            <Label Margin="0,10,0,0">Excluded Categories:</Label>
+                            <ComboBox x:Name="CategoriesComboBox" Margin="0,10,0,0" StaysOpenOnEdit="True" IsSynchronizedWithCurrentItem="False" IsEditable="True" PreviewKeyUp="CategoriesComboBox_PreviewKeyUp" DropDownClosed="CategoriesComboBox_DropDownClosed" IsTextSearchEnabled="False"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Grid.Row="0" Margin="6,10,12,0" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                            <Label Margin="0">Ignored Games:</Label>
+                            <CheckBox x:Name="AddHiddenToIgnoreList" Margin="0,5,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" VerticalAlignment="Center">
+                                <TextBlock TextWrapping="Wrap" MaxWidth="{Binding ElementName=IgnoreListBox,Path=ActualWidth}">Add manually hidden/revealed Games</TextBlock>
+                                <CheckBox.ToolTip>If enabled, Games hidden or revealed by other means than DuplicateHider will be added to the Ignore List.</CheckBox.ToolTip>
+                            </CheckBox>
+                            <ListBox x:Name="IgnoreListBox" MaxHeight="400" SelectionMode="Extended" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                    <Label Margin="10,10,0,0">Display string for other copies:</Label>
+                    <TextBox Margin="10,5,10,0" TextWrapping="Wrap" x:Name="DisplayStringTextBox" ToolTip="Right-click to insert placeholder variables"/>
                 </StackPanel>
-                <StackPanel VerticalAlignment="Top" Grid.Column="1" Grid.Row="0" Margin="6,10,6,0">
-                    <CheckBox x:Name="AutoUpdateCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">Update Rank Automatically
-                        <CheckBox.ToolTip>If enabled, DuplicateHider will re-evaluate the rank of a copy when it changes, always keeping the copy with the highest rank visible while hiding all other copies</CheckBox.ToolTip>
-                    </CheckBox>
-                    <CheckBox x:Name="ShowCopiesInGameMenu" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0">Show Copies in Game Menu
-                        <CheckBox.ToolTip>If enabled, other copies of a game can be started using a games context menu.</CheckBox.ToolTip>
-                    </CheckBox>
-                    <Label Margin="0,10,0,0">Included Platforms:</Label>
-                    <ComboBox x:Name="PlatformComboBox" Margin="0,10,0,0" StaysOpenOnEdit="True" IsSynchronizedWithCurrentItem="False" IsEditable="True" PreviewKeyUp="PlatformComboBox_PreviewKeyUp"  DropDownClosed="PlatformComboBox_DropDownClosed" IsTextSearchEnabled="False"/>
-                    <Label Margin="0,10,0,0">Excluded Sources:</Label>
-                    <ComboBox x:Name="SourceComboBox" Margin="0,10,0,0" StaysOpenOnEdit="True" IsSynchronizedWithCurrentItem="False" IsEditable="True" PreviewKeyUp="SourceComboBox_PreviewKeyUp" DropDownClosed="SourceComboBox_DropDownClosed"  IsTextSearchEnabled="False"/>
-                    <Label Margin="0,10,0,0">Excluded Categories:</Label>
-                    <ComboBox x:Name="CategoriesComboBox" Margin="0,10,0,0" StaysOpenOnEdit="True" IsSynchronizedWithCurrentItem="False" IsEditable="True" PreviewKeyUp="CategoriesComboBox_PreviewKeyUp" DropDownClosed="CategoriesComboBox_DropDownClosed" IsTextSearchEnabled="False"/>
+            </ScrollViewer>
+        </TabItem>
+        <TabItem Header="Custom Rules">
+            <ScrollViewer>
+                <StackPanel>
+                    <TextBlock Margin="10" TextWrapping="Wrap">
+                        Define rules that are applied to game names before further processing. Rules are applied in the order they appear in the list.
+                    </TextBlock>
+                    <ListBox KeyDown="ReplacementRulesListBox_KeyDown" PreviewMouseWheel="HandlePreviewMouseWheel" Margin="10,5,10,0" x:Name="ReplacementRulesListBox" ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Extended"/>
                 </StackPanel>
-                <StackPanel Grid.Column="2" Grid.Row="0" Margin="6,10,12,0" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                    <Label Margin="0">Ignored Games:</Label>
-                    <CheckBox x:Name="AddHiddenToIgnoreList" Margin="0,5,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" VerticalAlignment="Center">
-                        <TextBlock TextWrapping="Wrap" MaxWidth="{Binding ElementName=IgnoreListBox,Path=ActualWidth}">Add manually hidden/revealed Games</TextBlock>
-                        <CheckBox.ToolTip>If enabled, Games hidden or revealed by other means than DuplicateHider will be added to the Ignore List.</CheckBox.ToolTip>
-                    </CheckBox>
-                    <ListBox x:Name="IgnoreListBox" MaxHeight="400" SelectionMode="Extended" Margin="0,5,0,0"/>
-                </StackPanel>
-            </Grid>
-            <Label Margin="10,10,0,0">Display string for other copies:</Label>
-            <TextBox Margin="10,5,10,0" TextWrapping="Wrap" x:Name="DisplayStringTextBox" ToolTip="Right-click to insert placeholder variables"/>
-            <Label Margin="10,10,0,0">Custom replacement rules:</Label>
-            <ListBox KeyDown="ReplacementRulesListBox_KeyDown" PreviewMouseWheel="HandlePreviewMouseWheel" Margin="10,5,10,0" x:Name="ReplacementRulesListBox" ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Extended"/>
-            <Label Content="UI Integration:" Margin="10,10,0,0"/>
-            <Button x:Name="OpenUserIconFolderButton" Content="Open user icon folder" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
-            <CheckBox x:Name="UiIntegrationCheckBox" Content="UI Integration" Margin="10,5,0,0" ToolTip="Enables custom ui elements depending on whether they are supported by the current Theme."/>
-            <CheckBox x:Name="EnableThemeIconsChechBox" Content="Enable Theme Icons" Margin="10,5,0,0" ToolTip="If enabled, icons included with the current Theme are used for the custom ui elements."/>
-            <CheckBox x:Name="PreferUserIconsCheckBox" Content="Prefer User Icons" Margin="10,5,0,0" ToolTip="If enabled, icons placed in the user icon folder are always given priority when looking for source icons."/>
-            <CheckBox x:Name="ShowSingleSourceIconCheckBox" Content="Show icon if there is only one copy" Margin="10,5,0,0" ToolTip="Indicates to the Theme that you do not want to have custom ui elements if there are no extra copies of a game."/>
-            <CheckBox x:Name="SuppressNotificationCheckBox" Content="Suppress Theme Icon notification" Margin="10,5,0,10" ToolTip="If enabled, you will not be notified if Theme Icons are found in the current Theme."/>
-        </StackPanel>
-    </ScrollViewer>
+            </ScrollViewer>
+        </TabItem>
+        <TabItem Header="UI Integration">
+            <StackPanel>
+                <Button x:Name="OpenUserIconFolderButton" Content="Open user icon folder" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+                <CheckBox x:Name="UiIntegrationCheckBox" Content="UI Integration" Margin="10,5,0,0" ToolTip="Enables custom ui elements depending on whether they are supported by the current Theme."/>
+                <CheckBox x:Name="EnableThemeIconsChechBox" Content="Enable Theme Icons" Margin="10,5,0,0" ToolTip="If enabled, icons included with the current Theme are used for the custom ui elements."/>
+                <CheckBox x:Name="PreferUserIconsCheckBox" Content="Prefer User Icons" Margin="10,5,0,0" ToolTip="If enabled, icons placed in the user icon folder are always given priority when looking for source icons."/>
+                <CheckBox x:Name="ShowSingleSourceIconCheckBox" Content="Show icon if there is only one copy" Margin="10,5,0,0" ToolTip="Indicates to the Theme that you do not want to have custom ui elements if there are no extra copies of a game."/>
+                <CheckBox x:Name="SuppressNotificationCheckBox" Content="Suppress Theme Icon notification" Margin="10,5,0,10" ToolTip="If enabled, you will not be notified if Theme Icons are found in the current Theme."/>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
 </UserControl>
