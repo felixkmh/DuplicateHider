@@ -155,14 +155,12 @@ namespace DuplicateHider
         {
             if (playButton is Button)
             {
-                if (!double.IsNaN(playButton.Width))
+                if (playButton.Parent is UIElement element)
                 {
-                    playButtonExtPopup.HorizontalOffset = -playButton.Width -playButton.Margin.Right;
-                } else
-                {
-                    playButtonExtPopup.HorizontalOffset = -playButton.ActualWidth - playButton.Margin.Right;
+                    playButtonExtPopup.PlacementTarget = element;
+                    playButtonExtPopup.VerticalOffset = 2;
                 }
-                playButtonExtPopup.VerticalOffset = 2;
+                playButtonExtPopup.Placement = PlacementMode.Bottom;
                 if (playButton.Parent is StackPanel panel)
                 {
                     InsertPlaybuttonExt(panel);
