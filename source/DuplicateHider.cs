@@ -150,6 +150,15 @@ namespace DuplicateHider
                 PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
             }});
 
+            commandActions.Add(new QuickSearch.SearchItems.CommandAction
+            {
+                Name = "Settings",
+                Action = () =>
+                {
+                    OpenSettingsView();
+                }
+            });
+
             QuickSearch.QuickSearchSDK.AddCommand("DuplicateHider", commandActions, "Hide and reveal duplicate copys.");
         }
 
