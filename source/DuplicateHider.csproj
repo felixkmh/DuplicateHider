@@ -39,8 +39,8 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Search">
-      <HintPath>..\..\playnite-dev\Search\bin\Debug\Search.dll</HintPath>
+    <Reference Include="QuickSearchSDK">
+      <HintPath>..\..\playnite-dev\Search\bin\Debug\QuickSearchSDK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

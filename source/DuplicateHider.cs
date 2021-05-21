@@ -102,7 +102,7 @@ namespace DuplicateHider
             playButtonExtPopup.StaysOpen = false;
             otherCopiesPanel.Background = Brushes.Transparent;
 
-            QuickSearch.SearchPlugin.AddCommand("Hide Duplicates", () =>
+            QuickSearch.QuickSearchSDK.AddCommand("Hide Duplicates", () =>
             {
                 PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
                 PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
@@ -114,7 +114,7 @@ namespace DuplicateHider
                 PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
             }, "Hide all duplicated according to your settings.");
 
-            QuickSearch.SearchPlugin.AddCommand("Reveal Duplicates", () =>
+            QuickSearch.QuickSearchSDK.AddCommand("Reveal Duplicates", () =>
             {
                 PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
                 PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
