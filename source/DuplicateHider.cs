@@ -159,7 +159,8 @@ namespace DuplicateHider
                 }
             });
 
-            QuickSearch.QuickSearchSDK.AddCommand("DuplicateHider", commandActions, "Hide and reveal duplicate copys.");
+            QuickSearch.QuickSearchSDK.AddCommand("DuplicateHider", commandActions, "Hide and reveal duplicate copys.").IconChar = QuickSearch.IconChars.Copy;
+            
         }
 
 

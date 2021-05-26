@@ -41,7 +41,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="QuickSearchSDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\playnite-dev\QuickSearchSDK\bin\Debug\QuickSearchSDK.dll</HintPath>
+      <HintPath>..\..\playnite-dev\QuickSearch\QuickSearchSDK\bin\Debug\QuickSearchSDK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
