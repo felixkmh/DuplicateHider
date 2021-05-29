@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -250,15 +251,18 @@ namespace DuplicateHider
             }
 
             // QuickSearch support
-
-            var settingsCommand = new QuickSearch.SearchItems.CommandItem("Open DuplicateHider settings", () => OpenSettingsView(), "Open DuplicateHider settings view", "Open")
-            { 
-                IconChar = ''
-            };
-            QuickSearch.QuickSearchSDK.AddCommand(settingsCommand);
-            QuickSearch.QuickSearchSDK.AddCommand(new DuplicateHiderItem() { Actions = new List<QuickSearch.SearchItems.ISearchAction<string>>()
+            try
             {
-                new QuickSearch.SearchItems.CommandAction() {Name = "Hide", Action = () => 
+                var settingsCommand = new QuickSearch.SearchItems.CommandItem("Open DuplicateHider settings", () => OpenSettingsView(), "Open DuplicateHider settings view", "Open")
+                {
+                    IconChar = ''
+                };
+                QuickSearch.QuickSearchSDK.AddCommand(settingsCommand);
+                QuickSearch.QuickSearchSDK.AddCommand(new DuplicateHiderItem()
+                {
+                    Actions = new List<QuickSearch.SearchItems.ISearchAction<string>>()
+            {
+                new QuickSearch.SearchItems.CommandAction() {Name = "Hide", Action = () =>
                 {
                     PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
                     PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
@@ -269,7 +273,7 @@ namespace DuplicateHider
                     PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
                     PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
                 } },
-                new QuickSearch.SearchItems.CommandAction() {Name = "Reveal", Action = () => 
+                new QuickSearch.SearchItems.CommandAction() {Name = "Reveal", Action = () =>
                 {
                     PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
                     PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
@@ -280,7 +284,13 @@ namespace DuplicateHider
                     PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
                     PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
                 } }
-            }});
+            }
+                });
+            } catch(Exception)
+            {
+
+            }
+            
         }
 
         public class DuplicateHiderItem : QuickSearch.SearchItems.ISearchItem<string>
