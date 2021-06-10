@@ -27,6 +27,8 @@ namespace DuplicateHider
 
         private DuplicateHiderSettings settings { get; set; }
 
+        public static DuplicateHider Instance { get; private set; }
+
         public override Guid Id { get; } = Guid.Parse("382f8003-8ed0-4e47-ae93-05b43c9c6c32");
 
         private Dictionary<string, List<Guid>> index { get; set; } = new Dictionary<string, List<Guid>>();
@@ -35,6 +37,7 @@ namespace DuplicateHider
         public DuplicateHider(IPlayniteAPI api) : base(api)
         {
             settings = new DuplicateHiderSettings(this);
+            Instance = this;
         }
 
         #region Events       
@@ -410,12 +413,31 @@ namespace DuplicateHider
                     var filteredName = newData.Name.Filter(nameFilter);
                     if (index.TryGetValue(filteredName, out var guids))
                     {
-                        guids.InsertSorted(newData.Id, GetGamePriority);
+                        guids.InsertSorted(newData.Id, GameComparer.Comparer);
                     }
                 }
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
             }
             PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
+        }
+
+        private class GameComparer : Comparer<Guid>
+        {
+            public static GameComparer Comparer = new GameComparer();
+
+            public override int Compare(Guid x, Guid y)
+            {
+                int byPriority = Instance.GetGamePriority(x).CompareTo(Instance.GetGamePriority(y));
+                if (byPriority != 0)
+                {
+                    return byPriority;
+                }
+                if (Instance.PlayniteApi.Database.Games.Get(x) is Game gameX && Instance.PlayniteApi.Database.Games.Get(y) is Game gameY)
+                {
+                    return (gameY.ReleaseDate ?? DateTime.MaxValue).CompareTo(gameX.ReleaseDate ?? DateTime.MaxValue);
+                }
+                return 0;
+            }
         }
 
         #endregion
@@ -648,7 +670,7 @@ namespace DuplicateHider
                 {
                     index[name] = new List<Guid> { };
                 }
-                index[name].InsertSorted(game.Id, GetGamePriority);
+                index[name].InsertSorted(game.Id, GameComparer.Comparer);
             }
             PlayniteApi.Database.Games.Update(SetDuplicateState(visibility));
         }
@@ -693,7 +715,7 @@ namespace DuplicateHider
                     index[cleanName] = new List<Guid> { };
                 }
 
-                index[cleanName].InsertSorted(game.Id, GetGamePriority);
+                index[cleanName].InsertSorted(game.Id, GameComparer.Comparer);
             }
         }
 
