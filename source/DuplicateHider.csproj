@@ -36,12 +36,18 @@
     </Reference>
     <Reference Include="Playnite.SDK, Version=5.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>C:\Users\Felix\AppData\Local\Playnite\Playnite.SDK.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="QuickSearchSDK, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\playnite-dev\QuickSearch\QuickSearchSDK\bin\Release\QuickSearchSDK.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="QuickSearchSDK.Attributes">
+      <HintPath>..\..\playnite-dev\QuickSearch\QuickSearchSDK\bin\Debug\QuickSearchSDK.Attributes.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -88,8 +94,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del $(ProjectDir)$(OutDir)*.xml
-%25LOCALAPPDATA%25\Playnite\Toolbox.exe pack $(ProjectDir)$(OutDir) $(ProjectDir)bin
+    <PostBuildEvent>%25LOCALAPPDATA%25\Playnite\Toolbox.exe pack $(ProjectDir)$(OutDir) $(ProjectDir)bin
 </PostBuildEvent>
   </PropertyGroup>
 </Project>

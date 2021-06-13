@@ -37,6 +37,7 @@ namespace DuplicateHider
 
         public bool AddHiddenToIgnoreList { get; set; } = false;
         public bool EnableUiIntegration { get; set; } = false;
+        public bool PreferNewerGame { get; set; } = true;
 
         public List<ReplaceFilter> ReplaceFilters { get; set; } = new List<ReplaceFilter>();
 
@@ -253,6 +254,7 @@ namespace DuplicateHider
                 plugin.SettingsView.ShowCopiesInGameMenu.IsChecked = ShowOtherCopiesInGameMenu;
                 plugin.SettingsView.AddHiddenToIgnoreList.IsChecked = AddHiddenToIgnoreList;
                 plugin.SettingsView.EnableUiIntegrationCheckbox.IsChecked = EnableUiIntegration;
+                plugin.SettingsView.PrioritizeNewerGame.IsChecked = PreferNewerGame;
 
                 // Populate Replacement Rules
                 {
@@ -426,6 +428,7 @@ namespace DuplicateHider
                     ShowOtherCopiesInGameMenu = plugin.SettingsView.ShowCopiesInGameMenu.IsChecked ?? false;
                     AddHiddenToIgnoreList = plugin.SettingsView.AddHiddenToIgnoreList.IsChecked ?? false;
                     EnableUiIntegration = plugin.SettingsView.EnableUiIntegrationCheckbox.IsChecked ?? false;
+                    PreferNewerGame = plugin.SettingsView.PrioritizeNewerGame.IsChecked ?? true;
                 }
 
                 // Retrieve Replacement Rules
