@@ -167,17 +167,8 @@ namespace DuplicateHider
                     }
                 });
 
-                commandActions.Add(new QuickSearch.SearchItems.CommandAction
-                {
-                    Name = "Settings",
-                    Action = () =>
-                    {
-                        OpenSettingsView();
-                    }
-                });
-
                 QuickSearch.QuickSearchSDK.AddCommand("DuplicateHider", commandActions, "Hide and reveal duplicate copys.").IconChar = QuickSearch.IconChars.Copy;
-                QuickSearch.QuickSearchSDK.AddPluginSettings("MyPlugin", settings, OpenSettingsView);
+                QuickSearch.QuickSearchSDK.AddPluginSettings("DuplicateHider", settings, OpenSettingsView);
             }
         }
 

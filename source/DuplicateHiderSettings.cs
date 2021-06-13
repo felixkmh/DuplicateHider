@@ -20,8 +20,9 @@ namespace DuplicateHider
 
         [JsonIgnore]
         private DuplicateHiderSettings previousSettings = null;
-
+        [QuickSearch.Attributes.GenericOption("Update Automatically", Description = "Automatically hide/reveal games when the library changes or Planite launces")]
         public bool UpdateAutomatically { get; set; } = false;
+        [QuickSearch.Attributes.GenericOption("Show Copies in Context Menu", Description = "If enabled, the game context menu gets a new entry listing its duplicates")]
         public bool ShowOtherCopiesInGameMenu { get; set; } = false;
         public string DisplayString { get; set; } = "{Name} [{Installed} on {'Source'}{, ROM: 'ImageNameNoExt}]";
 
@@ -34,9 +35,11 @@ namespace DuplicateHider
         public UniqueList<string> ExcludeSources { get; set; } = new UniqueList<string>();
         public UniqueList<string> ExcludeCategories { get; set; } = new UniqueList<string>();
         public HashSet<Guid> IgnoredGames { get; set; } = new HashSet<Guid>();
-
+        [QuickSearch.Attributes.GenericOption("Ignore Automatically", Description = "Automatically add games to Ignore List to if games they are hidden manually")]
         public bool AddHiddenToIgnoreList { get; set; } = false;
+        [QuickSearch.Attributes.GenericOption("Enable UI Integration", Description = "If enabled, DuplicateHider tries to add an extension to the play button")]
         public bool EnableUiIntegration { get; set; } = false;
+        [QuickSearch.Attributes.GenericOption("Prefer Newer Games", Description = "If enabled, if games have the same score, the newer one will be prefered. Otherwise the older one will be prefered")]
         public bool PreferNewerGame { get; set; } = true;
 
         public List<ReplaceFilter> ReplaceFilters { get; set; } = new List<ReplaceFilter>();
