@@ -20,7 +20,7 @@ namespace DuplicateHider
 
         [JsonIgnore]
         private DuplicateHiderSettings previousSettings = null;
-        [QuickSearch.Attributes.GenericOption("Update Automatically", Description = "Automatically hide/reveal games when the library changes or Planite launces")]
+        [QuickSearch.Attributes.GenericOption("Update Automatically", Description = "Automatically hide/reveal games when the library changes or Playnite launches")]
         public bool UpdateAutomatically { get; set; } = false;
         [QuickSearch.Attributes.GenericOption("Show Copies in Context Menu", Description = "If enabled, the game context menu gets a new entry listing its duplicates")]
         public bool ShowOtherCopiesInGameMenu { get; set; } = false;
