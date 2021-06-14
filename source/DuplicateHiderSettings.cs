@@ -35,7 +35,7 @@ namespace DuplicateHider
         public UniqueList<string> ExcludeSources { get; set; } = new UniqueList<string>();
         public UniqueList<string> ExcludeCategories { get; set; } = new UniqueList<string>();
         public HashSet<Guid> IgnoredGames { get; set; } = new HashSet<Guid>();
-        [QuickSearch.Attributes.GenericOption("Ignore Automatically", Description = "Automatically add games to Ignore List to if games they are hidden manually")]
+        [QuickSearch.Attributes.GenericOption("Ignore Automatically", Description = "Automatically add games to Ignore List when they are hidden/revealed manually")]
         public bool AddHiddenToIgnoreList { get; set; } = false;
         [QuickSearch.Attributes.GenericOption("Enable UI Integration", Description = "If enabled, DuplicateHider tries to add an extension to the play button")]
         public bool EnableUiIntegration { get; set; } = false;
