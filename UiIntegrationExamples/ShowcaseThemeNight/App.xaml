@@ -49,7 +49,7 @@
         <ResourceDictionary Source="CustomControls/HtmlTextView.xaml" />
         <ResourceDictionary Source="CustomControls/TrayContextMenu.xaml" />
         <ResourceDictionary Source="CustomControls/NullableIntBox.xaml" />
-        <ResourceDictionary Source="CustomControls/NumericBox.xaml" />
+        <ResourceDictionary Source="CustomControls/NumericBoxes.xaml" />
         <ResourceDictionary Source="CustomControls/NumericDoubleBox.xaml" />
         <ResourceDictionary Source="CustomControls/SliderEx.xaml" />
         <ResourceDictionary Source="CustomControls/ExpanderEx.xaml" />
