@@ -260,35 +260,43 @@ namespace DuplicateHider
             // QuickSearch support
             try
             {
-                QuickSearch.QuickSearchSDK.AddPluginSettings("DuplicateHider", settings, OpenSettingsView);
-                QuickSearch.QuickSearchSDK.AddCommand(new DuplicateHiderItem()
+                if (AppDomain.CurrentDomain.GetAssemblies()
+             .Select(asm => asm.GetName())
+             .Any(asm => asm.Name == "QuickSearchSDK" && asm.Version.Major == 1 && asm.Version.Minor == 3))
                 {
-                    Actions = new List<ISearchAction<string>>()
-            {
-                new QuickSearch.SearchItems.CommandAction() {Name = "Hide", Action = () =>
-                {
-                    PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
-                    PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
-                    BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
-                    var hidden = SetDuplicateState(Hidden);
-                    PlayniteApi.Database.Games.Update(hidden);
-                    PlayniteApi.Dialogs.ShowMessage($"{hidden.Where(g => g.Hidden).Count()} games have been hidden.", "DuplicateHider");
-                    PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
-                    PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
-                } },
+                    QuickSearch.QuickSearchSDK.AddPluginSettings("DuplicateHider", settings, OpenSettingsView);
+                    QuickSearch.QuickSearchSDK.AddCommand(new DuplicateHiderItem()
+                    {
+                        Actions = new List<ISearchAction<string>>()
+                    {
+                    new QuickSearch.SearchItems.CommandAction() {Name = "Hide", Action = () =>
+                    {
+                        PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
+                        PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
+                        BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
+                        var hidden = SetDuplicateState(Hidden);
+                        PlayniteApi.Database.Games.Update(hidden);
+                        PlayniteApi.Dialogs.ShowMessage($"{hidden.Where(g => g.Hidden).Count()} games have been hidden.", "DuplicateHider");
+                        PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
+                        PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
+                    } 
+                },
                 new QuickSearch.SearchItems.CommandAction() {Name = "Reveal", Action = () =>
-                {
-                    PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
-                    PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
-                    BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
-                    var revealed = SetDuplicateState(Visible);
-                    PlayniteApi.Database.Games.Update(revealed);
-                    PlayniteApi.Dialogs.ShowMessage($"{revealed.Where(g => !g.Hidden).Count()} games have been revealed.", "DuplicateHider");
-                    PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
-                    PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
-                } }
+                    {
+                        PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
+                        PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
+                        BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
+                        var revealed = SetDuplicateState(Visible);
+                        PlayniteApi.Database.Games.Update(revealed);
+                        PlayniteApi.Dialogs.ShowMessage($"{revealed.Where(g => !g.Hidden).Count()} games have been revealed.", "DuplicateHider");
+                        PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
+                        PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
+                    } 
+                }
             }
-                });
+                    });
+                }
+                
             } catch(Exception)
             {
 
