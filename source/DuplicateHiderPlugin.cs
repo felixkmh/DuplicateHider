@@ -60,6 +60,7 @@ namespace DuplicateHider
             API = api;
             Instance = this;
             settings = new DuplicateHiderSettings(this);
+            Properties = new GenericPluginProperties { HasSettings = true };
             var elements = new HashSet<string>() { "SourceSelector" };
             for (int i = 1; i < Constants.NUMBEROFSOURCESELECTORS; ++i)
             {
