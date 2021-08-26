@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace DuplicateHider
 {
@@ -19,8 +20,9 @@ namespace DuplicateHider
 
         [JsonIgnore]
         private DuplicateHiderSettings previousSettings = null;
-
+        [QuickSearch.Attributes.GenericOption("Update Automatically", Description = "Automatically hide/reveal games when the library changes or Playnite launches")]
         public bool UpdateAutomatically { get; set; } = false;
+        [QuickSearch.Attributes.GenericOption("Show Copies in Context Menu", Description = "If enabled, the game context menu gets a new entry listing its duplicates")]
         public bool ShowOtherCopiesInGameMenu { get; set; } = false;
         public string DisplayString { get; set; } = "{Name} [{Installed} on {'Source'}{, ROM: 'ImageNameNoExt}]";
 
@@ -33,13 +35,15 @@ namespace DuplicateHider
         public UniqueList<string> ExcludeSources { get; set; } = new UniqueList<string>();
         public UniqueList<string> ExcludeCategories { get; set; } = new UniqueList<string>();
         public HashSet<Guid> IgnoredGames { get; set; } = new HashSet<Guid>();
-
+        [QuickSearch.Attributes.GenericOption("Ignore Automatically", Description = "Automatically add games to Ignore List when they are hidden/revealed manually")]
         public bool AddHiddenToIgnoreList { get; set; } = false;
         public bool PreferUserIcons { get; set; } = true;
         public bool EnableThemeIcons { get; set; } = true;
         public bool EnableUiIntegration { get; set; } = false;
         public bool ShowSingleIcon { get; set; } = false;
         public bool SupressThemeIconNotification { get; set; } = false;
+        [QuickSearch.Attributes.GenericOption("Prefer Newer Games", Description = "If enabled, if games have the same score, the newer one will be prefered. Otherwise the older one will be prefered")]
+        public bool PreferNewerGame { get; set; } = true;
 
         public List<ReplaceFilter> ReplaceFilters { get; set; } = new List<ReplaceFilter>();
 
@@ -55,7 +59,11 @@ namespace DuplicateHider
             var left = new TextBox();
             left.Tag = "left";
             left.TextChanged += FilterTextChanged;
-            left.Text = filter is null?string.Empty: Regex.Unescape(filter.regex.ToString());
+            left.Text = string.Empty;
+            if (filter is ReplaceFilter rf)
+            {
+                left.Text = filter.asRegex? filter.regex.ToString() : Regex.Unescape(filter.regex.ToString());
+            }
             var right = new TextBox();
             right.Tag = "right";
             right.TextChanged += FilterTextChanged;
@@ -65,6 +73,25 @@ namespace DuplicateHider
             sp.Children.Add(left);
             sp.Children.Add(arrow);
             sp.Children.Add(right);
+
+            var cb = new CheckBox();
+            cb.IsChecked = filter?.asRegex??false;
+            cb.FlowDirection = FlowDirection.RightToLeft;
+            var hl = new Hyperlink(new Run("Regex"));
+            var tb = new TextBlock();
+            var margin = cb.Margin;
+            margin.Left = 5;
+            cb.Margin = margin;
+
+            var pretext = new Run("");
+            hl.NavigateUri = new Uri("https://docs.microsoft.com/en-us/dotnet/standard/base-types/regular-expressions");
+            hl.Click += Hl_Click;
+            tb.FlowDirection = FlowDirection.LeftToRight;
+            tb.Inlines.Add(pretext);
+            tb.Inlines.Add(hl);
+            cb.Content = tb;
+            sp.Children.Add(cb);
+
             item.Content = sp;
             if (filter != null)
             {
@@ -77,6 +104,14 @@ namespace DuplicateHider
                 sp.Children.Insert(0, bt);
             }
             return item;
+        }
+
+        private void Hl_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Hyperlink hl)
+            {
+                System.Diagnostics.Process.Start(hl.NavigateUri.AbsoluteUri);
+            }
         }
 
         private void DeleteReplaceFilterClick(object sender, RoutedEventArgs e)
@@ -95,12 +130,23 @@ namespace DuplicateHider
             }
             if (item.Content is StackPanel sp )
             {
+                var isRegex = false;
+                if (sp.Children.OfType<CheckBox>().FirstOrDefault() is CheckBox cb)
+                {
+                    isRegex = cb.IsChecked ?? false;
+                }
                 var textboxes = sp.Children.OfType<TextBox>();
                 TextBox left = textboxes.First(b => b.Tag as string == "left");
                 TextBox right = textboxes.First(b => b.Tag as string == "right");
                 if (left.Text.Length > 0)
                 {
-                    return new ReplaceFilter(right.Text, new Regex(Regex.Escape(left.Text), RegexOptions.IgnoreCase));
+                    if (isRegex)
+                    {
+                        return new ReplaceFilter(right.Text, new Regex(left.Text, RegexOptions.IgnoreCase)) { asRegex = true };
+                    } else
+                    {
+                        return new ReplaceFilter(right.Text, new Regex(Regex.Escape(left.Text), RegexOptions.IgnoreCase));
+                    }
                 }
             }
             return null;
@@ -217,6 +263,7 @@ namespace DuplicateHider
                 plugin.SettingsView.AutoUpdateCheckBox.IsChecked = UpdateAutomatically;
                 plugin.SettingsView.ShowCopiesInGameMenu.IsChecked = ShowOtherCopiesInGameMenu;
                 plugin.SettingsView.AddHiddenToIgnoreList.IsChecked = AddHiddenToIgnoreList;
+                plugin.SettingsView.PrioritizeNewerGame.IsChecked = PreferNewerGame;
 
                 // Populate Replacement Rules
                 {
@@ -326,24 +373,12 @@ namespace DuplicateHider
                     textBox.Text = DisplayString ?? "";
                     var contextMenu = textBox.ContextMenu = new ContextMenu();
 
-                    var installedItem = new MenuItem();
-                    installedItem.Header = "Installed";
-                    installedItem.Click += InsertVariable;
-                    installedItem.Tag = "{'Installed'}";
-                    contextMenu.Items.Add(installedItem);
-
-                    var sourceItem = new MenuItem();
-                    sourceItem.Header = "SourceName";
-                    sourceItem.Click += InsertVariable;
-                    sourceItem.Tag = "{'Source'}";
-                    contextMenu.Items.Add(sourceItem);
-
-                    foreach (var variable in typeof(ExpandableVariables).GetFields())
+                    foreach (var variable in DuplicateHiderPlugin.GetGameVariables())
                     {
                         var item = new MenuItem();
-                        item.Header = variable.Name;
+                        item.Header = variable.Key;
                         item.Click += InsertVariable;
-                        item.Tag = ((string)variable.GetRawConstantValue()).Replace("{", "{'").Replace("}", "'}");
+                        item.Tag = variable.Value;
                         contextMenu.Items.Add(item);
                     }
                 }
@@ -411,6 +446,7 @@ namespace DuplicateHider
                     UpdateAutomatically = plugin.SettingsView.AutoUpdateCheckBox.IsChecked ?? UpdateAutomatically;
                     ShowOtherCopiesInGameMenu = plugin.SettingsView.ShowCopiesInGameMenu.IsChecked ?? ShowOtherCopiesInGameMenu;
                     AddHiddenToIgnoreList = plugin.SettingsView.AddHiddenToIgnoreList.IsChecked ?? AddHiddenToIgnoreList;
+                    PreferNewerGame = plugin.SettingsView.PrioritizeNewerGame.IsChecked ?? true;
                 }
 
                 // Retrieve Replacement Rules

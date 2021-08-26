@@ -5,6 +5,7 @@ using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using QuickSearch.SearchItems;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -13,10 +14,16 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using static DuplicateHider.DuplicateHiderPlugin.Visibility;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Media;
+using System.Windows.Threading;
 
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("DuplicateHider")]
@@ -33,6 +40,8 @@ namespace DuplicateHider
         internal DuplicateHiderSettings settings { get; private set; }
         internal static DuplicateHiderPlugin DHP { get; private set; } = null;
         internal static IPlayniteAPI API { get; private set; } = null;
+
+        public static DuplicateHiderPlugin Instance { get; private set; }
 
         public override Guid Id { get; } = Guid.Parse("382f8003-8ed0-4e47-ae93-05b43c9c6c32");
 
@@ -51,6 +60,7 @@ namespace DuplicateHider
             logger = LogManager.GetLogger();
             DHP = this;
             API = api;
+            Instance = this;
             settings = new DuplicateHiderSettings(this);
             var elements = new HashSet<string>() { "SourceSelector" };
             for (int i = 1; i < Constants.NUMBEROFSOURCESELECTORS; ++i)
@@ -389,6 +399,8 @@ namespace DuplicateHider
             {
                 PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Visible));
+                GameFilters = null;
+                NameFilters = null;
                 BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
                 PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
@@ -517,7 +529,7 @@ namespace DuplicateHider
                     var filteredName = newData.Name.Filter(nameFilter);
                     if (index.TryGetValue(filteredName, out var guids))
                     {
-                        guids.InsertSorted(newData.Id, GetGamePriority);
+                        guids.InsertSorted(newData.Id, GameComparer.Comparer);
                         guids.ForEach(id => updatedIds.Add(id));
                     }
                 }
@@ -525,6 +537,33 @@ namespace DuplicateHider
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
             }
             PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
+        }
+
+        private class GameComparer : Comparer<Guid>
+        {
+            public static GameComparer Comparer = new GameComparer();
+
+            public override int Compare(Guid x, Guid y)
+            {
+                int prioX = Instance.GetGamePriority(x);
+                int prioY = Instance.GetGamePriority(y);
+                int byPriority = prioX.CompareTo(prioY);
+                if (byPriority != 0)
+                {
+                    return byPriority;
+                }
+                if (Instance.PlayniteApi.Database.Games.Get(x) is Game gameX && Instance.PlayniteApi.Database.Games.Get(y) is Game gameY)
+                {
+                    var defaultValue = new ReleaseDate(Instance.settings.PreferNewerGame ? DateTime.MinValue : DateTime.MaxValue);
+                    var byReleaseDate = (gameY.ReleaseDate ?? defaultValue).CompareTo(gameX.ReleaseDate ?? defaultValue);
+                    if (byReleaseDate != 0)
+                    {
+                        return byReleaseDate * (Instance.settings.PreferNewerGame? 1 : -1);
+                    }
+                    return (gameY.Added ?? DateTime.MinValue).CompareTo(gameX.Added ?? DateTime.MinValue) * (Instance.settings.PreferNewerGame ? 1 : -1);
+                }
+                return 0;
+            }
         }
 
         #endregion
@@ -761,7 +800,7 @@ namespace DuplicateHider
                 {
                     index[name] = new List<Guid> { };
                 }
-                index[name].InsertSorted(game.Id, GetGamePriority);
+                index[name].InsertSorted(game.Id, GameComparer.Comparer);
             }
             PlayniteApi.Database.Games.Update(SetDuplicateState(visibility));
         }
@@ -806,7 +845,7 @@ namespace DuplicateHider
                     index[cleanName] = new List<Guid> { };
                 }
 
-                index[cleanName].InsertSorted(game.Id, GetGamePriority);
+                index[cleanName].InsertSorted(game.Id, GameComparer.Comparer);
             }
         }
 
@@ -814,6 +853,31 @@ namespace DuplicateHider
         static readonly int prefixIdx = regexVariable.GroupNumberFromName("Prefix");
         static readonly int suffixIdx = regexVariable.GroupNumberFromName("Suffix");
         static readonly int variableIdx = regexVariable.GroupNumberFromName("Variable");
+
+        public static IList<KeyValuePair<string, string>> GetGameVariables()
+        {
+            var vars = new List<KeyValuePair<string, string>>();
+
+            vars.Add(new KeyValuePair<string, string> ("Installed", "{'Installed'}"));
+            vars.Add(new KeyValuePair<string, string>("SourceName", "{'SourceName'}"));
+
+
+            foreach (var variable in typeof(ExpandableVariables).GetFields())
+            {
+                vars.Add(new KeyValuePair<string, string>(variable.Name, ((string)variable.GetRawConstantValue()).Replace("{", "{'").Replace("}", "'}")));
+            }
+
+            var t = typeof(Game);
+
+            foreach (var variable in typeof(Game).GetProperties())
+            {
+                if (!vars.TryFind(s => s.Key.Contains(variable.Name) || s.Value.Contains(variable.Name), out var _))
+                    if (variable.PropertyType == typeof(string) || variable.PropertyType == typeof(int?) || variable.PropertyType == typeof(float?) || variable.PropertyType == typeof(DateTime?))
+                        vars.Add(new KeyValuePair<string, string>(variable.Name, "{'" + variable.Name + "'}"));
+            }
+
+            return vars;
+        }
 
         public string ExpandDisplayString(Game game, string displayString)
         {
@@ -835,6 +899,20 @@ namespace DuplicateHider
                     {
                         expanded = expanded.Replace("{Source}", game.GetSourceName());
                         expanded = expanded.Replace("{Installed}", game.IsInstalled ? "Installed" : "Not installed");
+                        var type = typeof(Game).GetFields();
+                        foreach (var field in typeof(Game).GetProperties())
+                        {
+                            if (field.PropertyType == typeof(string) || field.PropertyType == typeof(int?) || field.PropertyType == typeof(float?) || field.PropertyType == typeof(DateTime?))
+                            {
+                                if (field.PropertyType == typeof(DateTime?))
+                                {
+                                    expanded = expanded.Replace("{" + field.Name + "}", ((DateTime?)field.GetValue(game))?.ToString("d") ?? string.Empty);
+                                } else
+                                {
+                                    expanded = expanded.Replace("{" + field.Name + "}", field.GetValue(game)?.ToString()??string.Empty);
+                                }
+                            }
+                        }
                     }
                     if (expanded.Length != 0 && expanded != variable)
                     {
