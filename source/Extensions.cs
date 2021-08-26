@@ -105,7 +105,7 @@ namespace DuplicateHider
 
         public static T Copy<T>(this T instance) where T : new()
         {
-            if (Object.ReferenceEquals(instance, null))
+            if (instance == null)
             {
                 return new T();
             }

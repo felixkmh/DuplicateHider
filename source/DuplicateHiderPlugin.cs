@@ -32,8 +32,8 @@ namespace DuplicateHider
     public class DuplicateHiderPlugin : GenericPlugin
     {
         public event EventHandler<IEnumerable<Guid>> GroupUpdated;
-        public struct GameSelectedArgs { public Guid? oldId; public Guid? newId; }
-        public event EventHandler<GameSelectedArgs> GameSelected;
+        internal struct GameSelectedArgs { public Guid? oldId; public Guid? newId; }
+        internal event EventHandler<GameSelectedArgs> GameSelected;
 
         private readonly ILogger logger;
 
@@ -44,7 +44,7 @@ namespace DuplicateHider
 
         public override Guid Id { get; } = Guid.Parse("382f8003-8ed0-4e47-ae93-05b43c9c6c32");
 
-        private Dictionary<string, List<Guid>> index { get; set; } = new Dictionary<string, List<Guid>>();
+        private Dictionary<string, List<Guid>> Index { get; set; } = new Dictionary<string, List<Guid>>();
 
         internal static readonly IconCache SourceIconCache = new IconCache();
 
@@ -121,11 +121,10 @@ namespace DuplicateHider
                 } else
                 if (args.Name.StartsWith("SourceSelector"))
                 {
-                    int n;
-                    if (int.TryParse(args.Name.Substring(14), out n))
+                    if (int.TryParse(args.Name.Substring(14), out int n))
                     {
 #if DEBUG
-                        System.Diagnostics.Debug.WriteLine("Generated SourceSelector:" + (++GeneratedElements)); 
+                        System.Diagnostics.Debug.WriteLine("Generated SourceSelector:" + (++GeneratedElements));
 #endif
                         return new SourceSelector(n, Orientation.Horizontal);
                     }
@@ -133,8 +132,7 @@ namespace DuplicateHider
 
                 } else if (args.Name.StartsWith("ContentControl")) 
                 {
-                    int n;
-                    if (!int.TryParse(args.Name.Substring(14), out n))
+                    if (!int.TryParse(args.Name.Substring(14), out int n))
                     {
                         n = 0;
                     }
@@ -154,9 +152,10 @@ namespace DuplicateHider
             {
                 Directory.CreateDirectory(GetUserIconFolderPath());
             }
-            iconWatcher = new FileSystemWatcher(GetUserIconFolderPath());
-
-            iconWatcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.CreationTime;
+            iconWatcher = new FileSystemWatcher(GetUserIconFolderPath())
+            {
+                NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.CreationTime
+            };
             iconWatcher.Renamed += IconWatcher_Changed;
             iconWatcher.Created += IconWatcher_Changed;
             iconWatcher.Deleted += IconWatcher_Changed;
@@ -261,14 +260,10 @@ namespace DuplicateHider
             // QuickSearch support
             try
             {
-                var settingsCommand = new QuickSearch.SearchItems.CommandItem("Open DuplicateHider settings", () => OpenSettingsView(), "Open DuplicateHider settings view", "Open")
-                {
-                    IconChar = ''
-                };
-                QuickSearch.QuickSearchSDK.AddCommand(settingsCommand);
+                QuickSearch.QuickSearchSDK.AddPluginSettings("DuplicateHider", settings, OpenSettingsView);
                 QuickSearch.QuickSearchSDK.AddCommand(new DuplicateHiderItem()
                 {
-                    Actions = new List<QuickSearch.SearchItems.ISearchAction<string>>()
+                    Actions = new List<ISearchAction<string>>()
             {
                 new QuickSearch.SearchItems.CommandAction() {Name = "Hide", Action = () =>
                 {
@@ -301,7 +296,7 @@ namespace DuplicateHider
             
         }
 
-        public class DuplicateHiderItem : QuickSearch.SearchItems.ISearchItem<string>
+        private class DuplicateHiderItem : ISearchItem<string>
         {
             public IList<QuickSearch.SearchItems.ISearchKey<string>> Keys => new List<QuickSearch.SearchItems.ISearchKey<string>> 
             {
@@ -323,7 +318,7 @@ namespace DuplicateHider
 
             public string BottomCenter => null;
 
-            public string BottomRight => Instance.index.Values.Sum(v => v.Count() - 1).ToString() + " duplicates found";
+            public string BottomRight => Instance.Index.Values.Sum(v => v.Count() - 1).ToString() + " duplicates found";
 
             public char? IconChar => '';
         }
@@ -421,11 +416,11 @@ namespace DuplicateHider
                 foreach (var game in e.RemovedItems.Filter<IEnumerable<Game>, IFilter<IEnumerable<Game>>>(filter))
                 {
                     var name = game.Name.Filter(nameFilter);
-                    if (index.ContainsKey(name))
+                    if (Index.ContainsKey(name))
                     {
-                        if (index[name].Remove(game.Id) && index[name].Count == 1)
+                        if (Index[name].Remove(game.Id) && Index[name].Count == 1)
                         {
-                            if (PlayniteApi.Database.Games.Get(index[name][0]) is Game last)
+                            if (PlayniteApi.Database.Games.Get(Index[name][0]) is Game last)
                             {
                                 if (last.Hidden)
                                 {
@@ -435,7 +430,7 @@ namespace DuplicateHider
                             }
                             else
                             {
-                                index[name] = null;
+                                Index[name] = null;
                             }
                         }
                     }
@@ -472,7 +467,7 @@ namespace DuplicateHider
                 {
                     if (change.OldData.Hidden != change.NewData.Hidden)
                     {
-                        if (index.TryGetValue(nameFilter.Apply(change.OldData.Name), out var copies)) {
+                        if (Index.TryGetValue(nameFilter.Apply(change.OldData.Name), out var copies)) {
                             if (copies.Count == 1)
                             {
                                 if (PlayniteApi.Database.Games.Get(copies[0]) is Game last)
@@ -496,7 +491,7 @@ namespace DuplicateHider
                     var oldData = change.OldData;
                     var newData = change.NewData;
                     var filteredName = oldData.Name.Filter(nameFilter);
-                    if (index.TryGetValue(filteredName, out var guids))
+                    if (Index.TryGetValue(filteredName, out var guids))
                     {
                         if (guids.Remove(oldData.Id))
                         {
@@ -525,7 +520,7 @@ namespace DuplicateHider
                 foreach (var newData in (from update in e.UpdatedItems select update.NewData).Filter(gameFilter))
                 {
                     var filteredName = newData.Name.Filter(nameFilter);
-                    if (index.TryGetValue(filteredName, out var guids))
+                    if (Index.TryGetValue(filteredName, out var guids))
                     {
                         guids.InsertSorted(newData.Id, GameComparer.Comparer);
                         guids.ForEach(id => updatedIds.Add(id));
@@ -597,7 +592,7 @@ namespace DuplicateHider
                         SortedDictionary<string, Guid> nameToSharedId = new SortedDictionary<string, Guid>();
                         settings.SharedGameIds.Clear();
                         BuildIndex(PlayniteApi.Database.Games, new PlaceboGameFilter(), GetNameFilter());
-                        foreach (var group in index)
+                        foreach (var group in Index)
                         {
                             var sharedId = Guid.NewGuid();
                             nameToSharedId.Add(group.Key, sharedId);
@@ -688,7 +683,7 @@ namespace DuplicateHider
                     Action = (context) => {
                         BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
                         SortedDictionary<string, List<DebugData>> ts = new SortedDictionary<string, List<DebugData>>();
-                        foreach(var group in index.OrderBy(g => g.Key).Where(g => g.Value.Count > 1))
+                        foreach(var group in Index.OrderBy(g => g.Key).Where(g => g.Value.Count > 1))
                         {
                             var data = new List<DebugData>();
                             foreach (var copy in group.Value)
@@ -765,7 +760,7 @@ namespace DuplicateHider
                 return duplicates;
 
             var name = game.Name.Filter(GetNameFilter());
-            if (index.TryGetValue(name, out var copies))
+            if (Index.TryGetValue(name, out var copies))
             {
                 var others = copies.Where(c => c != game.Id);
                 foreach (var copyId in others)
@@ -790,15 +785,15 @@ namespace DuplicateHider
             foreach (var game in games)
             {
                 var name = game.Name.Filter(nameFilter);
-                if (index.ContainsKey(name))
+                if (Index.ContainsKey(name))
                 {
-                    index[name].Remove(game.Id);
+                    Index[name].Remove(game.Id);
                 }
                 else
                 {
-                    index[name] = new List<Guid> { };
+                    Index[name] = new List<Guid> { };
                 }
-                index[name].InsertSorted(game.Id, GameComparer.Comparer);
+                Index[name].InsertSorted(game.Id, GameComparer.Comparer);
             }
             PlayniteApi.Database.Games.Update(SetDuplicateState(visibility));
         }
@@ -806,8 +801,8 @@ namespace DuplicateHider
         private IList<Game> SetDuplicateState(Visibility visibility)
         {
             List<Game> toUpdate = new List<Game> { };
-            bool hidden = visibility == Hidden ? true : false;
-            foreach (var copies in index.Values)
+            bool hidden = visibility == Hidden;
+            foreach (var copies in Index.Values)
             {
                 for (int i = 1; i < copies.Count; ++i)
                 {
@@ -834,16 +829,16 @@ namespace DuplicateHider
 
         private void BuildIndex(IEnumerable<Game> games, IFilter<IEnumerable<Game>> gameFilter, IFilter<string> nameFilter)
         {
-            index.Clear();
+            Index.Clear();
             foreach (var game in games.Filter(gameFilter))
             {
                 var cleanName = game.Name.Filter(nameFilter);
-                if (!index.ContainsKey(cleanName))
+                if (!Index.ContainsKey(cleanName))
                 {
-                    index[cleanName] = new List<Guid> { };
+                    Index[cleanName] = new List<Guid> { };
                 }
 
-                index[cleanName].InsertSorted(game.Id, GameComparer.Comparer);
+                Index[cleanName].InsertSorted(game.Id, GameComparer.Comparer);
             }
         }
 
@@ -854,10 +849,11 @@ namespace DuplicateHider
 
         public static IList<KeyValuePair<string, string>> GetGameVariables()
         {
-            var vars = new List<KeyValuePair<string, string>>();
-
-            vars.Add(new KeyValuePair<string, string> ("Installed", "{'Installed'}"));
-            vars.Add(new KeyValuePair<string, string>("SourceName", "{'SourceName'}"));
+            var vars = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("Installed", "{'Installed'}"),
+                new KeyValuePair<string, string>("SourceName", "{'SourceName'}")
+            };
 
 
             foreach (var variable in typeof(ExpandableVariables).GetFields())

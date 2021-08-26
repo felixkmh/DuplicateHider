@@ -54,29 +54,39 @@ namespace DuplicateHider
             {
                 item.Tag = "empty";
             }
-            var sp = new StackPanel();
-            sp.Orientation = Orientation.Horizontal;
-            var left = new TextBox();
-            left.Tag = "left";
+            var sp = new StackPanel
+            {
+                Orientation = Orientation.Horizontal
+            };
+            var left = new TextBox
+            {
+                Tag = "left"
+            };
             left.TextChanged += FilterTextChanged;
             left.Text = string.Empty;
             if (filter is ReplaceFilter rf)
             {
                 left.Text = filter.asRegex? filter.regex.ToString() : Regex.Unescape(filter.regex.ToString());
             }
-            var right = new TextBox();
-            right.Tag = "right";
+            var right = new TextBox
+            {
+                Tag = "right"
+            };
             right.TextChanged += FilterTextChanged;
             right.Text = filter is null ? string.Empty : filter._replace;
-            var arrow = new Label();
-            arrow.Content = "→";
+            var arrow = new Label
+            {
+                Content = "→"
+            };
             sp.Children.Add(left);
             sp.Children.Add(arrow);
             sp.Children.Add(right);
 
-            var cb = new CheckBox();
-            cb.IsChecked = filter?.asRegex??false;
-            cb.FlowDirection = FlowDirection.RightToLeft;
+            var cb = new CheckBox
+            {
+                IsChecked = filter?.asRegex ?? false,
+                FlowDirection = FlowDirection.RightToLeft
+            };
             var hl = new Hyperlink(new Run("Regex"));
             var tb = new TextBlock();
             var margin = cb.Margin;
@@ -122,7 +132,7 @@ namespace DuplicateHider
             }
         }
 
-        public ReplaceFilter CreateFilterFromListBoxItem(ListBoxItem item)
+        public static ReplaceFilter CreateFilterFromListBoxItem(ListBoxItem item)
         {
             if (item.Tag as string == "empty")
             {
@@ -171,9 +181,11 @@ namespace DuplicateHider
                                 item.Tag = null;
                                 list.Items.Dispatcher.Invoke(() =>
                                 {
-                                    var bt = new Button();
-                                    bt.Content = "X";
-                                    bt.Tag = item;
+                                    var bt = new Button
+                                    {
+                                        Content = "X",
+                                        Tag = item
+                                    };
                                     bt.Click += DeleteReplaceFilterClick;
                                     sp.Children.Insert(0, bt);
                                     list.Items.Add(CreateReplacementFilterItem());
@@ -354,9 +366,11 @@ namespace DuplicateHider
                     plugin.SettingsView.IgnoreListBox.Items.Clear();
                     foreach (var id in IgnoredGames)
                     {
-                        var item = new ListBoxItem();
-                        item.Tag = id;
-                        item.ContextMenu = new ContextMenu();
+                        var item = new ListBoxItem
+                        {
+                            Tag = id,
+                            ContextMenu = new ContextMenu()
+                        };
                         var menuItem = new MenuItem { Header = "Remove Entry", Tag = id };
                         menuItem.Click += RemoveIgnored_Click;
                         item.ContextMenu.Items.Add(menuItem);
@@ -375,8 +389,10 @@ namespace DuplicateHider
 
                     foreach (var variable in DuplicateHiderPlugin.GetGameVariables())
                     {
-                        var item = new MenuItem();
-                        item.Header = variable.Key;
+                        var item = new MenuItem
+                        {
+                            Header = variable.Key
+                        };
                         item.Click += InsertVariable;
                         item.Tag = variable.Value;
                         contextMenu.Items.Add(item);
