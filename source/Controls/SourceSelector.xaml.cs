@@ -131,7 +131,7 @@ namespace DuplicateHider.Controls
 
         internal void CreateGameSourceIcons()
         {
-            if (!DuplicateHiderPlugin.DHP.settings.EnableUiIntegration)
+            if (!DuplicateHiderPlugin.Instance.settings.EnableUiIntegration)
                 return;
             for (int i = 0; i < MaxNumberOfIcons; ++i)
             {
@@ -145,7 +145,7 @@ namespace DuplicateHider.Controls
             {
                 var games = GetGames(context).ToList();
 
-                if (games.Count < 2 && !DuplicateHiderPlugin.DHP.settings.ShowSingleIcon)
+                if (games.Count < 2 && !DuplicateHiderPlugin.Instance.settings.ShowSingleIcon)
                 {
                     ButtonCaches[selectorNumber].Consume(IconStackPanel.Children);
                     return;
@@ -165,12 +165,12 @@ namespace DuplicateHider.Controls
                     }
                     Game game = games[i];
                     button.Visibility = Visibility.Visible;
-                    bool isCurrent = DuplicateHiderPlugin.DHP.CurrentlySelected == game.Id;
+                    bool isCurrent = DuplicateHiderPlugin.Instance.CurrentlySelected == game.Id;
                     ListData listData = new ListData(game, isCurrent);
 
                     button.DataContext = listData;
 
-                    button.ToolTip = DuplicateHiderPlugin.DHP.ExpandDisplayString(game, DuplicateHiderPlugin.DHP.settings.DisplayString);
+                    button.ToolTip = DuplicateHiderPlugin.Instance.ExpandDisplayString(game, DuplicateHiderPlugin.Instance.settings.DisplayString);
                     if (button.Content is Image icon)
                     {
                         icon.Source = GetSourceIcon(game);
@@ -216,7 +216,7 @@ namespace DuplicateHider.Controls
         {
             if (sender is Button bt)
             {
-                DuplicateHiderPlugin.DHP.PlayniteApi.MainView.SelectGame((bt.DataContext as ListData).Game.Id);
+                DuplicateHiderPlugin.Instance.PlayniteApi.MainView.SelectGame((bt.DataContext as ListData).Game.Id);
             }
         }
 
@@ -332,14 +332,14 @@ namespace DuplicateHider.Controls
 
         private IEnumerable<Game> GetGames(Game game)
         {
-            if (DuplicateHiderPlugin.DHP is DuplicateHiderPlugin dh)
+            if (DuplicateHiderPlugin.Instance is DuplicateHiderPlugin dh)
             {
                 if (game != null)
                 {
                     var copys = (new Game[] { game })
                             .Concat(dh.GetOtherCopies(game))
                             .Distinct()
-                            .OrderBy(g => DuplicateHiderPlugin.DHP.GetGamePriority(g.Id))
+                            .OrderBy(g => DuplicateHiderPlugin.Instance.GetGamePriority(g.Id))
                             .ThenBy(g => g.Hidden ? 1 : -1)
                             .ThenBy(g => g.Id);
                     if (MaxNumberOfIcons > 0)
@@ -372,14 +372,14 @@ namespace DuplicateHider.Controls
         {
             if (e.NewValue as bool? == true)
             {
-                DuplicateHiderPlugin.DHP.GroupUpdated += DuplicateHider_GroupUpdated;
-                DuplicateHiderPlugin.DHP.GameSelected += DHP_GameSelected;
+                DuplicateHiderPlugin.Instance.GroupUpdated += DuplicateHider_GroupUpdated;
+                DuplicateHiderPlugin.Instance.GameSelected += DHP_GameSelected;
                 UpdateGameSourceIcons(GameContext);
             }
             else
             {
-                DuplicateHiderPlugin.DHP.GameSelected -= DHP_GameSelected;
-                DuplicateHiderPlugin.DHP.GroupUpdated -= DuplicateHider_GroupUpdated;
+                DuplicateHiderPlugin.Instance.GameSelected -= DHP_GameSelected;
+                DuplicateHiderPlugin.Instance.GroupUpdated -= DuplicateHider_GroupUpdated;
                 ButtonCaches[selectorNumber].Consume(IconStackPanel.Children);
             }
         }

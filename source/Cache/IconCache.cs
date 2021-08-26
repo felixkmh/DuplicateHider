@@ -99,8 +99,8 @@ namespace DuplicateHider.Cache
         protected IEnumerable<string> GetSourceIconPaths(Game game)
         {
             var name = game.Source != null ? game.Source.Name : Constants.UNDEFINED_SOURCE;
-            bool enableThemeIcons = DuplicateHiderPlugin.DHP.settings.EnableThemeIcons;
-            bool preferUserIcons = DuplicateHiderPlugin.DHP.settings.PreferUserIcons;
+            bool enableThemeIcons = DuplicateHiderPlugin.Instance.settings.EnableThemeIcons;
+            bool preferUserIcons = DuplicateHiderPlugin.Instance.settings.PreferUserIcons;
 
             List<string> paths = new List<string>();
 
@@ -129,7 +129,7 @@ namespace DuplicateHider.Cache
 
         private string GetUserIconPath(string sourceName)
         {
-            if (UserIconFolderPaths.Count == 0) UserIconFolderPaths.Add(DuplicateHiderPlugin.DHP.GetUserIconFolderPath());
+            if (UserIconFolderPaths.Count == 0) UserIconFolderPaths.Add(DuplicateHiderPlugin.Instance.GetUserIconFolderPath());
             return UserIconFolderPaths
                .SelectMany(s => System.IO.Directory.GetFiles(s))
                .Where(f => System.IO.Path.GetFileNameWithoutExtension(f).Equals(sourceName, StringComparison.OrdinalIgnoreCase))
@@ -143,8 +143,8 @@ namespace DuplicateHider.Cache
         protected IEnumerable<string> GetDefaultIconPaths()
         {
             var name = "Default";
-            bool enableThemeIcons = DuplicateHiderPlugin.DHP.settings.EnableThemeIcons;
-            bool preferUserIcons = DuplicateHiderPlugin.DHP.settings.PreferUserIcons;
+            bool enableThemeIcons = DuplicateHiderPlugin.Instance.settings.EnableThemeIcons;
+            bool preferUserIcons = DuplicateHiderPlugin.Instance.settings.PreferUserIcons;
 
             List<string> paths = new List<string>();
 

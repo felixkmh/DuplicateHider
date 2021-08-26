@@ -38,7 +38,6 @@ namespace DuplicateHider
         private readonly ILogger logger;
 
         internal DuplicateHiderSettings settings { get; private set; }
-        internal static DuplicateHiderPlugin DHP { get; private set; } = null;
         internal static IPlayniteAPI API { get; private set; } = null;
 
         public static DuplicateHiderPlugin Instance { get; private set; }
@@ -58,7 +57,6 @@ namespace DuplicateHider
         public DuplicateHiderPlugin(IPlayniteAPI api) : base(api)
         {
             logger = LogManager.GetLogger();
-            DHP = this;
             API = api;
             Instance = this;
             settings = new DuplicateHiderSettings(this);
@@ -325,7 +323,7 @@ namespace DuplicateHider
 
             public string BottomCenter => null;
 
-            public string BottomRight => DuplicateHiderPlugin.DHP.index.Values.Sum(v => v.Count() - 1).ToString() + " duplicates found";
+            public string BottomRight => Instance.index.Values.Sum(v => v.Count() - 1).ToString() + " duplicates found";
 
             public char? IconChar => '';
         }

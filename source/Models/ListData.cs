@@ -66,9 +66,9 @@ namespace DuplicateHider.Models
             Game = game;
             IsCurrent = current;
             SourceName = game.Source?.Name ?? Constants.UNDEFINED_SOURCE;
-            DisplayString = DuplicateHiderPlugin.DHP.ExpandDisplayString(game, DuplicateHiderPlugin.DHP.settings.DisplayString);
+            DisplayString = DuplicateHiderPlugin.Instance.ExpandDisplayString(game, DuplicateHiderPlugin.Instance.settings.DisplayString);
             LaunchCommand = launchCommand ?? new RelayCommand(() => DuplicateHiderPlugin.API.StartGame(Game.Id));
-            SelectCommand = selectCommand ?? new RelayCommand(() => DuplicateHiderPlugin.DHP.SelectGame(Game.Id));
+            SelectCommand = selectCommand ?? new RelayCommand(() => DuplicateHiderPlugin.Instance.SelectGame(Game.Id));
             InstallCommand = installCommand ?? new RelayCommand(() => DuplicateHiderPlugin.API.InstallGame(Game.Id));
             UninstallCommand = uninstallCommand ?? new RelayCommand(() => DuplicateHiderPlugin.API.InstallGame(Game.Id));
         }

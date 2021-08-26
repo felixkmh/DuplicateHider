@@ -77,8 +77,8 @@ namespace DuplicateHider.Controls
         {
             if (e.NewValue as bool? == true)
             {
-                DuplicateHiderPlugin.DHP.GroupUpdated += DHP_GroupUpdated;
-                DuplicateHiderPlugin.DHP.GameSelected += DHP_GameSelected;
+                DuplicateHiderPlugin.Instance.GroupUpdated += DHP_GroupUpdated;
+                DuplicateHiderPlugin.Instance.GameSelected += DHP_GameSelected;
                 if (CurrentGame?.Game?.Id != GameContext?.Id)
                 {
                     CurrentGame = GameContext is Game ? new ListData(GameContext, true) : null;
@@ -86,8 +86,8 @@ namespace DuplicateHider.Controls
                 UpdateContent(GameContext);
             } else
             {
-                DuplicateHiderPlugin.DHP.GameSelected -= DHP_GameSelected;
-                DuplicateHiderPlugin.DHP.GroupUpdated -= DHP_GroupUpdated;
+                DuplicateHiderPlugin.Instance.GameSelected -= DHP_GameSelected;
+                DuplicateHiderPlugin.Instance.GroupUpdated -= DHP_GroupUpdated;
             }
         }
 
@@ -183,7 +183,7 @@ namespace DuplicateHider.Controls
                     foreach (var copy in copys)
                     {
                         var source = copy.Source ?? Constants.DEFAULT_SOURCE;
-                        Games.Add(new ListData(copy, copy.Id == DuplicateHiderPlugin.DHP.CurrentlySelected));
+                        Games.Add(new ListData(copy, copy.Id == DuplicateHiderPlugin.Instance.CurrentlySelected));
                     }
                 }
             } else
@@ -197,9 +197,9 @@ namespace DuplicateHider.Controls
                 if (game != null)
                 {
                     var copys = (new Game[] { game })
-                            .Concat(DuplicateHiderPlugin.DHP.GetOtherCopies(game))
+                            .Concat(DuplicateHiderPlugin.Instance.GetOtherCopies(game))
                             .Distinct()
-                            .OrderBy(g => DuplicateHiderPlugin.DHP.GetGamePriority(g.Id))
+                            .OrderBy(g => DuplicateHiderPlugin.Instance.GetGamePriority(g.Id))
                             .ThenBy(g => g.Hidden?1:-1)
                             .ThenBy(g => g.Id);
 
