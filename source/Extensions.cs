@@ -67,13 +67,13 @@ namespace DuplicateHider
 
         public static string GetPlatformName(this Game game)
         {
-            if (game.Platform == null)
+            if (game.Platforms?.FirstOrDefault() == null)
             {
                 return Constants.UNDEFINED_SOURCE;
             }
             else
             {
-                return game.Platform.Name;
+                return game.Platforms?.FirstOrDefault().Name;
             }
         }
 
@@ -81,7 +81,7 @@ namespace DuplicateHider
         {
             if (game.Categories == null)
             {
-                return new string[] { };
+                return Array.Empty<string>();
             }
             else
             {

@@ -68,7 +68,7 @@ namespace DuplicateHider.Controls
             DataContext = this;
             MouseDown += DHContentControl_MouseDown;
             IsVisibleChanged += DHContentControl_IsVisibleChanged;
-            OpenMenuCommand = new SimpleCommand(() => {
+            OpenMenuCommand = new RelayCommand(() => {
                 
             });
         }

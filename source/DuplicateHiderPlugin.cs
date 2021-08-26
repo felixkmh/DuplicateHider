@@ -22,7 +22,7 @@ using static DuplicateHider.DuplicateHiderPlugin.Visibility;
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("DuplicateHider")]
 namespace DuplicateHider
 {
-    public class DuplicateHiderPlugin : Plugin
+    public class DuplicateHiderPlugin : GenericPlugin
     {
         public event EventHandler<IEnumerable<Guid>> GroupUpdated;
         public struct GameSelectedArgs { public Guid? oldId; public Guid? newId; }
@@ -139,7 +139,7 @@ namespace DuplicateHider
         }
 
         #region Events       
-        public override void OnApplicationStarted()
+        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
             // Create icon folder
             if (!Directory.Exists(GetUserIconFolderPath()))
@@ -360,7 +360,7 @@ namespace DuplicateHider
             }
         }
 
-        public override void OnGameSelected(GameSelectionEventArgs args)
+        public override void OnGameSelected(OnGameSelectedEventArgs args)
         {
             var oldId = args.OldValue?.FirstOrDefault()?.Id;
             var newId = args.NewValue?.FirstOrDefault()?.Id;
@@ -372,7 +372,7 @@ namespace DuplicateHider
             // GroupUpdated?.Invoke(this, args.OldValue.Select(g => g.Id).Concat(args.NewValue.Select(g => g.Id)).Distinct());
         }
 
-        public override void OnApplicationStopped()
+        public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
         {
             iconWatcher.EnableRaisingEvents = false;
             PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
@@ -546,7 +546,7 @@ namespace DuplicateHider
             Hidden
         }
 
-        public override List<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
+        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
             return new List<MainMenuItem>
             {
@@ -694,7 +694,7 @@ namespace DuplicateHider
             public bool Installed;
         };
 #endif
-        public override List<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
+        public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
 
             var entries = new List<GameMenuItem>();
