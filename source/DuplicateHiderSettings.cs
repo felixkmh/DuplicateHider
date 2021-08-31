@@ -37,10 +37,15 @@ namespace DuplicateHider
         public HashSet<Guid> IgnoredGames { get; set; } = new HashSet<Guid>();
         [QuickSearch.Attributes.GenericOption("Ignore Automatically", Description = "Automatically add games to Ignore List when they are hidden/revealed manually")]
         public bool AddHiddenToIgnoreList { get; set; } = false;
+        [QuickSearch.Attributes.GenericOption("Prefer User Icons", Description = "If UI Integration is enabled, prefer user provided icons, if available")]
         public bool PreferUserIcons { get; set; } = true;
+        [QuickSearch.Attributes.GenericOption("Enable Theme Icons", Description = "If UI Integration is enabled, use source icons provided by the current theme if available")]
         public bool EnableThemeIcons { get; set; } = true;
+        [QuickSearch.Attributes.GenericOption("Enable UI Integration", Description = "Enables custom UI elements if supported by current theme")]
         public bool EnableUiIntegration { get; set; } = false;
+        [QuickSearch.Attributes.GenericOption("Show Single Icon", Description = "If UI Integration is enabled, show source icons even if only one copy of a game exists")]
         public bool ShowSingleIcon { get; set; } = false;
+        [QuickSearch.Attributes.GenericOption("Enable Theme Icons", Description = "If UI Integration is enabled, supress notifications about theme icons being availableb")]
         public bool SupressThemeIconNotification { get; set; } = false;
         [QuickSearch.Attributes.GenericOption("Prefer Newer Games", Description = "If enabled, if games have the same score, the newer one will be prefered. Otherwise the older one will be prefered")]
         public bool PreferNewerGame { get; set; } = true;
