@@ -1,0 +1,100 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="HighlightBorder" TargetType="Border" BasedOn="{StaticResource {x:Type Border}}">
+        <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource ControlBorderThickness}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource NormalBorderBrush}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource GlyphBrush}" />
+            </Trigger>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource GlyphBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="InputBorder" TargetType="Border" BasedOn="{StaticResource {x:Type Border}}">
+        <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource ControlBorderThickness}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource NormalBorderBrush}" />
+        <Setter Property="Background" Value="{DynamicResource InputDefaultBrush}"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource InputHoveredBrush}" />
+            </Trigger>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="Background" Value="{DynamicResource InputSelectedBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="HighlightContentControl" TargetType="ContentControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Grid Background="Transparent">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                CornerRadius="{DynamicResource InputCornerRadius}"
+                                Background="{TemplateBinding Background}"/>
+                        <Border BorderThickness="{TemplateBinding BorderThickness}" 
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                CornerRadius="{DynamicResource InputCornerRadius}"
+                                OpacityMask="{DynamicResource CenterFadingBrushVertical}"/>
+                        <Border BorderThickness="{TemplateBinding BorderThickness}" 
+                                BorderBrush="{DynamicResource GlyphBrush}"
+                                RenderTransformOrigin="0.5,0.5"
+                                CornerRadius="{DynamicResource InputCornerRadius}"
+                                OpacityMask="{DynamicResource CenterFadingBrushVertical}">
+                            <Border.RenderTransform>
+                                <ScaleTransform x:Name="HighlightScale" ScaleX="0"/>
+                            </Border.RenderTransform>
+                        </Border>
+                        <ContentPresenter Margin="{TemplateBinding BorderThickness}"/>
+                    </Grid>
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="Expand">
+                            <DoubleAnimation Duration="0:0:0.2" 
+                                                         Storyboard.TargetProperty="(ScaleTransform.ScaleX)" 
+                                                         Storyboard.TargetName="HighlightScale"
+                                                         To="1" FillBehavior="HoldEnd">
+                                <DoubleAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                        <Storyboard x:Key="Collapse">
+                            <DoubleAnimation Duration="0:0:0.1" 
+                                                         Storyboard.TargetProperty="(ScaleTransform.ScaleX)" 
+                                                         Storyboard.TargetName="HighlightScale"
+                                                         To="0" FillBehavior="Stop">
+                                <DoubleAnimation.EasingFunction>
+                                    <CircleEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource Expand}"/>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource Collapse}"/>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="Tag" Value="{StaticResource True}">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource Expand}"/>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource Collapse}"/>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

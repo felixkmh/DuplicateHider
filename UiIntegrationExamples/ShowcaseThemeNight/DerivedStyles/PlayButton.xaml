@@ -16,7 +16,9 @@
                                 Opacity="1" CornerRadius="{DynamicResource ButtonCornerRadius}"/>
                         <!--<Ellipse Fill="{DynamicResource ButtonDefaultBrush}" StrokeThickness="0" Margin="0,-25,0,0"/>-->
                         <!--<Image Source="{ThemeFile 'Images/playIcon.png'}" HorizontalAlignment="Left" Margin="0,0,0,0" RenderOptions.BitmapScalingMode="Fant"/>-->
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True" />
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          Margin="{TemplateBinding Padding}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="True" />

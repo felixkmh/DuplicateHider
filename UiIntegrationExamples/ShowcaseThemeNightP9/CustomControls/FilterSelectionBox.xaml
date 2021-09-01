@@ -1,0 +1,140 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <ControlTemplate x:Key="FilterSelectionBoxTemplate" TargetType="{x:Type FilterSelectionBoxBase}">
+        <Border BorderThickness="{DynamicResource ControlBorderThickness}"
+                CornerRadius="{DynamicResource ControlCornerRadius}"
+                Style="{DynamicResource HighlightBorder}"
+                Background="{TemplateBinding Background}"
+                x:Name="Root">
+            <ContentControl x:Name="HighlightControl"
+                            Style="{DynamicResource HighlightContentControl}"
+                            BorderBrush="{DynamicResource InputDefaultBrush}"
+                            BorderThickness="{DynamicResource InputBorderThickness}"
+                            Opacity="1">
+                <Grid>
+                    <DockPanel>
+                        <Viewbox Margin="0,0,2,0" DockPanel.Dock="Right">
+                            <TextBlock Text="6" FontFamily="Marlett"
+                                        Foreground="{DynamicResource GlyphBrush}"
+                                        VerticalAlignment="Center"/>
+                        </Viewbox>
+                        <TextBlock x:Name="PART_TextFilterString"
+                                    Style="{StaticResource BaseTextBlockStyle}"
+                                    TextTrimming="CharacterEllipsis" HorizontalAlignment="Stretch" 
+                                    VerticalAlignment="Center" DockPanel.Dock="Left"
+                                    Margin="5,0,0,0"/>
+                    </DockPanel>
+                    <ToggleButton x:Name="MainToggle"
+                                          BorderThickness="0" Focusable="False"
+                                          HorizontalContentAlignment="Stretch"
+                                          Background="Transparent" />
+                    <TextBox x:Name="PART_TextFilterInput" BorderThickness="0" Style="{DynamicResource SimpleTextBox}"
+                                VerticalAlignment="Center" Margin="1,0,30,0" Background="Transparent"/>
+                    <Button x:Name="PART_ButtonClearFilter"
+                                    Margin="0,0,20,0" FontSize="18"
+                                    Background="Transparent" HorizontalAlignment="Right"
+                                    BorderThickness="0" Padding="3,0,3,0"
+                                    ContentTemplate="{DynamicResource ClearTextIconTemplate}">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsMouseOver, ElementName=Root}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Popup Placement="Bottom" Focusable="False" AllowsTransparency="True" Name="Popup"
+                           IsOpen="{Binding IsChecked, ElementName=MainToggle, Mode=TwoWay, Delay=100}" StaysOpen="False"
+                           MaxHeight="300" MinWidth="{Binding ActualWidth, ElementName=MainToggle}">
+                        <Border Background="{DynamicResource PopupBackgroundBrush}"
+                                BorderThickness="{DynamicResource PopupBorderThickness}"
+                                BorderBrush="{DynamicResource PopupBorderBrush}"
+                                Effect="{DynamicResource DefaultDropShadow}"
+                                Margin="{DynamicResource DropShadowThickness}"
+                                Width="{Binding ActualWidth, ElementName=MainToggle}"
+                                CornerRadius="{DynamicResource ControlCornerRadius}">
+                            <ItemsControl x:Name="PART_ItemsPanel" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                        </Border>
+                    </Popup>
+                </Grid>
+            </ContentControl>
+        </Border>
+        <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding ElementName=PART_TextFilterString, Path=Text, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToBoolConverter}}" Value="{StaticResource True}">
+                <Setter Property="Tag" TargetName="HighlightControl" Value="{StaticResource True}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ElementName=PART_TextFilterInput, Path=Text, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToBoolConverter}}" Value="{StaticResource True}">
+                <Setter Property="Tag" TargetName="HighlightControl" Value="{StaticResource True}"/>
+            </DataTrigger>
+            <Trigger Property="IsFocused" Value="True" SourceName="Root">
+                <Setter Property="Background" Value="Transparent" TargetName="PART_TextFilterInput"/>
+            </Trigger>
+            <Trigger Property="IsChecked" SourceName="MainToggle" Value="True">
+                <!--Force Popup Position Update-->
+                <Trigger.EnterActions>
+                    <BeginStoryboard x:Name="PopupFollow">
+                        <Storyboard>
+                            <DoubleAnimation Duration="1:0:0" AutoReverse="True" RepeatBehavior="Forever"
+                                                         Storyboard.TargetName="Popup" Storyboard.TargetProperty="VerticalOffset"
+                                                         To="1"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <StopStoryboard BeginStoryboardName="PopupFollow"/>
+                </Trigger.ExitActions>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True" SourceName="Root">
+                <Setter Property="Margin" TargetName="PART_TextFilterString" Value="5,0,20,0"/>
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" SourceName="Root" Value="True"/>
+                    <Condition Property="Visibility" SourceName="PART_TextFilterInput" Value="Visible"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource InputHoveredBrush}" TargetName="Root"/>
+                <Setter Property="Margin" TargetName="PART_TextFilterInput" Value="1,0,50,0"/>
+            </MultiTrigger>
+            <Trigger Property="IsFocused" Value="True" SourceName="PART_TextFilterInput">
+                <Setter Property="Background" Value="{DynamicResource InputSelectedBrush}" TargetName="Root"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="FilterSelectionBoxItemStyle" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <CheckBox IsThreeState="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=CheckBox}, Path=IsThreeState, Mode=TwoWay}" 
+                              IsChecked="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=CheckBox}, Path=IsChecked, Mode=TwoWay}" 
+                              Margin="3">
+                        <ContentPresenter/>
+                    </CheckBox>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type FilterEnumSelectionBox}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Height" Value="24" />
+        <Setter Property="Template" Value="{DynamicResource FilterSelectionBoxTemplate}" />
+    </Style>
+    
+    <Style TargetType="{x:Type FilterStringSelectionBox}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Height" Value="24" />
+        <Setter Property="Template" Value="{DynamicResource FilterSelectionBoxTemplate}" />
+    </Style>
+
+    <Style TargetType="{x:Type FilterSelectionBox}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Height" Value="24" />
+        <Setter Property="Template" Value="{DynamicResource FilterSelectionBoxTemplate}" />
+    </Style>
+</ResourceDictionary>
