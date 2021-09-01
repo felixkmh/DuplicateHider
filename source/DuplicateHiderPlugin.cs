@@ -376,7 +376,7 @@ namespace DuplicateHider
         {
             var oldId = args.OldValue?.FirstOrDefault()?.Id;
             var newId = args.NewValue?.FirstOrDefault()?.Id;
-            if  (oldId != newId)
+            if (oldId != newId)
             {
                 CurrentlySelected = newId;
                 GameSelected?.Invoke(this, new GameSelectedArgs() { oldId = oldId, newId = newId });
