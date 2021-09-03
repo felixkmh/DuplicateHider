@@ -10,7 +10,8 @@
                 <ControlTemplate TargetType="{x:Type LibraryListView}">
                     <GamesGridView x:Name="PART_ListGames"
                                    d:DesignWidth="1280" d:DesignHeight="960"
-                                   d:DataContext="{x:Static DesignMainViewModel.DesignIntance}"/>
+                                   d:DataContext="{x:Static DesignMainViewModel.DesignIntance}"
+                                   Background="{DynamicResource WindowBackgourndBrushLight}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

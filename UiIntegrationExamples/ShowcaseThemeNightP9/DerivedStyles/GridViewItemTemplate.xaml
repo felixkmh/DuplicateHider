@@ -8,46 +8,99 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type GameListItem}">
-                    <Border BorderThickness="{Settings GridItemMargin}" BorderBrush="{DynamicResource GridItemBackgroundBrush}">
-                        <StackPanel Name="PART_PanelHost"
-                                    d:DataContext="{x:Static DesignMainViewModel.DesignSelectedGameIntance}">
-
-                            <Grid Width="{Settings GridItemWidth}"
-                              Height="{Settings GridItemHeight}">
-                                <Image Name="PART_ImageCover"
-                                   RenderOptions.BitmapScalingMode="Fant" StretchDirection="Both"
-                                   HorizontalAlignment="Center" VerticalAlignment="Center"
-                                   Stretch="{Settings CoverArtStretch}" />
-                                <Border Background="#99000000" x:Name="TextGameName" Visibility="Collapsed">
-                                    <TextBlock Text="{Binding DisplayName}"
-                                           TextWrapping="Wrap" Margin="5"
-                                           Style="{StaticResource BaseTextBlockStyle}"
-                                           TextTrimming="CharacterEllipsis" TextAlignment="Center"
-                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <Border Background="#AA000000" x:Name="BorderMouseOver" Visibility="Collapsed" />
-                                <Viewbox VerticalAlignment="Center" HorizontalAlignment="Center"
-                                         Name="GameControls"  Visibility="Collapsed">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Button Name="PART_ButtonPlay" Style="{StaticResource SimpleButton}"
-                                                Margin="20,0,2,0" VerticalAlignment="Center"
-                                                Content="&#xec74;" FontFamily="{StaticResource FontIcoFont}" />
-                                        <Button Name="PART_ButtonInfo" Style="{StaticResource SimpleButton}"
-                                                Margin="2,0,20,0" VerticalAlignment="Center"
-                                                Content="&#xef4f;" FontFamily="{StaticResource FontIcoFont}" />
-                                    </StackPanel>
-                                </Viewbox>
-                            </Grid>
-                            <TextBlock Text="{Binding DisplayName}"
-                                   Style="{DynamicResource BaseTextBlockStyle}"                                                                   
-                                   TextAlignment="Center" TextTrimming="CharacterEllipsis"
-                                   VerticalAlignment="Center"
-                                   Padding="2,5,2,5" Grid.Row="1" Grid.Column="0"
-                                   Width="{Settings GridItemWidth}" 
-                                   Visibility="{Settings ShowNamesUnderCovers}" />
-                        </StackPanel>
-                    </Border>
+                    <Grid>
+                        <Border x:Name="Mask" Background="Black" CornerRadius="{DynamicResource GridItemCornerRadius}"/>
+                        <Border BorderThickness="0"  
+                                Background="Transparent"
+                                x:Name="OutsideBorder" CornerRadius="{DynamicResource GridItemCornerRadius}"
+                                >
+                            <Border.OpacityMask>
+                                <VisualBrush Visual="{Binding ElementName=Mask}"/>
+                            </Border.OpacityMask>
+                            <StackPanel Name="PART_PanelHost"
+                                        d:DataContext="{x:Static DesignMainViewModel.DesignSelectedGameIntance}">
+                                <Grid Width="{Settings GridItemWidth}"
+                                  Height="{Settings GridItemHeight}">
+                                    <Image Name="PART_ImageCover"
+                                           RenderOptions.BitmapScalingMode="Fant" StretchDirection="Both"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           Stretch="{Settings CoverArtStretch}" />
+                                    <Border Background="#99000000" x:Name="TextGameName" Visibility="Hidden">
+                                        <TextBlock Text="{Binding DisplayName}"
+                                               TextWrapping="Wrap"
+                                               Style="{StaticResource BaseTextBlockStyle}"
+                                               TextTrimming="CharacterEllipsis" TextAlignment="Center"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <Border OpacityMask="{DynamicResource BottomFadingBrush}"
+                                            Background="{DynamicResource WindowBackgourndBrushHighlight}" 
+                                            x:Name="BorderMouseOver" Visibility="Hidden" 
+                                            Opacity="0.75"/>
+                                    <Border Background="{DynamicResource WindowBackgourndBrushLight}" 
+                                            x:Name="DarkenBorder" Visibility="Hidden"  Opacity="0.9"
+                                            />
+                                    <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5">
+                                        <!--<Border CornerRadius="8" Background="{DynamicResource WindowBackgourndBrushLight}" Opacity="0.7"/>-->
+                                        <ContentControl x:Name="DuplicateHider_SourceSelector1" RenderOptions.BitmapScalingMode="Fant" Visibility="Collapsed"/>
+                                    </Grid>
+                                    <Viewbox VerticalAlignment="Center" HorizontalAlignment="Center"
+                                             Name="GameControls"  Visibility="Hidden">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Name="PART_ButtonPlay" Style="{StaticResource SimpleButton}"
+                                                    Margin="20,0,2,0" VerticalAlignment="Center"
+                                                    Content="&#xec74;" FontFamily="{StaticResource FontIcoFont}" />
+                                            <Button Name="PART_ButtonInfo" Style="{StaticResource SimpleButton}"
+                                                    Margin="2,0,20,0" VerticalAlignment="Center"
+                                                    Content="&#xef4f;" FontFamily="{StaticResource FontIcoFont}" />
+                                        </StackPanel>
+                                    </Viewbox>
+                                </Grid>
+                                <TextBlock Text="{Binding DisplayName}" x:Name="LowerText"
+                                       Style="{DynamicResource BaseTextBlockStyle}"                                                                   
+                                       TextAlignment="Center" TextTrimming="CharacterEllipsis"
+                                       VerticalAlignment="Center"
+                                       Padding="10,5,10,5" Grid.Row="1" Grid.Column="0"
+                                       Width="{Settings GridItemWidth}" 
+                                       Visibility="{Settings ShowNamesUnderCovers}"
+                                       Background="{DynamicResource WindowBackgourndBrushLight}"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
                     <ControlTemplate.Triggers>
+                        <!--Fade in effect when mouse enters Item.-->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation 
+                                            Storyboard.TargetName="DuplicateHider_SourceSelector1" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1" Duration="0:0:0.15" />
+                                        <ObjectAnimationUsingKeyFrames
+                                            Storyboard.TargetName="DuplicateHider_SourceSelector1"
+                                            Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <!--Fade out effect when mouse leaves Item.-->
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation 
+                                            Storyboard.TargetName="DuplicateHider_SourceSelector1" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0" Duration="0:0:0.15" />
+                                        <ObjectAnimationUsingKeyFrames
+                                            Storyboard.TargetName="DuplicateHider_SourceSelector1"
+                                            Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.15" Value="{x:Static Visibility.Collapsed}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
                         <DataTrigger Binding="{Binding IsInstalled}" Value="False">
                             <Setter Property="Content" Value="&#xef08;" TargetName="PART_ButtonPlay" />
                         </DataTrigger>
@@ -56,7 +109,8 @@
                                 <Condition Binding="{Binding IsInstalled}" Value="False" />
                                 <Condition Binding="{Settings DarkenUninstalledGamesGrid}" Value="True" />
                             </MultiDataTrigger.Conditions>
-                            <Setter Property="Visibility" Value="Visible" TargetName="BorderMouseOver" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="DarkenBorder" />
+                            <Setter Property="Opacity" Value="0.6" TargetName="LowerText" />
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -69,6 +123,94 @@
                             <Setter Property="Visibility" Value="Visible" TargetName="BorderMouseOver"/>
                             <Setter Property="Visibility" Value="Visible" TargetName="GameControls"/>
                         </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="DuplicateHider_IconStackPanelStyle1" TargetType="{x:Type StackPanel}">
+        <Setter Property="Orientation" Value="Vertical"/>
+    </Style>
+
+    <Style
+        x:Key="DuplicateHider_IconContentControlStyle1"
+        BasedOn="{StaticResource {x:Type ContentControl}}"
+        TargetType="ContentControl">
+        <Style.Resources>
+            <DropShadowEffect
+                x:Key="glowEffect"
+                BlurRadius="8"
+                Opacity="1"
+                RenderingBias="Quality"
+                ShadowDepth="0"
+                Color="{DynamicResource GlyphColor}" />
+        </Style.Resources>
+        <Setter Property="BorderBrush" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="{x:Null}" />
+        <Setter Property="Background" Value="{x:Null}" />
+        <Setter Property="Padding" Value="0,0,0,0" />
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="BorderThickness" Value="0,0,0,0" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="ClipToBounds" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Border x:Name="IconBackground" CornerRadius="8" Background="{DynamicResource WindowBackgourndBrush}" Opacity="1" Visibility="Visible">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock x:Name="SourceText" Text="{Binding SourceName}" Style="{DynamicResource BaseTextBlockStyle}" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                           TextAlignment="Center" Width="70" 
+                                           TextTrimming="CharacterEllipsis"
+                                           Opacity="{Binding Game.IsInstalled, Converter={StaticResource OpacityBoolConverter}}">
+                                        <TextBlock.LayoutTransform>
+                                            <ScaleTransform x:Name="SourceNameScale" ScaleX="0"/>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                    <Image MaxWidth="20" MaxHeight="20" Source="{Binding Icon}" RenderOptions.BitmapScalingMode="Fant" Margin="3" HorizontalAlignment="Right"
+                                       Opacity="{Binding Game.IsInstalled, Converter={StaticResource OpacityBoolConverter}}"/>
+
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Border.Visibility" Value="Visible" TargetName="IconBackground"/>
+                            <Setter Property="Border.Background" Value="{DynamicResource WindowBackgourndBrushBright}" TargetName="IconBackground"/>
+                            <Setter Property="Border.Opacity" Value="1" TargetName="IconBackground"/>
+                            <Setter Property="Effect" Value="{StaticResource glowEffect}" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="SourceNameScale" Storyboard.TargetProperty="(ScaleTransform.ScaleX)" Duration="0:0:0.15" To="1">
+                                            <DoubleAnimation.EasingFunction>
+                                                <QuadraticEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="SourceNameScale" Storyboard.TargetProperty="(ScaleTransform.ScaleX)" Duration="0:0:0.15" To="0">
+                                            <DoubleAnimation.EasingFunction>
+                                                <QuadraticEase EasingMode="EaseIn"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <DataTrigger Binding="{Binding IsCurrent}" Value="True">
+                            <Setter Property="Border.Visibility" Value="Visible" TargetName="IconBackground"/>
+                            <Setter Property="Border.Background" Value="{DynamicResource WindowBackgourndBrushHighlight}" TargetName="IconBackground"/>
+                            <Setter Property="Border.Opacity" Value="1" TargetName="IconBackground"/>
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
