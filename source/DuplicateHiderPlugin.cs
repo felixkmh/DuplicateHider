@@ -157,11 +157,14 @@ namespace DuplicateHider
             {
                 NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.CreationTime
             };
-            iconWatcher.Renamed += IconWatcher_Changed;
-            iconWatcher.Created += IconWatcher_Changed;
-            iconWatcher.Deleted += IconWatcher_Changed;
-            iconWatcher.Changed += IconWatcher_Changed;
-            iconWatcher.EnableRaisingEvents = true;
+            if (iconWatcher != null)
+            {
+                iconWatcher.Renamed += IconWatcher_Changed;
+                iconWatcher.Created += IconWatcher_Changed;
+                iconWatcher.Deleted += IconWatcher_Changed;
+                iconWatcher.Changed += IconWatcher_Changed;
+                iconWatcher.EnableRaisingEvents = true;
+            }
 
             // Clean orphaned entries from Priorites list
             for (int i = settings.Priorities.Count - 1; i >= 0; --i)
@@ -302,7 +305,6 @@ namespace DuplicateHider
             {
 
             }
-            
         }
 
         private class DuplicateHiderItem : ISearchItem<string>
@@ -386,7 +388,10 @@ namespace DuplicateHider
 
         public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
         {
-            iconWatcher.EnableRaisingEvents = false;
+            if (iconWatcher != null)
+            {
+                iconWatcher.EnableRaisingEvents = false;
+            }
             PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
             PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
             settings.OnSettingsChanged -= Settings_OnSettingsChanged;
