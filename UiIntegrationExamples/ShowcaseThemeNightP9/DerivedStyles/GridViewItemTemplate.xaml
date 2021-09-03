@@ -45,7 +45,7 @@
                                     </Grid>
                                     <Viewbox VerticalAlignment="Center" HorizontalAlignment="Center"
                                              Name="GameControls"  Visibility="Hidden">
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Orientation="Horizontal" Effect="{DynamicResource TextDropShadow}">
                                             <Button Name="PART_ButtonPlay" Style="{StaticResource SimpleButton}"
                                                     Margin="20,0,2,0" VerticalAlignment="Center"
                                                     Content="&#xec74;" FontFamily="{StaticResource FontIcoFont}" />
