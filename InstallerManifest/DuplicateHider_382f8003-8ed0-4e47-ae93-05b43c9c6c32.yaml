@@ -1,5 +1,12 @@
 AddonId: DuplicateHider_382f8003-8ed0-4e47-ae93-05b43c9c6c32
 Packages:
+  - Version: 3.0.0
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-03
+    PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.0.0/DuplicateHider_3_0_0.pext
+    Changelog:
+      - Playnite 9 support
+      - Custom UI Elements for custom theme integration
   - Version: 2.3.2
     RequiredApiVersion: 5.5.0
     ReleaseDate: 2021-01-09
