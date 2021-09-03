@@ -35,7 +35,7 @@
                                     <Border OpacityMask="{DynamicResource BottomFadingBrush}"
                                             Background="{DynamicResource WindowBackgourndBrushHighlight}" 
                                             x:Name="BorderMouseOver" Visibility="Hidden" 
-                                            Opacity="0.75"/>
+                                            Opacity="0.5"/>
                                     <Border Background="{DynamicResource WindowBackgourndBrushLight}" 
                                             x:Name="DarkenBorder" Visibility="Hidden"  Opacity="0.9"
                                             />
