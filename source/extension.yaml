@@ -8,6 +8,3 @@ Icon: icon.png
 Links:
   - Name: GitHub
     Url: https://github.com/felixkmh/DuplicateHider
-UpdaterConfig:
-  GitHubUser: felixkmh
-  GitHubRepo: DuplicateHider
