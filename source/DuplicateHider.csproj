@@ -34,16 +34,14 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Playnite.SDK, Version=5.6.16.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Playnite.SDK, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\playnite-dev\Playnite9\build\Debug\Playnite.SDK.dll</HintPath>
+      <HintPath>..\..\playnite-dev\Playnite9Beta\Playnite.SDK.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="QuickSearchSDK, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\playnite-dev\QuickSearch\QuickSearchSDK\bin\Release\QuickSearchSDK.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="QuickSearchSDK">
+      <HintPath>..\..\playnite-dev\QuickSearch\bin\Debug\QuickSearchSDK.dll</HintPath>
     </Reference>
     <Reference Include="QuickSearchSDK.Attributes">
       <HintPath>..\..\playnite-dev\QuickSearch\QuickSearchSDK\bin\Debug\QuickSearchSDK.Attributes.dll</HintPath>
@@ -172,7 +170,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>%25LOCALAPPDATA%25\Playnite\Toolbox.exe pack $(ProjectDir)$(OutDir) $(ProjectDir)bin
+    <PostBuildEvent>D:\Programmierung\playnite-dev\Playnite9Beta\Toolbox.exe pack $(ProjectDir)$(OutDir) $(ProjectDir)bin
 </PostBuildEvent>
   </PropertyGroup>
 </Project>
