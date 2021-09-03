@@ -31,7 +31,7 @@ namespace DuplicateHider
         public Dictionary<Guid, Guid> SharedGameIds { get; set; } = new Dictionary<Guid, Guid>();
 
 
-        public UniqueList<string> IncludePlatforms { get; set; } = new UniqueList<string> { "PC", Constants.UNDEFINED_SOURCE };
+        public UniqueList<string> IncludePlatforms { get; set; } = new UniqueList<string> { "PC (Windows)", Constants.UNDEFINED_SOURCE };
         public UniqueList<string> ExcludeSources { get; set; } = new UniqueList<string>();
         public UniqueList<string> ExcludeCategories { get; set; } = new UniqueList<string>();
         public HashSet<Guid> IgnoredGames { get; set; } = new HashSet<Guid>();
