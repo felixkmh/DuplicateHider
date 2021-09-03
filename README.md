@@ -5,7 +5,8 @@ An extension for [Playnite](https://github.com/JosefNemec/Playnite/ "Playnite - 
 
 ## Extension Settings
 
-![Extension Settings](https://i.ibb.co/prHsD6L/grafik.png "Plugin Settings")
+![Extension Settings](https://user-images.githubusercontent.com/24227002/132069628-437aedbd-17c0-4277-8cca-1c36af65cf59.png "Plugin Settings")
+
 
 ### Priorites
 
