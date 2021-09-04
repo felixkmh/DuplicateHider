@@ -42,12 +42,11 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="QuickSearchSDK, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\playnite-dev\QuickSearch\source\QuickSearchSDK\bin\Debug\QuickSearchSDK.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\playnite-dev\QuickSearch\source\bin\Release\QuickSearchSDK.dll</HintPath>
     </Reference>
     <Reference Include="QuickSearchSDK.Attributes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\playnite-dev\QuickSearch\source\QuickSearchSDK\bin\Debug\QuickSearchSDK.Attributes.dll</HintPath>
+      <HintPath>..\..\playnite-dev\QuickSearch\source\bin\Release\QuickSearchSDK.Attributes.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
