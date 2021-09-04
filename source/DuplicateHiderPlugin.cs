@@ -266,7 +266,7 @@ namespace DuplicateHider
             {
                 if (AppDomain.CurrentDomain.GetAssemblies()
              .Select(asm => asm.GetName())
-             .Any(asm => asm.Name == "QuickSearchSDK" && asm.Version.Major == 1 && asm.Version.Minor == 3))
+             .Any(asm => asm.Name == "QuickSearchSDK" && asm.Version.Major == 1 && asm.Version.Minor == 4))
                 {
                     QuickSearch.QuickSearchSDK.AddPluginSettings("DuplicateHider", settings, OpenSettingsView);
                     QuickSearch.QuickSearchSDK.AddCommand(new DuplicateHiderItem()

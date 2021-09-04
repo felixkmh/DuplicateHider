@@ -20,9 +20,9 @@ namespace DuplicateHider
 
         [JsonIgnore]
         private DuplicateHiderSettings previousSettings = null;
-        [QuickSearch.Attributes.GenericOption("Update Automatically", Description = "Automatically hide/reveal games when the library changes or Playnite launches")]
+        [QuickSearch.Attributes.GenericOption("LOC_DH_AutomaticUpdate", Description = "LOC_DH_AutomaticUpdateTooltip")]
         public bool UpdateAutomatically { get; set; } = false;
-        [QuickSearch.Attributes.GenericOption("Show Copies in Context Menu", Description = "If enabled, the game context menu gets a new entry listing its duplicates")]
+        [QuickSearch.Attributes.GenericOption("LOC_DH_ShowOtherCopies", Description = "LOC_DH_ShowOtherCopiesTooltip")]
         public bool ShowOtherCopiesInGameMenu { get; set; } = false;
         public string DisplayString { get; set; } = "{Name} [{Installed} on {'Source'}{, ROM: 'ImageNameNoExt}]";
 
@@ -35,19 +35,19 @@ namespace DuplicateHider
         public UniqueList<string> ExcludeSources { get; set; } = new UniqueList<string>();
         public UniqueList<string> ExcludeCategories { get; set; } = new UniqueList<string>();
         public HashSet<Guid> IgnoredGames { get; set; } = new HashSet<Guid>();
-        [QuickSearch.Attributes.GenericOption("Ignore Automatically", Description = "Automatically add games to Ignore List when they are hidden/revealed manually")]
+        [QuickSearch.Attributes.GenericOption("LOC_DH_IgnoreManuallyHiddenGames", Description = "LOC_DH_IgnoreManuallyHiddenGamesTooltip")]
         public bool AddHiddenToIgnoreList { get; set; } = false;
-        [QuickSearch.Attributes.GenericOption("Prefer User Icons", Description = "If UI Integration is enabled, prefer user provided icons, if available")]
+        [QuickSearch.Attributes.GenericOption("LOC_DH_PreferUserIcons", Description = "LOC_DH_PreferUserIconsTooltip")]
         public bool PreferUserIcons { get; set; } = true;
-        [QuickSearch.Attributes.GenericOption("Enable Theme Icons", Description = "If UI Integration is enabled, use source icons provided by the current theme if available")]
+        [QuickSearch.Attributes.GenericOption("LOC_DH_EnableThemeIcons", Description = "LOC_DH_EnableThemeIconsTooltip")]
         public bool EnableThemeIcons { get; set; } = true;
-        [QuickSearch.Attributes.GenericOption("Enable UI Integration", Description = "Enables custom UI elements if supported by current theme")]
+        [QuickSearch.Attributes.GenericOption("LOC_DH_EnableUIIntegration", Description = "LOC_DH_EnableUIIntegrationTooltip")]
         public bool EnableUiIntegration { get; set; } = false;
-        [QuickSearch.Attributes.GenericOption("Show Single Icon", Description = "If UI Integration is enabled, show source icons even if only one copy of a game exists")]
+        [QuickSearch.Attributes.GenericOption("LOC_DH_ShowSingleIcon", Description = "LOC_DH_ShowSingleIconTooltip")]
         public bool ShowSingleIcon { get; set; } = false;
-        [QuickSearch.Attributes.GenericOption("Enable Theme Icons", Description = "If UI Integration is enabled, supress notifications about theme icons being availableb")]
+        [QuickSearch.Attributes.GenericOption("LOC_DH_SuppressNotification", Description = "LOC_DH_SuppressNotificationTooltip")]
         public bool SupressThemeIconNotification { get; set; } = false;
-        [QuickSearch.Attributes.GenericOption("Prefer Newer Games", Description = "If enabled, if games have the same score, the newer one will be prefered. Otherwise the older one will be prefered")]
+        [QuickSearch.Attributes.GenericOption("LOC_DH_PrioritizeNewerGames")]
         public bool PreferNewerGame { get; set; } = true;
 
         public List<ReplaceFilter> ReplaceFilters { get; set; } = new List<ReplaceFilter>();
