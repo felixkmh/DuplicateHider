@@ -31,10 +31,10 @@
     <sys:String x:Key="LOC_DH_DisplayString">Texto de exibição para outras cópias:</sys:String>
     <sys:String x:Key="LOC_DH_CustomRulesHeader">Defina as regras que serão aplicadas aos nomes dos jogos antes de processa-los. as regras são aplicadas na ordem em que elas aparecem na lista.</sys:String>
     <sys:String x:Key="LOC_DH_EnableUIIntegration">Habilitar integrações de interface</sys:String>
-    <sys:String x:Key="LOC_DH_EnableThemeIcons">Habilitar ícones de temas</sys:String>
+    <sys:String x:Key="LOC_DH_EnableThemeIcons">Habilitar temas de ícones</sys:String>
     <sys:String x:Key="LOC_DH_PreferUserIcons">Preferir ícones do usuário</sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIcon">Mostrar ícone se somente existir uma cópia</sys:String>
-    <sys:String x:Key="LOC_DH_SuppressNotification">Suprimir a notificação de ícone de tema</sys:String>
+    <sys:String x:Key="LOC_DH_SuppressNotification">Suprimir a notificação de tema de ícone</sys:String>
     <!--Tool Tips-->
 	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">Se habilitado, o DuplicateHider era reavaliar a posição da cópia quando ela mudar, sempre mantendo a cópia com a maior posição visível enquanto oculta todas as outras.</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">Se habilitado, as outras cópias de um jogo poderão ser iniciadas usando o menu de contexto dele.</sys:String>
@@ -45,7 +45,7 @@
     <sys:String x:Key="LOC_DH_EnableThemeIconsTooltip">Se habilitado, os ícones incluídos com o tema atual serão usados para os elementos personalizados de interface.</sys:String>
     <sys:String x:Key="LOC_DH_PreferUserIconsTooltip">Se habilitado, os ícones colocados na pasta de ícones do usuário serão sempre priorizados quando procurando por ícones de fontes.</sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIconTooltip">Indica para o tema que você não quer ter elementos personalizados de interface se não existirem cópias extras de um jogo.</sys:String>
-    <sys:String x:Key="LOC_DH_SuppressNotificationTooltip"></sys:String>
+    <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">Se habilitado, você não será notificado se um tema de ícones for encontrado no tema atual.</sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Abrir a pasta de ícones de usuário</sys:String>
 	
