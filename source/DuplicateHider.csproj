@@ -168,7 +168,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icons\playnite.ico" />
-    <Content Include="Localization\en_US.xml" />
+    <EmbeddedResource Include="Localization\en_US.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -633,7 +633,7 @@ namespace DuplicateHider
 #endif
                 new MainMenuItem
                 {
-                    Description = "Hide Duplicates",
+                    Description = ResourceProvider.GetString("LOC_DH_HideDuplicatesEntry"),
                     MenuSection = "@|DuplicateHider",
                     Action = (context) => {
                         PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
@@ -641,14 +641,14 @@ namespace DuplicateHider
                         BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
                         var hidden = SetDuplicateState(Hidden);
                         PlayniteApi.Database.Games.Update(hidden);
-                        PlayniteApi.Dialogs.ShowMessage($"{hidden.Where(g => g.Hidden).Count()} games have been hidden.", "DuplicateHider");
+                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOC_DH_NGamesHidden"), hidden.Where(g => g.Hidden).Count()), "DuplicateHider");
                         PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
                         PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
                     }
                 },
                 new MainMenuItem
                 {
-                    Description = "Reveal Duplicates",
+                    Description = PlayniteApi.Resources.GetString("LOC_DH_RevealDuplicatesEntry"),
                     MenuSection = "@|DuplicateHider",
                     Action = (context) => {
                         PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
@@ -656,14 +656,14 @@ namespace DuplicateHider
                         BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
                         var revealed = SetDuplicateState(Visible);
                         PlayniteApi.Database.Games.Update(revealed);
-                        PlayniteApi.Dialogs.ShowMessage($"{revealed.Where(g => !g.Hidden).Count()} games have been revealed.", "DuplicateHider");
+                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOC_DH_NGamesRevealed"), revealed.Where(g => !g.Hidden).Count()), "DuplicateHider");
                         PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
                         PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
                     }
                 },
                 new MainMenuItem
                 {
-                    Description = "Add Selected Games to Ignore List",
+                    Description = ResourceProvider.GetString("LOC_DH_AddSelectedToIgnoreEntry"),
                     MenuSection = "@|DuplicateHider",
                     Action = (context) => {
                         PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
@@ -677,7 +677,7 @@ namespace DuplicateHider
                 },
                 new MainMenuItem
                 {
-                    Description = "Remove Selected Games from Ignore List",
+                    Description = ResourceProvider.GetString("LOC_DH_RemoveSelectedFromIgnoreEntry"),
                     MenuSection = "@|DuplicateHider",
                     Action = (context) => {
                         PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
@@ -750,12 +750,13 @@ namespace DuplicateHider
                 {
                     var selected = args.Games[0];
                     var others = GetOtherCopies(selected);
+                    string menuSection = string.Format(ResourceProvider.GetString("LOC_DH_N_OtherCopies"), others.Count());
                     foreach (var copy in others)
                     {
                         entries.Add(new GameMenuItem
                         {
                             Action = context => PlayniteApi.StartGame(copy.Id),
-                            MenuSection = $"Other Copies: {others.Count()}",
+                            MenuSection = menuSection,
                             Description = ExpandDisplayString(copy, settings.DisplayString)
                         });
                     }

@@ -120,9 +120,9 @@
                                                Text="{DynamicResource LOCTimePlayed}"
                                                Margin="0,0,0,10" />
                                     <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
-                                               Text="{Binding Playtime, Converter={StaticResource LongToTimePlayedConverter}}" />
+                                               Text="{Binding Playtime, Converter={StaticResource PlayTimeToStringConverter}}" />
                                 </StackPanel>
-
+                                
                                 <StackPanel Margin="50,0,0,0">
                                     <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
                                                FontFamily="{DynamicResource FontTitilliumWebBold}"
@@ -138,7 +138,7 @@
                                                Text="{DynamicResource LOCGameReleaseDateTitle}"
                                                Margin="0,0,0,10" />
                                     <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
-                                               Text="{Binding ReleaseDate, Converter={StaticResource NullableDateToStringConverter}}" />
+                                               Text="{Binding ReleaseDate}" />
                                 </StackPanel>
 
                                 <StackPanel Margin="50,0,0,0">
@@ -147,10 +147,10 @@
                                                Text="{DynamicResource LOCGamePlatformTitle}"
                                                Margin="0,0,0,10" />
                                     <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
-                                               Text="{Binding Platform}" />
+                                               Text="{Binding Platforms, Converter={StaticResource ListToStringConverter}}" />
                                 </StackPanel>
                             </StackPanel>
-
+                            
                             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" x:Name="ButtonPanel">
                                 <ButtonEx x:Name="PART_ButtonContext"
                                           Margin="2,2,2,2" BorderThickness="2" MinWidth="220" HorizontalContentAlignment="Center" />
