@@ -29,22 +29,22 @@
 	<sys:String x:Key="LOC_DH_IgnoredGames">Jeux ignorés :</sys:String>
     <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGames">Ajouter manuellement les jeux cachés / révélés</sys:String>
     <sys:String x:Key="LOC_DH_DisplayString">Chaînes affichés pour les autres copies :</sys:String>
-    <sys:String x:Key="LOC_DH_CustomRulesHeader"></sys:String>
+    <sys:String x:Key="LOC_DH_CustomRulesHeader">Définit des règles qui sont appliquées aux noms de jeux avant tout traitement ultérieur. Les règles sont appliquées dans l'ordre où elles apparaissent dans la liste.</sys:String>
     <sys:String x:Key="LOC_DH_EnableUIIntegration">Activer l'intégration UI</sys:String>
     <sys:String x:Key="LOC_DH_EnableThemeIcons">Activer les icônes du thème</sys:String>
     <sys:String x:Key="LOC_DH_PreferUserIcons">Préférer les icônes utilisateur</sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIcon">Afficher une icône s'il y a seulement une copie</sys:String>
-    <sys:String x:Key="LOC_DH_SuppressNotification"></sys:String>
+    <sys:String x:Key="LOC_DH_SuppressNotification">Suppression de la notification de l'icône du thème</sys:String>
     <!--Tool Tips-->
-	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip"></sys:String>
-	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip"></sys:String>
-	<sys:String x:Key="LOC_DH_PrioritizeNewerGamesTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGamesTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_DisplayStringTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_EnableUIIntegrationTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_EnableThemeIconsTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_PreferUserIconsTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_ShowSingleIconTooltip"></sys:String>
+	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">Si activé, DuplicateHider réévalue le rang d'un doublon lors de changement, en gardant toujours la copie avec le rang le plus élevé visible tout en cachant les autres.</sys:String>
+	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">Si activé, d'autres copies peuvent être lancées à l'aide du menu contextuel d'un jeu.</sys:String>
+	<sys:String x:Key="LOC_DH_PrioritizeNewerGamesTooltip">Activé : Préférer le jeu le plus récent si les scores sont égaux. Désactivé : Préférer le jeu le plus ancien si les scores sont égaux.</sys:String>
+    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGamesTooltip">Si activé, les jeux cachés ou révélés par d'autres moyens que DuplicateHider seront ajoutés à la liste des ignorés.</sys:String>
+    <sys:String x:Key="LOC_DH_DisplayStringTooltip">Clic-droit de la souris pour insérer des variables de type placeholder.</sys:String>
+    <sys:String x:Key="LOC_DH_EnableUIIntegrationTooltip">Active les éléments d'interface utilisateur personnalisés selon qu'ils sont pris en charge par le thème actuel.</sys:String>
+    <sys:String x:Key="LOC_DH_EnableThemeIconsTooltip">Si cette option est activée, les icônes incluses dans le thème actuel sont utilisées pour les éléments d'interface utilisateur personnalisés.</sys:String>
+    <sys:String x:Key="LOC_DH_PreferUserIconsTooltip">Si activée, les icônes placées dans le dossier d'icônes utilisateur sont toujours prioritaires lors de la recherche d'icônes sources.</sys:String>
+    <sys:String x:Key="LOC_DH_ShowSingleIconTooltip">Indique au thème que vous ne voulez pas avoir d'éléments d'interface personnalisés s'il n'y a pas de doublons d'un jeu.</sys:String>
     <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">Si activé, vous ne serez pas averti si des icônes de thème sont trouvées dans le thème actuel.</sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Ouvrir le dossier icônes utilisateur</sys:String>
