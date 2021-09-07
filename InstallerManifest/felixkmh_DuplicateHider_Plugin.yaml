@@ -1,25 +1,32 @@
-AddonId: felixkmh_DuplicateHider_Plugin
+AddonId: 'felixkmh_DuplicateHider_Plugin'
 Packages:
+  - Version: 3.1.1
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-05
+    PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.1.1/felixkmh_DuplicateHider_Plugin_3_1_1.pext
+    Changelog:
+      - 'dutch translation by WaelALR'
+      - 'french translation by Lacro59 and ohkami'
   - Version: 3.1.0
     RequiredApiVersion: 6.0.0
     ReleaseDate: 2021-09-04
     PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.1.0/felixkmh_DuplicateHider_Plugin_3_1_0.pext
     Changelog:
-      - Localization support. See https://crowdin.com/project/duplicatehider to contribute
-      - added german translation
-      - added Portuguese, Brazilian translation. Contributed by @ferrazpedro
-      - Updated to QuickSearchSDK 1.4
+      - 'Localization support. See https://crowdin.com/project/duplicatehider to contribute'
+      - 'added german translation'
+      - 'added Portuguese, Brazilian translation. Contributed by @ferrazpedro'
+      - 'Updated to QuickSearchSDK 1.4'
   - Version: 3.0.0
     RequiredApiVersion: 6.0.0
     ReleaseDate: 2021-09-03
     PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.0.0/felixkmh_DuplicateHider_Plugin_3_0_0.pext
     Changelog:
-      - Playnite 9 Beta support, not compatible with Playnite 8!
-      - Custom UI Elements for custom theme integration
-      - Changed Id, so you need to uninstall before reinstalling!
+      - 'Playnite 9 Beta support, not compatible with Playnite 8!'
+      - 'Custom UI Elements for custom theme integration'
+      - 'Changed Id, so you need to uninstall before reinstalling!'
   - Version: 2.3.2
     RequiredApiVersion: 5.5.0
     ReleaseDate: 2021-01-09
     PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v2.3.2/DuplicateHider_2_3_2.pext
     Changelog:
-      - Fixed extension crashing when games contained numbers outside int32 range.
+      - 'Fixed extension crashing when games contained numbers outside int32 range.'
