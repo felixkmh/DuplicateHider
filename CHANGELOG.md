@@ -1,3 +1,21 @@
+## v3.1.3 (2021-09-07)
+
+### Fix
+
+- catch error when library icon path is null
+- icon opacity is not changed based on installation status using code behind, it is only handled by each theme
+
+### Perf
+
+- ListData objects are properly being reused to save time wasted on their innitialization
+- store dictionary that keeps a list of copies for each game
+
+### Refactor
+
+- fixed release date
+- added new package
+- cz init
+
 ## v3.1.2 (2021-09-07)
 
 ### Fix
