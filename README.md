@@ -142,7 +142,7 @@ Example Styles can be found [here](UiIntegrationExamples/DuplicateHider_ContentC
 Themes can also supply their own source icons, by adding entries to the resource dictionary and adding the icon files into the appropriate folder. The entries need to have the key  `DuplicateHider_SOURCENAME_Icon`, where _SOURCENAME_ needs to be replaced by the name of the source as seen in the _Priority List_. For example, if you want to add an icon for Uplay aka Ubisoft Connect, you might add
 
 ```xml
-<BitmapImage x:Key="DuplicateHider_Ubisoft Connect_Icon" UriSource="{ThemeFile 'Images/Icons/ubisoft.png'}" RenderOptions.BitmapScalingMode="Fant" popt:Freeze="True"/>
+<BitmapImage x:Key="DuplicateHider_Ubisoft Connect_Icon" UriSource="{ThemeFile 'Images/Icons/ubisoft.png'}" RenderOptions.BitmapScalingMode="Fant"/>
 ```
 
 to the `Media.xaml` file and place `ubisoft.png` into the `Image/Icons` folder. A default icon can be specified by giving it the key ```DuplicateHider_Default_Icon```
