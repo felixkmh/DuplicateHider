@@ -45,6 +45,7 @@ namespace DuplicateHider
         public override Guid Id { get; } = Guid.Parse("382f8003-8ed0-4e47-ae93-05b43c9c6c32");
 
         private Dictionary<string, List<Guid>> Index { get; set; } = new Dictionary<string, List<Guid>>();
+        private Dictionary<Guid, List<Game>> GuidToCopies { get; set; } = new Dictionary<Guid, List<Game>>();
 
         internal static readonly IconCache SourceIconCache = new IconCache();
 
@@ -105,6 +106,19 @@ namespace DuplicateHider
             });
 
             AddSettingsSupport(new AddSettingsSupportArgs { SettingsRoot = "settings", SourceName = "DuplicateHider" });
+        }
+
+        internal void UpdateGuidToCopiesDict()
+        {
+            GuidToCopies.Clear();
+            foreach(var pair in Index)
+            {
+                var copies = pair.Value.Select(id => PlayniteApi.Database.Games.Get(id)).Where(g => g is Game).ToList();
+                foreach(var id in pair.Value)
+                {
+                    GuidToCopies.Add(id, copies);
+                }
+            }
         }
 
         static int GeneratedElements = 0;
@@ -261,6 +275,8 @@ namespace DuplicateHider
                 }
             }
 
+            UpdateGuidToCopiesDict();
+
             // QuickSearch support
             try
             {
@@ -413,6 +429,7 @@ namespace DuplicateHider
                 PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             }
             SourceIconCache.Clear();
+            UpdateGuidToCopiesDict();
             SourceSelector.ButtonCaches.ForEach(bc => bc?.Clear());
             GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
         }
@@ -453,6 +470,7 @@ namespace DuplicateHider
             PlayniteApi.Database.Games.Update(toUpdate);
             PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
+            UpdateGuidToCopiesDict();
         }
 
         private void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> e)
@@ -544,6 +562,7 @@ namespace DuplicateHider
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
             }
             PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
+            UpdateGuidToCopiesDict();
         }
 
         private class GameComparer : Comparer<Guid>
@@ -768,30 +787,16 @@ namespace DuplicateHider
 
         public List<Game> GetOtherCopies(Game game)
         {
-            var filtered = new[] { game }.AsEnumerable().Filter(GetGameFilter());
-            var duplicates = new List<Game>();
+            return GetCopies(game)?.Where(g => g.Id != (game?.Id ?? Guid.Empty)).ToList();
+        }
 
-            if (filtered.Count() == 0) 
-                return duplicates;
-
-            var name = game.Name.Filter(GetNameFilter());
-            if (Index.TryGetValue(name, out var copies))
+        public List<Game> GetCopies(Game game)
+        {
+            if (GuidToCopies.TryGetValue(game.Id, out var copies))
             {
-                var others = copies.Where(c => c != game.Id);
-                foreach (var copyId in others)
-                {
-                    if (PlayniteApi.Database.Games.Get(copyId) is Game copy)
-                    {
-                        duplicates.Add(copy);
-                    }
-                }
+                return copies;
             }
-            return duplicates
-                .OrderByDescending(g => g.IsInstalled)
-                .ThenBy(g => GetGamePriority(g.Id))
-                .ThenBy(g => g.Name)
-                .ThenBy(g => g.GetSourceName())
-                .ToList();
+            return new List<Game> { game };
         }
 
         private void UpdateDuplicateState(IEnumerable<Game> games, Visibility visibility)
@@ -886,6 +891,11 @@ namespace DuplicateHider
             }
 
             return vars;
+        }
+
+        public async Task<string> ExpandDisplayStringAsync(Game game, string displayString)
+        {
+            return ExpandDisplayString(game, displayString);
         }
 
         public string ExpandDisplayString(Game game, string displayString)
