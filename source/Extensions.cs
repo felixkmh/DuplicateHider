@@ -3,11 +3,30 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace DuplicateHider
 {
     public static class Extensions
     {
+        public static string Capitalize(this string input)
+        {
+            var builder = new StringBuilder();
+            bool lastCharSpace = true;
+            foreach (var c in input)
+            {
+                if (lastCharSpace)
+                {
+                    builder.Append(char.ToUpper(c));
+                } else
+                {
+                    builder.Append(c);
+                }
+                lastCharSpace = c == ' ' || c == '\t';
+            }
+            return builder.ToString();
+        }
+
         public static bool InsertSorted<T>(this IList<T> list, T item, Func<T, int> toValue)
         {
             if (list.Contains(item))
