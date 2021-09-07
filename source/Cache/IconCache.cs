@@ -227,7 +227,7 @@ namespace DuplicateHider.Cache
                 if (plugin is Playnite.SDK.Plugins.LibraryPlugin lp)
                 {
                     var path = lp.LibraryIcon;
-                    if (!System.IO.Path.IsPathRooted(path))
+                    if (path is string && !System.IO.Path.IsPathRooted(path))
                     {
                         var configPath = DuplicateHiderPlugin.API.Paths.ConfigurationPath;
                         path = System.IO.Path.Combine(configPath, "Extensions", plugin.Id.ToString(), path);
