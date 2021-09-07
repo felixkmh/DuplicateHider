@@ -149,9 +149,18 @@ namespace DuplicateHider.Cache
             {
                 sourceName = builtinSource;
             }
+            // sourceName = Uri.EscapeDataString(sourceName);
             if (DuplicateHiderPlugin.API.Resources.GetResource($"DuplicateHider_{sourceName}_Icon") is BitmapImage img)
             {
                 return img.UriSource.ToString();
+            }
+            if (DuplicateHiderPlugin.API.Resources.GetResource($"DuplicateHider_{sourceName.ToLower()}_Icon") is BitmapImage img2)
+            {
+                return img2.UriSource.ToString();
+            }
+            if (DuplicateHiderPlugin.API.Resources.GetResource($"DuplicateHider_{sourceName.Capitalize()}_Icon") is BitmapImage img3)
+            {
+                return img3.UriSource.ToString();
             }
             return null;
         }
