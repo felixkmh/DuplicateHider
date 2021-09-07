@@ -68,20 +68,44 @@ namespace DuplicateHider.Cache
             }
         }
 
-        internal static string GetResourceIconUri(string sourceName)
+        private static readonly Dictionary<Playnite.SDK.BuiltinExtension, string> builtinToName = new Dictionary<Playnite.SDK.BuiltinExtension, string>()
         {
-            var source = Uri.EscapeDataString(sourceName);
-            var name = GetResourceNames()
-                .Where(n => n.EndsWith(".ico", StringComparison.OrdinalIgnoreCase))
-                .FirstOrDefault(n => System.IO.Path.GetFileName(n).StartsWith(source, StringComparison.OrdinalIgnoreCase));
-            if (!string.IsNullOrEmpty(name))
+            {Playnite.SDK.BuiltinExtension.AmazonGamesLibrary, "amazon"          },
+            {Playnite.SDK.BuiltinExtension.BattleNetLibrary,   "battle.net"      },
+            {Playnite.SDK.BuiltinExtension.BethesdaLibrary,    "bethesda"        },
+            {Playnite.SDK.BuiltinExtension.EpicLibrary,        "epic"            },
+            {Playnite.SDK.BuiltinExtension.GogLibrary,         "gog"             },
+            {Playnite.SDK.BuiltinExtension.HumbleLibrary,      "humble"          },
+            {Playnite.SDK.BuiltinExtension.ItchioLibrary,      "itchio"          },
+            {Playnite.SDK.BuiltinExtension.OriginLibrary,      "origin"          },
+            {Playnite.SDK.BuiltinExtension.PSNLibrary,         "psn"             },
+            {Playnite.SDK.BuiltinExtension.SteamLibrary,       "steam"           },
+            {Playnite.SDK.BuiltinExtension.TwitchLibrary,      "twitch"          },
+            {Playnite.SDK.BuiltinExtension.UplayLibrary,       "ubisoft connect" },
+            {Playnite.SDK.BuiltinExtension.XboxLibrary,        "xbox"            },
+        };
+        
+
+        internal static string GetResourceIconUri(Game game)
+        {
+            if (game is Game)
             {
-                return $"pack://application:,,,/DuplicateHider;component/{name}";
+                var pluginId = game.PluginId;
+                var source = game.Source?.Name ?? Constants.UNDEFINED_SOURCE;
+                if (builtinToName.TryGetValue(Playnite.SDK.BuiltinExtensions.GetExtensionFromId(pluginId), out var builtinSource))
+                {
+                    source = builtinSource;
+                }
+                source = Uri.EscapeDataString(source);
+                var names = GetResourceNames()
+                    .Where(n => n.EndsWith(".ico", StringComparison.OrdinalIgnoreCase));
+                var name = names.FirstOrDefault(n => System.IO.Path.GetFileName(n).StartsWith(source, StringComparison.OrdinalIgnoreCase));
+                if (!string.IsNullOrEmpty(name))
+                {
+                    return $"pack://application:,,,/DuplicateHider;component/{name}";
+                }
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         // https://stackoverflow.com/a/2517799
@@ -104,9 +128,9 @@ namespace DuplicateHider.Cache
 
             List<string> paths = new List<string>();
 
-            var userIconPath = GetUserIconPath(name);
-            var themeIconPath = enableThemeIcons ? GetThemeIconPath(name) : null;
-            var resourceIconPath = GetResourceIconUri(name);
+            var userIconPath = GetUserIconPath(game);
+            var themeIconPath = enableThemeIcons ? GetThemeIconPath(game) : null;
+            var resourceIconPath = GetResourceIconUri(game);
             var pluginIconPath = GetPluginIconPath(game);
             if (preferUserIcons) paths.Add(userIconPath);
             if (enableThemeIcons) paths.Add(themeIconPath);
@@ -118,8 +142,13 @@ namespace DuplicateHider.Cache
                         .Concat(GetDefaultIconPaths());
         }
 
-        private static string GetThemeIconPath(string sourceName)
+        private static string GetThemeIconPath(Game game)
         {
+            var sourceName = game?.PluginId.ToString() ?? "Default";
+            if (builtinToName.TryGetValue(Playnite.SDK.BuiltinExtensions.GetExtensionFromId(game?.PluginId ?? Guid.Empty), out var builtinSource))
+            {
+                sourceName = builtinSource;
+            }
             if (DuplicateHiderPlugin.API.Resources.GetResource($"DuplicateHider_{sourceName}_Icon") is BitmapImage img)
             {
                 return img.UriSource.ToString();
@@ -127,10 +156,11 @@ namespace DuplicateHider.Cache
             return null;
         }
 
-        private string GetUserIconPath(string sourceName)
+        private string GetUserIconPath(Game game)
         {
+            var sourceName = game?.Source?.Name ?? "Default";
             if (UserIconFolderPaths.Count == 0) UserIconFolderPaths.Add(DuplicateHiderPlugin.Instance.GetUserIconFolderPath());
-            return UserIconFolderPaths
+            var paths = UserIconFolderPaths
                .SelectMany(s => System.IO.Directory.GetFiles(s))
                .Where(f => System.IO.Path.GetFileNameWithoutExtension(f).Equals(sourceName, StringComparison.OrdinalIgnoreCase))
                .FirstOrDefault(f =>
@@ -138,6 +168,22 @@ namespace DuplicateHider.Cache
                  || f.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
                  || f.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase)
                  || f.EndsWith(".ico", StringComparison.OrdinalIgnoreCase));
+            if ((paths?.Count() ?? 0) == 0)
+            {
+                if (builtinToName.TryGetValue(Playnite.SDK.BuiltinExtensions.GetExtensionFromId(game?.PluginId ?? Guid.Empty), out var builtinSource))
+                {
+                    sourceName = builtinSource;
+                    paths = UserIconFolderPaths
+                        .SelectMany(s => System.IO.Directory.GetFiles(s))
+                        .Where(f => System.IO.Path.GetFileNameWithoutExtension(f).Equals(sourceName, StringComparison.OrdinalIgnoreCase))
+                        .FirstOrDefault(f =>
+                            f.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
+                         || f.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
+                         || f.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase)
+                         || f.EndsWith(".ico", StringComparison.OrdinalIgnoreCase));
+                }
+            }
+            return paths;
         }
 
         protected IEnumerable<string> GetDefaultIconPaths()
@@ -148,9 +194,9 @@ namespace DuplicateHider.Cache
 
             List<string> paths = new List<string>();
 
-            var userIconPath = GetUserIconPath(name);
-            var themeIconPath = enableThemeIcons ? GetThemeIconPath(name) : null;
-            var resourceIconPath = GetResourceIconUri(name);
+            var userIconPath = GetUserIconPath(null);
+            var themeIconPath = enableThemeIcons ? GetThemeIconPath(null) : null;
+            var resourceIconPath = GetResourceIconUri(null);
             if (preferUserIcons) paths.Add(userIconPath);
             if (enableThemeIcons) paths.Add(themeIconPath);
             paths.Add(resourceIconPath);
@@ -172,6 +218,11 @@ namespace DuplicateHider.Cache
                 if (plugin is Playnite.SDK.Plugins.LibraryPlugin lp)
                 {
                     var path = lp.LibraryIcon;
+                    if (!System.IO.Path.IsPathRooted(path))
+                    {
+                        var configPath = DuplicateHiderPlugin.API.Paths.ConfigurationPath;
+                        path = System.IO.Path.Combine(configPath, "Extensions", plugin.Id.ToString(), path);
+                    }
                     return path;
                 }
             }
