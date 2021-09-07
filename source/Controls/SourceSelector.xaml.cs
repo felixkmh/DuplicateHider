@@ -166,14 +166,21 @@ namespace DuplicateHider.Controls
                     Game game = games[i];
                     button.Visibility = Visibility.Visible;
                     bool isCurrent = DuplicateHiderPlugin.Instance.CurrentlySelected == game.Id;
-                    ListData listData = new ListData(game, isCurrent);
+                    var listData = button.DataContext as ListData;
+                    if (listData == null)
+                    {
+                        listData = new ListData();
+                    }
 
+                    listData.Game = game;
+                    listData.IsCurrent = isCurrent;
+
+                    button.DataContext = null;
                     button.DataContext = listData;
 
-                    button.ToolTip = DuplicateHiderPlugin.Instance.ExpandDisplayString(game, DuplicateHiderPlugin.Instance.settings.DisplayString);
                     if (button.Content is Image icon)
                     {
-                        icon.Source = GetSourceIcon(game);
+                        //icon.Source = GetSourceIcon(game);
                         icon.Opacity = game.IsInstalled ? 1.0 : 0.5;
                     }
                 }
@@ -292,6 +299,9 @@ namespace DuplicateHider.Controls
                 bt.VerticalAlignment = VerticalAlignment.Center;
                 bt.MouseEnter += Icon_MouseEnter;
                 bt.MouseLeave += Icon_MouseLeave;
+                var tb = new TextBox();
+                tb.SetBinding(TextBox.TextProperty, "DisplayString");
+                bt.ToolTip = tb;
             }
 
 
@@ -309,6 +319,7 @@ namespace DuplicateHider.Controls
             RenderOptions.SetBitmapScalingMode(icon, BitmapScalingMode.Fant);
 
             bt.Content = icon;
+            icon.SetBinding(Image.SourceProperty, "Icon");
             bt.Visibility = Visibility.Collapsed;
             return bt;
         }
@@ -336,12 +347,7 @@ namespace DuplicateHider.Controls
             {
                 if (game != null)
                 {
-                    var copys = (new Game[] { game })
-                            .Concat(dh.GetOtherCopies(game))
-                            .Distinct()
-                            .OrderBy(g => DuplicateHiderPlugin.Instance.GetGamePriority(g.Id))
-                            .ThenBy(g => g.Hidden ? 1 : -1)
-                            .ThenBy(g => g.Id);
+                    var copys = dh.GetCopies(game);
                     if (MaxNumberOfIcons > 0)
                         return copys.Take(MaxNumberOfIcons);
                     else

@@ -15,22 +15,14 @@ namespace DuplicateHider.Models
 {
     public class ListData : DependencyObject
     {
-        public ImageSource Icon
-        {
-            get => (ImageSource)GetValue(IconProperty);
-            set => SetValue(IconProperty, value);
-        }
+        public ImageSource Icon => DuplicateHiderPlugin.SourceIconCache.GetOrGenerate(Game);
         public Game Game
         {
             get => (Game)GetValue(GameProperty);
             set => SetValue(GameProperty, value);
         }
-        public String SourceName
-        {
-            get => (String)GetValue(SourceNameProperty);
-            set => SetValue(SourceNameProperty, value);
-        }
-        public String DisplayString { get; set; }
+        public String SourceName => Game?.Source?.Name ?? Constants.UNDEFINED_SOURCE;
+        public String DisplayString => DuplicateHiderPlugin.Instance.ExpandDisplayString(Game, DuplicateHiderPlugin.Instance.settings.DisplayString);
         public Boolean IsCurrent
         {
             get => (Boolean)GetValue(IsCurrentProperty);
@@ -43,7 +35,10 @@ namespace DuplicateHider.Models
 
         public ListData()
         {
-
+            LaunchCommand = new RelayCommand(() => DuplicateHiderPlugin.API.StartGame(Game.Id));
+            SelectCommand = new RelayCommand(() => DuplicateHiderPlugin.Instance.SelectGame(Game.Id));
+            InstallCommand = new RelayCommand(() => DuplicateHiderPlugin.API.InstallGame(Game.Id));
+            UninstallCommand = new RelayCommand(() => DuplicateHiderPlugin.API.InstallGame(Game.Id));
         }
 
         public ListData(Game game, bool current, 
@@ -62,11 +57,11 @@ namespace DuplicateHider.Models
             ICommand installCommand = null,
             ICommand uninstallCommand = null)
         {
-            Icon = image;
+            //Icon = image;
             Game = game;
             IsCurrent = current;
-            SourceName = game.Source?.Name ?? Constants.UNDEFINED_SOURCE;
-            DisplayString = DuplicateHiderPlugin.Instance.ExpandDisplayString(game, DuplicateHiderPlugin.Instance.settings.DisplayString);
+            //SourceName = game.Source?.Name ?? Constants.UNDEFINED_SOURCE;
+            //DisplayString = DuplicateHiderPlugin.Instance.ExpandDisplayString(game, DuplicateHiderPlugin.Instance.settings.DisplayString);
             LaunchCommand = launchCommand ?? new RelayCommand(() => DuplicateHiderPlugin.API.StartGame(Game.Id));
             SelectCommand = selectCommand ?? new RelayCommand(() => DuplicateHiderPlugin.Instance.SelectGame(Game.Id));
             InstallCommand = installCommand ?? new RelayCommand(() => DuplicateHiderPlugin.API.InstallGame(Game.Id));
@@ -78,9 +73,9 @@ namespace DuplicateHider.Models
             = DependencyProperty.Register(nameof(IsCurrent), typeof(Boolean), typeof(ListData), new PropertyMetadata(false));
         public static readonly DependencyProperty GameProperty
             = DependencyProperty.Register(nameof(Game), typeof(Game), typeof(ListData), new PropertyMetadata(null));
-        public static readonly DependencyProperty IconProperty
-            = DependencyProperty.Register(nameof(Icon), typeof(ImageSource), typeof(ListData), new PropertyMetadata(null));
-        public static readonly DependencyProperty SourceNameProperty
-            = DependencyProperty.Register(nameof(SourceName), typeof(String), typeof(ListData), new PropertyMetadata("Playnite"));
+        //public static readonly DependencyProperty IconProperty
+        //    = DependencyProperty.Register(nameof(Icon), typeof(ImageSource), typeof(ListData), new PropertyMetadata(null));
+        //public static readonly DependencyProperty SourceNameProperty
+        //    = DependencyProperty.Register(nameof(SourceName), typeof(String), typeof(ListData), new PropertyMetadata("Playnite"));
     }
 }
