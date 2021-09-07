@@ -177,12 +177,6 @@ namespace DuplicateHider.Controls
 
                     button.DataContext = null;
                     button.DataContext = listData;
-
-                    if (button.Content is Image icon)
-                    {
-                        //icon.Source = GetSourceIcon(game);
-                        icon.Opacity = game.IsInstalled ? 1.0 : 0.5;
-                    }
                 }
                 for (int i = IconStackPanel.Children.Count - 1; i > games.Count - 1; --i)
                 {
