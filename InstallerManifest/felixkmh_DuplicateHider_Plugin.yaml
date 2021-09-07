@@ -1,5 +1,12 @@
 AddonId: 'felixkmh_DuplicateHider_Plugin'
 Packages:
+  - Version: 3.1.2
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-05
+    PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.1.2/felixkmh_DuplicateHider_Plugin_3_1_2.pext
+    Changelog:
+      - 'theme icons can be found using either lower case or capitalized strings'
+      - 'use pluginId to retrieve icons of builtin sources'
   - Version: 3.1.1
     RequiredApiVersion: 6.0.0
     ReleaseDate: 2021-09-05
