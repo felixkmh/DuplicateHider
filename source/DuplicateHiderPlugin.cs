@@ -152,7 +152,10 @@ namespace DuplicateHider
                         n = 0;
                     }
                     var wrapper = new DHWrapper();
-                    wrapper.DH_ContentControl.SetResourceReference(DHContentControl.MaxNumberOfIconsCCProperty, "DuplicateHider_MaxNumberOfIcons".Suffix(n));
+                    if (ResourceProvider.GetResource("DuplicateHider_MaxNumberOfIcons".Suffix(n)) != null)
+                    {
+                        wrapper.DH_ContentControl.SetResourceReference(DHContentControl.MaxNumberOfIconsCCProperty, "DuplicateHider_MaxNumberOfIcons".Suffix(n));
+                    }
                     return wrapper;
                 }
             }

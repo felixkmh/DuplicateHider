@@ -90,8 +90,10 @@ namespace DuplicateHider.Controls
             {
                 IconStackPanel.Orientation = orientation;
             }
-
-            SetResourceReference(MaxNumberOfIconsProperty, "DuplicateHider_MaxNumberOfIcons".Suffix(number));
+            if (ResourceProvider.GetResource("DuplicateHider_MaxNumberOfIcons".Suffix(number)) != null)
+            {
+                SetResourceReference(MaxNumberOfIconsProperty, "DuplicateHider_MaxNumberOfIcons".Suffix(number));
+            }
         }
 
         #endregion Public Constructors
