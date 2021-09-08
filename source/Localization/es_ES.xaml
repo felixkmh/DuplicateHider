@@ -36,10 +36,10 @@
     <sys:String x:Key="LOC_DH_ShowSingleIcon">Mostrar icono si solo hay una copia</sys:String>
     <sys:String x:Key="LOC_DH_SuppressNotification">Suprimir la notificación del icono del tema</sys:String>
     <!--Tool Tips-->
-	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">Si está habilitado, DuplplyateHider volverá a evaluar el rango de una copia cuando cambie, manteniendo siempre la copia con el rango más alto visible mientras oculta todas las demás copias.</sys:String>
+	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">Si está habilitado, DuplicateHider volverá a evaluar el rango de una copia cuando cambie, manteniendo siempre la copia con el rango más alto visible mientras oculta todas las demás copias.</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">Si está habilitado, otras copias de un juego se pueden comenzar al usar el menú contextual de un juego.</sys:String>
 	<sys:String x:Key="LOC_DH_PrioritizeNewerGamesTooltip">Habilitado: Preferir el juego más nuevo si las puntuaciones son iguales. Deshabiltado: Preferir el juego anterior si las puntuaciones son iguales.</sys:String>
-    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGamesTooltip">Si está habilitado, los juegos ocultos o revelados por otros medios que duplicateHider se agregarán a la lista Ignorar.</sys:String>
+    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGamesTooltip">Si está habilitado, los juegos ocultos o revelados por otros medios que DuplicateHider se agregarán a la lista Ignorar.</sys:String>
     <sys:String x:Key="LOC_DH_DisplayStringTooltip">Haga clic derecho para insertar variables de marcador de posición.</sys:String>
     <sys:String x:Key="LOC_DH_EnableUIIntegrationTooltip">Permite elementos de UI personalizados dependiendo de si son compatibles con el tema actual.</sys:String>
     <sys:String x:Key="LOC_DH_EnableThemeIconsTooltip">Si está habilitado, los iconos incluidos con el tema actual se utilizan para los elementos de UI personalizados.</sys:String>
