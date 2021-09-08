@@ -301,9 +301,12 @@ namespace DuplicateHider.Controls
                 bt.VerticalAlignment = VerticalAlignment.Center;
                 bt.MouseEnter += Icon_MouseEnter;
                 bt.MouseLeave += Icon_MouseLeave;
-                var tb = new TextBox();
-                tb.SetBinding(TextBox.TextProperty, "DisplayString");
-                bt.ToolTip = tb;
+                if (DuplicateHiderPlugin.API.ApplicationInfo.Mode == ApplicationMode.Desktop)
+                {
+                    var tb = new TextBox();
+                    tb.SetBinding(TextBox.TextProperty, "DisplayString");
+                    bt.ToolTip = tb;
+                }
             }
 
 
