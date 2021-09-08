@@ -1,3 +1,11 @@
+## v3.1.4 (2021-09-08)
+
+### Fix
+
+- check for resource existence before setting it as a reference
+- no tooltip for default SourceSelector Style in Fullscreen mode
+- still change icon opacity if no style is applied
+
 ## v3.1.3 (2021-09-07)
 
 ### Fix
