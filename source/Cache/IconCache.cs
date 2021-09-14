@@ -132,14 +132,31 @@ namespace DuplicateHider.Cache
             var themeIconPath = enableThemeIcons ? GetThemeIconPath(game) : null;
             var resourceIconPath = GetResourceIconUri(game);
             var pluginIconPath = GetPluginIconPath(game);
+            var platformIconPath = GetPlatformIconPath(game);
             if (preferUserIcons) paths.Add(userIconPath);
             if (enableThemeIcons) paths.Add(themeIconPath);
+            if (game.Source == null) paths.Add(platformIconPath);
             paths.Add(resourceIconPath);
             if (!preferUserIcons) paths.Add(userIconPath);
             paths.Add(pluginIconPath);
+            if (game.Source != null) paths.Add(platformIconPath);
 
             return paths.Where(p => !string.IsNullOrEmpty(p) && Uri.TryCreate(p, UriKind.RelativeOrAbsolute, out var _))
                         .Concat(GetDefaultIconPaths());
+        }
+
+        private string GetPlatformIconPath(Game game)
+        {
+            var path = game?.Platforms?.FirstOrDefault()?.Icon;
+            if (!string.IsNullOrEmpty(path))
+            {
+                if (!System.IO.Path.IsPathRooted(path))
+                {
+                    path = DuplicateHiderPlugin.API.Database.GetFullFilePath(path);
+                }
+                return path;
+            }
+            return null;
         }
 
         private static string GetThemeIconPath(Game game)
