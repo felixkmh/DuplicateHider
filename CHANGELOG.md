@@ -1,3 +1,9 @@
+## v3.1.6 (2021-09-15)
+
+### Fix
+
+- platform icons only were cached once per source
+
 ## v3.1.5 (2021-09-15)
 
 ### Fix
