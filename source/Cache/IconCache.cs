@@ -26,7 +26,7 @@ namespace DuplicateHider.Cache
 
         public ImageSource this[GameSource key] => ((IReadOnlyDictionary<GameSource, ImageSource>)cache)[key];
 
-        internal ConcurrentDictionary<GameSource, ImageSource> cache = new ConcurrentDictionary<GameSource, ImageSource>();
+        internal ConcurrentDictionary<string, ImageSource> cache = new ConcurrentDictionary<string, ImageSource>();
 
         internal BitmapImage generate(Game game)
         {
@@ -57,13 +57,15 @@ namespace DuplicateHider.Cache
         {
             if (game == null) return null;
             var source = game.Source ?? Constants.DEFAULT_SOURCE;
-            if (cache.TryGetValue(source, out var icon))
+            var platform = game.Platforms?.FirstOrDefault()?.Name ?? Constants.UNDEFINED_PLATFORM;
+            var key = source + platform;
+            if (cache.TryGetValue(key, out var icon))
             {
                 return icon;
             } else
             {
                 var newIcon = generate(game);
-                cache[source] = newIcon;
+                cache[key] = newIcon;
                 return newIcon;
             }
         }
