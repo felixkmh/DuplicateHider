@@ -1,3 +1,9 @@
+## v3.1.5 (2021-09-15)
+
+### Fix
+
+- platform locaization string spelled incorrrctly
+
 ## v3.1.4 (2021-09-08)
 
 ### Fix
