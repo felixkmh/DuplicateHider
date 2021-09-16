@@ -7,8 +7,8 @@
 	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry">Remover os jogos selecionados da lista para ignorar</sys:String>
 	
 	<!--Message Boxes-->
-	<sys:String x:Key="LOC_DH_NGamesHidden">{0} jogos foram ocultados.</sys:String>
-	<sys:String x:Key="LOC_DH_NGamesRevealed">{0} jogos foram revelados.</sys:String>
+    <sys:String x:Key="LOC_DH_NGamesHidden"></sys:String>
+    <sys:String x:Key="LOC_DH_NGamesRevealed"></sys:String>
     <sys:String x:Key="LOC_DH_N_GamesAddedToGroup"></sys:String>
     <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup"></sys:String>
     <sys:String x:Key="LOC_DH_N_GroupsDisbanded"></sys:String>
