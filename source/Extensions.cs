@@ -47,6 +47,26 @@ namespace DuplicateHider
             return true;
         }
 
+        public static bool InsertSorted<T>(this IList<T> list, T item, Func<T, T, int> compare)
+        {
+            if (list.Contains(item))
+            {
+                return false;
+            }
+
+            int i;
+            for (i = 0; i < list.Count; ++i)
+            {
+                if (i < list.Count && compare(item, list[i]) <= 0)
+                {
+                    break;
+                }
+            }
+
+            list.Insert(i, item);
+            return true;
+        }
+
         public static bool InsertSorted<T>(this IList<T> list, T item, Comparer<T> comparer)
         {
             if (list.Contains(item))

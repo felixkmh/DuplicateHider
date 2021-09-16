@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using DuplicateHider.Data;
+using DuplicateHider.Models;
+using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -51,6 +53,8 @@ namespace DuplicateHider
         public bool PreferNewerGame { get; set; } = true;
 
         public List<ReplaceFilter> ReplaceFilters { get; set; } = new List<ReplaceFilter>();
+
+        public List<CustomGroup> CustomGroups {get; set;} = new List<CustomGroup>();
 
         public ListBoxItem CreateReplacementFilterItem(ReplaceFilter filter = null)
         {
@@ -245,6 +249,7 @@ namespace DuplicateHider
                 EnableUiIntegration = savedSettings.EnableUiIntegration;
                 ShowSingleIcon = savedSettings.ShowSingleIcon;
                 SupressThemeIconNotification = savedSettings.SupressThemeIconNotification;
+                CustomGroups = savedSettings.CustomGroups;
             }
 
             if (Priorities.Count == 0)
@@ -273,10 +278,13 @@ namespace DuplicateHider
 
         public void BeginEdit()
         {
+
             // Code executed when settings view is opened and user starts editing values.
             previousSettings = this.Copy();
             plugin.SettingsView.Dispatcher.Invoke(() =>
             {
+                plugin.SettingsView.GroupsList.DataContext = new CustomGroupsViewModel(CustomGroups) { Synchronize = false };
+
                 plugin.SettingsView.AutoUpdateCheckBox.IsChecked = UpdateAutomatically;
                 plugin.SettingsView.ShowCopiesInGameMenu.IsChecked = ShowOtherCopiesInGameMenu;
                 plugin.SettingsView.AddHiddenToIgnoreList.IsChecked = AddHiddenToIgnoreList;
@@ -464,6 +472,11 @@ namespace DuplicateHider
             plugin.SettingsView.AutoUpdateCheckBox.Dispatcher.Invoke(() =>
             {
                 {
+                    if (plugin.SettingsView.GroupsList.DataContext is CustomGroupsViewModel groups)
+                    {
+                        CustomGroups = groups.Groups.Select(g => { g.UpdateGroup(); return g.Group; }).ToList();
+                    }
+
                     UpdateAutomatically = plugin.SettingsView.AutoUpdateCheckBox.IsChecked ?? UpdateAutomatically;
                     ShowOtherCopiesInGameMenu = plugin.SettingsView.ShowCopiesInGameMenu.IsChecked ?? ShowOtherCopiesInGameMenu;
                     AddHiddenToIgnoreList = plugin.SettingsView.AddHiddenToIgnoreList.IsChecked ?? AddHiddenToIgnoreList;

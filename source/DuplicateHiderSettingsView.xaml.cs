@@ -328,5 +328,14 @@ namespace DuplicateHider
                 }
             }
         }
+
+        private void AddGroupButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(NewGroupNameBox.Text))
+            {
+                var groupName = NewGroupNameBox.Text;
+                GroupsList.AddGroup(new Data.CustomGroup() { Name = groupName });
+            }
+        }
     }
 }
