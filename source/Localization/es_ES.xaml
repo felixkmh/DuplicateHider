@@ -9,9 +9,16 @@
 	<!--Message Boxes-->
 	<sys:String x:Key="LOC_DH_NGamesHidden">{0} juegos han sido ocultados.</sys:String>
 	<sys:String x:Key="LOC_DH_NGamesRevealed">{0} juegos han sido revelados.</sys:String>
-	
-	<!--GameMenu Entries-->
+    <sys:String x:Key="LOC_DH_N_GamesAddedToGroup"></sys:String>
+    <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup"></sys:String>
+    <sys:String x:Key="LOC_DH_N_GroupsDisbanded"></sys:String>
+
+    <!--GameMenu Entries-->
 	<sys:String x:Key="LOC_DH_N_OtherCopies">Otras copias: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup"></sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup"></sys:String>
+    <sys:String x:Key="LOC_DH_RemoveFromExistingGroup"></sys:String>
+    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected"></sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
@@ -35,6 +42,13 @@
     <sys:String x:Key="LOC_DH_PreferUserIcons">Prefiero los iconos de usuario</sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIcon">Mostrar icono si solo hay una copia</sys:String>
     <sys:String x:Key="LOC_DH_SuppressNotification">Suprimir la notificación del icono del tema</sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroups"></sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupName"></sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupNamePrompt"></sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflict"></sys:String>
+    <sys:String x:Key="LOC_DH_KeepOrderLabel"></sys:String>
+    <sys:String x:Key="LOC_DH_Games"></sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve"></sys:String>
     <!--Tool Tips-->
 	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">Si está habilitado, DuplicateHider volverá a evaluar el rango de una copia cuando cambie, manteniendo siempre la copia con el rango más alto visible mientras oculta todas las demás copias.</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">Si está habilitado, otras copias de un juego se pueden comenzar al usar el menú contextual de un juego.</sys:String>
@@ -46,7 +60,10 @@
     <sys:String x:Key="LOC_DH_PreferUserIconsTooltip">Si está habilitado, los iconos colocados en la carpeta del icono del usuario siempre se les da prioridad al buscar iconos de origen.</sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIconTooltip">Indica al tema que no desea tener elementos de UI personalizados si no hay copias adicionales de un juego.</sys:String>
     <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">Si está habilitado, no se te notificará si se encuentran los iconos del tema en el tema actual.</sys:String>
+    <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve"></sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Abra la carpeta de iconos del usuario</sys:String>
+    <sys:String x:Key="LOC_DH_MoveButton"></sys:String>
+    <sys:String x:Key="LOC_DH_KeepButton"></sys:String>
 	
 </ResourceDictionary>
