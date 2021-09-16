@@ -9,9 +9,16 @@
 	<!--Message Boxes-->
 	<sys:String x:Key="LOC_DH_NGamesHidden"></sys:String>
 	<sys:String x:Key="LOC_DH_NGamesRevealed"></sys:String>
-	
-	<!--GameMenu Entries-->
+    <sys:String x:Key="LOC_DH_N_GamesAddedToGroup"></sys:String>
+    <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup"></sys:String>
+    <sys:String x:Key="LOC_DH_N_GroupsDisbanded"></sys:String>
+
+    <!--GameMenu Entries-->
 	<sys:String x:Key="LOC_DH_N_OtherCopies"></sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup"></sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup"></sys:String>
+    <sys:String x:Key="LOC_DH_RemoveFromExistingGroup"></sys:String>
+    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected"></sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
@@ -35,6 +42,13 @@
     <sys:String x:Key="LOC_DH_PreferUserIcons"></sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIcon"></sys:String>
     <sys:String x:Key="LOC_DH_SuppressNotification"></sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroups"></sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupName"></sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupNamePrompt"></sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflict"></sys:String>
+    <sys:String x:Key="LOC_DH_KeepOrderLabel"></sys:String>
+    <sys:String x:Key="LOC_DH_Games"></sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve"></sys:String>
     <!--Tool Tips-->
 	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip"></sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip"></sys:String>
@@ -46,7 +60,10 @@
     <sys:String x:Key="LOC_DH_PreferUserIconsTooltip"></sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIconTooltip"></sys:String>
     <sys:String x:Key="LOC_DH_SuppressNotificationTooltip"></sys:String>
+    <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve"></sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton"></sys:String>
+    <sys:String x:Key="LOC_DH_MoveButton"></sys:String>
+    <sys:String x:Key="LOC_DH_KeepButton"></sys:String>
 	
 </ResourceDictionary>
