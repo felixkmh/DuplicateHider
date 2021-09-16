@@ -435,6 +435,7 @@ namespace DuplicateHider
             UpdateGuidToCopiesDict();
             SourceSelector.ButtonCaches.ForEach(bc => bc?.Clear());
             GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
+            //SavePluginSettings(settings);
         }
 
         private void Games_ItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<Game> e)

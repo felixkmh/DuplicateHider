@@ -11,7 +11,7 @@
 	<sys:String x:Key="LOC_DH_NGamesRevealed">{0} games have been revealed.</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">{0} games have been added to group "{1}".</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">{0} games have been removed from their groups.</sys:String>
-    <sys:String x:Key="LOC_DH_N_GroupsDisbanded">{0} dispanded Groups</sys:String>
+    <sys:String x:Key="LOC_DH_N_GroupsDisbanded">Dispanded {0} Groups</sys:String>
 
     <!--GameMenu Entries-->
 	<sys:String x:Key="LOC_DH_N_OtherCopies">Other Copies: {0}</sys:String>
