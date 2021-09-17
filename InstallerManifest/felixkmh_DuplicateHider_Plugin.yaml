@@ -1,5 +1,11 @@
 AddonId: 'felixkmh_DuplicateHider_Plugin'
 Packages:
+  - Version: 3.2.0
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-17
+    PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.2.0/felixkmh_DuplicateHider_Plugin_3_2_0.pext
+    Changelog:
+      - 'added custom groups feature: allows to define groups of games which will be considered copies of each other'
   - Version: 3.1.6
     RequiredApiVersion: 6.0.0
     ReleaseDate: 2021-09-15
