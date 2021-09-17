@@ -9,7 +9,7 @@
 	<!--Message Boxes-->
     <sys:String x:Key="LOC_DH_NGamesHidden">Versteckte Spiele: {0}</sys:String>
     <sys:String x:Key="LOC_DH_NGamesRevealed">Spiele enthüllt: {0}</sys:String>
-    <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">Spiele zur Gruppe &quot;{1} &quot; hinzugefügt: {0}.</sys:String>
+    <sys:String x:Key="LOC_DH_N_GamesAddedToGroup"></sys:String>
     <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">Spiele aus ihrer Gruppen entfernt: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GroupsDisbanded">Aufgelöste Gruppen: {0}</sys:String>
 
