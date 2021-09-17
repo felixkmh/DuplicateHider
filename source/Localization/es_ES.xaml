@@ -16,9 +16,9 @@
     <!--GameMenu Entries-->
 	<sys:String x:Key="LOC_DH_N_OtherCopies">Otras copias: {0}</sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup">Añadir juegos seleccionados al nuevo grupo</sys:String>
-    <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_RemoveFromExistingGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected"></sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup">Añadir juegos seleccionados al grupo existente</sys:String>
+    <sys:String x:Key="LOC_DH_RemoveFromExistingGroup">Eliminar los juegos seleccionados de sus grupos</sys:String>
+    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Disolver grupos de juegos seleccionados</sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
@@ -42,13 +42,17 @@
     <sys:String x:Key="LOC_DH_PreferUserIcons">Prefiero los iconos de usuario</sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIcon">Mostrar icono si solo hay una copia</sys:String>
     <sys:String x:Key="LOC_DH_SuppressNotification">Suprimir la notificación del icono del tema</sys:String>
-    <sys:String x:Key="LOC_DH_CustomGroups"></sys:String>
-    <sys:String x:Key="LOC_DH_CustomGroupName"></sys:String>
-    <sys:String x:Key="LOC_DH_CustomGroupNamePrompt"></sys:String>
-    <sys:String x:Key="LOC_DH_GroupConflict"></sys:String>
-    <sys:String x:Key="LOC_DH_KeepOrderLabel"></sys:String>
-    <sys:String x:Key="LOC_DH_Games"></sys:String>
-    <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve"></sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroups">Grupos personalizados</sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupName">Nombre de grupo personalizado</sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupNamePrompt">Por favor, selecciona un nombre para el nuevo grupo:</sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflict">Conflictos de agrupación</sys:String>
+    <sys:String x:Key="LOC_DH_KeepOrderLabel">Mantener el orden</sys:String>
+    <sys:String x:Key="LOC_DH_Games">Juegos</sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve">Los siguientes juegos están en conflicto con los grupos personalizados existentes:
+{0}
+
+¿Quieres mover estos juegos de sus grupos antiguos a la nueva, mantener juegos conflictivos en sus grupos antiguos o cancelar la creación del grupo?
+    </sys:String>
     <!--Tool Tips-->
 	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">Si está habilitado, DuplicateHider volverá a evaluar el rango de una copia cuando cambie, manteniendo siempre la copia con el rango más alto visible mientras oculta todas las demás copias.</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">Si está habilitado, otras copias de un juego se pueden comenzar al usar el menú contextual de un juego.</sys:String>
@@ -60,10 +64,11 @@
     <sys:String x:Key="LOC_DH_PreferUserIconsTooltip">Si está habilitado, los iconos colocados en la carpeta del icono del usuario siempre se les da prioridad al buscar iconos de origen.</sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIconTooltip">Indica al tema que no desea tener elementos de UI personalizados si no hay copias adicionales de un juego.</sys:String>
     <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">Si está habilitado, no se te notificará si se encuentran los iconos del tema en el tema actual.</sys:String>
-    <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve"></sys:String>
+    <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve">Habilitado: puntuación de juegos basados en la posición en la lista de grupos.
+Deshabilitado: puntuación utilizando el método de puntuación normal en función de las prioridades de origen.</sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Abra la carpeta de iconos del usuario</sys:String>
-    <sys:String x:Key="LOC_DH_MoveButton"></sys:String>
-    <sys:String x:Key="LOC_DH_KeepButton"></sys:String>
+    <sys:String x:Key="LOC_DH_MoveButton">Mover</sys:String>
+    <sys:String x:Key="LOC_DH_KeepButton">Mantener</sys:String>
 	
 </ResourceDictionary>
