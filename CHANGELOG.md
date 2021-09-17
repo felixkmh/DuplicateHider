@@ -1,3 +1,9 @@
+## v3.2.1 (2021-09-17)
+
+### Fix
+
+- crash if group item is dragged to the last spot
+
 ## v3.2.0 (2021-09-17)
 
 ### Refactor
