@@ -120,9 +120,9 @@ namespace DuplicateHider
                 }
             }
         }
-
+#if DEBUG
         static int GeneratedElements = 0;
-
+#endif
         public override Control GetGameViewControl(GetGameViewControlArgs args)
         {
             if (settings.EnableUiIntegration)
@@ -162,7 +162,7 @@ namespace DuplicateHider
             return null;
         }
 
-        #region Events       
+#region Events       
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
             // Create icon folder
@@ -596,7 +596,7 @@ namespace DuplicateHider
             }
         }
 
-        #endregion
+#endregion
 
         public override ISettings GetSettings(bool firstRunSettings)
         {
@@ -1041,11 +1041,6 @@ namespace DuplicateHider
             }
 
             return vars;
-        }
-
-        public async Task<string> ExpandDisplayStringAsync(Game game, string displayString)
-        {
-            return ExpandDisplayString(game, displayString);
         }
 
         public string ExpandDisplayString(Game game, string displayString)

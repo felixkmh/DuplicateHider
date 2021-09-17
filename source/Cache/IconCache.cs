@@ -216,7 +216,6 @@ namespace DuplicateHider.Cache
 
         protected IEnumerable<string> GetDefaultIconPaths()
         {
-            var name = "Default";
             bool enableThemeIcons = DuplicateHiderPlugin.Instance.settings.EnableThemeIcons;
             bool preferUserIcons = DuplicateHiderPlugin.Instance.settings.PreferUserIcons;
 
