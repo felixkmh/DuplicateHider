@@ -1,3 +1,19 @@
+## v3.2.0 (2021-09-17)
+
+### Refactor
+
+- removed unused variables
+- changed loc strings
+- changed loc string
+
+### Fix
+
+- items disappearing after being dropped
+
+### Feat
+
+- added custom groups
+
 ## v3.1.6 (2021-09-15)
 
 ### Fix
