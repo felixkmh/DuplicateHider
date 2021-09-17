@@ -7,11 +7,18 @@
 	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry">Verwijder geselecteerde games toe aan de negeerlijst</sys:String>
 	
 	<!--Message Boxes-->
-	<sys:String x:Key="LOC_DH_NGamesHidden">{0} games zijn verborgen.</sys:String>
-	<sys:String x:Key="LOC_DH_NGamesRevealed">{0} games zijn weergegeven.</sys:String>
-	
-	<!--GameMenu Entries-->
+    <sys:String x:Key="LOC_DH_NGamesHidden"></sys:String>
+    <sys:String x:Key="LOC_DH_NGamesRevealed"></sys:String>
+    <sys:String x:Key="LOC_DH_N_GamesAddedToGroup"></sys:String>
+    <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup"></sys:String>
+    <sys:String x:Key="LOC_DH_N_GroupsDisbanded"></sys:String>
+
+    <!--GameMenu Entries-->
 	<sys:String x:Key="LOC_DH_N_OtherCopies">Andere Kopieën: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup"></sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup"></sys:String>
+    <sys:String x:Key="LOC_DH_RemoveFromExistingGroup"></sys:String>
+    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected"></sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
@@ -35,6 +42,13 @@
     <sys:String x:Key="LOC_DH_PreferUserIcons">Gebruikspictogrammen verkiezen</sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIcon">Toon icoon als er maar één exemplaar is</sys:String>
     <sys:String x:Key="LOC_DH_SuppressNotification">Melding themapictogram onderdrukken</sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroups"></sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupName"></sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupNamePrompt"></sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflict"></sys:String>
+    <sys:String x:Key="LOC_DH_KeepOrderLabel"></sys:String>
+    <sys:String x:Key="LOC_DH_Games"></sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve"></sys:String>
     <!--Tool Tips-->
 	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">Indien ingeschakeld, zal DuplicateHider de rangorde van een kopie opnieuw evalueren wanneer deze verandert, waarbij altijd de kopie met de hoogste rangschikking zichtbaar blijft, terwijl alle andere kopieën worden verborgen.</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">Indien ingeschakeld, kunnen andere exemplaren van een game worden gestart met behulp van het contextmenu van een game.</sys:String>
@@ -46,7 +60,10 @@
     <sys:String x:Key="LOC_DH_PreferUserIconsTooltip">Indien ingeschakeld, krijgen pictogrammen die in de map met gebruikerspictogrammen zijn geplaatst altijd prioriteit bij het zoeken naar bronpictogrammen.</sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIconTooltip">Geeft aan het thema aan dat je geen aangepaste ui-elementen wilt hebben als er geen extra exemplaren van een game zijn.</sys:String>
     <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">Indien ingeschakeld, ontvangt u geen melding als themapictogrammen worden gevonden in het huidige thema.</sys:String>
+    <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve"></sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Map met gebruikerspictogrammen openen</sys:String>
+    <sys:String x:Key="LOC_DH_MoveButton"></sys:String>
+    <sys:String x:Key="LOC_DH_KeepButton"></sys:String>
 	
 </ResourceDictionary>
