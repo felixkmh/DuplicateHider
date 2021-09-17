@@ -7,18 +7,18 @@
 	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry">Ausgewählte Spiele nicht mehr ignorieren</sys:String>
 	
 	<!--Message Boxes-->
-    <sys:String x:Key="LOC_DH_NGamesHidden"></sys:String>
-    <sys:String x:Key="LOC_DH_NGamesRevealed"></sys:String>
-    <sys:String x:Key="LOC_DH_N_GamesAddedToGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_N_GroupsDisbanded"></sys:String>
+    <sys:String x:Key="LOC_DH_NGamesHidden">Versteckte Spiele: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_NGamesRevealed">Spiele enthüllt: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">Spiele zur Gruppe &quot;{1} &quot; hinzugefügt: {0}.</sys:String>
+    <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">Spiele aus ihrer Gruppen entfernt: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_N_GroupsDisbanded">Aufgelöste Gruppen: {0}</sys:String>
 
     <!--GameMenu Entries-->
 	<sys:String x:Key="LOC_DH_N_OtherCopies">Andere Kopien: {0}</sys:String>
-    <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_RemoveFromExistingGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected"></sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup">Ausgewählte Spiele neuer Gruppe hinzufügen</sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup">Ausgewählte Spiele bestehender Gruppe hinzufügen</sys:String>
+    <sys:String x:Key="LOC_DH_RemoveFromExistingGroup">Ausgewählte Spiele aus ihren Gruppen entfernen</sys:String>
+    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Gruppen ausgewählter Spiele auflösen</sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
@@ -42,13 +42,17 @@
     <sys:String x:Key="LOC_DH_PreferUserIcons">Bevorzuge Benutzer-Icons</sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIcon">Zeige Icons auch bei nur einer Kopie</sys:String>
     <sys:String x:Key="LOC_DH_SuppressNotification">Unterdrücke Theme-Icon Benachrichtigung</sys:String>
-    <sys:String x:Key="LOC_DH_CustomGroups"></sys:String>
-    <sys:String x:Key="LOC_DH_CustomGroupName"></sys:String>
-    <sys:String x:Key="LOC_DH_CustomGroupNamePrompt"></sys:String>
-    <sys:String x:Key="LOC_DH_GroupConflict"></sys:String>
-    <sys:String x:Key="LOC_DH_KeepOrderLabel"></sys:String>
-    <sys:String x:Key="LOC_DH_Games"></sys:String>
-    <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve"></sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroups">Benutzerdefinierte Gruppen</sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupName">Gruppenname</sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupNamePrompt">Bitte wähle einen Namen für die neue Gruppe:</sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflict">Gruppenkonflikte</sys:String>
+    <sys:String x:Key="LOC_DH_KeepOrderLabel">Reihenfolge beibehalten</sys:String>
+    <sys:String x:Key="LOC_DH_Games">Spiele</sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve">Die folgenden Spiele stehen in Konflikt mit bestehenden benutzerdefinierten Gruppen: 
+{0}
+		
+Möchten Sie diese Spiele aus ihren alten Gruppen in die neue Gruppe verschieben, die in Konflikt stehenden Spiele in ihren alten Gruppen belassen oder die Gruppenerstellung abbrechen?
+    </sys:String>
     <!--Tool Tips-->
 	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">Wenn aktiv, wird DuplicateHider den Rang einer Kopie automatisch aktualisieren, wenn es Änderungen gibt. Die Kopie mit dem höchsten Rang bleibt immer sichtbar.</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">Wenn aktiv, werden andere Kopien eines Spiels im Spiele-Menü angezeigt.</sys:String>
@@ -60,10 +64,11 @@
     <sys:String x:Key="LOC_DH_PreferUserIconsTooltip">Wenn aktiv, werden Icons im Benutzer-Verzeichnis bevorzugt genutzt, auch wenn andere verfügbar wären.</sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIconTooltip">Teilt dem aktuellem Theme mit, dass keine Icons angezeigt werden sollen, falls nur eine Kopie existiert.</sys:String>
     <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">Wenn aktiv, wird keine Benachrichtigung bezüglich verfügbarer Theme-Icons angezeigt.</sys:String>
-    <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve"></sys:String>
+    <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve">Aktiviert: Spiele werden auf der Grundlage der Position in der Gruppenliste gewertet.
+Deaktiviert: Die normale Wertungsmethode basierend auf den Prioritäten der Quellen wird verwendet.</sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Öffne Benutzer-Icon-Verzeichnis</sys:String>
-    <sys:String x:Key="LOC_DH_MoveButton"></sys:String>
-    <sys:String x:Key="LOC_DH_KeepButton"></sys:String>
+    <sys:String x:Key="LOC_DH_MoveButton">Verschieben</sys:String>
+    <sys:String x:Key="LOC_DH_KeepButton">Beibehalten</sys:String>
 	
 </ResourceDictionary>
