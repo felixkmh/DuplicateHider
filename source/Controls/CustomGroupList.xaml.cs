@@ -310,13 +310,6 @@ namespace DuplicateHider.Views
             if (e.Data.GetData("Games") is IList<Game> games &&
                 e.Data.GetData("SourceGroup") is ListBox source)
             {
-                if (source.ItemsSource is ObservableCollection<Game> sourceItems)
-                {
-                    foreach(var game in games)
-                    {
-                        sourceItems.Remove(game);
-                    }
-                }
                 ObservableCollection<Game> targetItems = null;
                 IList selected = null;
                 int insertionStart = 0;
@@ -348,8 +341,41 @@ namespace DuplicateHider.Views
                         }
                     }
                 }
+                else if (e.Source is CheckBox cb)
+                {
+                    if (cb.Parent is Grid grid &&
+                        grid.Parent is Expander exp &&
+                        exp.Content is ListBox lb)
+                    {
+                        if (lb.ItemsSource is ObservableCollection<Game> cl)
+                        {
+                            targetItems = cl;
+                            selected = lb.SelectedItems;
+                        }
+                    }
+                }
+                else if (e.Source is Button bt)
+                {
+                    if (bt.Parent is Grid grid &&
+                        grid.Parent is Expander exp &&
+                        exp.Content is ListBox lb)
+                    {
+                        if (lb.ItemsSource is ObservableCollection<Game> cl)
+                        {
+                            targetItems = cl;
+                            selected = lb.SelectedItems;
+                        }
+                    }
+                }
                 if (targetItems != null)
                 {
+                    if (source.ItemsSource is ObservableCollection<Game> sourceItems)
+                    {
+                        foreach (var game in games)
+                        {
+                            sourceItems.Remove(game);
+                        }
+                    }
                     selected.Clear();
                     int i = Math.Max(insertionStart, 0);
                     foreach (var game in games)
