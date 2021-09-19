@@ -7,10 +7,10 @@
 	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry">Supprimer les jeux sélectionnés de la liste des ignorés</sys:String>
 	
 	<!--Message Boxes-->
-    <sys:String x:Key="LOC_DH_NGamesHidden"></sys:String>
-    <sys:String x:Key="LOC_DH_NGamesRevealed"></sys:String>
-    <sys:String x:Key="LOC_DH_N_GamesAddedToGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup"></sys:String>
+    <sys:String x:Key="LOC_DH_NGamesHidden">Jeux masqués : {0}</sys:String>
+    <sys:String x:Key="LOC_DH_NGamesRevealed">Jeux dévoilés : {0}</sys:String>
+    <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">Jeux ajoutés au groupe &quot;{1}&quot;: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">Jeux retirés de leurs groupes : {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GroupsDisbanded"></sys:String>
 
     <!--GameMenu Entries-->
@@ -45,9 +45,9 @@
     <sys:String x:Key="LOC_DH_CustomGroups"></sys:String>
     <sys:String x:Key="LOC_DH_CustomGroupName"></sys:String>
     <sys:String x:Key="LOC_DH_CustomGroupNamePrompt"></sys:String>
-    <sys:String x:Key="LOC_DH_GroupConflict"></sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflict">Conflits de groupes</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderLabel"></sys:String>
-    <sys:String x:Key="LOC_DH_Games"></sys:String>
+    <sys:String x:Key="LOC_DH_Games">Jeux</sys:String>
     <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve"></sys:String>
     <!--Tool Tips-->
 	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">Si activé, DuplicateHider réévalue le rang d'un doublon lors de changement, en gardant toujours la copie avec le rang le plus élevé visible tout en cachant les autres.</sys:String>
