@@ -1,3 +1,9 @@
+## v3.2.2 (2021-09-21)
+
+### Fix
+
+- customs groups not being saved correctly in some cases
+
 ## v3.2.1 (2021-09-17)
 
 ### Fix
