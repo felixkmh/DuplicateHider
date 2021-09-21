@@ -43,13 +43,17 @@ namespace DuplicateHider.Models
 
         public void UpdateGroup()
         {
-            Group.Games.Clear();
-            foreach(var game in games)
+            if (Games != null)
             {
-                Group.Games.Add(game.Id);
+                Group.Games.Clear();
+                foreach(var game in Games)
+                {
+                    Group.Games.Add(game.Id);
+                }
+
+                Group.ScoreByOrder = scoreByOrder;
+                Group.Name = name;
             }
-            Group.ScoreByOrder = scoreByOrder;
-            Group.Name = name;
         }
 
         private void Games_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -57,7 +61,7 @@ namespace DuplicateHider.Models
             if (Synchronize)
             {
                 Group.Games.Clear();
-                foreach(var game in games)
+                foreach(var game in Games)
                 {
                     Group.Games.Add(game.Id);
                 }
