@@ -35,8 +35,7 @@
       <HintPath>packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Playnite.SDK, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\playnite-dev\Playnite9Beta\Playnite.SDK.dll</HintPath>
+      <HintPath>packages\PlayniteSDK.6.0.0-preview4\lib\net462\Playnite.SDK.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -186,7 +185,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>D:\Programmierung\playnite-dev\Playnite9Beta\Toolbox.exe pack $(ProjectDir)$(OutDir) $(ProjectDir)bin
+    <PostBuildEvent>D:\Programmierung\playnite-dev\Playnite9Beta2\Toolbox.exe pack $(ProjectDir)$(OutDir) $(ProjectDir)bin
 </PostBuildEvent>
   </PropertyGroup>
 </Project>

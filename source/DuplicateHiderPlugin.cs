@@ -287,7 +287,6 @@ namespace DuplicateHider
              .Select(asm => asm.GetName())
              .Any(asm => asm.Name == "QuickSearchSDK" && asm.Version.Major == 1 && asm.Version.Minor == 4))
                 {
-                    QuickSearch.QuickSearchSDK.AddPluginSettings("DuplicateHider", settings, OpenSettingsView);
                     QuickSearch.QuickSearchSDK.AddCommand(new DuplicateHiderItem()
                     {
                         Actions = new List<ISearchAction<string>>()
@@ -351,6 +350,8 @@ namespace DuplicateHider
             public string BottomRight => Instance.Index.Values.Sum(v => v.Count() - 1).ToString() + " duplicates found";
 
             public char? IconChar => '';
+
+            public FrameworkElement DetailsView => null;
         }
 
         private void IconWatcher_Changed(object sender, FileSystemEventArgs e)
