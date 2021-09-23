@@ -283,13 +283,9 @@ namespace DuplicateHider
             // QuickSearch support
             try
             {
-                if (AppDomain.CurrentDomain.GetAssemblies()
-             .Select(asm => asm.GetName())
-             .Any(asm => asm.Name == "QuickSearchSDK" && asm.Version.Major == 1 && asm.Version.Minor == 4))
+                QuickSearch.QuickSearchSDK.AddCommand(new DuplicateHiderItem()
                 {
-                    QuickSearch.QuickSearchSDK.AddCommand(new DuplicateHiderItem()
-                    {
-                        Actions = new List<ISearchAction<string>>()
+                    Actions = new List<ISearchAction<string>>()
                     {
                     new QuickSearch.SearchItems.CommandAction() {Name = "Hide", Action = () =>
                     {
@@ -316,10 +312,11 @@ namespace DuplicateHider
                     }
                 }
             }
-                    });
-                }
+                });
 
-            } catch (Exception)
+
+            }
+            catch (Exception)
             {
 
             }
