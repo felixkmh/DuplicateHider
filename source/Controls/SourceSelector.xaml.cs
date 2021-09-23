@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
@@ -306,7 +307,7 @@ namespace DuplicateHider.Controls
                 if (DuplicateHiderPlugin.API.ApplicationInfo.Mode == ApplicationMode.Desktop)
                 {
                     var tb = new TextBox();
-                    tb.SetBinding(TextBox.TextProperty, "DisplayString");
+                    tb.SetBinding(TextBox.TextProperty, new Binding("DisplayString") { Mode = BindingMode.OneWay });
                     bt.ToolTip = tb;
                 }
             }
@@ -326,7 +327,7 @@ namespace DuplicateHider.Controls
             RenderOptions.SetBitmapScalingMode(icon, BitmapScalingMode.Fant);
 
             bt.Content = icon;
-            icon.SetBinding(Image.SourceProperty, "Icon");
+            icon.SetBinding(Image.SourceProperty, new Binding("Icon") { Mode = BindingMode.OneWay });
             bt.Visibility = Visibility.Collapsed;
             return bt;
         }
