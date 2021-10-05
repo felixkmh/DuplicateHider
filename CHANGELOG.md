@@ -1,3 +1,9 @@
+## v3.3.0 (2021-10-05)
+
+### Feat
+
+- updated to QuickSearchSDK 2.0.0
+
 ## v3.2.3 (2021-09-23)
 
 ### Fix
