@@ -1,5 +1,7 @@
 # DuplicateHider
 
+## Important: Version 3.x.x is only compatible with Playnite 9. The latest Version compatible with Playnite 8 is [v2.5.4](https://github.com/felixkmh/DuplicateHider/releases/tag/v2.5.4).
+
 [Playnite Forum Post](https://playnite.link/forum/thread-308.html)  
 An extension for [Playnite](https://github.com/JosefNemec/Playnite/ "Playnite - video game library manager") by JosefNemec that hides additional copies of games.
 
