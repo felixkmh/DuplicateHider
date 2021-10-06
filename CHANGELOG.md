@@ -1,3 +1,9 @@
+## v3.4.0 (2021-10-06)
+
+### Feat
+
+- add tag to games hidden by duplicate hider
+
 ## v3.3.0 (2021-10-05)
 
 ### Feat
