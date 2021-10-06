@@ -1,5 +1,11 @@
 AddonId: 'felixkmh_DuplicateHider_Plugin'
 Packages:
+  - Version: 3.4.0
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-10-06
+    PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.4.0/felixkmh_DuplicateHider_Plugin_3_4_0.pext
+    Changelog:
+      - add Tag to games hidden by DuplicateHider
   - Version: 3.3.0
     RequiredApiVersion: 6.0.0
     ReleaseDate: 2021-10-05
