@@ -53,6 +53,8 @@
 		
 Voulez-vous déplacer ces jeux de leurs anciens groupes vers le nouveau, les garder dans leurs anciens groupes ou annuler la création du groupe ?
     </sys:String>
+    <sys:String x:Key="LOC_DH_HiddenTag"></sys:String>
+    <sys:String x:Key="LOC_DH_RevealedTag"></sys:String>
     <!--Tool Tips-->
 	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">Si activé, DuplicateHider réévalue le rang d'un doublon lors de changement, en gardant toujours la copie avec le rang le plus élevé visible tout en cachant les autres.</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">Si activé, d'autres copies peuvent être lancées à l'aide du menu contextuel d'un jeu.</sys:String>
