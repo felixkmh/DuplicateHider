@@ -1,3 +1,9 @@
+## v3.4.1 (2021-10-06)
+
+### Fix
+
+- check if TagId List exists before adding or removing tags
+
 ## v3.4.0 (2021-10-06)
 
 ### Feat
