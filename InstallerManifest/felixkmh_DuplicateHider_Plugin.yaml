@@ -1,5 +1,11 @@
 AddonId: 'felixkmh_DuplicateHider_Plugin'
 Packages:
+  - Version: 3.4.1
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-10-06
+    PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.4.1/felixkmh_DuplicateHider_Plugin_3_4_1.pext
+    Changelog:
+      - check if TagId List exists before adding or removing Tags
   - Version: 3.4.0
     RequiredApiVersion: 6.0.0
     ReleaseDate: 2021-10-06
