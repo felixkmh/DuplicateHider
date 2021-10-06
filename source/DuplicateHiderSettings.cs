@@ -55,6 +55,42 @@ namespace DuplicateHider
         public List<ReplaceFilter> ReplaceFilters { get; set; } = new List<ReplaceFilter>();
 
         public List<CustomGroup> CustomGroups {get; set;} = new List<CustomGroup>();
+        // Tag Ids
+        [JsonIgnore]
+        private Guid hiddenTagId = Guid.Empty;
+        [JsonIgnore]
+        private Guid revealedTagId = Guid.Empty;
+        public Guid HiddenTagId
+        {
+            get
+            {
+                if (plugin != null && hiddenTagId == Guid.Empty)
+                {
+                    hiddenTagId = plugin.PlayniteApi.Database.Tags.Add("[DH] Hidden").Id;
+                } else if (plugin != null && plugin.PlayniteApi.Database.Tags.Get(hiddenTagId) == null)
+                {
+                    hiddenTagId = plugin.PlayniteApi.Database.Tags.Add("[DH] Hidden").Id;
+                }
+                return hiddenTagId;
+            }
+            set => hiddenTagId = value;
+        }
+        public Guid RevealedTagId
+        {
+            get
+            {
+                if (plugin != null && revealedTagId == Guid.Empty)
+                {
+                    revealedTagId = plugin.PlayniteApi.Database.Tags.Add("[DH] Revealed").Id;
+                }
+                else if (plugin != null && plugin.PlayniteApi.Database.Tags.Get(revealedTagId) == null)
+                {
+                    revealedTagId = plugin.PlayniteApi.Database.Tags.Add("[DH] Revealed").Id;
+                }
+                return revealedTagId;
+            }
+            set => revealedTagId = value;
+        }
 
         public ListBoxItem CreateReplacementFilterItem(ReplaceFilter filter = null)
         {
@@ -250,6 +286,8 @@ namespace DuplicateHider
                 ShowSingleIcon = savedSettings.ShowSingleIcon;
                 SupressThemeIconNotification = savedSettings.SupressThemeIconNotification;
                 CustomGroups = savedSettings.CustomGroups;
+                HiddenTagId = savedSettings.HiddenTagId;
+                RevealedTagId = savedSettings.RevealedTagId;
             }
 
             if (Priorities.Count == 0)

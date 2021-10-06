@@ -165,6 +165,9 @@ namespace DuplicateHider
 #region Events       
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
+            // Create or set tags
+            LocalizeTags();
+
             // Create icon folder
             if (!Directory.Exists(GetUserIconFolderPath()))
             {
@@ -234,7 +237,9 @@ namespace DuplicateHider
                         {
                             var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
                             {
-                                ShowMinimizeButton = false, ShowCloseButton = true, ShowMaximizeButton = false
+                                ShowMinimizeButton = false,
+                                ShowCloseButton = true,
+                                ShowMaximizeButton = false
                             });
 
                             window.Height = 400;
@@ -319,6 +324,18 @@ namespace DuplicateHider
             catch (Exception)
             {
 
+            }
+        }
+
+        private void LocalizeTags()
+        {
+            if (PlayniteApi.Database.Tags.Get(settings.HiddenTagId) is Tag hiddenTag)
+            {
+                hiddenTag.Name = ResourceProvider.GetString("LOC_DH_HiddenTag");
+            }
+            if (PlayniteApi.Database.Tags.Get(settings.RevealedTagId) is Tag revealedTag)
+            {
+                revealedTag.Name = ResourceProvider.GetString("LOC_DH_RevealedTag");
             }
         }
 
@@ -509,6 +526,7 @@ namespace DuplicateHider
                                     if (last.Hidden)
                                     {
                                         last.Hidden = false;
+                                        last.TagIds.Remove(settings.HiddenTagId);
                                         PlayniteApi.Database.Games.Update(last);
                                     }
                                 }
@@ -562,6 +580,14 @@ namespace DuplicateHider
                 }
                 GroupUpdated?.Invoke(this, updatedIds);
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
+            }
+            else
+            {
+                var removeTags = e.UpdatedItems
+                    .Where(g => g.OldData.TagIds.Contains(settings.HiddenTagId) && !g.NewData.Hidden)
+                    .Select(g => g.NewData );
+                removeTags.ForEach(g => g.TagIds.Remove(settings.HiddenTagId));
+                PlayniteApi.Database.Games.Update(removeTags);
             }
             PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             UpdateGuidToCopiesDict();
@@ -979,6 +1005,13 @@ namespace DuplicateHider
                         if (copy.Hidden != hidden)
                         {
                             copy.Hidden = hidden;
+                            if (hidden)
+                            {
+                                copy.TagIds.AddMissing(settings.HiddenTagId);
+                            } else
+                            {
+                                copy.TagIds.Remove(settings.HiddenTagId);
+                            }
                             toUpdate.Add(copy);
                         }
                     }
@@ -988,6 +1021,7 @@ namespace DuplicateHider
                     if (game.Hidden)
                     {
                         game.Hidden = false;
+                        game.TagIds.Remove(settings.HiddenTagId);
                         toUpdate.Add(game);
                     }
                 }
