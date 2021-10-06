@@ -526,7 +526,7 @@ namespace DuplicateHider
                                     if (last.Hidden)
                                     {
                                         last.Hidden = false;
-                                        last.TagIds.Remove(settings.HiddenTagId);
+                                        RemoveTag(last, settings.HiddenTagId);
                                         PlayniteApi.Database.Games.Update(last);
                                     }
                                 }
@@ -584,9 +584,9 @@ namespace DuplicateHider
             else
             {
                 var removeTags = e.UpdatedItems
-                    .Where(g => g.OldData.TagIds.Contains(settings.HiddenTagId) && !g.NewData.Hidden)
-                    .Select(g => g.NewData );
-                removeTags.ForEach(g => g.TagIds.Remove(settings.HiddenTagId));
+                    .Where(g => (g.OldData.TagIds?.Contains(settings.HiddenTagId) ?? false) && !g.NewData.Hidden)
+                    .Select(g => g.NewData);
+                removeTags.ForEach(g => RemoveTag(g, settings.HiddenTagId));
                 PlayniteApi.Database.Games.Update(removeTags);
             }
             PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
@@ -959,6 +959,33 @@ namespace DuplicateHider
             return false;
         }
 
+        public bool AddTag(Game game, Guid tagId)
+        {
+            if (game is Game && tagId != Guid.Empty)
+            {
+                if (game.TagIds is List<Guid> ids)
+                {
+                    return ids.AddMissing(tagId);
+                } else
+                {
+                    game.TagIds = new List<Guid> { tagId };
+                }
+            }
+            return false;
+        }
+
+        public bool RemoveTag(Game game, Guid tagId)
+        {
+            if (game is Game && tagId != Guid.Empty)
+            {
+                if (game.TagIds is List<Guid> ids)
+                {
+                    return ids.Remove(tagId);
+                }
+            }
+            return false;
+        }
+
         public List<Game> GetOtherCopies(Game game)
         {
             return GetCopies(game)?.Where(g => g.Id != (game?.Id ?? Guid.Empty)).ToList();
@@ -1007,10 +1034,10 @@ namespace DuplicateHider
                             copy.Hidden = hidden;
                             if (hidden)
                             {
-                                copy.TagIds.AddMissing(settings.HiddenTagId);
+                                AddTag(copy, settings.HiddenTagId);
                             } else
                             {
-                                copy.TagIds.Remove(settings.HiddenTagId);
+                                RemoveTag(copy, settings.HiddenTagId);
                             }
                             toUpdate.Add(copy);
                         }
@@ -1021,7 +1048,7 @@ namespace DuplicateHider
                     if (game.Hidden)
                     {
                         game.Hidden = false;
-                        game.TagIds.Remove(settings.HiddenTagId);
+                        RemoveTag(game, settings.HiddenTagId);
                         toUpdate.Add(game);
                     }
                 }
