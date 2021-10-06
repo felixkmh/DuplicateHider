@@ -7,8 +7,8 @@
 	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry">Verwijder geselecteerde games toe aan de negeerlijst</sys:String>
 	
 	<!--Message Boxes-->
-    <sys:String x:Key="LOC_DH_NGamesHidden"></sys:String>
-    <sys:String x:Key="LOC_DH_NGamesRevealed"></sys:String>
+    <sys:String x:Key="LOC_DH_NGamesHidden">Spellen verborgen: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_NGamesRevealed">Spellen zichtbaar gemaakt: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesAddedToGroup"></sys:String>
     <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup"></sys:String>
     <sys:String x:Key="LOC_DH_N_GroupsDisbanded"></sys:String>
@@ -49,6 +49,8 @@
     <sys:String x:Key="LOC_DH_KeepOrderLabel"></sys:String>
     <sys:String x:Key="LOC_DH_Games"></sys:String>
     <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve"></sys:String>
+    <sys:String x:Key="LOC_DH_HiddenTag">[DH] Verborgen</sys:String>
+    <sys:String x:Key="LOC_DH_RevealedTag">[DH] Onthuld</sys:String>
     <!--Tool Tips-->
 	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">Indien ingeschakeld, zal DuplicateHider de rangorde van een kopie opnieuw evalueren wanneer deze verandert, waarbij altijd de kopie met de hoogste rangschikking zichtbaar blijft, terwijl alle andere kopieën worden verborgen.</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">Indien ingeschakeld, kunnen andere exemplaren van een game worden gestart met behulp van het contextmenu van een game.</sys:String>
