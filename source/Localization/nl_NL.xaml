@@ -9,16 +9,16 @@
 	<!--Message Boxes-->
     <sys:String x:Key="LOC_DH_NGamesHidden">Spellen verborgen: {0}</sys:String>
     <sys:String x:Key="LOC_DH_NGamesRevealed">Spellen zichtbaar gemaakt: {0}</sys:String>
-    <sys:String x:Key="LOC_DH_N_GamesAddedToGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_N_GroupsDisbanded"></sys:String>
+    <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">Spellen toegevoegd aan groep &quot;{1}&quot;: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">Spellen verwijderd uit hun groepen: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_N_GroupsDisbanded">Verwijderde groepen: {0}</sys:String>
 
     <!--GameMenu Entries-->
 	<sys:String x:Key="LOC_DH_N_OtherCopies">Andere Kopieën: {0}</sys:String>
-    <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_RemoveFromExistingGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected"></sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup">Geselecteerde spellen toevoegen aan nieuwe groep</sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup">Geselecteerde spellen toevoegen aan bestaande groep</sys:String>
+    <sys:String x:Key="LOC_DH_RemoveFromExistingGroup">Verwijder geselecteerde spellen uit hun groepen</sys:String>
+    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Verwijder groepen van geselecteerde spellen</sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
@@ -42,13 +42,17 @@
     <sys:String x:Key="LOC_DH_PreferUserIcons">Gebruikspictogrammen verkiezen</sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIcon">Toon icoon als er maar één exemplaar is</sys:String>
     <sys:String x:Key="LOC_DH_SuppressNotification">Melding themapictogram onderdrukken</sys:String>
-    <sys:String x:Key="LOC_DH_CustomGroups"></sys:String>
-    <sys:String x:Key="LOC_DH_CustomGroupName"></sys:String>
-    <sys:String x:Key="LOC_DH_CustomGroupNamePrompt"></sys:String>
-    <sys:String x:Key="LOC_DH_GroupConflict"></sys:String>
-    <sys:String x:Key="LOC_DH_KeepOrderLabel"></sys:String>
-    <sys:String x:Key="LOC_DH_Games"></sys:String>
-    <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve"></sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroups">Aangepaste groepen</sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupName">Aangepaste groepsnaam</sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupNamePrompt">Kies een naam voor de nieuwe groep:</sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflict">Groepsconflicten</sys:String>
+    <sys:String x:Key="LOC_DH_KeepOrderLabel">Volgorde houden</sys:String>
+    <sys:String x:Key="LOC_DH_Games">Spellen</sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve">De volgende spellen zijn in conflict met bestaande aangepaste groepen: 
+{0}
+		
+Wil je deze spellen verplaatsen van hun oude groepen naar de nieuwe en conflicterende games in hun oude groepen houden of de aanmaak van de groep annuleren?
+    </sys:String>
     <sys:String x:Key="LOC_DH_HiddenTag">[DH] Verborgen</sys:String>
     <sys:String x:Key="LOC_DH_RevealedTag">[DH] Onthuld</sys:String>
     <!--Tool Tips-->
@@ -62,10 +66,11 @@
     <sys:String x:Key="LOC_DH_PreferUserIconsTooltip">Indien ingeschakeld, krijgen pictogrammen die in de map met gebruikerspictogrammen zijn geplaatst altijd prioriteit bij het zoeken naar bronpictogrammen.</sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIconTooltip">Geeft aan het thema aan dat je geen aangepaste ui-elementen wilt hebben als er geen extra exemplaren van een game zijn.</sys:String>
     <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">Indien ingeschakeld, ontvangt u geen melding als themapictogrammen worden gevonden in het huidige thema.</sys:String>
-    <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve"></sys:String>
+    <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve">Ingeschakeld: Score spellen gebaseerd op de positie in de groepslijst.
+Uitgeschakeld: Score met behulp van de normale scoremethode op basis van de bronprioriteiten.</sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Map met gebruikerspictogrammen openen</sys:String>
-    <sys:String x:Key="LOC_DH_MoveButton"></sys:String>
-    <sys:String x:Key="LOC_DH_KeepButton"></sys:String>
+    <sys:String x:Key="LOC_DH_MoveButton">Verplaats</sys:String>
+    <sys:String x:Key="LOC_DH_KeepButton">Behouden</sys:String>
 	
 </ResourceDictionary>
