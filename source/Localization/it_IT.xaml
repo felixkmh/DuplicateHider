@@ -11,14 +11,14 @@
     <sys:String x:Key="LOC_DH_NGamesRevealed">Giochi mostrati: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">Giochi aggiunti al gruppo &quot;{1}&quot;: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">Giochi rimossi dai loro gruppi: {0}</sys:String>
-    <sys:String x:Key="LOC_DH_N_GroupsDisbanded"></sys:String>
+    <sys:String x:Key="LOC_DH_N_GroupsDisbanded">Gruppi sciolti: {0}</sys:String>
 
     <!--GameMenu Entries-->
 	<sys:String x:Key="LOC_DH_N_OtherCopies">Altre Copie: {0}</sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup">Aggiungi i Giochi selezionati a un nuovo Gruppo</sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup">Aggiungi i Giochi selezionati al Gruppo esistente</sys:String>
     <sys:String x:Key="LOC_DH_RemoveFromExistingGroup">Rimuovi i Giochi selezionati dai loro Gruppi</sys:String>
-    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected"></sys:String>
+    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Sciogli i gruppi dei Giochi selezionati</sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
@@ -35,8 +35,8 @@
 	<sys:String x:Key="LOC_DH_ExcludedCategories">Categorie escluse:</sys:String>
 	<sys:String x:Key="LOC_DH_IgnoredGames">Giochi ignorati:</sys:String>
     <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGames">Aggiungi Giochi manualmente nascosti/mostrati</sys:String>
-    <sys:String x:Key="LOC_DH_DisplayString"></sys:String>
-    <sys:String x:Key="LOC_DH_CustomRulesHeader"></sys:String>
+    <sys:String x:Key="LOC_DH_DisplayString">Per altre copie, mostra la stringa:</sys:String>
+    <sys:String x:Key="LOC_DH_CustomRulesHeader">Definisci le regole che sono applicate ai nomi dei giochi prima di un ulteriore elaborazione. Le regole sono applicate nell'ordine in cui appaiono sulla lista.</sys:String>
     <sys:String x:Key="LOC_DH_EnableUIIntegration">Abilita Integrazione UI</sys:String>
     <sys:String x:Key="LOC_DH_EnableThemeIcons">Abilita Icone del Tema</sys:String>
     <sys:String x:Key="LOC_DH_PreferUserIcons">Privilegia Icone Utente</sys:String>
@@ -56,10 +56,10 @@ Vuoi spostare questi giochi dai loro vecchi gruppi a quello nuovo, mantenere i g
     <sys:String x:Key="LOC_DH_HiddenTag">[DH] Nascosto</sys:String>
     <sys:String x:Key="LOC_DH_RevealedTag">[DH] Mostrato</sys:String>
     <!--Tool Tips-->
-	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip"></sys:String>
-	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip"></sys:String>
-	<sys:String x:Key="LOC_DH_PrioritizeNewerGamesTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGamesTooltip"></sys:String>
+	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">Se abilitato, DuplicateHider rivaluterà il grado di una copia quando cambia, mantenendo la copia di grado più alto sempre visibile e nascondendo tutte le altre.</sys:String>
+	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">Se abilitato, altre copie di un gioco possono essere avviate usando il menu contestuale del gioco.</sys:String>
+	<sys:String x:Key="LOC_DH_PrioritizeNewerGamesTooltip">Abilitato: Privilegia un Gioco più nuovo se i punteggi sono uguali. Disabilitato: Privilegia un Gioco più vecchio se i punteggi sono uguali.</sys:String>
+    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGamesTooltip">Se abilitato, i Giochi nascosti o mostrati attraverso modi diversi da DuplicateHider saranno aggiunti alla Lista Ignorati.</sys:String>
     <sys:String x:Key="LOC_DH_DisplayStringTooltip">Click destro per inserire variabili di rimpiazzo.</sys:String>
     <sys:String x:Key="LOC_DH_EnableUIIntegrationTooltip">Abilita elementi UI personalizzati dipendentemente dal fatto che siano supportati dal Tema corrente.</sys:String>
     <sys:String x:Key="LOC_DH_EnableThemeIconsTooltip">Se abilitato, le icone incluse nel Tema corrente verrano usate per gli elementi UI personalizzati.</sys:String>
