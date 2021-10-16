@@ -41,7 +41,7 @@
     <sys:String x:Key="LOC_DH_EnableThemeIcons">Abilita Icone del Tema</sys:String>
     <sys:String x:Key="LOC_DH_PreferUserIcons">Privilegia Icone Utente</sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIcon">Mostra Icona anche se c'è una sola copia</sys:String>
-    <sys:String x:Key="LOC_DH_SuppressNotification"></sys:String>
+    <sys:String x:Key="LOC_DH_SuppressNotification">Nascondi notifiche per Icone del Tema</sys:String>
     <sys:String x:Key="LOC_DH_CustomGroups">Gruppi Personalizzati</sys:String>
     <sys:String x:Key="LOC_DH_CustomGroupName">Nome Gruppo Personalizzato</sys:String>
     <sys:String x:Key="LOC_DH_CustomGroupNamePrompt">Per favore, selezionare un nome per il nuovo gruppo:</sys:String>
