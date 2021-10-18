@@ -165,12 +165,12 @@ namespace DuplicateHider
 #region Events       
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            PlayniteApi.Database.Games.ItemUpdated += (sender, itemUpdatedArgs) =>
-            {
+            //PlayniteApi.Database.Games.ItemUpdated += (sender, itemUpdatedArgs) =>
+            //{
 
-                PlayniteApi.Dialogs.ShowMessage($"ItemUpdateEvent triggered with {itemUpdatedArgs.UpdatedItems.Count} updates.");
+            //    PlayniteApi.Dialogs.ShowMessage($"ItemUpdateEvent triggered with {itemUpdatedArgs.UpdatedItems.Count} updates.");
 
-            };
+            //};
             // Create or set tags
             LocalizeTags();
 
@@ -494,11 +494,11 @@ namespace DuplicateHider
             }
             if (toUpdate.Count > 0)
             {
+                UpdateGuidToCopiesDict();
                 PlayniteApi.Database.Games.Update(toUpdate);
             }
             PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
-            UpdateGuidToCopiesDict();
         }
 
         private void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> e)
