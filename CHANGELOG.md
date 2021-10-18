@@ -1,3 +1,9 @@
+## v3.5.2 (2021-10-18)
+
+### Fix
+
+- include games that have at least one enabled platform
+
 ## v3.5.1 (2021-10-18)
 
 ### Fix
