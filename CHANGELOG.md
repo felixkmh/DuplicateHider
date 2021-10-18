@@ -1,3 +1,10 @@
+## v3.4.2 (2021-10-18)
+
+### Fix
+
+- ui integration not reflecting changes correctly
+- triggering game updates too often in some cases fix: ui integration not reflecting changes correctly
+
 ## v3.4.1 (2021-10-06)
 
 ### Fix
