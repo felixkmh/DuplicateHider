@@ -1090,9 +1090,9 @@ namespace DuplicateHider
                         }
                     }
                 }
-                if (copies.Count > 0 && PlayniteApi.Database.Games.Get(copies[0]) is Game game)
+                if (copies.Count > 0 && PlayniteApi?.Database?.Games?.Get(copies[0]) is Game game)
                 {
-                    if (game.Hidden && game.TagIds.Contains(settings.HiddenTagId))
+                    if (game.Hidden && (game.TagIds?.Contains(settings.HiddenTagId) ?? false))
                     {
                         game.Hidden = false;
                         RemoveTag(game, settings.HiddenTagId);
