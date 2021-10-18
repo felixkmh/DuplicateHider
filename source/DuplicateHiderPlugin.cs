@@ -165,12 +165,12 @@ namespace DuplicateHider
 #region Events       
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            //PlayniteApi.Database.Games.ItemUpdated += (sender, itemUpdatedArgs) =>
-            //{
+            PlayniteApi.Database.Games.ItemUpdated += (sender, itemUpdatedArgs) =>
+            {
 
-            //    PlayniteApi.Dialogs.ShowMessage($"ItemUpdateEvent triggered with {itemUpdatedArgs.UpdatedItems.Count} updates.");
+                PlayniteApi.Dialogs.ShowMessage($"ItemUpdateEvent triggered with {itemUpdatedArgs.UpdatedItems.Count} updates.");
 
-            //};
+            };
             // Create or set tags
             LocalizeTags();
 
@@ -216,7 +216,11 @@ namespace DuplicateHider
             GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
             if (settings.UpdateAutomatically)
             {
-                PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
+                var toUpdate = SetDuplicateState(Hidden);
+                if (toUpdate.Count > 0)
+                {
+                    PlayniteApi.Database.Games.Update(toUpdate);
+                }
             }
 
             PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
@@ -588,6 +592,9 @@ namespace DuplicateHider
                     {
                         guids.InsertSorted(newData.Id, GameComparer.Comparer);
                         guids.ForEach(id => updatedIds.Add(id));
+                    } else
+                    {
+                        AddGameToIndex(newData);
                     }
                 }
                 var toUpdate = SetDuplicateState(Hidden);
