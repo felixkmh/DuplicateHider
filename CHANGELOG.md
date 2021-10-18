@@ -1,3 +1,9 @@
+## v3.5.1 (2021-10-18)
+
+### Fix
+
+- crashing if game's TagId list is null
+
 ## v3.5.0 (2021-10-18)
 
 ### Feat
