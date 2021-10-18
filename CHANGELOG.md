@@ -1,3 +1,14 @@
+## v3.5.0 (2021-10-18)
+
+### Feat
+
+- italian translation by MaxRally
+- italian translation by MaxRally
+
+### Fix
+
+- automatic update not working in some cases
+
 ## v3.4.2 (2021-10-18)
 
 ### Fix
