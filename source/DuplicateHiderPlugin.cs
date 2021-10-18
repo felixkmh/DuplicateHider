@@ -1128,7 +1128,8 @@ namespace DuplicateHider
             var vars = new List<KeyValuePair<string, string>>
             {
                 new KeyValuePair<string, string>("Installed", "{'Installed'}"),
-                new KeyValuePair<string, string>("SourceName", "{'SourceName'}")
+                new KeyValuePair<string, string>("SourceName", "{'SourceName'}"),
+                new KeyValuePair<string, string>("Regions", "{'Regions'}")
             };
 
 
@@ -1169,6 +1170,11 @@ namespace DuplicateHider
                     {
                         expanded = expanded.Replace("{Source}", game.GetSourceName());
                         expanded = expanded.Replace("{Installed}", game.IsInstalled ? "Installed" : "Not installed");
+                        if (expanded.Contains("{Regions}"))
+                        {
+                            expanded = expanded.Replace("{Regions}", game.Regions != null ? string.Join(", ", game.Regions.Select(e => e.Name)) : "");
+                        }
+
                         var type = typeof(Game).GetFields();
                         foreach (var field in typeof(Game).GetProperties())
                         {
