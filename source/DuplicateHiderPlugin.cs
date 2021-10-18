@@ -165,6 +165,12 @@ namespace DuplicateHider
 #region Events       
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
+            PlayniteApi.Database.Games.ItemUpdated += (sender, itemUpdatedArgs) =>
+            {
+
+                PlayniteApi.Dialogs.ShowMessage($"ItemUpdateEvent triggered with {itemUpdatedArgs.UpdatedItems.Count} updates.");
+
+            };
             // Create or set tags
             LocalizeTags();
 
@@ -461,7 +467,7 @@ namespace DuplicateHider
             if (settings.UpdateAutomatically)
             {
                 var filter = GetGameFilter();
-                UpdateDuplicateState(e.AddedItems.Where(g => g.Name != "New Game").Filter<IEnumerable<Game>, IFilter<IEnumerable<Game>>>(filter), Hidden);
+                UpdateDuplicateState(e.AddedItems.Where(g => g.Name != "New Game").Filter(filter), Hidden);
                 var nameFilter = GetNameFilter();
                 foreach (var game in e.RemovedItems.Filter<IEnumerable<Game>, IFilter<IEnumerable<Game>>>(filter))
                 {
@@ -486,7 +492,10 @@ namespace DuplicateHider
                     }
                 }
             }
-            PlayniteApi.Database.Games.Update(toUpdate);
+            if (toUpdate.Count > 0)
+            {
+                PlayniteApi.Database.Games.Update(toUpdate);
+            }
             PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
             UpdateGuidToCopiesDict();
@@ -553,16 +562,19 @@ namespace DuplicateHider
                             {
                                 if (newData.Hidden)
                                 {
-                                    newData.Hidden = false;
-                                    PlayniteApi.Database.Games.Update(newData);
+                                    // newData.Hidden = false;
+                                    // PlayniteApi.Database.Games.Update(newData);
                                 }
                             }
                             if (guids.Count == 1)
                             {
                                 if (PlayniteApi.Database.Games.Get(guids[0]) is Game game)
                                 {
-                                    game.Hidden = false;
-                                    PlayniteApi.Database.Games.Update(game);
+                                    if (game.Hidden)
+                                    {
+                                        // game.Hidden = false;
+                                        // PlayniteApi.Database.Games.Update(game);
+                                    }
                                 }
                             }
                             guids.ForEach(id => updatedIds.Add(id));
@@ -578,19 +590,26 @@ namespace DuplicateHider
                         guids.ForEach(id => updatedIds.Add(id));
                     }
                 }
-                GroupUpdated?.Invoke(this, updatedIds);
-                PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
+                var toUpdate = SetDuplicateState(Hidden);
+                if (toUpdate.Count > 0)
+                {
+                    PlayniteApi.Database.Games.Update(toUpdate);
+                }
             }
             else
             {
                 var removeTags = e.UpdatedItems
                     .Where(g => (g.OldData.TagIds?.Contains(settings.HiddenTagId) ?? false) && !g.NewData.Hidden)
                     .Select(g => g.NewData);
-                removeTags.ForEach(g => RemoveTag(g, settings.HiddenTagId));
-                PlayniteApi.Database.Games.Update(removeTags);
+                if (removeTags.Count() > 0)
+                {
+                    removeTags.ForEach(g => RemoveTag(g, settings.HiddenTagId));
+                    PlayniteApi.Database.Games.Update(removeTags);
+                }
             }
-            PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             UpdateGuidToCopiesDict();
+            GroupUpdated?.Invoke(this, updatedIds);
+            PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
         }
 
         private class GameComparer : Comparer<Guid>
@@ -1000,6 +1019,23 @@ namespace DuplicateHider
             return new List<Game> { game };
         }
 
+        private int AddGameToIndex(Game game)
+        {
+            var nameFilter = GetNameFilter();
+
+            var name = GetFilteredName(game, nameFilter);
+            if (Index.ContainsKey(name))
+            {
+                Index[name].Remove(game.Id);
+            }
+            else
+            {
+                Index[name] = new List<Guid> { };
+            }
+            Index[name].InsertSorted(game.Id, GameComparer.Comparer);
+            return Index[name].IndexOf(game.Id);
+        }
+
         private void UpdateDuplicateState(IEnumerable<Game> games, Visibility visibility)
         {
             var nameFilter = GetNameFilter();
@@ -1016,7 +1052,11 @@ namespace DuplicateHider
                 }
                 Index[name].InsertSorted(game.Id, GameComparer.Comparer);
             }
-            PlayniteApi.Database.Games.Update(SetDuplicateState(visibility));
+            var toUpdate = SetDuplicateState(visibility);
+            if (toUpdate.Count > 0)
+            {
+                PlayniteApi.Database.Games.Update(toUpdate);
+            }
         }
 
         private IList<Game> SetDuplicateState(Visibility visibility)
@@ -1043,9 +1083,9 @@ namespace DuplicateHider
                         }
                     }
                 }
-                if (copies.Count > 1 && PlayniteApi.Database.Games.Get(copies[0]) is Game game)
+                if (copies.Count > 0 && PlayniteApi.Database.Games.Get(copies[0]) is Game game)
                 {
-                    if (game.Hidden)
+                    if (game.Hidden && game.TagIds.Contains(settings.HiddenTagId))
                     {
                         game.Hidden = false;
                         RemoveTag(game, settings.HiddenTagId);
