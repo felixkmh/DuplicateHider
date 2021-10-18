@@ -342,7 +342,7 @@ namespace DuplicateHider.Controls
                     {
                         UpdateGameSourceIcons(game);
 #if DEBUG
-                        System.Diagnostics.Debug.WriteLine("Called Group Update"); 
+                        System.Diagnostics.Debug.WriteLine("Called Group Update");
 #endif
                     }
                 }
