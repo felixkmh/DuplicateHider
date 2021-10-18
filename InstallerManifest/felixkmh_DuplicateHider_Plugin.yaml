@@ -1,5 +1,13 @@
 AddonId: 'felixkmh_DuplicateHider_Plugin'
 Packages:
+  - Version: 3.5.0
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-10-18
+    PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.5.0/felixkmh_DuplicateHider_Plugin_3_5_0.pext
+    Changelog:
+      - italian translation by MaxRally
+      - fixed automatic updates not working correctly
+      - fixed game changed event being triggered too often
   - Version: 3.4.1
     RequiredApiVersion: 6.0.0
     ReleaseDate: 2021-10-06
