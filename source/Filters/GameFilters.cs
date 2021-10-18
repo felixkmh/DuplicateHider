@@ -29,7 +29,7 @@ namespace DuplicateHider
             return
                 from game
                 in input
-                where _include == _platforms.Contains(game.GetPlatformName())
+                where _include == _platforms.Any(p => game.Platforms?.Any(gp => gp.Name == p) ?? false)
                 select game;
         }
     }
