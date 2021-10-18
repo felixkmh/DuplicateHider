@@ -1125,7 +1125,7 @@ namespace DuplicateHider
                         expanded = expanded.Replace("{Installed}", game.IsInstalled ? "Installed" : "Not installed");
                         if (expanded.Contains("{Regions}"))
                         {
-                            expanded = expanded.Replace("{Regions}", string.Join(", ", game.Regions.Select(e => e.Name)));
+                            expanded = expanded.Replace("{Regions}", game.Regions != null ? string.Join(", ", game.Regions.Select(e => e.Name)) : "");
                         }
 
                         var type = typeof(Game).GetFields();
