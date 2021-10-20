@@ -116,6 +116,18 @@ namespace DuplicateHider
             }
         }
 
+        public static IEnumerable<string> GetPlatformNames(this Game game)
+        {
+            if (game.Platforms?.FirstOrDefault() == null)
+            {
+                return new[] { Constants.UNDEFINED_SOURCE };
+            }
+            else
+            {
+                return game.Platforms?.Select(p => p.Name);
+            }
+        }
+
         public static IEnumerable<string> GetCategories(this Game game)
         {
             if (game.Categories == null)
