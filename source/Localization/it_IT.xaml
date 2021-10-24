@@ -26,7 +26,7 @@
 	<sys:String x:Key="LOC_DH_CustomRulesTab">Regole Personalizzate</sys:String>
 	<sys:String x:Key="LOC_DH_UIIntegrationTab">Integrazione UI</sys:String>
 	<!--Labels-->
-	<sys:String x:Key="LOC_DH_Priorities">Priorit</sys:String>
+	<sys:String x:Key="LOC_DH_Priorities">Priorità</sys:String>
 	<sys:String x:Key="LOC_DH_AutomaticUpdate">Aggiorna Automaticamente</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopies">Mostra le Copie nel Menu Giochi</sys:String>
 	<sys:String x:Key="LOC_DH_PrioritizeNewerGames">Prioritizza un Gioco più recente dalla stessa fonte</sys:String>
