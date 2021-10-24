@@ -11,14 +11,14 @@
     <sys:String x:Key="LOC_DH_NGamesRevealed">Giochi mostrati: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">Giochi aggiunti al gruppo &quot;{1}&quot;: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">Giochi rimossi dai loro gruppi: {0}</sys:String>
-    <sys:String x:Key="LOC_DH_N_GroupsDisbanded"></sys:String>
+    <sys:String x:Key="LOC_DH_N_GroupsDisbanded">Gruppi sciolti: {0}</sys:String>
 
     <!--GameMenu Entries-->
 	<sys:String x:Key="LOC_DH_N_OtherCopies">Altre Copie: {0}</sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup">Aggiungi i Giochi selezionati a un nuovo Gruppo</sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup">Aggiungi i Giochi selezionati al Gruppo esistente</sys:String>
     <sys:String x:Key="LOC_DH_RemoveFromExistingGroup">Rimuovi i Giochi selezionati dai loro Gruppi</sys:String>
-    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected"></sys:String>
+    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Sciogli i gruppi dei Giochi selezionati</sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
