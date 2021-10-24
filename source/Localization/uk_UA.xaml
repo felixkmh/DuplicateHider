@@ -18,7 +18,7 @@
     <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup">Додати вибрані ігри до нової групи</sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup">Додати вибрані ігри до існуючої групи</sys:String>
     <sys:String x:Key="LOC_DH_RemoveFromExistingGroup">Видалити вибрані ігри з їхніх груп</sys:String>
-    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Розкрити групи вибраних ігор</sys:String>
+    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Розкрити групи вибраних іго</sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
@@ -37,7 +37,7 @@
     <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGames">Додати вручну приховані/показані ігри</sys:String>
     <sys:String x:Key="LOC_DH_DisplayString">Відображати рядок для інших копій:</sys:String>
     <sys:String x:Key="LOC_DH_CustomRulesHeader">Визначте правила, які застосовуються до назв ігор перед подальшою обробкою. Правила застосовуються в тому порядку, в якому вони відображаються у списку.</sys:String>
-    <sys:String x:Key="LOC_DH_EnableUIIntegration">Увімкнути інтеграцію в інтерфейс</sys:String>
+    <sys:String x:Key="LOC_DH_EnableUIIntegration">Увімкнути інтеграцію в інтерфей</sys:String>
     <sys:String x:Key="LOC_DH_EnableThemeIcons">Увімкнути значки теми</sys:String>
     <sys:String x:Key="LOC_DH_PreferUserIcons">Перевага користувацьким значкам</sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIcon">Показувати значок, якщо є лише одна копія</sys:String>
