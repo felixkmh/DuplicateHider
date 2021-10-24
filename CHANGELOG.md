@@ -1,3 +1,9 @@
+## v3.7.1 (2021-10-24)
+
+### Fix
+
+- hiding games using the menu function does not update ui integration
+
 ## v3.7.0 (2021-10-24)
 
 ### Feat
