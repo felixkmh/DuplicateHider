@@ -1,3 +1,13 @@
+## v3.7.0 (2021-10-24)
+
+### Feat
+
+- custom groups overwrite black/white lists
+
+### Fix
+
+- Undefined Platform not matched on empty platform list
+
 ## v3.6.0 (2021-10-20)
 
 ### Feat
