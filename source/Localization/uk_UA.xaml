@@ -11,14 +11,14 @@
     <sys:String x:Key="LOC_DH_NGamesRevealed">Показано ігор: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">Ігри додані до групи &quot;{1}&quot;: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">Ігри вилучені зі своїх груп: {0}</sys:String>
-    <sys:String x:Key="LOC_DH_N_GroupsDisbanded"></sys:String>
+    <sys:String x:Key="LOC_DH_N_GroupsDisbanded">Розкриті групи: {0}</sys:String>
 
     <!--GameMenu Entries-->
 	<sys:String x:Key="LOC_DH_N_OtherCopies">Інші копії: {0}</sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup">Додати вибрані ігри до нової групи</sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup">Додати вибрані ігри до існуючої групи</sys:String>
     <sys:String x:Key="LOC_DH_RemoveFromExistingGroup">Видалити вибрані ігри з їхніх груп</sys:String>
-    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected"></sys:String>
+    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Розкрити групи вибраних іго</sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
