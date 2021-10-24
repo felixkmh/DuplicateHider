@@ -1,5 +1,12 @@
 AddonId: 'felixkmh_DuplicateHider_Plugin'
 Packages:
+  - Version: 3.7.0
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-10-24
+    PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.7.0/felixkmh_DuplicateHider_Plugin_3_7_0.pext
+    Changelog:
+      - custom groups now ignore the black-/whitelist settings
+      - fixed some typos
   - Version: 3.6.0
     RequiredApiVersion: 6.0.0
     ReleaseDate: 2021-10-20
