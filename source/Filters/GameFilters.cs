@@ -89,4 +89,19 @@ namespace DuplicateHider
             return from game in input where !_ignoredIds.Contains(game.Id) select game;
         }
     }
+
+    class UnionFilter : IFilter<IEnumerable<Game>>
+    {
+        ISet<Game> _addedGames;
+
+        public UnionFilter(IEnumerable<Game> games)
+        {
+            _addedGames = games.ToHashSet();
+        }
+
+        public override IEnumerable<Game> ApplySingle(in IEnumerable<Game> input)
+        {
+            return input.Union(_addedGames);
+        }
+    }
 }

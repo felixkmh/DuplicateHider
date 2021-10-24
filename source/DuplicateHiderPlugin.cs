@@ -741,7 +741,8 @@ namespace DuplicateHider
                     Action = (context) => {
                         PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
                         PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
-                        foreach(var game in PlayniteApi.MainView.SelectedGames) { settings.IgnoredGames.Add(game.Id); } BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
+                        foreach(var game in PlayniteApi.MainView.SelectedGames) { settings.IgnoredGames.Add(game.Id); } 
+                        BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
                         var revealed = SetDuplicateState(Hidden);
                         PlayniteApi.Database.Games.Update(revealed);
                         PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
@@ -755,7 +756,8 @@ namespace DuplicateHider
                     Action = (context) => {
                         PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
                         PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
-                        foreach(var game in PlayniteApi.MainView.SelectedGames) { settings.IgnoredGames.Remove(game.Id); } BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
+                        foreach(var game in PlayniteApi.MainView.SelectedGames) { settings.IgnoredGames.Remove(game.Id); } 
+                        BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
                         var revealed = SetDuplicateState(Hidden);
                         PlayniteApi.Database.Games.Update(revealed);
                         PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
@@ -1274,7 +1276,8 @@ namespace DuplicateHider
                     new PlatformFilter(true, settings.IncludePlatforms),
                     new SourceFilter(false, settings.ExcludeSources),
                     new CategoryFilter(false, settings.ExcludeCategories),
-                    new IgnoreFilter(settings.IgnoredGames)
+                    new IgnoreFilter(settings.IgnoredGames),
+                    new UnionFilter(settings.CustomGroups.SelectMany(group => group.Games.Select(id => PlayniteApi.Database.Games.Get(id)).OfType<Game>()))
                 );
             }
             return GameFilters;
