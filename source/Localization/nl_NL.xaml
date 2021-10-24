@@ -11,14 +11,14 @@
     <sys:String x:Key="LOC_DH_NGamesRevealed">Spellen zichtbaar gemaakt: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">Spellen toegevoegd aan groep &quot;{1}&quot;: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">Spellen verwijderd uit hun groepen: {0}</sys:String>
-    <sys:String x:Key="LOC_DH_N_GroupsDisbanded"></sys:String>
+    <sys:String x:Key="LOC_DH_N_GroupsDisbanded">Verwijderde groepen: {0}</sys:String>
 
     <!--GameMenu Entries-->
 	<sys:String x:Key="LOC_DH_N_OtherCopies">Andere Kopieën: {0}</sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup">Geselecteerde spellen toevoegen aan nieuwe groep</sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup">Geselecteerde spellen toevoegen aan bestaande groep</sys:String>
     <sys:String x:Key="LOC_DH_RemoveFromExistingGroup">Verwijder geselecteerde spellen uit hun groepen</sys:String>
-    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected"></sys:String>
+    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Verwijder groepen van geselecteerde spellen</sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
