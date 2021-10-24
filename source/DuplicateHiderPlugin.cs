@@ -717,6 +717,8 @@ namespace DuplicateHider
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOC_DH_NGamesHidden"), hidden.Where(g => g.Hidden).Count()), "DuplicateHider");
                         PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
                         PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
+                        UpdateGuidToCopiesDict();
+                        GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
                     }
                 },
                 new MainMenuItem
@@ -732,6 +734,8 @@ namespace DuplicateHider
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOC_DH_NGamesRevealed"), revealed.Where(g => !g.Hidden).Count()), "DuplicateHider");
                         PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
                         PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
+                        UpdateGuidToCopiesDict();
+                        GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
                     }
                 },
                 new MainMenuItem
@@ -741,12 +745,20 @@ namespace DuplicateHider
                     Action = (context) => {
                         PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
                         PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
-                        foreach(var game in PlayniteApi.MainView.SelectedGames) { settings.IgnoredGames.Add(game.Id); } 
+                        foreach(var game in PlayniteApi.MainView.SelectedGames)
+                        {
+                            settings.IgnoredGames.Add(game.Id);
+                        }
                         BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
-                        var revealed = SetDuplicateState(Hidden);
-                        PlayniteApi.Database.Games.Update(revealed);
+                        if (settings.UpdateAutomatically)
+                        {
+                            var revealed = SetDuplicateState(Hidden);
+                            PlayniteApi.Database.Games.Update(revealed);
+                        }
                         PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
                         PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
+                        UpdateGuidToCopiesDict();
+                        GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
                     }
                 },
                 new MainMenuItem
@@ -756,12 +768,20 @@ namespace DuplicateHider
                     Action = (context) => {
                         PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
                         PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
-                        foreach(var game in PlayniteApi.MainView.SelectedGames) { settings.IgnoredGames.Remove(game.Id); } 
+                        foreach(var game in PlayniteApi.MainView.SelectedGames)
+                        {
+                            settings.IgnoredGames.Remove(game.Id);
+                        }
                         BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
-                        var revealed = SetDuplicateState(Hidden);
-                        PlayniteApi.Database.Games.Update(revealed);
+                        if (settings.UpdateAutomatically)
+                        {
+                            var revealed = SetDuplicateState(Hidden);
+                            PlayniteApi.Database.Games.Update(revealed);
+                        }
                         PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
                         PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
+                        UpdateGuidToCopiesDict();
+                        GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
                     }
                 }
 #if DEBUG
