@@ -43,7 +43,7 @@
     <sys:String x:Key="LOC_DH_ShowSingleIcon">Afficher une icône s'il y a seulement une copie</sys:String>
     <sys:String x:Key="LOC_DH_SuppressNotification">Suppression de la notification de l'icône du thème</sys:String>
     <sys:String x:Key="LOC_DH_CustomGroups">Groupes personnalisés</sys:String>
-    <sys:String x:Key="LOC_DH_CustomGroupName">Nom de groupe personnalis</sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupName">Nom de groupe personnalisé</sys:String>
     <sys:String x:Key="LOC_DH_CustomGroupNamePrompt">Spécifiez le nom du groupe :</sys:String>
     <sys:String x:Key="LOC_DH_GroupConflict">Conflits de groupes</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderLabel">Conserver l'ordre</sys:String>
@@ -53,8 +53,8 @@
 		
 Voulez-vous déplacer ces jeux de leurs anciens groupes vers le nouveau, les garder dans leurs anciens groupes ou annuler la création du groupe ?
     </sys:String>
-    <sys:String x:Key="LOC_DH_HiddenTag">[DH] Cach</sys:String>
-    <sys:String x:Key="LOC_DH_RevealedTag">[DH] Révél</sys:String>
+    <sys:String x:Key="LOC_DH_HiddenTag">[DH] Caché</sys:String>
+    <sys:String x:Key="LOC_DH_RevealedTag">[DH] Révélé</sys:String>
     <!--Tool Tips-->
 	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">Si activé, DuplicateHider réévalue le rang d'un doublon lors de changement, en gardant toujours la copie avec le rang le plus élevé visible tout en cachant les autres.</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">Si activé, d'autres copies peuvent être lancées à l'aide du menu contextuel d'un jeu.</sys:String>
