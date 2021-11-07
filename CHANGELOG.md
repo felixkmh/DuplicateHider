@@ -1,3 +1,9 @@
+## v3.8.0 (2021-11-07)
+
+### Feat
+
+- added priority overwrite tags
+
 ## v3.7.1 (2021-10-24)
 
 ### Fix
