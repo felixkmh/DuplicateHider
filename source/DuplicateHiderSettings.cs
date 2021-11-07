@@ -60,6 +60,10 @@ namespace DuplicateHider
         private Guid hiddenTagId = Guid.Empty;
         [JsonIgnore]
         private Guid revealedTagId = Guid.Empty;
+        [JsonIgnore]
+        private Guid highPrioTagId = Guid.Empty;
+        [JsonIgnore]
+        private Guid lowPrioTagId = Guid.Empty;
         public Guid HiddenTagId
         {
             get
@@ -90,6 +94,38 @@ namespace DuplicateHider
                 return revealedTagId;
             }
             set => revealedTagId = value;
+        }
+        public Guid HighPrioTagId
+        {
+            get
+            {
+                if (plugin != null && highPrioTagId == Guid.Empty)
+                {
+                    highPrioTagId = plugin.PlayniteApi.Database.Tags.Add("[DH] High").Id;
+                }
+                else if (plugin != null && plugin.PlayniteApi.Database.Tags.Get(highPrioTagId) == null)
+                {
+                    highPrioTagId = plugin.PlayniteApi.Database.Tags.Add("[DH] High").Id;
+                }
+                return highPrioTagId;
+            }
+            set => highPrioTagId = value;
+        }
+        public Guid LowPrioTagId
+        {
+            get
+            {
+                if (plugin != null && lowPrioTagId == Guid.Empty)
+                {
+                    lowPrioTagId = plugin.PlayniteApi.Database.Tags.Add("[DH] Low").Id;
+                }
+                else if (plugin != null && plugin.PlayniteApi.Database.Tags.Get(lowPrioTagId) == null)
+                {
+                    lowPrioTagId = plugin.PlayniteApi.Database.Tags.Add("[DH] Low").Id;
+                }
+                return lowPrioTagId;
+            }
+            set => lowPrioTagId = value;
         }
 
         public ListBoxItem CreateReplacementFilterItem(ReplaceFilter filter = null)

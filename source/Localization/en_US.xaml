@@ -55,6 +55,8 @@ Do you want to move these games from their old groups to the new one, keep confl
     </sys:String>
     <sys:String x:Key="LOC_DH_HiddenTag">[DH] Hidden</sys:String>
     <sys:String x:Key="LOC_DH_RevealedTag">[DH] Revealed</sys:String>
+    <sys:String x:Key="LOC_DH_HighPrioTag">[DH] High</sys:String>
+    <sys:String x:Key="LOC_DH_LowPrioTag">[DH] Low</sys:String>
     <!--Tool Tips-->
 	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">If enabled, DuplicateHider will re-evaluate the rank of a copy when it changes, always keeping the copy with the highest rank visible while hiding all other copies.</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">If enabled, other copies of a game can be started using a game's context menu.</sys:String>

@@ -83,7 +83,7 @@ namespace DuplicateHider
 
     class SpecialCharFilter : IFilter<string>
     {
-        private readonly Regex regex = new Regex("[" + Regex.Escape("&.,:;^°_`´~+!\"§$% &/ () =?<>#|'’") + "\\-]");
+        private readonly Regex regex = new Regex("[" + Regex.Escape("–&.,:;^°_`´~+!\"§$% &/ () =?<>#|'’") + "\\-]");
         public override string ApplySingle(in string input)
         {
             var stringBuilder = new StringBuilder();

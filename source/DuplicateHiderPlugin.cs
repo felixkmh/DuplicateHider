@@ -25,6 +25,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Threading;
 using DuplicateHider.Data;
+using System.Windows.Input;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("DuplicateHider")]
 namespace DuplicateHider
@@ -54,6 +55,8 @@ namespace DuplicateHider
         private FileSystemWatcher iconWatcher = null;
 
         public Guid? CurrentlySelected { get; private set; } = null;
+
+        internal static ICommand editGamesCommand;
 
         public DuplicateHiderPlugin(IPlayniteAPI api) : base(api)
         {
@@ -171,6 +174,23 @@ namespace DuplicateHider
             //    PlayniteApi.Dialogs.ShowMessage($"ItemUpdateEvent triggered with {itemUpdatedArgs.UpdatedItems.Count} updates.");
 
             //};
+
+
+   
+            if (UiIntegration.FindVisualChildren(Application.Current.MainWindow, "PART_ListGames").FirstOrDefault() is FrameworkElement gameList)
+            {
+                var bindings = gameList.InputBindings;
+                foreach (var binding in bindings.OfType<KeyBinding>())
+                {
+                    if (binding.Key == Key.F3)
+                    {
+                        editGamesCommand = binding.Command;
+                    }
+                }
+            }
+
+
+
             // Create or set tags
             LocalizeTags();
 
@@ -346,6 +366,14 @@ namespace DuplicateHider
             if (PlayniteApi.Database.Tags.Get(settings.RevealedTagId) is Tag revealedTag)
             {
                 revealedTag.Name = ResourceProvider.GetString("LOC_DH_RevealedTag");
+            }
+            if (PlayniteApi.Database.Tags.Get(settings.LowPrioTagId) is Tag lowTag)
+            {
+                lowTag.Name = ResourceProvider.GetString("LOC_DH_LowPrioTag");
+            }
+            if (PlayniteApi.Database.Tags.Get(settings.HighPrioTagId) is Tag highTag)
+            {
+                highTag.Name = ResourceProvider.GetString("LOC_DH_HighPrioTag");
             }
         }
 
@@ -839,6 +867,36 @@ namespace DuplicateHider
         {
 
             var entries = new List<GameMenuItem>();
+
+            //if (editGamesCommand is ICommand)
+            //{
+            //    entries.Add(new GameMenuItem
+            //    {
+            //        Description = "Edit All Copies",
+            //        Action = (arg) =>
+            //        {
+            //            Task.Run(() => editGamesCommand.Execute(null));
+            //            Task.Run(() =>
+            //            {
+            //                Thread.Sleep(500);
+            //                Application.Current.Dispatcher.Invoke(() =>
+            //                {
+            //                    foreach (FrameworkElement window in Application.Current.Windows)
+            //                    {
+            //                        if (window.GetType().Name == "GameEditWindow")
+            //                        {
+            //                            dynamic context = window.DataContext;
+            //                            context.Games = GetCopies(arg.Games.FirstOrDefault());
+            //                            window.DataContext = context;
+            //                        }
+            //                    }
+            //                });
+            //            });
+                        
+            //        }
+            //    });
+            //}
+
             if (settings.ShowOtherCopiesInGameMenu)
             {
                 if (args.Games.Count == 1)
@@ -1236,7 +1294,17 @@ namespace DuplicateHider
             }
             if (PlayniteApi.Database.Games.Get(id) is Game game)
             {
-                return GetSourceRank(game) - (rankRange * (game.IsInstalled ? 1 : 0));
+                var offset = 0;
+                var tags = game.TagIds ?? new List<Guid>();
+                if (tags.Contains(settings.HighPrioTagId))
+                {
+                    offset -= 2 * rankRange;
+                }
+                if (tags.Contains(settings.LowPrioTagId))
+                {
+                    offset += 2 * rankRange;
+                }
+                return GetSourceRank(game) - (rankRange * (game.IsInstalled ? 1 : 0)) + offset;
             }
             return rankRange;
         }
