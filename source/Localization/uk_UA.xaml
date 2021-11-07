@@ -55,6 +55,8 @@
     </sys:String>
     <sys:String x:Key="LOC_DH_HiddenTag">[DH] Приховано</sys:String>
     <sys:String x:Key="LOC_DH_RevealedTag">[DH] Показано</sys:String>
+    <sys:String x:Key="LOC_DH_HighPrioTag"></sys:String>
+    <sys:String x:Key="LOC_DH_LowPrioTag"></sys:String>
     <!--Tool Tips-->
 	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">Якщо увімкнено, DuplicateHider буде повторно оцінювати ранг копії, коли вона змінюється, завжди зберігаючи видимою копію з найвищим рейтингом, приховуючи всі інші копії.</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">Якщо увімкнено, інші копії гри можна запускати за допомогою контекстного меню гри.</sys:String>
