@@ -55,8 +55,8 @@ Wil je deze spellen verplaatsen van hun oude groepen naar de nieuwe en conflicte
     </sys:String>
     <sys:String x:Key="LOC_DH_HiddenTag">[DH] Verborgen</sys:String>
     <sys:String x:Key="LOC_DH_RevealedTag">[DH] Onthuld</sys:String>
-    <sys:String x:Key="LOC_DH_HighPrioTag"></sys:String>
-    <sys:String x:Key="LOC_DH_LowPrioTag"></sys:String>
+    <sys:String x:Key="LOC_DH_HighPrioTag">[DH] Hoog</sys:String>
+    <sys:String x:Key="LOC_DH_LowPrioTag">[DH] Laag</sys:String>
     <!--Tool Tips-->
 	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">Indien ingeschakeld, zal DuplicateHider de rangorde van een kopie opnieuw evalueren wanneer deze verandert, waarbij altijd de kopie met de hoogste rangschikking zichtbaar blijft, terwijl alle andere kopieën worden verborgen.</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">Indien ingeschakeld, kunnen andere exemplaren van een game worden gestart met behulp van het contextmenu van een game.</sys:String>
