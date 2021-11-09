@@ -1249,7 +1249,7 @@ namespace DuplicateHider
                     if (expanded.Length == 0 || expanded == variable)
                     {
                         expanded = expanded.Replace("{Source}", game.GetSourceName());
-                        expanded = expanded.Replace("{Installed}", game.IsInstalled ? "Installed" : "Not installed");
+                        expanded = expanded.Replace("{Installed}", game.IsInstalled ? ResourceProvider.GetString("LOCGameIsInstalledTitle") : ResourceProvider.GetString("LOCGameIsUnInstalledTitle"));
                         if (expanded.Contains("{Regions}"))
                         {
                             expanded = expanded.Replace("{Regions}", game.Regions != null ? string.Join(", ", game.Regions.Select(e => e.Name)) : "");
