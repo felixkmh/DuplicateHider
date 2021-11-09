@@ -51,6 +51,8 @@
     <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve"></sys:String>
     <sys:String x:Key="LOC_DH_HiddenTag"></sys:String>
     <sys:String x:Key="LOC_DH_RevealedTag"></sys:String>
+    <sys:String x:Key="LOC_DH_HighPrioTag"></sys:String>
+    <sys:String x:Key="LOC_DH_LowPrioTag"></sys:String>
     <!--Tool Tips-->
 	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip"></sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip"></sys:String>

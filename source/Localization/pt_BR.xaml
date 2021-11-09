@@ -51,6 +51,8 @@
     <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve"></sys:String>
     <sys:String x:Key="LOC_DH_HiddenTag"></sys:String>
     <sys:String x:Key="LOC_DH_RevealedTag"></sys:String>
+    <sys:String x:Key="LOC_DH_HighPrioTag"></sys:String>
+    <sys:String x:Key="LOC_DH_LowPrioTag"></sys:String>
     <!--Tool Tips-->
 	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">Se habilitado, o DuplicateHider era reavaliar a posição da cópia quando ela mudar, sempre mantendo a cópia com a maior posição visível enquanto oculta todas as outras.</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">Se habilitado, as outras cópias de um jogo poderão ser iniciadas usando o menu de contexto dele.</sys:String>
