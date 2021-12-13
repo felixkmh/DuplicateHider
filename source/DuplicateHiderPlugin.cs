@@ -868,34 +868,28 @@ namespace DuplicateHider
 
             var entries = new List<GameMenuItem>();
 
-            //if (editGamesCommand is ICommand)
-            //{
-            //    entries.Add(new GameMenuItem
-            //    {
-            //        Description = "Edit All Copies",
-            //        Action = (arg) =>
-            //        {
-            //            Task.Run(() => editGamesCommand.Execute(null));
-            //            Task.Run(() =>
-            //            {
-            //                Thread.Sleep(500);
-            //                Application.Current.Dispatcher.Invoke(() =>
-            //                {
-            //                    foreach (FrameworkElement window in Application.Current.Windows)
-            //                    {
-            //                        if (window.GetType().Name == "GameEditWindow")
-            //                        {
-            //                            dynamic context = window.DataContext;
-            //                            context.Games = GetCopies(arg.Games.FirstOrDefault());
-            //                            window.DataContext = context;
-            //                        }
-            //                    }
-            //                });
-            //            });
-                        
-            //        }
-            //    });
-            //}
+            if (editGamesCommand is ICommand)
+            {
+                Game mainCopy = args.Games.First();
+                var otherCopies = GetOtherCopies(mainCopy);
+                if (otherCopies.Count > 0)
+                {
+                    entries.Add(new GameMenuItem
+                    {
+                        Description = ResourceProvider.GetString("LOC_DH_EditAllCopies"),
+                        Icon = "EditGameIcon",
+                        Action = (arg) =>
+                        {
+                            if (arg.Games.Count > 0)
+                            {
+                                IEnumerable<Guid> gameIds = (new[] { mainCopy.Id }).Concat(otherCopies.Select(g => g.Id));
+                                PlayniteApi.MainView.SelectGames(gameIds);
+                                editGamesCommand?.Execute(null);
+                            }
+                        }
+                    });
+                }
+            }
 
             if (settings.ShowOtherCopiesInGameMenu)
             {
