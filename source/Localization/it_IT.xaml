@@ -19,6 +19,7 @@
     <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup">Aggiungi i Giochi selezionati al Gruppo esistente</sys:String>
     <sys:String x:Key="LOC_DH_RemoveFromExistingGroup">Rimuovi i Giochi selezionati dai loro Gruppi</sys:String>
     <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Sciogli i gruppi dei Giochi selezionati</sys:String>
+    <sys:String x:Key="LOC_DH_EditAllCopies"></sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
