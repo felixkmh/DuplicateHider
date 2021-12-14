@@ -29,6 +29,7 @@
 	<sys:String x:Key="LOC_DH_CustomRulesTab">Reglas personalizadas</sys:String>
 	<sys:String x:Key="LOC_DH_UIIntegrationTab">Integración de UI</sys:String>
 	<!--Labels-->
+    <sys:String x:Key="LOC_DH_Updating"></sys:String>
     <sys:String x:Key="LOC_DH_GameFields"></sys:String>
     <sys:String x:Key="LOC_DH_SourceGames"></sys:String>
     <sys:String x:Key="LOC_DH_Warning"></sys:String>
