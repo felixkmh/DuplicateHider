@@ -1,5 +1,14 @@
 AddonId: 'felixkmh_DuplicateHider_Plugin'
 Packages:
+  - Version: 3.8.0
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2021-12-14
+    PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.8.0/felixkmh_DuplicateHider_Plugin_3_8_0.pext
+    Changelog:
+      - added priority overwrite tags
+      - added game menu entry to edit all copies of a game
+      - added game menu entry to copy game fields and assets (including ExtraMetadata) to all copies of a game (multi-selection possible)
+      - updated to PlayniteSDK 6.2
   - Version: 3.7.1
     RequiredApiVersion: 6.0.0
     ReleaseDate: 2021-10-24
