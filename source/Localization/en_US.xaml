@@ -20,6 +20,7 @@
     <sys:String x:Key="LOC_DH_RemoveFromExistingGroup">Remove selected Games from their Groups</sys:String>
     <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Disband Groups of selected Games</sys:String>
     <sys:String x:Key="LOC_DH_EditAllCopies">Edit All Copies</sys:String>
+    <sys:String x:Key="LOC_DH_CopyFieldsFromGame">Copy Info to other Copies</sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->

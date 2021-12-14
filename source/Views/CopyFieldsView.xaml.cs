@@ -30,5 +30,13 @@ namespace DuplicateHider.Views
         {
             DataContext = model;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (Parent is Window window)
+            {
+                window.Close();
+            }
+        }
     }
 }

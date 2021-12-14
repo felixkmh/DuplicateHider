@@ -103,8 +103,8 @@
         </ScrollViewer>
         <DockPanel Grid.Row="1" LastChildFill="False" Margin="5">
             <Separator DockPanel.Dock="Top"/>
-            <Button Content="{DynamicResource LOCCancelLabel}" DockPanel.Dock="Right" Margin="5" MinWidth="100" Command="{Binding RevertCommand}"/>
-            <Button Content="{DynamicResource LOCOKLabel}" DockPanel.Dock="Right" Margin="5" MinWidth="100" Command="{Binding ApplyCommand}"/>
+            <Button Content="{DynamicResource LOCCancelLabel}" DockPanel.Dock="Right" Margin="5" MinWidth="100" Command="{Binding RevertCommand}" ClickMode="Release" Click="Button_Click"/>
+            <Button Content="{DynamicResource LOCOKLabel}" DockPanel.Dock="Right" Margin="5" MinWidth="100" Command="{Binding ApplyCommand}" ClickMode="Release" Click="Button_Click"/>
             <StackPanel Orientation="Horizontal" Margin="5" DockPanel.Dock="Left" VerticalAlignment="Center">
                 <CheckBox IsChecked="{Binding SaveAsDefault}"/>
                 <TextBlock Text="{DynamicResource LOCSaveAsDefault}" Foreground="{DynamicResource TextBrush}"/>
