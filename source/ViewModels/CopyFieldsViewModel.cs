@@ -40,6 +40,7 @@ namespace DuplicateHider.ViewModels
                     DuplicateHiderPlugin.API.Database.Games.Update(CopyFields.SelectMany(cf => cf.TargetGames));
                     if (SaveAsDefault) DuplicateHiderPlugin.Instance.settings.DefaultEnabledFields = EnabledFields;
                 }
+                GC.Collect();
             });
             RevertCommand = new RelayCommand(() =>
             {
