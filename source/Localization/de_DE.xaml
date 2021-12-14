@@ -31,6 +31,7 @@ Klicke auf &quot;{0}&quot;, um fortzufahren oder &quot;{1}&quot;, um diesen Vorg
 	<sys:String x:Key="LOC_DH_CustomRulesTab">Eigene Regeln</sys:String>
 	<sys:String x:Key="LOC_DH_UIIntegrationTab">UI Integration</sys:String>
 	<!--Labels-->
+    <sys:String x:Key="LOC_DH_Updating">Aktualisieren...</sys:String>
     <sys:String x:Key="LOC_DH_GameFields">Spiel-Datenfelder</sys:String>
     <sys:String x:Key="LOC_DH_SourceGames">Quellspiele</sys:String>
     <sys:String x:Key="LOC_DH_Warning">Warnung</sys:String>
