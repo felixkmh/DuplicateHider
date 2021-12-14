@@ -81,7 +81,9 @@
     <Compile Include="Filters\GameFilters.cs" />
     <Compile Include="Filters\IFilter.cs" />
     <Compile Include="Data\CustomGroup.cs" />
+    <Compile Include="Models\CopyFieldsModel.cs" />
     <Compile Include="Models\CustomGroupViewModel.cs" />
+    <Compile Include="Models\EnabledFieldsModel.cs" />
     <Compile Include="Models\ListData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Filters\StringFilters.cs" />
@@ -89,6 +91,10 @@
     <Compile Include="UniqueList.cs" />
     <Compile Include="Controls\CustomGroupList.xaml.cs">
       <DependentUpon>CustomGroupList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\CopyFieldsViewModel.cs" />
+    <Compile Include="Views\CopyFieldsView.xaml.cs">
+      <DependentUpon>CopyFieldsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\IconPreview.xaml.cs">
       <DependentUpon>IconPreview.xaml</DependentUpon>
@@ -125,6 +131,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Page Include="Controls\CustomGroupList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CopyFieldsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

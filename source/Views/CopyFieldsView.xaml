@@ -1,0 +1,114 @@
+﻿<UserControl x:Class="DuplicateHider.Views.CopyFieldsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DuplicateHider.Views"
+             xmlns:viewModels="clr-namespace:DuplicateHider.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False, Type=viewModels:CopyFieldsViewModel}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer>
+            <StackPanel HorizontalAlignment="Left" Margin="5">
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.Name}"/>
+                    <TextBlock Text="{DynamicResource LOCGameNameTitle}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.SortingName}"/>
+                    <TextBlock Text="{DynamicResource LOCGameSortingNameTitle}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.Genres}"/>
+                    <TextBlock Text="{DynamicResource LOCGenresLabel}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.Platforms}"/>
+                    <TextBlock Text="{DynamicResource LOCGamePlatformTitle}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.Categories}"/>
+                    <TextBlock Text="{DynamicResource LOCGameCategoriesTitle}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.Icon}"/>
+                    <TextBlock Text="{DynamicResource LOCGameIconTitle}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.CoverImage}"/>
+                    <TextBlock Text="{DynamicResource LOCGameCoverTitle}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.BackgroundImage}"/>
+                    <TextBlock Text="{DynamicResource LOCGameBackgroundTitle}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.Tags}"/>
+                    <TextBlock Text="{DynamicResource LOCGameTagsTitle}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.Description}"/>
+                    <TextBlock Text="{DynamicResource LOCGameDescriptionTitle}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.Features}"/>
+                    <TextBlock Text="{DynamicResource LOCFeaturesLabel}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.Developers}"/>
+                    <TextBlock Text="{DynamicResource LOCDevelopersLabel}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.Publishers}"/>
+                    <TextBlock Text="{DynamicResource LOCPublishersLabel}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.Regions}"/>
+                    <TextBlock Text="{DynamicResource LOCRegionsLabel}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.AgeRatings}"/>
+                    <TextBlock Text="{DynamicResource LOCAgeRatingsLabel}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.ReleaseDate}"/>
+                    <TextBlock Text="{DynamicResource LOCGameReleaseDateTitle}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.Series}"/>
+                    <TextBlock Text="{DynamicResource LOCSeriesLabel}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.UserScore}"/>
+                    <TextBlock Text="{DynamicResource LOCUserScore}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.CriticsScore}"/>
+                    <TextBlock Text="{DynamicResource LOCCriticScore}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.CommunityScore}"/>
+                    <TextBlock Text="{DynamicResource LOCCommunityScore}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <CheckBox IsChecked="{Binding EnabledFields.Links}"/>
+                    <TextBlock Text="{DynamicResource LOCLinksLabel}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+        <DockPanel Grid.Row="1" LastChildFill="False" Margin="5">
+            <Separator DockPanel.Dock="Top"/>
+            <Button Content="{DynamicResource LOCCancelLabel}" DockPanel.Dock="Right" Margin="5" MinWidth="100" Command="{Binding RevertCommand}"/>
+            <Button Content="{DynamicResource LOCOKLabel}" DockPanel.Dock="Right" Margin="5" MinWidth="100" Command="{Binding ApplyCommand}"/>
+            <StackPanel Orientation="Horizontal" Margin="5" DockPanel.Dock="Left" VerticalAlignment="Center">
+                <CheckBox IsChecked="{Binding SaveAsDefault}"/>
+                <TextBlock Text="{DynamicResource LOCSaveAsDefault}" Foreground="{DynamicResource TextBrush}"/>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</UserControl>

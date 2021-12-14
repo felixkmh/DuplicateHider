@@ -26,6 +26,9 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using DuplicateHider.Data;
 using System.Windows.Input;
+using DuplicateHider.Models;
+using DuplicateHider.ViewModels;
+using DuplicateHider.Views;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("DuplicateHider")]
 namespace DuplicateHider
@@ -868,9 +871,9 @@ namespace DuplicateHider
 
             var entries = new List<GameMenuItem>();
 
-            if (editGamesCommand is ICommand)
+            if (editGamesCommand is ICommand && args.Games.Count == 1)
             {
-                Game mainCopy = args.Games.First();
+                Game mainCopy = args.Games.FirstOrDefault();
                 var otherCopies = GetOtherCopies(mainCopy);
                 if (otherCopies.Count > 0)
                 {
@@ -885,11 +888,39 @@ namespace DuplicateHider
                                 IEnumerable<Guid> gameIds = (new[] { mainCopy.Id }).Concat(otherCopies.Select(g => g.Id));
                                 PlayniteApi.MainView.SelectGames(gameIds);
                                 editGamesCommand?.Execute(null);
+                                PlayniteApi.MainView.SelectGames(new[] { mainCopy.Id });
                             }
                         }
                     });
                 }
             }
+
+            entries.Add(new GameMenuItem
+            {
+                Description = "Copy from Current to others",
+                Action = (arg) =>
+                {
+                    List<CopyFieldsModel> copyFieldsModels = new List<CopyFieldsModel>();
+                    foreach(var game in arg.Games)
+                    {
+                        var copies = GetOtherCopies(game);
+                        if (copies.Count > 0)
+                        {
+                            copyFieldsModels.Add(new CopyFieldsModel(game, copies));
+                        }
+                    }
+
+                    var viewModel = new CopyFieldsViewModel(copyFieldsModels);
+
+                    var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = false, ShowMinimizeButton = false });
+                    window.Width = 700;
+                    window.Height = 620;
+                    window.Content = new CopyFieldsView(viewModel);
+                    window.Owner = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.Name == "WindowMain");
+                    window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                    window.Show();
+                }
+            });
 
             if (settings.ShowOtherCopiesInGameMenu)
             {
