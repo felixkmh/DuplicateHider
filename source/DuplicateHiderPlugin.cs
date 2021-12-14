@@ -897,7 +897,8 @@ namespace DuplicateHider
 
             entries.Add(new GameMenuItem
             {
-                Description = $"DuplicateHider|{ResourceProvider.GetString("LOC_DH_CopyFieldsFromGame")}",
+                Description = ResourceProvider.GetString("LOC_DH_CopyFieldsFromGame"),
+                MenuSection = "DuplicateHider",
                 Action = (arg) =>
                 {
                     List<CopyFieldsModel> copyFieldsModels = new List<CopyFieldsModel>();
