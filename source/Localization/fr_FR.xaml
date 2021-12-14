@@ -12,7 +12,9 @@
     <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">Jeux ajoutés au groupe &quot;{1}&quot;: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">Jeux retirés de leurs groupes : {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GroupsDisbanded">Groupes supprimés: {0}</sys:String>
-    <sys:String x:Key="LOC_DH_CopyFieldsWarning" xml:space="preserve"></sys:String>
+    <sys:String x:Key="LOC_DH_CopyFieldsWarning" xml:space="preserve">Cette opération copiera les infos sélectionnées de la copie sur laquelle cette opération a été invoquée vers toutes ses autres copies. Cela écrasera et supprimera les infos et images existantes des autres copies et ne pourra pas être annulé. 
+        
+Cliquez sur &quot;{0}&quot; pour continuer ou &quot;{1}&quot; pour annuler cette opération.</sys:String>
     
     <!--GameMenu Entries-->
 	<sys:String x:Key="LOC_DH_N_OtherCopies">Autre copies: {0}</sys:String>
@@ -20,8 +22,8 @@
     <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup">Ajouter les jeux sélectionnés à un groupe existant</sys:String>
     <sys:String x:Key="LOC_DH_RemoveFromExistingGroup">Retirer les jeux sélectionnés de leurs groupes</sys:String>
     <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Supprimer les groupes des jeux séléctionnés</sys:String>
-    <sys:String x:Key="LOC_DH_EditAllCopies"></sys:String>
-    <sys:String x:Key="LOC_DH_CopyFieldsFromGame"></sys:String>
+    <sys:String x:Key="LOC_DH_EditAllCopies">Editer toutes les copies</sys:String>
+    <sys:String x:Key="LOC_DH_CopyFieldsFromGame">Copier les infos vers les autres copies</sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
@@ -29,10 +31,10 @@
 	<sys:String x:Key="LOC_DH_CustomRulesTab">Règles personnalisées</sys:String>
 	<sys:String x:Key="LOC_DH_UIIntegrationTab">Intégration UI</sys:String>
 	<!--Labels-->
-    <sys:String x:Key="LOC_DH_Updating"></sys:String>
-    <sys:String x:Key="LOC_DH_GameFields"></sys:String>
-    <sys:String x:Key="LOC_DH_SourceGames"></sys:String>
-    <sys:String x:Key="LOC_DH_Warning"></sys:String>
+    <sys:String x:Key="LOC_DH_Updating">Mise à jour...</sys:String>
+    <sys:String x:Key="LOC_DH_GameFields">Propriétés de jeu</sys:String>
+    <sys:String x:Key="LOC_DH_SourceGames">Jeux source</sys:String>
+    <sys:String x:Key="LOC_DH_Warning">Attention</sys:String>
 	<sys:String x:Key="LOC_DH_Priorities">Priorités</sys:String>
 	<sys:String x:Key="LOC_DH_AutomaticUpdate">Mise à jour automatique</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopies">Afficher les copies dans le menu du jeu</sys:String>
