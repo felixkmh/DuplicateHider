@@ -31,8 +31,13 @@ namespace DuplicateHider.Models
 
         public void Apply(EnabledFieldsModel enabledFields)
         {
-            var targets = TargetGames.Select(g => DuplicateHiderPlugin.API.Database.Games.Get(g.Id)).OfType<Game>();
-
+            var targets = TargetGames;
+            var dhTagIds = new[] {
+                DuplicateHiderPlugin.Instance.settings.HiddenTagId,
+                DuplicateHiderPlugin.Instance.settings.RevealedTagId,
+                DuplicateHiderPlugin.Instance.settings.HighPrioTagId,
+                DuplicateHiderPlugin.Instance.settings.LowPrioTagId
+            };
             if (enabledFields.Name) targets.ForEach(g => g.Name = SourceGame.Name);
             if (enabledFields.SortingName) targets.ForEach(g => g.SortingName = SourceGame.SortingName);
             if (enabledFields.Platforms) targets.ForEach(g => g.PlatformIds = SourceGame.PlatformIds);
@@ -41,7 +46,7 @@ namespace DuplicateHider.Models
             if (enabledFields.Publishers) targets.ForEach(g => g.PublisherIds = SourceGame.PublisherIds);
             if (enabledFields.Categories) targets.ForEach(g => g.CategoryIds = SourceGame.CategoryIds);
             if (enabledFields.Features) targets.ForEach(g => g.FeatureIds = SourceGame.FeatureIds);
-            if (enabledFields.Tags) targets.ForEach(g => g.TagIds = SourceGame.TagIds);
+            if (enabledFields.Tags) targets.ForEach(g => g.TagIds = SourceGame.TagIds.Where(t => !dhTagIds.Contains(t)).ToList());
             if (enabledFields.Description) targets.ForEach(g => g.Description = SourceGame.Description);
             if (enabledFields.ReleaseDate) targets.ForEach(g => g.ReleaseDate = SourceGame.ReleaseDate);
             if (enabledFields.Series) targets.ForEach(g => g.SeriesIds = SourceGame.SeriesIds);
@@ -136,7 +141,7 @@ namespace DuplicateHider.Models
                 }
             }
 
-            DuplicateHiderPlugin.API.Database.Games.Update(targets);
+            // DuplicateHiderPlugin.API.Database.Games.Update(targets);
         }
 
         public void Revert()
