@@ -12,7 +12,8 @@
     <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">Jeux ajoutés au groupe &quot;{1}&quot;: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">Jeux retirés de leurs groupes : {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GroupsDisbanded">Groupes supprimés: {0}</sys:String>
-
+    <sys:String x:Key="LOC_DH_CopyFieldsWarning" xml:space="preserve"></sys:String>
+    
     <!--GameMenu Entries-->
 	<sys:String x:Key="LOC_DH_N_OtherCopies">Autre copies: {0}</sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup">Ajouter les jeux sélectionnés à un nouveau groupe</sys:String>
@@ -28,6 +29,9 @@
 	<sys:String x:Key="LOC_DH_CustomRulesTab">Règles personnalisées</sys:String>
 	<sys:String x:Key="LOC_DH_UIIntegrationTab">Intégration UI</sys:String>
 	<!--Labels-->
+    <sys:String x:Key="LOC_DH_GameFields"></sys:String>
+    <sys:String x:Key="LOC_DH_SourceGames"></sys:String>
+    <sys:String x:Key="LOC_DH_Warning"></sys:String>
 	<sys:String x:Key="LOC_DH_Priorities">Priorités</sys:String>
 	<sys:String x:Key="LOC_DH_AutomaticUpdate">Mise à jour automatique</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopies">Afficher les copies dans le menu du jeu</sys:String>
