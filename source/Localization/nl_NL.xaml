@@ -20,6 +20,7 @@
     <sys:String x:Key="LOC_DH_RemoveFromExistingGroup">Verwijder geselecteerde spellen uit hun groepen</sys:String>
     <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Verwijder groepen van geselecteerde spellen</sys:String>
     <sys:String x:Key="LOC_DH_EditAllCopies"></sys:String>
+    <sys:String x:Key="LOC_DH_CopyFieldsFromGame"></sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->

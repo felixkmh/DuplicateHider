@@ -20,6 +20,7 @@
     <sys:String x:Key="LOC_DH_RemoveFromExistingGroup">Видалити вибрані ігри з їхніх груп</sys:String>
     <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Розпустити групи вибраних ігор</sys:String>
     <sys:String x:Key="LOC_DH_EditAllCopies"></sys:String>
+    <sys:String x:Key="LOC_DH_CopyFieldsFromGame"></sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->

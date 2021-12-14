@@ -20,6 +20,7 @@
     <sys:String x:Key="LOC_DH_RemoveFromExistingGroup">Retirer les jeux sélectionnés de leurs groupes</sys:String>
     <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Supprimer les groupes des jeux séléctionnés</sys:String>
     <sys:String x:Key="LOC_DH_EditAllCopies"></sys:String>
+    <sys:String x:Key="LOC_DH_CopyFieldsFromGame"></sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
