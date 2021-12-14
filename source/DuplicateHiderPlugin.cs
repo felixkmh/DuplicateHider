@@ -914,6 +914,7 @@ namespace DuplicateHider
                     var viewModel = new CopyFieldsViewModel(copyFieldsModels);
 
                     var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = true, ShowMinimizeButton = false });
+                    window.Title = "DuplicateHider";
                     window.Width = 700;
                     window.Height = 650;
                     window.Content = new CopyFieldsView(viewModel);

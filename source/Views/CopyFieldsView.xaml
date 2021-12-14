@@ -4,10 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DuplicateHider.Views"
-             xmlns:viewModels="clr-namespace:DuplicateHider.ViewModels"
+             xmlns:viewModels="clr-namespace:DuplicateHider.ViewModels" xmlns:converters="clr-namespace:DuplicateHider.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False, Type=viewModels:CopyFieldsViewModel}">
+    <UserControl.Resources>
+        <converters:GameToPrioConverter x:Key="GameToPrioConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -118,6 +121,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="{x:Type Game}">
                         <DockPanel>
+                            <TextBlock Text="{Binding ., Converter={StaticResource GameToPrioConverter}, Mode=OneWay, StringFormat='({0})'}" DockPanel.Dock="Right" Margin="5,0,0,0"/>
                             <TextBlock Text="{Binding Source}" DockPanel.Dock="Right"/>
                             <TextBlock Text="{Binding Name}" DockPanel.Dock="Left" TextTrimming="CharacterEllipsis"/>
                         </DockPanel>

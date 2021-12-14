@@ -72,6 +72,7 @@
     <Compile Include="Controls\SourceSelector.xaml.cs">
       <DependentUpon>SourceSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\GameToPrioConverter.cs" />
     <Compile Include="DuplicateHiderPlugin.cs" />
     <Compile Include="DuplicateHiderSettings.cs" />
     <Compile Include="DuplicateHiderSettingsView.xaml.cs">
