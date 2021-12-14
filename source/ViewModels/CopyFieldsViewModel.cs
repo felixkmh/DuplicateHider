@@ -44,7 +44,8 @@ namespace DuplicateHider.ViewModels
                             int total = CopyFields.Count();
                             args.ProgressMaxValue = total;
                             args.Text = string.Format("{0}/{1}", done, total);
-                            foreach(var cf in CopyFields)
+                            args.CurrentProgressValue = done;
+                            foreach (var cf in CopyFields)
                             {
                                 if (args.CancelToken.IsCancellationRequested)
                                 {
