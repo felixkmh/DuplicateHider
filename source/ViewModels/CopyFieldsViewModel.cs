@@ -31,14 +31,34 @@ namespace DuplicateHider.ViewModels
         {
             ApplyCommand = new RelayCommand(() =>
             {
-                if (DuplicateHiderPlugin.API.Dialogs.ShowMessage(
-                    string.Format(ResourceProvider.GetString("LOC_DH_CopyFieldsWarning"), ResourceProvider.GetString("LOCOKLabel"), ResourceProvider.GetString("LOCCancelLabel")),
-                    ResourceProvider.GetString("LOC_DH_Warning"), System.Windows.MessageBoxButton.OKCancel)
-                == System.Windows.MessageBoxResult.OK)
+                if (CopyFields.Count() > 0)
                 {
-                    CopyFields.ForEach(cf => { cf.Apply(EnabledFields); });
-                    DuplicateHiderPlugin.API.Database.Games.Update(CopyFields.SelectMany(cf => cf.TargetGames));
-                    if (SaveAsDefault) DuplicateHiderPlugin.Instance.settings.DefaultEnabledFields = EnabledFields;
+                    if (DuplicateHiderPlugin.API.Dialogs.ShowMessage(
+                        string.Format(ResourceProvider.GetString("LOC_DH_CopyFieldsWarning"), ResourceProvider.GetString("LOCOKLabel"), ResourceProvider.GetString("LOCCancelLabel")),
+                        ResourceProvider.GetString("LOC_DH_Warning"), System.Windows.MessageBoxButton.OKCancel)
+                    == System.Windows.MessageBoxResult.OK)
+                    {
+                        DuplicateHiderPlugin.API.Dialogs.ActivateGlobalProgress(args =>
+                        {
+                            int done = 0;
+                            int total = CopyFields.Count();
+                            args.ProgressMaxValue = total;
+                            args.Text = string.Format("{0}/{1}", done, total);
+                            foreach(var cf in CopyFields)
+                            {
+                                if (args.CancelToken.IsCancellationRequested)
+                                {
+                                    break;
+                                }
+                                cf.Apply(EnabledFields);
+                                args.Text = string.Format("{0}/{1}", ++done, total);
+                                args.CurrentProgressValue = done;
+                            }
+                            args.Text = ResourceProvider.GetString("LOC_DH_Updating");
+                            DuplicateHiderPlugin.API.Database.Games.Update(CopyFields.SelectMany(cf => cf.TargetGames));
+                            if (SaveAsDefault) DuplicateHiderPlugin.Instance.settings.DefaultEnabledFields = EnabledFields;
+                        }, new GlobalProgressOptions(string.Format("{0}/{1}", 0, CopyFields.Count()), true) { IsIndeterminate = false });
+                    }
                 }
                 GC.Collect();
             });

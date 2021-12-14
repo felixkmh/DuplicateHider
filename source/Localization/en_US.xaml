@@ -31,6 +31,7 @@ Click "{0}" to continue or "{1}" to cancel this operation.</sys:String>
 	<sys:String x:Key="LOC_DH_CustomRulesTab">Custom Rules</sys:String>
 	<sys:String x:Key="LOC_DH_UIIntegrationTab">UI Integration</sys:String>
 	<!--Labels-->
+    <sys:String x:Key="LOC_DH_Updating">Updating...</sys:String>
     <sys:String x:Key="LOC_DH_GameFields">Game Fields</sys:String>
     <sys:String x:Key="LOC_DH_SourceGames">Source Games</sys:String>
     <sys:String x:Key="LOC_DH_Warning">Warning</sys:String>
