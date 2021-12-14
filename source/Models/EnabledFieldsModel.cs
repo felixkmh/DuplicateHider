@@ -73,5 +73,14 @@ namespace DuplicateHider.Models
 
         protected bool links;
         public bool Links { get => links; set => SetValue(ref links, value); }
+
+        protected bool logo;
+        public bool Logo { get => logo; set => SetValue(ref logo, value); }
+
+        protected bool trailer;
+        public bool Trailer { get => trailer; set => SetValue(ref trailer, value); }
+
+        protected bool microTrailer;
+        public bool MicroTrailer { get => microTrailer; set => SetValue(ref microTrailer, value); }
     }
 }

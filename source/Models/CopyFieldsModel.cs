@@ -141,6 +141,57 @@ namespace DuplicateHider.Models
                 }
             }
 
+            // ExtraMetaData
+            var emtPath = Path.Combine(DuplicateHiderPlugin.API.Paths.ConfigurationPath, "ExtraMetadata", "games");
+            var sourceEmt = Path.Combine(emtPath, SourceGame.Id.ToString().ToLower());
+            if (Directory.Exists(emtPath) && Directory.Exists(sourceEmt))
+            {
+                foreach(var target in targets)
+                {
+                    var targetEmt = Path.Combine(emtPath, target.Id.ToString().ToLower());
+                    if (!Directory.Exists(targetEmt))
+                    {
+                        Directory.CreateDirectory(targetEmt);
+                    }
+                    var sourceLogo = Directory.GetFiles(sourceEmt, "Logo.*").FirstOrDefault();
+                    if (enabledFields.Logo && !string.IsNullOrEmpty(sourceLogo))
+                    {
+                        try
+                        {
+                            var sourceFileName = Path.GetFileName(sourceLogo);
+                            var targetLogo = Path.Combine(targetEmt, sourceFileName);
+                            File.Copy(sourceLogo, targetLogo, true);
+                        }
+                        catch (Exception)
+                        {}
+                    }
+                    var sourceTrailer = Directory.GetFiles(sourceEmt, "VideoTrailer.*").FirstOrDefault();
+                    if (enabledFields.Trailer && !string.IsNullOrEmpty(sourceTrailer))
+                    {
+                        try
+                        {
+                            var sourceFileName = Path.GetFileName(sourceTrailer);
+                            var targetTrailer = Path.Combine(targetEmt, sourceFileName);
+                            File.Copy(sourceTrailer, targetTrailer, true);
+                        }
+                        catch (Exception)
+                        { }
+                    }
+                    var sourceMicroTrailer = Directory.GetFiles(sourceEmt, "VideoMicrotrailer.*").FirstOrDefault();
+                    if (enabledFields.MicroTrailer && !string.IsNullOrEmpty(sourceMicroTrailer))
+                    {
+                        try
+                        {
+                            var sourceFileName = Path.GetFileName(sourceMicroTrailer);
+                            var targetMicroTrailer = Path.Combine(targetEmt, sourceFileName);
+                            File.Copy(sourceTrailer, targetMicroTrailer, true);
+                        }
+                        catch (Exception)
+                        { }
+                    }
+                }
+            }
+
             // DuplicateHiderPlugin.API.Database.Games.Update(targets);
         }
 

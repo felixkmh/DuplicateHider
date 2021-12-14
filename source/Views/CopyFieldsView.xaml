@@ -107,6 +107,27 @@
                         <CheckBox IsChecked="{Binding EnabledFields.Links}"/>
                         <TextBlock Text="{DynamicResource LOCLinksLabel}" Foreground="{DynamicResource TextBrush}"/>
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3" 
+                                Tag="{DynamicResource LOCExtra_Metadata_Loader_MenuItemSectionLogos}" 
+                                Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}">
+                        <CheckBox IsChecked="{Binding EnabledFields.Logo}"/>
+                        <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_MenuItemSectionLogos}" Foreground="{DynamicResource TextBrush}"/>
+                        <TextBlock Text=" (EMT)" Foreground="{DynamicResource TextBrush}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3"
+                                Tag="{DynamicResource LOCExtra_Metadata_Loader_MenuItemSectionVideos}" 
+                                Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}">
+                        <CheckBox IsChecked="{Binding EnabledFields.Trailer}"/>
+                        <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_MenuItemSectionVideos}" Foreground="{DynamicResource TextBrush}"/>
+                        <TextBlock Text=" (EMT)" Foreground="{DynamicResource TextBrush}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3"
+                                Tag="{DynamicResource LOCExtra_Metadata_Loader_MenuItemSectionMicrovideos}" 
+                                Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}">
+                        <CheckBox IsChecked="{Binding EnabledFields.MicroTrailer}"/>
+                        <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_MenuItemSectionMicrovideos}" Foreground="{DynamicResource TextBrush}"/>
+                        <TextBlock Text=" (EMT)" Foreground="{DynamicResource TextBrush}"/>
+                    </StackPanel>
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>
