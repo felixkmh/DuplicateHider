@@ -12,7 +12,9 @@
     <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">Ігри додані до групи &quot;{1}&quot;: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">Ігри вилучені зі своїх груп: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GroupsDisbanded">Розпущені групи: {0}</sys:String>
-    <sys:String x:Key="LOC_DH_CopyFieldsWarning" xml:space="preserve"></sys:String>
+    <sys:String x:Key="LOC_DH_CopyFieldsWarning" xml:space="preserve">Ця операція скопіює вибрані поля з копії/копій, для яких була викликана ця операція, до всіх її/їх інших копій. Це перезапише та видалить наявні поля та зображення інших копій, і цю дію неможливо скасувати.
+        
+Натисніть &quot;{0}&quot;, щоб продовжити, або &quot;{1}&quot;, щоб скасувати цю операцію.</sys:String>
     
     <!--GameMenu Entries-->
 	<sys:String x:Key="LOC_DH_N_OtherCopies">Інші копії: {0}</sys:String>
@@ -29,9 +31,9 @@
 	<sys:String x:Key="LOC_DH_CustomRulesTab">Власні правила</sys:String>
 	<sys:String x:Key="LOC_DH_UIIntegrationTab">Інтеграція з інтерфейсом</sys:String>
 	<!--Labels-->
-    <sys:String x:Key="LOC_DH_GameFields"></sys:String>
-    <sys:String x:Key="LOC_DH_SourceGames"></sys:String>
-    <sys:String x:Key="LOC_DH_Warning"></sys:String>
+    <sys:String x:Key="LOC_DH_GameFields">Ігрові поля</sys:String>
+    <sys:String x:Key="LOC_DH_SourceGames">Ігри-джерела</sys:String>
+    <sys:String x:Key="LOC_DH_Warning">Попередження</sys:String>
 	<sys:String x:Key="LOC_DH_Priorities">Пріоритети</sys:String>
 	<sys:String x:Key="LOC_DH_AutomaticUpdate">Оновлювати автоматично</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopies">Показувати копії в меню Гри</sys:String>
