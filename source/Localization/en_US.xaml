@@ -12,7 +12,10 @@
     <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">Games added to group "{1}": {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">Games removed from their groups: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GroupsDisbanded">Disbanded Groups: {0}</sys:String>
-
+    <sys:String x:Key="LOC_DH_CopyFieldsWarning" xml:space="preserve">This operation will copy the selected fields from the copy/copies this operation was invoked on to all its/their other copies. This will overwrite and delete existing fields and images of the other copies and cannot be undone. 
+        
+Click "{0}" to continue or "{1}" to cancel this operation.</sys:String>
+    
     <!--GameMenu Entries-->
 	<sys:String x:Key="LOC_DH_N_OtherCopies">Other Copies: {0}</sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup">Add selected Games to new Group</sys:String>
@@ -28,6 +31,9 @@
 	<sys:String x:Key="LOC_DH_CustomRulesTab">Custom Rules</sys:String>
 	<sys:String x:Key="LOC_DH_UIIntegrationTab">UI Integration</sys:String>
 	<!--Labels-->
+    <sys:String x:Key="LOC_DH_GameFields">Game Fields</sys:String>
+    <sys:String x:Key="LOC_DH_SourceGames">Source Games</sys:String>
+    <sys:String x:Key="LOC_DH_Warning">Warning</sys:String>
 	<sys:String x:Key="LOC_DH_Priorities">Priorites</sys:String>
 	<sys:String x:Key="LOC_DH_AutomaticUpdate">Update Automatically</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopies">Show Copies in Game Menu</sys:String>
