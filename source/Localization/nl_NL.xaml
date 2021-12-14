@@ -12,7 +12,10 @@
     <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">Spellen toegevoegd aan groep &quot;{1}&quot;: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">Spellen verwijderd uit hun groepen: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GroupsDisbanded">Verwijderde groepen: {0}</sys:String>
-
+    <sys:String x:Key="LOC_DH_CopyFieldsWarning" xml:space="preserve">Deze handeling kopieert de geselecteerde velden van de kopie(ën) waarop deze handeling is aangeroepen naar al zijn/hun andere kopieën. Dit zal bestaande velden en afbeeldingen van de andere kopieën overschrijven en verwijderen en kan niet ongedaan worden gemaakt. 
+        
+Klik op &quot;{0}&quot; om verder te gaan of &quot;{1}&quot; om deze operatie te annuleren.</sys:String>
+    
     <!--GameMenu Entries-->
 	<sys:String x:Key="LOC_DH_N_OtherCopies">Andere Kopieën: {0}</sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup">Geselecteerde spellen toevoegen aan nieuwe groep</sys:String>
@@ -28,6 +31,9 @@
 	<sys:String x:Key="LOC_DH_CustomRulesTab">Aangepaste regels</sys:String>
 	<sys:String x:Key="LOC_DH_UIIntegrationTab">UI-integratie</sys:String>
 	<!--Labels-->
+    <sys:String x:Key="LOC_DH_GameFields">Spel velden</sys:String>
+    <sys:String x:Key="LOC_DH_SourceGames">Bron Spellen</sys:String>
+    <sys:String x:Key="LOC_DH_Warning">Waarschuwing</sys:String>
 	<sys:String x:Key="LOC_DH_Priorities">Prioriteiten</sys:String>
 	<sys:String x:Key="LOC_DH_AutomaticUpdate">Automatisch bijwerken</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopies">Toon kopieën in het gamemenu</sys:String>
