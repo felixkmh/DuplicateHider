@@ -20,6 +20,7 @@
     <sys:String x:Key="LOC_DH_RemoveFromExistingGroup"></sys:String>
     <sys:String x:Key="LOC_DH_DisbandGroupOfSelected"></sys:String>
     <sys:String x:Key="LOC_DH_EditAllCopies"></sys:String>
+    <sys:String x:Key="LOC_DH_CopyFieldsFromGame"></sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
