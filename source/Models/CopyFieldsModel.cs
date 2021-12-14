@@ -46,7 +46,7 @@ namespace DuplicateHider.Models
             if (enabledFields.Publishers) targets.ForEach(g => g.PublisherIds = SourceGame.PublisherIds);
             if (enabledFields.Categories) targets.ForEach(g => g.CategoryIds = SourceGame.CategoryIds);
             if (enabledFields.Features) targets.ForEach(g => g.FeatureIds = SourceGame.FeatureIds);
-            if (enabledFields.Tags) targets.ForEach(g => g.TagIds = SourceGame.TagIds.Where(t => !dhTagIds.Contains(t)).ToList());
+            if (enabledFields.Tags) targets.ForEach(g => g.TagIds = SourceGame.TagIds.Where(t => !dhTagIds.Contains(t)).Concat(g.TagIds.Where(id => dhTagIds.Contains(id))).Distinct().ToList());
             if (enabledFields.Description) targets.ForEach(g => g.Description = SourceGame.Description);
             if (enabledFields.ReleaseDate) targets.ForEach(g => g.ReleaseDate = SourceGame.ReleaseDate);
             if (enabledFields.Series) targets.ForEach(g => g.SeriesIds = SourceGame.SeriesIds);
