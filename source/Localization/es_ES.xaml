@@ -32,8 +32,8 @@ Haga clic en &quot;{0}&quot; para continuar o &quot;{1}&quot; para cancelar esta
 	<sys:String x:Key="LOC_DH_UIIntegrationTab">Integración de UI</sys:String>
 	<!--Labels-->
     <sys:String x:Key="LOC_DH_Updating">Actualizando...</sys:String>
-    <sys:String x:Key="LOC_DH_GameFields"></sys:String>
-    <sys:String x:Key="LOC_DH_SourceGames"></sys:String>
+    <sys:String x:Key="LOC_DH_GameFields">Campos de juego</sys:String>
+    <sys:String x:Key="LOC_DH_SourceGames">Juegos fuente</sys:String>
     <sys:String x:Key="LOC_DH_Warning">Advertencia</sys:String>
 	<sys:String x:Key="LOC_DH_Priorities">Prioridades</sys:String>
 	<sys:String x:Key="LOC_DH_AutomaticUpdate">Actualizar automáticamente</sys:String>
