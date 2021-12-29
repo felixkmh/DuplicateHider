@@ -1,3 +1,19 @@
+## v3.9.0 (2021-12-29)
+
+### Fix
+
+- fix crash if games name are null
+
+## v3.8.1 (2021-12-18)
+
+### Fix
+
+- init progress to 0
+
+### Feat
+
+- use global progress dialog for copying
+
 ## v3.8.0 (2021-11-07)
 
 ### Feat
