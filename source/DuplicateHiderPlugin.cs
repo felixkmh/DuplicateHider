@@ -1388,6 +1388,7 @@ namespace DuplicateHider
             if (GameFilters is null)
             {
                 GameFilters = IFilter<IEnumerable<Game>>.MakeChain(
+                    new NameNullFilter(),
                     new PlatformFilter(true, settings.IncludePlatforms),
                     new SourceFilter(false, settings.ExcludeSources),
                     new CategoryFilter(false, settings.ExcludeCategories),

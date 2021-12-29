@@ -104,4 +104,17 @@ namespace DuplicateHider
             return input.Union(_addedGames);
         }
     }
+
+    class NameNullFilter : IFilter<IEnumerable<Game>>
+    {
+        public NameNullFilter()
+        {
+            
+        }
+
+        public override IEnumerable<Game> ApplySingle(in IEnumerable<Game> input)
+        {
+            return input.Where(g => g.Name != null);
+        }
+    }
 }
