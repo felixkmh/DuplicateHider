@@ -21,7 +21,7 @@
     <sys:String x:Key="LOC_DH_RemoveFromExistingGroup">将所选游戏从所在组移除</sys:String>
     <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">解散所选游戏的组</sys:String>
     <sys:String x:Key="LOC_DH_EditAllCopies">编辑所有副本</sys:String>
-    <sys:String x:Key="LOC_DH_CopyFieldsFromGame"></sys:String>
+    <sys:String x:Key="LOC_DH_CopyFieldsFromGame">将信息复制到其他副本</sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
