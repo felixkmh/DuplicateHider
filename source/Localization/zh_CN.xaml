@@ -10,37 +10,37 @@
     <sys:String x:Key="LOC_DH_NGamesHidden">已隐藏游戏：{0}</sys:String>
     <sys:String x:Key="LOC_DH_NGamesRevealed">已显示游戏：{0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">已向群组“{1}”添加游戏：{0}</sys:String>
-    <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_N_GroupsDisbanded"></sys:String>
+    <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">已从所在组中移除游戏：{0}</sys:String>
+    <sys:String x:Key="LOC_DH_N_GroupsDisbanded">已解散的组：{0}</sys:String>
     <sys:String x:Key="LOC_DH_CopyFieldsWarning" xml:space="preserve"></sys:String>
     
     <!--GameMenu Entries-->
-	<sys:String x:Key="LOC_DH_N_OtherCopies"></sys:String>
-    <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_RemoveFromExistingGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected"></sys:String>
-    <sys:String x:Key="LOC_DH_EditAllCopies"></sys:String>
+	<sys:String x:Key="LOC_DH_N_OtherCopies">其他副本：{0}</sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup">将所选游戏添加到新组</sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup">将所选游戏添加到现存组</sys:String>
+    <sys:String x:Key="LOC_DH_RemoveFromExistingGroup">将所选游戏从所在组移除</sys:String>
+    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">解散所选游戏的组</sys:String>
+    <sys:String x:Key="LOC_DH_EditAllCopies">编辑所有副本</sys:String>
     <sys:String x:Key="LOC_DH_CopyFieldsFromGame"></sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
-	<sys:String x:Key="LOC_DH_CommonTab"></sys:String>
-	<sys:String x:Key="LOC_DH_CustomRulesTab"></sys:String>
-	<sys:String x:Key="LOC_DH_UIIntegrationTab"></sys:String>
+	<sys:String x:Key="LOC_DH_CommonTab">常规</sys:String>
+	<sys:String x:Key="LOC_DH_CustomRulesTab">自定义规则</sys:String>
+	<sys:String x:Key="LOC_DH_UIIntegrationTab">UI 集成</sys:String>
 	<!--Labels-->
-    <sys:String x:Key="LOC_DH_Updating"></sys:String>
-    <sys:String x:Key="LOC_DH_GameFields"></sys:String>
-    <sys:String x:Key="LOC_DH_SourceGames"></sys:String>
-    <sys:String x:Key="LOC_DH_Warning"></sys:String>
-	<sys:String x:Key="LOC_DH_Priorities"></sys:String>
-	<sys:String x:Key="LOC_DH_AutomaticUpdate"></sys:String>
-	<sys:String x:Key="LOC_DH_ShowOtherCopies"></sys:String>
-	<sys:String x:Key="LOC_DH_PrioritizeNewerGames"></sys:String>
-	<sys:String x:Key="LOC_DH_IncludedPlatforms"></sys:String>
-	<sys:String x:Key="LOC_DH_ExcludedSources"></sys:String>
-	<sys:String x:Key="LOC_DH_ExcludedCategories"></sys:String>
-	<sys:String x:Key="LOC_DH_IgnoredGames"></sys:String>
+    <sys:String x:Key="LOC_DH_Updating">正在更新...</sys:String>
+    <sys:String x:Key="LOC_DH_GameFields">游戏字段</sys:String>
+    <sys:String x:Key="LOC_DH_SourceGames">源游戏</sys:String>
+    <sys:String x:Key="LOC_DH_Warning">警告</sys:String>
+	<sys:String x:Key="LOC_DH_Priorities">优先级</sys:String>
+	<sys:String x:Key="LOC_DH_AutomaticUpdate">自动更新</sys:String>
+	<sys:String x:Key="LOC_DH_ShowOtherCopies">在游戏菜单中显示副本</sys:String>
+	<sys:String x:Key="LOC_DH_PrioritizeNewerGames">优先考虑同一来源中较新的游戏</sys:String>
+	<sys:String x:Key="LOC_DH_IncludedPlatforms">包括的平台：</sys:String>
+	<sys:String x:Key="LOC_DH_ExcludedSources">排除的源：</sys:String>
+	<sys:String x:Key="LOC_DH_ExcludedCategories">排除的分类：</sys:String>
+	<sys:String x:Key="LOC_DH_IgnoredGames">忽略的游戏：</sys:String>
     <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGames"></sys:String>
     <sys:String x:Key="LOC_DH_DisplayString"></sys:String>
     <sys:String x:Key="LOC_DH_CustomRulesHeader"></sys:String>
@@ -49,17 +49,21 @@
     <sys:String x:Key="LOC_DH_PreferUserIcons"></sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIcon"></sys:String>
     <sys:String x:Key="LOC_DH_SuppressNotification"></sys:String>
-    <sys:String x:Key="LOC_DH_CustomGroups"></sys:String>
-    <sys:String x:Key="LOC_DH_CustomGroupName"></sys:String>
-    <sys:String x:Key="LOC_DH_CustomGroupNamePrompt"></sys:String>
-    <sys:String x:Key="LOC_DH_GroupConflict"></sys:String>
-    <sys:String x:Key="LOC_DH_KeepOrderLabel"></sys:String>
-    <sys:String x:Key="LOC_DH_Games"></sys:String>
-    <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve"></sys:String>
-    <sys:String x:Key="LOC_DH_HiddenTag"></sys:String>
-    <sys:String x:Key="LOC_DH_RevealedTag"></sys:String>
-    <sys:String x:Key="LOC_DH_HighPrioTag"></sys:String>
-    <sys:String x:Key="LOC_DH_LowPrioTag"></sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroups">自定义组</sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupName">自定义组名称</sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupNamePrompt">请选择这个新组的名称：</sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflict">组冲突</sys:String>
+    <sys:String x:Key="LOC_DH_KeepOrderLabel">保持顺序</sys:String>
+    <sys:String x:Key="LOC_DH_Games">游戏</sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve">以下游戏与现有的自定义组有冲突：
+{0}
+
+您想把这些游戏从旧组移到新组，把冲突的游戏保留在其旧组，还是取消创建组？
+    </sys:String>
+    <sys:String x:Key="LOC_DH_HiddenTag">[DH] 隐</sys:String>
+    <sys:String x:Key="LOC_DH_RevealedTag">[DH] 显</sys:String>
+    <sys:String x:Key="LOC_DH_HighPrioTag">[DH] 高</sys:String>
+    <sys:String x:Key="LOC_DH_LowPrioTag">[DH] 低</sys:String>
     <!--Tool Tips-->
 	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip"></sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip"></sys:String>
