@@ -12,7 +12,9 @@
     <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">已向群组“{1}”添加游戏：{0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">已从所在组中移除游戏：{0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GroupsDisbanded">已解散的组：{0}</sys:String>
-    <sys:String x:Key="LOC_DH_CopyFieldsWarning" xml:space="preserve"></sys:String>
+    <sys:String x:Key="LOC_DH_CopyFieldsWarning" xml:space="preserve">此操作将从指定为源的副本复制所选字段到其他副本。这将覆盖并删除其他副本本的现存字段和图像，且无法撤消。 
+
+点击“{0}”继续，点击“{1}”取消。</sys:String>
     
     <!--GameMenu Entries-->
 	<sys:String x:Key="LOC_DH_N_OtherCopies">其他副本：{0}</sys:String>
@@ -41,14 +43,14 @@
 	<sys:String x:Key="LOC_DH_ExcludedSources">排除的源：</sys:String>
 	<sys:String x:Key="LOC_DH_ExcludedCategories">排除的分类：</sys:String>
 	<sys:String x:Key="LOC_DH_IgnoredGames">忽略的游戏：</sys:String>
-    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGames"></sys:String>
-    <sys:String x:Key="LOC_DH_DisplayString"></sys:String>
-    <sys:String x:Key="LOC_DH_CustomRulesHeader"></sys:String>
-    <sys:String x:Key="LOC_DH_EnableUIIntegration"></sys:String>
-    <sys:String x:Key="LOC_DH_EnableThemeIcons"></sys:String>
-    <sys:String x:Key="LOC_DH_PreferUserIcons"></sys:String>
-    <sys:String x:Key="LOC_DH_ShowSingleIcon"></sys:String>
-    <sys:String x:Key="LOC_DH_SuppressNotification"></sys:String>
+    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGames">添加手动隐藏/显示的游戏</sys:String>
+    <sys:String x:Key="LOC_DH_DisplayString">其他副本显示的字符串：</sys:String>
+    <sys:String x:Key="LOC_DH_CustomRulesHeader">定义在进一步处理前应用于游戏名称的规则。按列表中的顺序进行规则应用。</sys:String>
+    <sys:String x:Key="LOC_DH_EnableUIIntegration">启用 UI 集成</sys:String>
+    <sys:String x:Key="LOC_DH_EnableThemeIcons">启用主题图标</sys:String>
+    <sys:String x:Key="LOC_DH_PreferUserIcons">首选用户图标</sys:String>
+    <sys:String x:Key="LOC_DH_ShowSingleIcon">如果只有一个副本，则显示图标</sys:String>
+    <sys:String x:Key="LOC_DH_SuppressNotification">不显示主题图标通知</sys:String>
     <sys:String x:Key="LOC_DH_CustomGroups">自定义组</sys:String>
     <sys:String x:Key="LOC_DH_CustomGroupName">自定义组名称</sys:String>
     <sys:String x:Key="LOC_DH_CustomGroupNamePrompt">请选择这个新组的名称：</sys:String>
@@ -65,20 +67,22 @@
     <sys:String x:Key="LOC_DH_HighPrioTag">[DH] 高</sys:String>
     <sys:String x:Key="LOC_DH_LowPrioTag">[DH] 低</sys:String>
     <!--Tool Tips-->
-	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip"></sys:String>
-	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip"></sys:String>
-	<sys:String x:Key="LOC_DH_PrioritizeNewerGamesTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGamesTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_DisplayStringTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_EnableUIIntegrationTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_EnableThemeIconsTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_PreferUserIconsTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_ShowSingleIconTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_SuppressNotificationTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve"></sys:String>
+	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">如果启用，DuplicateHider 将在副本发生变化时重新评估其排位，始终保持具有最高排位的副本可见，同时隐藏所有其他副本。</sys:String>
+	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">如果启用，一个游戏的其他副本可以通过游戏的上下文菜单启动。</sys:String>
+	<sys:String x:Key="LOC_DH_PrioritizeNewerGamesTooltip">启用：如果排位评分相同，优先选择较新的游戏。
+禁用：如果排位评分相同，优先选择较早的游戏。</sys:String>
+    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGamesTooltip">如果启用，通过 DuplicateHider 以外的其他方式隐藏或显示的游戏将被添加到忽略列表。</sys:String>
+    <sys:String x:Key="LOC_DH_DisplayStringTooltip">右键单击以插入占位变量。</sys:String>
+    <sys:String x:Key="LOC_DH_EnableUIIntegrationTooltip">自定义 UI 元素的启用依赖于当前主题的支持。</sys:String>
+    <sys:String x:Key="LOC_DH_EnableThemeIconsTooltip">如果启用，当前主题中包含的图标将被用于自定义 UI 元素。</sys:String>
+    <sys:String x:Key="LOC_DH_PreferUserIconsTooltip">如果启用，在寻找来源图标时，放在用户图标文件夹中的图标具有优先级。</sys:String>
+    <sys:String x:Key="LOC_DH_ShowSingleIconTooltip">告知主题，若一个游戏没有额外副本，您不希望有自定义的 UI 元素。</sys:String>
+    <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">若启用，则在当前主题中发现主题图标时不通知。</sys:String>
+    <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve">启用：根据小组列表中的位置对游戏排位评分。
+禁用：使用基于来源优先级的普通排位评分方法。</sys:String>
     <!--Buttons-->
-    <sys:String x:Key="LOC_DH_OpenUserIconFolderButton"></sys:String>
-    <sys:String x:Key="LOC_DH_MoveButton"></sys:String>
-    <sys:String x:Key="LOC_DH_KeepButton"></sys:String>
+    <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">打开用户图标文件夹</sys:String>
+    <sys:String x:Key="LOC_DH_MoveButton">移动</sys:String>
+    <sys:String x:Key="LOC_DH_KeepButton">保留</sys:String>
 	
 </ResourceDictionary>
