@@ -437,7 +437,7 @@ namespace DuplicateHider
 
         public void SelectGame(Guid? gameId)
         {
-            if (gameId is Guid id)
+            if (gameId is Guid id && PlayniteApi.Database.Games.Get(id) is Game)
             {
                 PlayniteApi.MainView.SelectGame(id);
             }
