@@ -36,17 +36,17 @@
 	<sys:String x:Key="LOC_DH_Priorities">أوليات</sys:String>
 	<sys:String x:Key="LOC_DH_AutomaticUpdate">تحديث تلقائيا</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopies">إظهار النسخ في قائمة الألعاب</sys:String>
-	<sys:String x:Key="LOC_DH_PrioritizeNewerGames"></sys:String>
+	<sys:String x:Key="LOC_DH_PrioritizeNewerGames">إعطاء الأولوية للعبة الأحدث من نفس المصدر</sys:String>
 	<sys:String x:Key="LOC_DH_IncludedPlatforms">المنصات المضمنة:</sys:String>
 	<sys:String x:Key="LOC_DH_ExcludedSources">المصادر المستثناة:</sys:String>
 	<sys:String x:Key="LOC_DH_ExcludedCategories">الفئات المستثناة:</sys:String>
 	<sys:String x:Key="LOC_DH_IgnoredGames">الألعاب المتجاهلة:</sys:String>
     <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGames">إضافة ألعاب مخفية/مكشوفة يدويا</sys:String>
-    <sys:String x:Key="LOC_DH_DisplayString"></sys:String>
+    <sys:String x:Key="LOC_DH_DisplayString">عرض سلسلة للنسخ الأخرى:</sys:String>
     <sys:String x:Key="LOC_DH_CustomRulesHeader"></sys:String>
     <sys:String x:Key="LOC_DH_EnableUIIntegration"></sys:String>
     <sys:String x:Key="LOC_DH_EnableThemeIcons"></sys:String>
-    <sys:String x:Key="LOC_DH_PreferUserIcons"></sys:String>
+    <sys:String x:Key="LOC_DH_PreferUserIcons">تفضيل أيقونات المستخدم</sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIcon">إظهار الأيقونة إذا كانت هناك نسخة واحدة</sys:String>
     <sys:String x:Key="LOC_DH_SuppressNotification"></sys:String>
     <sys:String x:Key="LOC_DH_CustomGroups">مجموعة مخصصة</sys:String>
@@ -64,13 +64,13 @@
 	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip"></sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip"></sys:String>
 	<sys:String x:Key="LOC_DH_PrioritizeNewerGamesTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGamesTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_DisplayStringTooltip"></sys:String>
+    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGamesTooltip">في حالة التمكين، سيتم إضافة الألعاب المخفية أو المكشوفة بوسائل أخرى غير DuplicateHider إلى قائمة التجاهل.</sys:String>
+    <sys:String x:Key="LOC_DH_DisplayStringTooltip">انقر بالزر الأيمن لإدراج المتغيرات النائبة.</sys:String>
     <sys:String x:Key="LOC_DH_EnableUIIntegrationTooltip"></sys:String>
     <sys:String x:Key="LOC_DH_EnableThemeIconsTooltip"></sys:String>
     <sys:String x:Key="LOC_DH_PreferUserIconsTooltip"></sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIconTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_SuppressNotificationTooltip"></sys:String>
+    <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">إذا تم تفعيله، لن يتم إعلامك إذا تم العثور على أيقونات السمة في السمة الحالية.</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve"></sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">فتح مجلد أيقونة المستخدم</sys:String>
