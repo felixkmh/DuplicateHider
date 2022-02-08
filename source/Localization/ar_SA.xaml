@@ -12,7 +12,9 @@
     <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">تم إضافة الألعاب إلى المجموعة&quot;{1}&quot;: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">تمت إزالة الألعاب من مجموعاتها: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GroupsDisbanded">المجموعات التي تم تفكيكها: {0}</sys:String>
-    <sys:String x:Key="LOC_DH_CopyFieldsWarning" xml:space="preserve"></sys:String>
+    <sys:String x:Key="LOC_DH_CopyFieldsWarning" xml:space="preserve">ستقوم هذه العملية بنسخ الحقول المحددة من النسخة/النسخ وسيتم تطبيقها على جميع النسخ الأخرى. سيؤدي هذا إلى استبدال الحقول والصور الموجودة للنسخ الأخرى وحذفها ولا يمكن التراجع عن هذا الإجراء.
+        
+انقر فوق &quot;{0}&quot; للمتابعة أو &quot;{1}&quot; لإلغاء هذه العملية.</sys:String>
     
     <!--GameMenu Entries-->
 	<sys:String x:Key="LOC_DH_N_OtherCopies">نسخ أخرى: {0}</sys:String>
@@ -48,7 +50,7 @@
     <sys:String x:Key="LOC_DH_EnableThemeIcons">تمكين أيقونات السمة</sys:String>
     <sys:String x:Key="LOC_DH_PreferUserIcons">تفضيل أيقونات المستخدم</sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIcon">إظهار الأيقونة إذا كانت هناك نسخة واحدة</sys:String>
-    <sys:String x:Key="LOC_DH_SuppressNotification"></sys:String>
+    <sys:String x:Key="LOC_DH_SuppressNotification">قمع إشعارات أيقونة السمة</sys:String>
     <sys:String x:Key="LOC_DH_CustomGroups">مجموعة مخصصة</sys:String>
     <sys:String x:Key="LOC_DH_CustomGroupName">اسم المجموعة المخصصة</sys:String>
     <sys:String x:Key="LOC_DH_CustomGroupNamePrompt">الرجاء تحديد اسم للمجموعة الجديدة:</sys:String>
@@ -67,7 +69,8 @@
     <!--Tool Tips-->
 	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">في حالة التمكين، سيتم إعادة تقييم ترتيب النسخة عند تغييرها، ابقاء النسخة مع أعلى رتبة مرئية دائما مع إخفاء جميع النسخ الأخرى.</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">في حالة التمكين، يمكن بدء نسخ أخرى من اللعبة باستخدام قائمة سياق.</sys:String>
-	<sys:String x:Key="LOC_DH_PrioritizeNewerGamesTooltip"></sys:String>
+	<sys:String x:Key="LOC_DH_PrioritizeNewerGamesTooltip">مفعل: تفضل اللعبة الأحدث إذا كانت النتائج متساوية.
+معطل: تفضل اللعبة القديمة إذا كانت النتائج متساوية.</sys:String>
     <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGamesTooltip">في حالة التمكين، سيتم إضافة الألعاب المخفية أو المكشوفة بوسائل أخرى غير DuplicateHider إلى قائمة التجاهل.</sys:String>
     <sys:String x:Key="LOC_DH_DisplayStringTooltip">انقر بالزر الأيمن لإدراج المتغيرات النائبة.</sys:String>
     <sys:String x:Key="LOC_DH_EnableUIIntegrationTooltip">تمكن عناصر واجهة المستخدم المخصصة إذا كانت مدعومة بالسمة الحالية.</sys:String>
