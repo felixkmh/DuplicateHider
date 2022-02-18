@@ -194,7 +194,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>D:\Programmierung\playnite-dev\Playnite9Beta2\Toolbox.exe pack $(ProjectDir)$(OutDir) $(ProjectDir)bin
+    <PostBuildEvent>%25LOCALAPPDATA%25\Playnite\Toolbox.exe pack $(ProjectDir)$(OutDir) $(ProjectDir)bin
 </PostBuildEvent>
   </PropertyGroup>
 </Project>
