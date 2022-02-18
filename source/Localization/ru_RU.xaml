@@ -17,7 +17,7 @@
 Нажмите &quot;{0}&quot; для продолжения или &quot;{1}&quot;, чтобы прервать операцию.</sys:String>
     
     <!--GameMenu Entries-->
-	<sys:String x:Key="LOC_DH_N_OtherCopies">Другие копии: {0}</sys:String>
+	<sys:String x:Key="LOC_DH_N_OtherCopies">Другие копии: {0} шт.</sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup">Добавить выделенные игры в новую группу</sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup">Добавить выделенные игры в имеющуюся группу</sys:String>
     <sys:String x:Key="LOC_DH_RemoveFromExistingGroup">Удалить выделенные игры из своих групп</sys:String>
