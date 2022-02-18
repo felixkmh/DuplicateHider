@@ -64,10 +64,10 @@
     </sys:String>
     <sys:String x:Key="LOC_DH_HiddenTag">[DH] Скрытые</sys:String>
     <sys:String x:Key="LOC_DH_RevealedTag">[DH] Показанные</sys:String>
-    <sys:String x:Key="LOC_DH_HighPrioTag">[DH] Приоритетные</sys:String>
-    <sys:String x:Key="LOC_DH_LowPrioTag"></sys:String>
+    <sys:String x:Key="LOC_DH_HighPrioTag">[DH] Высокий</sys:String>
+    <sys:String x:Key="LOC_DH_LowPrioTag">[DH] Низкий</sys:String>
     <!--Tool Tips-->
-	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip"></sys:String>
+	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">Включено: DuplicateHider будет пересчитывать ранг копии после ее правок, всегда сохраняя видимой копию с наивысшим рангом и скрывая все остальные.</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">Включено: другие копии можно запускать из контекстного меню игры.</sys:String>
 	<sys:String x:Key="LOC_DH_PrioritizeNewerGamesTooltip">Включено: Предпочитать более свежую игру, если равенство по рейтингу. 
 Отключено: Предпочитать более старую игру, если равенство по рейтингу.</sys:String>
