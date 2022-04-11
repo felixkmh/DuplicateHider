@@ -700,41 +700,52 @@ namespace DuplicateHider
         {
             return new List<MainMenuItem>
             {
-#if DEBUG
                 new MainMenuItem
                 {
-                    Description = "Generate Shared Ids",
+                    Description = "Export Index",
                     MenuSection = "@|DuplicateHider",
                     Action = (context) =>
                     {
                         SortedDictionary<string, Guid> nameToSharedId = new SortedDictionary<string, Guid>();
                         settings.SharedGameIds.Clear();
                         BuildIndex(PlayniteApi.Database.Games, new PlaceboGameFilter(), GetNameFilter());
-                        foreach (var group in Index)
+                        UpdateGuidToCopiesDict();
+                        var export = Index.Where(e => e.Value.Count() > 1).ToDictionary(
+                            item => item.Key, 
+                            item => item.Value
+                                .Select(id => {var game = PlayniteApi.Database.Games.Get(id) ?? new Game(); return new { Name = game.Name, Source = game.Source?.ToString() ?? "Playnite" }; }));
+
+                        var path = PlayniteApi.Dialogs.SaveFile("JSON|*.json|CSV|*.csv");
+                        if (path != null)
                         {
-                            var sharedId = Guid.NewGuid();
-                            nameToSharedId.Add(group.Key, sharedId);
-                            foreach(var id in group.Value)
+                            if (Path.GetExtension(path).EndsWith(".json", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                settings.SharedGameIds.Add(id, sharedId);
+                                using (var file = File.CreateText(path))
+                                {
+                                    var obj = JsonConvert.SerializeObject(export, Formatting.Indented);
+                                    file.Write(obj);
+                                }
+                            } else if (Path.GetExtension(path).EndsWith(".csv", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                var maxCopies = export.Values.Max(v => v.Count());
+                                using (var file = File.CreateText(path))
+                                {
+                                    file.Write("Normalized Name;");
+                                    file.WriteLine(string.Join(";", Enumerable.Range(0, maxCopies).Select(i => $"Name {i};Platform {i}")));
+                                    foreach(var entry in export)
+                                    {
+                                        if (entry.Value.Count() > 1)
+                                        {
+                                            file.Write(entry.Key);
+                                            file.Write(";");
+                                            file.WriteLine(string.Join(";", entry.Value.Select(g => $"{g.Name};{g.Source}").ToArray()));
+                                        }
+                                    }
+                                }
                             }
                         }
-                        var path = Path.Combine(this.GetPluginUserDataPath(), "SharedGameIds.json");
-                        using (var file = File.CreateText(path))
-                        {
-                            var obj = JsonConvert.SerializeObject(settings.SharedGameIds, Formatting.Indented);
-                            file.Write(obj);
-                        }
-                        path = Path.Combine(this.GetPluginUserDataPath(), "NameToSharedId.json");
-                        using (var file = File.CreateText(path))
-                        {
-                            var obj = JsonConvert.SerializeObject(nameToSharedId, Formatting.Indented);
-                            file.Write(obj);
-                        }
-                        BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
                     }
                 },
-#endif
                 new MainMenuItem
                 {
                     Description = ResourceProvider.GetString("LOC_DH_HideDuplicatesEntry"),
