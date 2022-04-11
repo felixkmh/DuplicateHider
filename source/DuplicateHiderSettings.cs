@@ -325,6 +325,7 @@ namespace DuplicateHider
                 HiddenTagId = savedSettings.HiddenTagId;
                 RevealedTagId = savedSettings.RevealedTagId;
                 DefaultEnabledFields = savedSettings.DefaultEnabledFields;
+                PreferNewerGame = savedSettings.PreferNewerGame;
             }
 
             if (Priorities.Count == 0)
