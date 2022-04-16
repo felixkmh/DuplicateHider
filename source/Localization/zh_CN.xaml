@@ -57,6 +57,7 @@
     <sys:String x:Key="LOC_DH_GroupConflict">组冲突</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderLabel">保持顺序</sys:String>
     <sys:String x:Key="LOC_DH_Games">游戏</sys:String>
+    <sys:String x:Key="LOC_DH_ExportIndex"></sys:String>
     <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve">以下游戏与现有的自定义组有冲突：
 {0}
 

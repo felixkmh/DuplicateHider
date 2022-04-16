@@ -57,6 +57,7 @@
     <sys:String x:Key="LOC_DH_GroupConflict">Конфлікти групи</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderLabel">Зберегти порядок</sys:String>
     <sys:String x:Key="LOC_DH_Games">Ігри</sys:String>
+    <sys:String x:Key="LOC_DH_ExportIndex"></sys:String>
     <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve">Наступні ігри конфліктують зі власними групами:
 {0}
 
