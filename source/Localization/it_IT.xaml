@@ -57,6 +57,7 @@ Clicca &quot;{0}&quot; per continuare o &quot;{1}&quot; per annullare questa ope
     <sys:String x:Key="LOC_DH_GroupConflict">Conflitti tra Gruppi</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderLabel">Mantieni l'ordine</sys:String>
     <sys:String x:Key="LOC_DH_Games">Giochi</sys:String>
+    <sys:String x:Key="LOC_DH_ExportIndex"></sys:String>
     <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve">I seguenti giochi sono in conflitto con i gruppi personalizzati esistenti: 
 {0}
 		
