@@ -1,5 +1,12 @@
 AddonId: 'felixkmh_DuplicateHider_Plugin'
 Packages:
+  - Version: 3.9.0
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2022-04-16
+    PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.9.0/felixkmh_DuplicateHider_Plugin_3_9_0.pext
+    Changelog:
+      - added menu function to export the duplicate index as a .json or .csv file
+      - fixed some settings not being loaded correctly
   - Version: 3.8.5
     RequiredApiVersion: 6.2.0
     ReleaseDate: 2022-02-18
