@@ -57,6 +57,7 @@
     <sys:String x:Key="LOC_DH_GroupConflict">تضارب المجموعات</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderLabel">حفاظ الترتيب</sys:String>
     <sys:String x:Key="LOC_DH_Games">الألعاب</sys:String>
+    <sys:String x:Key="LOC_DH_ExportIndex"></sys:String>
     <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve">الألعاب التالية تتعارض مع المجموعات المخصصة الحالية: 
 {0}
 
