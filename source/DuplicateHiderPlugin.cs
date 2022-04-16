@@ -702,7 +702,7 @@ namespace DuplicateHider
             {
                 new MainMenuItem
                 {
-                    Description = "Export Index",
+                    Description = ResourceProvider.GetString("LOC_DH_ExportIndex"),
                     MenuSection = "@|DuplicateHider",
                     Action = (context) =>
                     {
