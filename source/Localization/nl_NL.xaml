@@ -57,6 +57,7 @@ Klik op &quot;{0}&quot; om verder te gaan of &quot;{1}&quot; om deze operatie te
     <sys:String x:Key="LOC_DH_GroupConflict">Groepsconflicten</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderLabel">Volgorde houden</sys:String>
     <sys:String x:Key="LOC_DH_Games">Spellen</sys:String>
+    <sys:String x:Key="LOC_DH_ExportIndex"></sys:String>
     <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve">De volgende spellen zijn in conflict met bestaande aangepaste groepen: 
 {0}
 		
