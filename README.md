@@ -5,6 +5,8 @@
 [Playnite Forum Post](https://playnite.link/forum/thread-308.html)  
 An extension for [Playnite](https://github.com/JosefNemec/Playnite/ "Playnite - video game library manager") by JosefNemec that hides additional copies of games.
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/C1C6CH5IN)
+
 ## Extension Settings
 
 ![Extension Settings](https://user-images.githubusercontent.com/24227002/132069628-437aedbd-17c0-4277-8cca-1c36af65cf59.png "Plugin Settings")
