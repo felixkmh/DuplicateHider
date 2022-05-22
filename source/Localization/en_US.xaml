@@ -84,5 +84,7 @@ Disabled: Score using the normal scoring method based on the source priorities.<
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Open user icon folder</sys:String>
     <sys:String x:Key="LOC_DH_MoveButton">Move</sys:String>
     <sys:String x:Key="LOC_DH_KeepButton">Keep</sys:String>
-	
+
+    <sys:String x:Key="LOC_DH_RestartMessage">Some changes require Playnite to be restartet to take effect.</sys:String>
+    
 </ResourceDictionary>
