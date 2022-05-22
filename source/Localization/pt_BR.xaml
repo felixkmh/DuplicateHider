@@ -77,5 +77,7 @@
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Abrir a pasta de ícones de usuário</sys:String>
     <sys:String x:Key="LOC_DH_MoveButton"></sys:String>
     <sys:String x:Key="LOC_DH_KeepButton"></sys:String>
-	
+
+    <sys:String x:Key="LOC_DH_RestartMessage"></sys:String>
+    
 </ResourceDictionary>

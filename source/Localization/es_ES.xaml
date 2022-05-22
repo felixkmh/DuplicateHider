@@ -84,5 +84,7 @@ Deshabilitado: puntuación utilizando el método de puntuación normal en funci�
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Abra la carpeta de iconos del usuario</sys:String>
     <sys:String x:Key="LOC_DH_MoveButton">Mover</sys:String>
     <sys:String x:Key="LOC_DH_KeepButton">Mantener</sys:String>
-	
+
+    <sys:String x:Key="LOC_DH_RestartMessage"></sys:String>
+    
 </ResourceDictionary>
