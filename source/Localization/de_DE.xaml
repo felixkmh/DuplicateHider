@@ -85,6 +85,6 @@ Deaktiviert: Die normale Wertungsmethode basierend auf den Prioritäten der Quel
     <sys:String x:Key="LOC_DH_MoveButton">Verschieben</sys:String>
     <sys:String x:Key="LOC_DH_KeepButton">Beibehalten</sys:String>
 
-    <sys:String x:Key="LOC_DH_RestartMessage"></sys:String>
+    <sys:String x:Key="LOC_DH_RestartMessage">Einige Änderungen erfordern einen Neustart von Playnite, um wirksam zu werden.</sys:String>
     
 </ResourceDictionary>
