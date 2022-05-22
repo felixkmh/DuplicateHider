@@ -85,5 +85,7 @@
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">打开用户图标文件夹</sys:String>
     <sys:String x:Key="LOC_DH_MoveButton">移动</sys:String>
     <sys:String x:Key="LOC_DH_KeepButton">保留</sys:String>
-	
+
+    <sys:String x:Key="LOC_DH_RestartMessage"></sys:String>
+    
 </ResourceDictionary>
