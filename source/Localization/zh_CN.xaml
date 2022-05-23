@@ -86,6 +86,6 @@
     <sys:String x:Key="LOC_DH_MoveButton">移动</sys:String>
     <sys:String x:Key="LOC_DH_KeepButton">保留</sys:String>
 
-    <sys:String x:Key="LOC_DH_RestartMessage"></sys:String>
+    <sys:String x:Key="LOC_DH_RestartMessage">某些更改需要重启 Playnite 以生效。</sys:String>
     
 </ResourceDictionary>
