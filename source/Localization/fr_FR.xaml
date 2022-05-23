@@ -85,6 +85,6 @@ Désactivé : Utiliser la méthode normale de notation basée sur les priorités
     <sys:String x:Key="LOC_DH_MoveButton">Déplacer</sys:String>
     <sys:String x:Key="LOC_DH_KeepButton">Conserver</sys:String>
 
-    <sys:String x:Key="LOC_DH_RestartMessage"></sys:String>
+    <sys:String x:Key="LOC_DH_RestartMessage">Certaines modifications nécessitent de redémarrer Playnite pour prendre effet.</sys:String>
     
 </ResourceDictionary>
