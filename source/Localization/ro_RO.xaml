@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 	<!--Menu Entries-->
-	<sys:String x:Key="LOC_DH_HideDuplicatesEntry"></sys:String>
-	<sys:String x:Key="LOC_DH_RevealDuplicatesEntry"></sys:String>
-	<sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntry"></sys:String>
-	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry"></sys:String>
+	<sys:String x:Key="LOC_DH_HideDuplicatesEntry">Ascunde dublurile</sys:String>
+	<sys:String x:Key="LOC_DH_RevealDuplicatesEntry">Dezvăluie dublurile</sys:String>
+	<sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntry">Adăugați jocurile selectate la Lista de Ignorare</sys:String>
+	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry">Scoateți jocurile selectate de la Lista de Ignorare</sys:String>
 	
 	<!--Message Boxes-->
-    <sys:String x:Key="LOC_DH_NGamesHidden"></sys:String>
-    <sys:String x:Key="LOC_DH_NGamesRevealed"></sys:String>
-    <sys:String x:Key="LOC_DH_N_GamesAddedToGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_N_GroupsDisbanded"></sys:String>
+    <sys:String x:Key="LOC_DH_NGamesHidden">Jocuri ascunse: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_NGamesRevealed">Jocuri dezvăluite: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">Jocuri adăugate la grupul &quot;{1}&quot;: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">Jocuri scoase din grupurile lor: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_N_GroupsDisbanded">Grupuri desființate: {0}</sys:String>
     <sys:String x:Key="LOC_DH_CopyFieldsWarning" xml:space="preserve"></sys:String>
     
     <!--GameMenu Entries-->
