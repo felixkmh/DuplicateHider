@@ -325,7 +325,7 @@ namespace DuplicateHider.Views
                         var container = target.ItemContainerGenerator.ContainerFromItem(game) as FrameworkElement;
                         insertionStart = target.ItemContainerGenerator.IndexFromContainer(container);
                         var pos = e.GetPosition(container);
-                        if (pos.Y >= container.ActualHeight / 2 && selected[0] != game)
+                        if (pos.Y >= container.ActualHeight / 2 && (selected.Count == 0 || selected[0] != game))
                         {
                             insertionStart += 1;
                         }
