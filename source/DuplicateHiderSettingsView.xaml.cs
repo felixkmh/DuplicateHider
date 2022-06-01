@@ -337,5 +337,15 @@ namespace DuplicateHider
                 GroupsList.AddGroup(new Data.CustomGroup() { Name = groupName });
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button bt && bt.ContextMenu is ContextMenu cm)
+            {
+                cm.Placement = System.Windows.Controls.Primitives.PlacementMode.Right;
+                cm.PlacementTarget = bt;
+                cm.IsOpen = true;
+            }
+        }
     }
 }

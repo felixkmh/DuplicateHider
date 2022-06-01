@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="DuplicateHider.Views.StartPage.LibraryStatisticsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DuplicateHider.Views.StartPage"
+             xmlns:vm="clr-namespace:DuplicateHider.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False, Type=vm:LibraryStatisticsViewModel}">
+    <Grid>
+        <!--<DataGrid ItemsSource="{Binding Libraries}" AutoGenerateColumns="False" CanUserAddRows="False" >
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Icon}" MaxHeight="16" RenderOptions.BitmapScalingMode="Fant"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Library" Binding="{Binding LibrarySource.Name}" Width="Auto" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Games" Binding="{Binding GamesTotal}" Width="Auto" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Dups" Binding="{Binding HiddenDuplicates}" Width="Auto" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>-->
+        <ListView ItemsSource="{Binding Libraries}">
+            <ListView.View>
+                <GridView AllowsColumnReorder="True">
+                    <GridViewColumn Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding Icon}" MaxHeight="16" RenderOptions.BitmapScalingMode="Fant"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!--<GridViewColumn Width="Auto" Header="Library">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding LibrarySource.Name}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>-->
+                    <GridViewColumn Width="Auto" Header="Games">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding GamesTotal}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Duplicates">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding HiddenDuplicates}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <!--<ItemsControl ItemsSource="{Binding Libraries}" Grid.IsSharedSizeScope="True">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition SharedSizeGroup="Icon"/>
+                            <ColumnDefinition SharedSizeGroup="Total"/>
+                            <ColumnDefinition SharedSizeGroup="Duplicates"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="{Binding Icon}" Grid.Column="0" MaxHeight="16" RenderOptions.BitmapScalingMode="Fant" Margin="5,1"/>
+                        <TextBlock Text="{Binding LibrarySource.Name}" Grid.Column="1" Margin="5,0" Foreground="{DynamicResource TextBrush}"/>
+                        <TextBlock Text="{Binding HiddenDuplicates}" Grid.Column="2" Foreground="{DynamicResource TextBrush}"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>-->
+    </Grid>
+</UserControl>

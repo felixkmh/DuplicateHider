@@ -29,12 +29,16 @@ using System.Windows.Input;
 using DuplicateHider.Models;
 using DuplicateHider.ViewModels;
 using DuplicateHider.Views;
+using StartPage.SDK;
+using System.Collections.ObjectModel;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("DuplicateHider")]
 namespace DuplicateHider
 {
-    public class DuplicateHiderPlugin : GenericPlugin
+    public class DuplicateHiderPlugin : GenericPlugin, StartPage.SDK.IStartPageExtension
     {
+        private GongSolutions.Wpf.DragDrop.DefaultDragHandler dropInfo = new GongSolutions.Wpf.DragDrop.DefaultDragHandler();
+
         public event EventHandler<IEnumerable<Guid>> GroupUpdated;
         internal struct GameSelectedArgs { public Guid? oldId; public Guid? newId; }
         internal event EventHandler<GameSelectedArgs> GameSelected;
@@ -48,8 +52,8 @@ namespace DuplicateHider
 
         public override Guid Id { get; } = Guid.Parse("382f8003-8ed0-4e47-ae93-05b43c9c6c32");
 
-        private Dictionary<string, List<Guid>> Index { get; set; } = new Dictionary<string, List<Guid>>();
-        private Dictionary<Guid, List<Game>> GuidToCopies { get; set; } = new Dictionary<Guid, List<Game>>();
+        internal Dictionary<string, List<Guid>> Index { get; set; } = new Dictionary<string, List<Guid>>();
+        internal Dictionary<Guid, List<Game>> GuidToCopies { get; set; } = new Dictionary<Guid, List<Game>>();
 
         internal static readonly IconCache SourceIconCache = new IconCache();
 
@@ -178,8 +182,34 @@ namespace DuplicateHider
 
             //};
 
+            if (settings.PriorityProperties == null)
+            {
+                var sourceIds = settings.Priorities
+                    .Select(name =>
+                    {
+                        var source = PlayniteApi.Database.Sources.FirstOrDefault(s => s.Name == name);
+                        if (source == null && name == Constants.UNDEFINED_SOURCE)
+                        {
+                            source = Constants.DEFAULT_SOURCE;
+                        }
+                        return source;
+                    })
+                    .OfType<GameSource>()
+                    .Distinct()
+                    .Select(s => s.Id.ToString());
 
-   
+                settings.PriorityProperties = new ObservableCollection<PriorityProperty>();
+
+                settings.PriorityProperties.Add(new PriorityProperty(nameof(Game.IsInstalled), PlayniteApi));
+                settings.PriorityProperties.Add(new PriorityProperty { PropertyName = nameof(Game.SourceId), PriorityList = sourceIds.ToObservable() });
+                if (settings.PreferNewerGame)
+                {
+                    settings.PriorityProperties.Add(new PriorityProperty { PropertyName = nameof(Game.ReleaseDate), Direction = ListSortDirection.Descending });
+                }
+                settings.PriorityProperties.Add(new PriorityProperty { PropertyName = nameof(Game.Added), Direction = ListSortDirection.Descending });
+            }
+
+
             if (UiIntegration.FindVisualChildren(Application.Current.MainWindow, "PART_ListGames").FirstOrDefault() is FrameworkElement gameList)
             {
                 var bindings = gameList.InputBindings;
@@ -479,6 +509,7 @@ namespace DuplicateHider
             GameFilters = null;
             if (newSettings.UpdateAutomatically)
             {
+                var selected = PlayniteApi.MainView.SelectedGames.ToList();
                 PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Visible));
                 GameFilters = null;
@@ -486,6 +517,14 @@ namespace DuplicateHider
                 BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
                 PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
+                if (selected?.Count > 0)
+                {
+                    var reselected = GetCopies(selected.Last())?.FirstOrDefault();
+                    if (reselected != null && PlayniteApi.Database.Games.Get(reselected.Id) is Game)
+                    {
+                        PlayniteApi.MainView.SelectGame(reselected.Id);
+                    }
+                }
             }
             SourceIconCache.Clear();
             UpdateGuidToCopiesDict();
@@ -650,11 +689,52 @@ namespace DuplicateHider
             PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
         }
 
-        private class GameComparer : Comparer<Guid>
+        internal class GameComparer : IComparer<Guid>, IComparer<Game>
         {
             public static GameComparer Comparer = new GameComparer();
 
-            public override int Compare(Guid x, Guid y)
+            public int Compare(Guid x, Guid y)
+            {
+                var gameA = Instance.PlayniteApi.Database.Games.Get(x);
+                var gameB = Instance.PlayniteApi.Database.Games.Get(y);
+                var comp = 0;
+                if (gameA != null && gameB != null)
+                {
+                    if ((gameA.TagIds?.Contains(Instance.settings.HighPrioTagId) ?? false)
+                        && !(gameB.TagIds?.Contains(Instance.settings.HighPrioTagId) ?? false))
+                    {
+                        return -1;
+                    }
+                    if ((gameA.TagIds?.Contains(Instance.settings.LowPrioTagId) ?? false)
+                        && !(gameB.TagIds?.Contains(Instance.settings.LowPrioTagId) ?? false))
+                    {
+                        return 1;
+                    }
+                    if (!(gameA.TagIds?.Contains(Instance.settings.HighPrioTagId) ?? false)
+                        && (gameB.TagIds?.Contains(Instance.settings.HighPrioTagId) ?? false))
+                    {
+                        return 1;
+                    }
+                    if (!(gameA.TagIds?.Contains(Instance.settings.LowPrioTagId) ?? false)
+                        && (gameB.TagIds?.Contains(Instance.settings.LowPrioTagId) ?? false))
+                    {
+                        return -1;
+                    }
+                    comp = gameA.CompareTo(gameB, Instance.settings.PriorityProperties);
+                }
+
+                //var val = CompareOld(x, y);
+
+                //if (val != comp)
+                //{
+                //    gameA.CompareTo(gameB, Instance.settings.PriorityProperties);
+                //    CompareOld(x, y);
+                //}
+
+                return comp;
+            }
+
+            private static int CompareOld(Guid x, Guid y)
             {
                 int prioX = Instance.GetGamePriority(x);
                 int prioY = Instance.GetGamePriority(y);
@@ -674,6 +754,11 @@ namespace DuplicateHider
                     return (gameY.Added ?? DateTime.MinValue).CompareTo(gameX.Added ?? DateTime.MinValue) * (Instance.settings.PreferNewerGame ? 1 : -1);
                 }
                 return 0;
+            }
+
+            public int Compare(Game x, Game y)
+            {
+                return Compare(x.Id, y.Id);
             }
         }
 
@@ -987,6 +1072,72 @@ namespace DuplicateHider
                 Description = ResourceProvider.GetString("LOC_DH_DisbandGroupOfSelected"),
                 MenuSection = $"DuplicateHider|{ResourceProvider.GetString("LOC_DH_CustomGroups")}",
                 Action = DisbandGroups
+            });
+
+            // Remove group with selected games inside
+            entries.Add(new GameMenuItem()
+            {
+                Description = ResourceProvider.GetString("LOC_DH_AssignOverrideTagHigh"),
+                MenuSection = $"DuplicateHider|{ResourceProvider.GetString("LOC_DH_AssignOverrideTag")}",
+                Action = a =>
+                {
+                    foreach(var game in a.Games)
+                    {
+                        if (game.TagIds == null)
+                        {
+                            game.TagIds = new List<Guid>();
+                        }
+                        game.TagIds.Remove(settings.LowPrioTagId);
+                        game.TagIds.AddMissing(settings.HighPrioTagId);
+                    }
+                    PlayniteApi.Database.Games.Update(a.Games);
+                    PlayniteApi.MainView.SelectGames(a.Games.Select(g => g.Id));
+                }
+            });
+
+            entries.Add(new GameMenuItem()
+            {
+                Description = ResourceProvider.GetString("LOC_DH_AssignOverrideTagLow"),
+                MenuSection = $"DuplicateHider|{ResourceProvider.GetString("LOC_DH_AssignOverrideTag")}",
+                Action = a =>
+                {
+                    foreach (var game in a.Games)
+                    {
+                        if (game.TagIds == null)
+                        {
+                            game.TagIds = new List<Guid>();
+                        }
+                        game.TagIds.Remove(settings.HighPrioTagId);
+                        game.TagIds.AddMissing(settings.LowPrioTagId);
+                    }
+                    PlayniteApi.Database.Games.Update(a.Games);
+                    PlayniteApi.MainView.SelectGames(a.Games.Select(g => g.Id));
+                }
+            });
+
+            entries.Add(new GameMenuItem()
+            {
+                Description = ResourceProvider.GetString("LOC_DH_AssignOverrideTagClear"),
+                MenuSection = $"DuplicateHider|{ResourceProvider.GetString("LOC_DH_AssignOverrideTag")}",
+                Action = a =>
+                {
+                    var updated = new List<Game>();
+                    foreach(var game in a.Games)
+                    {
+                        updated.Add(game);
+                        game.TagIds?.Remove(settings.HighPrioTagId);
+                        game.TagIds?.Remove(settings.LowPrioTagId);
+                        foreach(var oldcopy in GetOtherCopies(game))
+                        {
+                            var copy = PlayniteApi.Database.Games.Get(oldcopy.Id);
+                            copy.TagIds?.Remove(settings.HighPrioTagId);
+                            copy.TagIds?.Remove(settings.LowPrioTagId);
+                            updated.Add(copy);
+                        }
+                    }
+                    PlayniteApi.Database.Games.Update(updated);
+                    PlayniteApi.MainView.SelectGames(a.Games.Select(g => g.Id));
+                }
             });
 
             return entries;
@@ -1408,6 +1559,35 @@ namespace DuplicateHider
                 );
             }
             return GameFilters;
+        }
+
+        const string LibraryStatisticsId = "LibraryStatistics";
+
+        public StartPageExtensionArgs GetAvailableStartPageViews()
+        {
+            var views = new List<StartPageViewArgsBase> { 
+                new StartPageViewArgsBase{ Name = "Library Statistics", ViewId = LibraryStatisticsId }
+            };
+            return new StartPageExtensionArgs { ExtensionName = "DuplicateHider", Views = views };
+        }
+
+        public object GetStartPageView(string viewId, Guid instanceId)
+        {
+            if (viewId == LibraryStatisticsId)
+            {
+                return new Views.StartPage.LibraryStatisticsView { DataContext = new ViewModels.LibraryStatisticsViewModel(this) };
+            }
+            return null;
+        }
+
+        public Control GetStartPageViewSettings(string viewId, Guid instanceId)
+        {
+            return null;
+        }
+
+        public void OnViewRemoved(string viewId, Guid instanceId)
+        {
+            
         }
     }
 }

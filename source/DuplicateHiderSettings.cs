@@ -5,11 +5,13 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace DuplicateHider
 {
@@ -54,7 +56,23 @@ namespace DuplicateHider
 
         public List<ReplaceFilter> ReplaceFilters { get; set; } = new List<ReplaceFilter>();
 
+        public ObservableCollection<PriorityProperty> PriorityProperties { get; set; } = null;
+
         public List<CustomGroup> CustomGroups {get; set;} = new List<CustomGroup>();
+
+        [JsonIgnore]
+        public ICommand AddPriorityPropertyCommand { get; private set; }
+
+        [JsonIgnore]
+        public ICommand RemovePriorityPropertyCommand { get; private set; }
+
+        [JsonIgnore]
+        public IEnumerable<string> AvailablePriorityProperties
+            => typeof(Game).GetProperties()
+            .Where(p => Converters.GamePropertyToNameConverter.Instance.Convert(p.Name, typeof(string), null, null) != null)
+            .Select(p => p.Name)
+            .OrderBy(p => Converters.GamePropertyToNameConverter.Instance.Convert(p, typeof(string), null, null));
+
         // Tag Ids
         [JsonIgnore]
         private Guid hiddenTagId = Guid.Empty;
@@ -326,6 +344,7 @@ namespace DuplicateHider
                 RevealedTagId = savedSettings.RevealedTagId;
                 DefaultEnabledFields = savedSettings.DefaultEnabledFields;
                 PreferNewerGame = savedSettings.PreferNewerGame;
+                PriorityProperties = savedSettings.PriorityProperties;
             }
 
             if (Priorities.Count == 0)
@@ -349,7 +368,14 @@ namespace DuplicateHider
                 };
             }
 
+            AddPriorityPropertyCommand = new RelayCommand<string>(
+                s => PriorityProperties.Add(new PriorityProperty(s, plugin.PlayniteApi)),
+                s => !PriorityProperties.Any(p => p.PropertyName == s)
+            );
 
+            RemovePriorityPropertyCommand = new RelayCommand<PriorityProperty>(
+                p => PriorityProperties.Remove(p)
+            );
         }
 
         public void BeginEdit()
@@ -539,6 +565,7 @@ namespace DuplicateHider
         {
             // Code executed when user decides to cancel any changes made since BeginEdit was called.
             // This method should revert any changes made to Option1 and Option2.
+            PriorityProperties = previousSettings.PriorityProperties;
         }
 
         public void EndEdit()
@@ -673,7 +700,7 @@ namespace DuplicateHider
             OnSettingsChanged?.Invoke(previousSettings, this);
             plugin.SavePluginSettings(this);
             if (requireRestart)
-                plugin.PlayniteApi.Dialogs.ShowMessage("Some changes require Playnite to be restartet to take effect.", "DuplicateHider");
+                plugin.PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOC_DH_RestartMessage"), "DuplicateHider");
         }
 
         public bool VerifySettings(out List<string> errors)

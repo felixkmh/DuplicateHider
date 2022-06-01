@@ -9,6 +9,19 @@ namespace DuplicateHider
 {
     public static class Extensions
     {
+        public static int CompareTo<T>(this T a, T b, IEnumerable<IComparer<T>> comparers)
+        {
+            foreach(var comparer in comparers)
+            {
+                var c = comparer.Compare(a, b);
+                if (c != 0)
+                {
+                    return c;
+                }
+            }
+            return 0;
+        }
+
         public static string Capitalize(this string input)
         {
             var builder = new StringBuilder();
@@ -67,7 +80,7 @@ namespace DuplicateHider
             return true;
         }
 
-        public static bool InsertSorted<T>(this IList<T> list, T item, Comparer<T> comparer)
+        public static bool InsertSorted<T>(this IList<T> list, T item, IComparer<T> comparer)
         {
             if (list.Contains(item))
             {

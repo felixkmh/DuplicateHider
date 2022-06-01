@@ -3,30 +3,107 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:views="clr-namespace:DuplicateHider.Views"
+             xmlns:models="clr-namespace:DuplicateHider.Models"
+             xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
+             xmlns:conv="clr-namespace:DuplicateHider.Converters"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <UserControl.Resources>
+        <conv:GamePropertyToNameConverter x:Key="GamePropertyToNameConverter"/>
     </UserControl.Resources>
     <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
         <TabItem Header="{DynamicResource LOC_DH_CommonTab}">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
-                    <Grid>
+                    <Label VerticalAlignment="Top" Margin="12,10,12,0">
+                        <TextBlock Text="{DynamicResource LOC_DH_Priorities}"/>
+                    </Label>
+                    <ItemsControl ItemsSource="{Binding PriorityProperties}"
+                                  dd:DragDrop.IsDragSource="True"
+                                  dd:DragDrop.IsDropTarget="True"
+                                  dd:DragDrop.UseDefaultDragAdorner="False"
+                                  Grid.IsSharedSizeScope="True"
+                                  MinHeight="50"
+                                  Background="Transparent"
+                                  Margin="10,5,12,0">
+                        <ItemsControl.ContextMenu>
+                            <ContextMenu ItemsSource="{Binding AvailablePriorityProperties}">
+                                <ContextMenu.ItemContainerStyle>
+                                    <Style BasedOn="{StaticResource {x:Type MenuItem}}" TargetType="MenuItem">
+                                        <Setter Property="CommandParameter" Value="{Binding .}"/>
+                                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}, Path=DataContext.AddPriorityPropertyCommand}"/>
+                                    </Style>
+                                </ContextMenu.ItemContainerStyle>
+                                <ContextMenu.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ., Converter={StaticResource GamePropertyToNameConverter}}"/>
+                                    </DataTemplate>
+                                </ContextMenu.ItemTemplate>
+                            </ContextMenu>
+                        </ItemsControl.ContextMenu>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"></StackPanel>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type models:PriorityProperty}">
+                                <DockPanel Background="Transparent">
+                                    <TextBlock Text="" FontFamily="{DynamicResource FontIcoFont}" Background="Transparent" VerticalAlignment="Center"
+                                               Cursor="Hand" Margin="3,0"
+                                              />
+                                    <Button DockPanel.Dock="Right" Margin="1" Padding="0" Background="Transparent"
+                                            CommandParameter="{Binding .}"
+                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}, Path=DataContext.RemovePriorityPropertyCommand}">
+                                        <TextBlock Text="" FontFamily="{DynamicResource FontIcoFont}" Foreground="{DynamicResource WarningBrush}"/>
+                                    </Button>
+                                    <views:PriorityPropertyView Margin="1" IsHitTestVisible="True"/>
+                                </DockPanel>
+                                <!--<TextBlock Text="{Binding PropertyName}"/>-->
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <Grid HorizontalAlignment="Center" Margin="5">
+                        <Button Content="{DynamicResource LOCAddNewItem}" 
+                                x:Name="AddButton"
+                                ContextMenuService.IsEnabled="False" 
+                                ContextMenuService.Placement="Right"
+                                ContextMenuService.PlacementTarget="{Binding ElementName=AddButton}"
+                                ContextMenuService.ShowOnDisabled="True"
+                                Click="Button_Click">
+                            <Button.ContextMenu>
+                                <ContextMenu ItemsSource="{Binding AvailablePriorityProperties}">
+                                    <ContextMenu.ItemContainerStyle>
+                                        <Style BasedOn="{StaticResource {x:Type MenuItem}}" TargetType="MenuItem">
+                                            <Setter Property="CommandParameter" Value="{Binding .}"/>
+                                            <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}, Path=DataContext.AddPriorityPropertyCommand}"/>
+                                        </Style>
+                                    </ContextMenu.ItemContainerStyle>
+                                    <ContextMenu.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ., Converter={StaticResource GamePropertyToNameConverter}}"/>
+                                        </DataTemplate>
+                                    </ContextMenu.ItemTemplate>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                    </Grid>
+                    <Grid Margin="12,4,12,4">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Grid.Row="0" Margin="12,10,6,0">
+                        <StackPanel Grid.Column="0" Grid.Row="0" Margin="12,10,6,0" Visibility="Collapsed">
                             <Label Margin="0" VerticalAlignment="Top">
                                 <TextBlock Text="{DynamicResource LOC_DH_Priorities}"/>
                             </Label>
                             <ListBox x:Name="PriorityListBox" Margin="0,5,0,0" MaxHeight="400" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
                         </StackPanel>
-                        <StackPanel VerticalAlignment="Top" Grid.Column="1" Grid.Row="0" Margin="6,10,6,0">
+                        <StackPanel VerticalAlignment="Top" Grid.Column="1" Grid.Row="0" Margin="6,10,15,0">
                             <CheckBox x:Name="AutoUpdateCheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0" 
                                       Content="{DynamicResource LOC_DH_AutomaticUpdate}"
                                       ToolTip="{DynamicResource LOC_DH_AutomaticUpdateTooltip}">
@@ -35,7 +112,7 @@
                                       Content="{DynamicResource LOC_DH_ShowOtherCopies}"
                                       ToolTip="{DynamicResource LOC_DH_ShowOtherCopiesTooltip}">
                             </CheckBox>
-                            <CheckBox x:Name="PrioritizeNewerGame" Margin="0,5,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" VerticalAlignment="Center"
+                            <CheckBox Visibility="Collapsed" x:Name="PrioritizeNewerGame" Margin="0,5,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" VerticalAlignment="Center"
                                       ToolTip="{DynamicResource LOC_DH_PrioritizeNewerGamesTooltip}">
                                 <TextBlock TextWrapping="Wrap" MaxWidth="{Binding ElementName=IgnoreListBox,Path=ActualWidth}"
                                            Text="{DynamicResource LOC_DH_PrioritizeNewerGames}"/>
@@ -47,7 +124,7 @@
                             <Label Margin="0,10,0,0" Content="{DynamicResource LOC_DH_ExcludedCategories}"></Label>
                             <ComboBox x:Name="CategoriesComboBox" Margin="0,10,0,0" StaysOpenOnEdit="True" IsSynchronizedWithCurrentItem="False" IsEditable="True" PreviewKeyUp="CategoriesComboBox_PreviewKeyUp" DropDownClosed="CategoriesComboBox_DropDownClosed" IsTextSearchEnabled="False"/>
                         </StackPanel>
-                        <StackPanel Grid.Column="2" Grid.Row="0" Margin="6,10,12,0" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                        <StackPanel Grid.Column="2" Grid.Row="0" Margin="15,10,12,0" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                             <Label Margin="0" Content="{DynamicResource LOC_DH_IgnoredGames}"></Label>
                             <CheckBox x:Name="AddHiddenToIgnoreList" Margin="0,5,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" VerticalAlignment="Center"
                                       ToolTip="{DynamicResource LOC_DH_IgnoreManuallyHiddenGamesTooltip}">

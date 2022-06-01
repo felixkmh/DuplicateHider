@@ -199,7 +199,7 @@ namespace DuplicateHider.Controls
                     var copys = (new Game[] { game })
                             .Concat(DuplicateHiderPlugin.Instance.GetOtherCopies(game))
                             .Distinct()
-                            .OrderBy(g => DuplicateHiderPlugin.Instance.GetGamePriority(g.Id))
+                            .OrderBy(g => g, DuplicateHiderPlugin.GameComparer.Comparer)
                             .ThenBy(g => g.Hidden?1:-1)
                             .ThenBy(g => g.Id);
 
