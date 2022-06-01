@@ -11,12 +11,15 @@ namespace DuplicateHider
     {
         public static int CompareTo<T>(this T a, T b, IEnumerable<IComparer<T>> comparers)
         {
-            foreach(var comparer in comparers)
+            if (comparers != null)
             {
-                var c = comparer.Compare(a, b);
-                if (c != 0)
+                foreach(var comparer in comparers)
                 {
-                    return c;
+                    var c = comparer.Compare(a, b);
+                    if (c != 0)
+                    {
+                        return c;
+                    }
                 }
             }
             return 0;
