@@ -24,6 +24,10 @@ Clicca &quot;{0}&quot; per continuare o &quot;{1}&quot; per annullare questa ope
     <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Sciogli i gruppi dei Giochi selezionati</sys:String>
     <sys:String x:Key="LOC_DH_EditAllCopies">Modifica tutte le Copie</sys:String>
     <sys:String x:Key="LOC_DH_CopyFieldsFromGame">Copia Informazione alle altre Copie</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTag"></sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagHigh"></sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagLow"></sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagClear"></sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
