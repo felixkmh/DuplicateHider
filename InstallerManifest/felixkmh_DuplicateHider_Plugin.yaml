@@ -1,5 +1,14 @@
 AddonId: 'felixkmh_DuplicateHider_Plugin'
 Packages:
+ - Version: 3.10.0
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2022-05-02
+    PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.10.0/felixkmh_DuplicateHider_Plugin_3_10_0.pext
+    Changelog:
+      - added game menu functions to assign priority override tags
+      - 'new priority system: allows to compute the priority based on many game properties, like installation status, source, library plugin, genres, platforms, completion status, etc.'
+      - a list of priority properties can be customized in the settings window. Properties can be reordered by dragging the arrow icon on the left. List properties can also be expanded and reordered via drag-and-drop.
+      - if two games have the same priority based on a property, the next property is checked until the one is found that provides an order for those games, or no more properties are available.
   - Version: 3.9.0
     RequiredApiVersion: 6.2.0
     ReleaseDate: 2022-04-16
