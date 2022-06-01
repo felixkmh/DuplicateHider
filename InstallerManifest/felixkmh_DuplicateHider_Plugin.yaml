@@ -1,6 +1,6 @@
 AddonId: 'felixkmh_DuplicateHider_Plugin'
 Packages:
- - Version: 3.10.0
+  - Version: 3.10.0
     RequiredApiVersion: 6.2.0
     ReleaseDate: 2022-05-02
     PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.10.0/felixkmh_DuplicateHider_Plugin_3_10_0.pext
