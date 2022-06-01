@@ -22,6 +22,10 @@
     <sys:String x:Key="LOC_DH_DisbandGroupOfSelected"></sys:String>
     <sys:String x:Key="LOC_DH_EditAllCopies"></sys:String>
     <sys:String x:Key="LOC_DH_CopyFieldsFromGame"></sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTag"></sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagHigh"></sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagLow"></sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagClear"></sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
