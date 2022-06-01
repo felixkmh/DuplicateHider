@@ -24,6 +24,10 @@
     <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Розпустити групи вибраних ігор</sys:String>
     <sys:String x:Key="LOC_DH_EditAllCopies">Редагувати всі копії</sys:String>
     <sys:String x:Key="LOC_DH_CopyFieldsFromGame">Скопіювати інформацію в інші копії</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTag"></sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagHigh"></sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagLow"></sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagClear"></sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
