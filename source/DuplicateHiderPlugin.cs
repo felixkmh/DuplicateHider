@@ -697,6 +697,12 @@ namespace DuplicateHider
             {
                 var gameA = Instance.PlayniteApi.Database.Games.Get(x);
                 var gameB = Instance.PlayniteApi.Database.Games.Get(y);
+                if (Instance.settings.CustomGroups?.FirstOrDefault(g => g.Contains(x)) is CustomGroup group 
+                    && group.Contains(y)
+                    && group.ScoreByOrder)
+                {
+                    return group.Games.IndexOf(x).CompareTo(group.Games.IndexOf(y));
+                }
                 var comp = 0;
                 if (gameA != null && gameB != null)
                 {
