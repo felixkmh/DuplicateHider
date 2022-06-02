@@ -196,12 +196,7 @@ namespace DuplicateHider.Controls
         {
                 if (game != null)
                 {
-                    var copys = (new Game[] { game })
-                            .Concat(DuplicateHiderPlugin.Instance.GetOtherCopies(game))
-                            .Distinct()
-                            .OrderBy(g => g, DuplicateHiderPlugin.GameComparer.Comparer)
-                            .ThenBy(g => g.Hidden?1:-1)
-                            .ThenBy(g => g.Id);
+                    var copys = DuplicateHiderPlugin.Instance.GetCopies(game);
 
                     if (MaxNumberOfIconsCC > 0)
                         return copys.Take(MaxNumberOfIconsCC);
