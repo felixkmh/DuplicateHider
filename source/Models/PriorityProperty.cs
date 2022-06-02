@@ -20,6 +20,22 @@ namespace DuplicateHider.Models
         private string propertyName = string.Empty;
         public string PropertyName { get => propertyName; set => SetValue(ref propertyName, value); }
 
+        private Lazy<Type> propertyType;
+        private Lazy<PropertyInfo> propertyInfo;
+
+        private PropertyInfo InitPropertyInfo()
+        {
+            return typeof(Game).GetProperty(PropertyName);
+        }
+
+        private Type InitPropertyType()
+        {
+            var type = propertyInfo.Value.PropertyType;
+            type = Nullable.GetUnderlyingType(type) ?? type;
+            return type;
+
+        }
+
         private ListSortDirection direction = ListSortDirection.Ascending;
         public ListSortDirection Direction { get => direction;
             set
@@ -36,6 +52,7 @@ namespace DuplicateHider.Models
         private ObservableCollection<string> priorityList = new ObservableCollection<string>();
         public ObservableCollection<string> PriorityList { get => priorityList; set => SetValue(ref priorityList, value); }
 
+        [JsonIgnore]
         public bool IsAscending
         {
             get => Direction == ListSortDirection.Ascending;
@@ -51,29 +68,34 @@ namespace DuplicateHider.Models
 
         public PriorityProperty()
         {
-
+            propertyInfo = new Lazy<PropertyInfo>(InitPropertyInfo);
+            propertyType = new Lazy<Type>(InitPropertyType);
+            isEnumerable = new Lazy<bool>(() => propertyType.Value != typeof(string) || propertyType.Value.GetInterfaces().Contains(typeof(IEnumerable)));
+            prioritySet = new Lazy<HashSet<string>>(() =>
+            {
+                if (!IsList) PriorityList.Clear();
+                return PriorityList.ToHashSet();
+            });
         }
 
-        public PriorityProperty(string propertyName, IPlayniteAPI api)
+        public PriorityProperty(string propertyName, IPlayniteAPI api) : this()
         {
             PropertyName = propertyName;
             if (IsBool)
             {
-                PriorityList.Add(true.ToString());
-                PriorityList.Add(false.ToString());
+                AddValue(true.ToString());
+                AddValue(false.ToString());
             }
 
-            var propertyInfo = typeof(Game).GetProperty(PropertyName);
-            var type = propertyInfo.PropertyType;
-            type = Nullable.GetUnderlyingType(type) ?? type;
-            if (type != typeof(DateTime) && type != typeof(int) && type != typeof(float) && type != typeof(double))
+            var type = propertyType.Value;
+            if (type != typeof(DateTime) && type != typeof(int) && type != typeof(float) && type != typeof(double) && type != typeof(string))
             {
                 HashSet<string> set = new HashSet<string>();
-                if (type.GetInterfaces().Contains(typeof(IEnumerable)))
+                if (isEnumerable.Value)
                 {
                     foreach (var game in api.Database.Games)
                     {
-                        var val = propertyInfo.GetValue(game);
+                        var val = propertyInfo.Value.GetValue(game);
                         if (val != null)
                         {
                             if (val is IEnumerable enumerable)
@@ -89,7 +111,7 @@ namespace DuplicateHider.Models
                 {
                     foreach (var game in api.Database.Games)
                     {
-                        var val = propertyInfo.GetValue(game);
+                        var val = propertyInfo.Value.GetValue(game);
                         if (val != null)
                         {
                             set.Add(val.ToString());
@@ -102,7 +124,7 @@ namespace DuplicateHider.Models
                 
                 foreach (var item in set)
                 {
-                    PriorityList.AddMissing(item);
+                    AddValue(item);
                 }
             }
         }
@@ -110,55 +132,96 @@ namespace DuplicateHider.Models
         [JsonIgnore]
         public int DirectionMulitplier => Direction == ListSortDirection.Ascending ? 1 : -1;
 
+        private bool? isList = null;
         [JsonIgnore]
         public bool IsList 
         { 
             get
             {
-                var type = typeof(Game).GetProperty(PropertyName).PropertyType;
-                if (type == typeof(Guid)) return true;
-                if (type.IsGenericType && type.GetGenericArguments()[0] == typeof(Guid)) return true;
-                return IsBool;
+                if (isList == null)
+                {
+                    isList = false;
+                    var type = typeof(Game).GetProperty(PropertyName).PropertyType;
+                    if (type == typeof(Guid))
+                    {
+                        isList = true;
+                    } else if (type.IsGenericType && type.GetGenericArguments()[0] == typeof(Guid))
+                    {
+                        isList = true;
+                    } else
+                    {
+                        isList = IsBool;
+                    } 
+                }
+                return isList ?? default;
             } 
         }
+
+        private bool? isBool = null;
         [JsonIgnore]
         public bool IsBool
         {
             get
             {
-                return typeof(Game).GetProperty(PropertyName).PropertyType == typeof(bool);
+                if (isBool == null)
+                {
+                    isBool = typeof(Game).GetProperty(PropertyName).PropertyType == typeof(bool);
+                }
+                return isBool ?? default;
             }
         }
+
+        private bool? isComparable = null;
         [JsonIgnore]
         public bool IsComparable
         {
             get
             {
-                if (IsBool || IsList) return false;
-                System.Reflection.PropertyInfo propertyInfo = typeof(Game).GetProperty(PropertyName);
-                var type = propertyInfo.PropertyType;
-                var nullableType = Nullable.GetUnderlyingType(type);
-                if (nullableType != null)
+                if (isComparable == null)
                 {
-                    type = nullableType;
+                    isComparable = false;
+                    if (IsBool || IsList)
+                    {
+                        isComparable = false;
+                    } else
+                    {
+                        System.Reflection.PropertyInfo propertyInfo = typeof(Game).GetProperty(PropertyName);
+                        var type = propertyInfo.PropertyType;
+                        var nullableType = Nullable.GetUnderlyingType(type);
+                        if (nullableType != null)
+                        {
+                            type = nullableType;
+                        }
+                        var types = type.GetInterfaces();
+                        isComparable = types.Contains(typeof(IComparable));
+                    }
                 }
-                var types = type.GetInterfaces();
-                return types.Contains(typeof(IComparable));
+                return isComparable ?? default;
             }
+        }
+
+        private Lazy<bool> isEnumerable;
+        private Lazy<HashSet<string>> prioritySet;
+
+        private bool AddValue(string value)
+        {
+            if (prioritySet.Value.Add(value))
+            {
+                PriorityList.Add(value);
+                return false;
+            }
+            return false;
         }
 
         public int Compare(Game a, Game b)
         {
-            var propertyInfo = typeof(Game).GetProperty(PropertyName);
             if (IsList)
             {
-                var type = propertyInfo.PropertyType;
-                type = Nullable.GetUnderlyingType(type) ?? type;
-                Type[] interfaces = type.GetInterfaces();
-                if (interfaces.Contains(typeof(IEnumerable)))
+                var type = propertyType.Value;
+                if (isEnumerable.Value)
                 {
-                    var valueA = propertyInfo.GetValue(a);
-                    var valueB = propertyInfo.GetValue(b);
+                    var valueA = propertyInfo.Value.GetValue(a);
+                    var valueB = propertyInfo.Value.GetValue(b);
                     int minA = int.MaxValue;
                     int minB = int.MaxValue;
                     var valuesA = valueA as IEnumerable;
@@ -169,7 +232,7 @@ namespace DuplicateHider.Models
                     {
                         foreach (var item in stringsA)
                         {
-                            PriorityList.AddMissing(item);
+                            AddValue(item);
                         }
                         minA = stringsA.Min(s => PriorityList.IndexOf(s));
                     }
@@ -177,7 +240,7 @@ namespace DuplicateHider.Models
                     {
                         foreach (var item in stringsB)
                         {
-                            PriorityList.AddMissing(item);
+                            AddValue(item);
                         }
                         minB = stringsB.Min(s => PriorityList.IndexOf(s));
                     }
@@ -190,24 +253,24 @@ namespace DuplicateHider.Models
                 }
                 else
                 {
-                    var valueA = propertyInfo.GetValue(a);
-                    var valueB = propertyInfo.GetValue(b);
-                    PriorityList.AddMissing(valueA?.ToString() ?? Activator.CreateInstance(type).ToString());
-                    PriorityList.AddMissing(valueB?.ToString() ?? Activator.CreateInstance(type).ToString());
+                    var valueA = propertyInfo.Value.GetValue(a);
+                    var valueB = propertyInfo.Value.GetValue(b);
+                    AddValue(valueA?.ToString() ?? Activator.CreateInstance(type).ToString());
+                    AddValue(valueB?.ToString() ?? Activator.CreateInstance(type).ToString());
                     return PriorityList.IndexOf(valueA.ToString()).CompareTo(PriorityList.IndexOf(valueB.ToString()));
                 }
                 
             }
             if (IsBool)
             {
-                var valueA = propertyInfo.GetValue(a).ToString();
-                var valueB = propertyInfo.GetValue(b).ToString();
+                var valueA = propertyInfo.Value.GetValue(a).ToString();
+                var valueB = propertyInfo.Value.GetValue(b).ToString();
                 return PriorityList.IndexOf(valueA).CompareTo(PriorityList.IndexOf(valueB));
             }
             if (IsComparable)
             {
-                var valueA = (IComparable)propertyInfo.GetValue(a);
-                var valueB = (IComparable)propertyInfo.GetValue(b);
+                var valueA = (IComparable)propertyInfo.Value.GetValue(a);
+                var valueB = (IComparable)propertyInfo.Value.GetValue(b);
                 if (valueA == valueB)
                 {
                     return 0;

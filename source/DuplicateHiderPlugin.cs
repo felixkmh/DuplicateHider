@@ -209,6 +209,13 @@ namespace DuplicateHider
                 settings.PriorityProperties.Add(new PriorityProperty { PropertyName = nameof(Game.Added), Direction = ListSortDirection.Descending });
             }
 
+            foreach(var prio in settings.PriorityProperties)
+            {
+                if (!prio.IsList)
+                {
+                    prio.PriorityList.Clear();
+                }
+            }
 
             if (UiIntegration.FindVisualChildren(Application.Current.MainWindow, "PART_ListGames").FirstOrDefault() is FrameworkElement gameList)
             {
