@@ -1,5 +1,12 @@
 AddonId: 'felixkmh_DuplicateHider_Plugin'
 Packages:
+  - Version: 3.10.1
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2022-05-02
+    PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.10.1/felixkmh_DuplicateHider_Plugin_3_10_1.pext
+    Changelog:
+      - fixed custom group order not being respected when keep order option is enabled
+      - localization updates
   - Version: 3.10.0
     RequiredApiVersion: 6.2.0
     ReleaseDate: 2022-05-02
