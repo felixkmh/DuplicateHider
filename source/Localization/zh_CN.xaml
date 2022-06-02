@@ -24,10 +24,10 @@
     <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">解散所选游戏的组</sys:String>
     <sys:String x:Key="LOC_DH_EditAllCopies">编辑所有副本</sys:String>
     <sys:String x:Key="LOC_DH_CopyFieldsFromGame">将信息复制到其他副本</sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTag"></sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTagHigh"></sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTagLow"></sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTagClear"></sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTag">分配优先级覆盖标签</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagHigh">最高优先级</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagLow">最低优先级</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagClear">清除所有副本的覆盖标签</sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
