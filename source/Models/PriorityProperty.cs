@@ -154,43 +154,39 @@ namespace DuplicateHider.Models
             {
                 var type = propertyInfo.PropertyType;
                 type = Nullable.GetUnderlyingType(type) ?? type;
-                if (type.GetInterfaces().Contains(typeof(IEnumerable)))
+                Type[] interfaces = type.GetInterfaces();
+                if (interfaces.Contains(typeof(IEnumerable)))
                 {
                     var valueA = propertyInfo.GetValue(a);
                     var valueB = propertyInfo.GetValue(b);
-                    if (valueA is IEnumerable valuesA && valueB is IEnumerable valuesB)
+                    int minA = int.MaxValue;
+                    int minB = int.MaxValue;
+                    var valuesA = valueA as IEnumerable;
+                    var valuesB = valueA as IEnumerable;
+                    var stringsA = valuesA?.Cast<object>().Select(o => o.ToString()).ToList();
+                    var stringsB = valuesB?.Cast<object>().Select(o => o.ToString()).ToList();
+                    if (stringsA != null && stringsA.Count > 0)
                     {
-                        var stringsA = valuesA.Cast<object>().Select(o => o.ToString()).ToList();
-                        var stringsB = valuesB.Cast<object>().Select(o => o.ToString()).ToList();
-                        if (stringsA.Count == 0 || stringsB.Count == 0)
+                        foreach (var item in stringsA)
                         {
-                            return 0;
+                            PriorityList.AddMissing(item);
                         }
-                        foreach (var item in valuesA)
-                        {
-                            PriorityList.AddMissing(item.ToString());
-                        }
-                        foreach (var item in valuesB)
-                        {
-                            PriorityList.AddMissing(item.ToString());
-                        }
-                        var minA = stringsA.Min(s => PriorityList.IndexOf(s));
-                        var minB = stringsB.Min(s => PriorityList.IndexOf(s));
-                        if (minA == minB)
-                        {
-                            minA = PriorityList.IndexOf(stringsA[0]);
-                            minB = PriorityList.IndexOf(stringsB[0]);
-                        }
-                        return minA.CompareTo(minB);
+                        minA = stringsA.Min(s => PriorityList.IndexOf(s));
                     }
-                    else
+                    if (stringsB != null && stringsB.Count > 0)
                     {
-                        var stringA = valueA.ToString();
-                        var stringB = valueB.ToString();
-                        PriorityList.AddMissing(stringA);
-                        PriorityList.AddMissing(stringB);
-                        return PriorityList.IndexOf(stringA).CompareTo(PriorityList.IndexOf(stringB));
+                        foreach (var item in stringsB)
+                        {
+                            PriorityList.AddMissing(item);
+                        }
+                        minB = stringsB.Min(s => PriorityList.IndexOf(s));
                     }
+                    if (minA == minB && minA != int.MaxValue)
+                    {
+                        minA = PriorityList.IndexOf(stringsA[0]);
+                        minB = PriorityList.IndexOf(stringsB[0]);
+                    }
+                    return minA.CompareTo(minB);
                 }
                 else
                 {
