@@ -70,7 +70,7 @@ namespace DuplicateHider.Models
         {
             propertyInfo = new Lazy<PropertyInfo>(InitPropertyInfo);
             propertyType = new Lazy<Type>(InitPropertyType);
-            isEnumerable = new Lazy<bool>(() => propertyType.Value != typeof(string) || propertyType.Value.GetInterfaces().Contains(typeof(IEnumerable)));
+            isEnumerable = new Lazy<bool>(() => propertyType.Value != typeof(string) && propertyType.Value.GetInterfaces().Contains(typeof(IEnumerable)));
             prioritySet = new Lazy<HashSet<string>>(() =>
             {
                 if (!IsList) PriorityList.Clear();
