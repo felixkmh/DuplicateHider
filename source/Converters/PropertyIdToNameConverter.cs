@@ -32,7 +32,7 @@ namespace DuplicateHider.Converters
         {
             if (values.Length != 2)
                 return null;
-            if (values[0] is string s && values[1] is PriorityProperty priorityProperty)
+            if (values[0]?.ToString() is string s && values[1] is PriorityProperty priorityProperty)
             {
                 var game = new Game();
                 var propertyName = priorityProperty.PropertyName;

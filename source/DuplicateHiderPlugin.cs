@@ -555,7 +555,8 @@ namespace DuplicateHider
                     var name = GetFilteredName(game, nameFilter);
                     if (Index.ContainsKey(name))
                     {
-                        if (Index[name].Remove(game.Id) && Index[name].Count == 1)
+                        List<Guid> guids = Index[name];
+                        if (guids != null && guids.Remove(game.Id) && guids.Count == 1)
                         {
                             if (PlayniteApi.Database.Games.Get(Index[name][0]) is Game last)
                             {
@@ -569,6 +570,10 @@ namespace DuplicateHider
                             {
                                 Index[name] = null;
                             }
+                        }
+                        if (Index[name] == null || Index[name].Count == 0)
+                        {
+                            Index.Remove(name);
                         }
                     }
                 }

@@ -34,7 +34,7 @@
                                       Cursor="Hand"/>
                     </Grid>
                 </Expander.Header>
-                <ListBox ItemsSource="{Binding PriorityList}"
+                <ListBox ItemsSource="{Binding PriorityObjects}"
                          ScrollViewer.VerticalScrollBarVisibility="Auto"
                          MaxHeight="350"
                          dd:DragDrop.IsDragSource="True"

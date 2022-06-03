@@ -49,8 +49,12 @@ namespace DuplicateHider.Models
             }
         }
 
+        private Lazy<ObservableCollection<object>> priorityObjects;
+        [JsonIgnore]
+        public ObservableCollection<object> PriorityObjects { get => priorityObjects.Value; }
+
         private ObservableCollection<string> priorityList = new ObservableCollection<string>();
-        public ObservableCollection<string> PriorityList { get => priorityList; set => SetValue(ref priorityList, value); }
+        public ObservableCollection<string> PriorityList { get => priorityObjects.IsValueCreated ? PriorityObjects.Select(o => o.ToString()).ToObservable() : priorityList; set => SetValue(ref priorityList, value); }
 
         [JsonIgnore]
         public bool IsAscending
@@ -71,10 +75,27 @@ namespace DuplicateHider.Models
             propertyInfo = new Lazy<PropertyInfo>(InitPropertyInfo);
             propertyType = new Lazy<Type>(InitPropertyType);
             isEnumerable = new Lazy<bool>(() => propertyType.Value != typeof(string) && propertyType.Value.GetInterfaces().Contains(typeof(IEnumerable)));
-            prioritySet = new Lazy<HashSet<string>>(() =>
+            prioritySet = new Lazy<HashSet<object>>(() =>
             {
                 if (!IsList) PriorityList.Clear();
-                return PriorityList.ToHashSet();
+                return priorityObjects.Value.ToHashSet();
+            });
+            priorityObjects = new Lazy<ObservableCollection<object>>(() =>
+            {
+                if (IsList)
+                {
+                    var tryParseMethod = propertyType.Value.GetMethod("TryParse", BindingFlags.Static | BindingFlags.InvokeMethod | BindingFlags.Public);
+                    if (tryParseMethod != null)
+                    {
+                        return priorityList.Select(priority => {
+                            object value = null;
+                            object[] parameters = new object[] { priority, value };
+                            tryParseMethod.Invoke(null, BindingFlags.Static, null, parameters, null);
+                            return parameters[1];
+                        }).ToObservable();
+                    }
+                }
+                return priorityList.Cast<object>().ToObservable();
             });
         }
 
@@ -83,14 +104,14 @@ namespace DuplicateHider.Models
             PropertyName = propertyName;
             if (IsBool)
             {
-                AddValue(true.ToString());
-                AddValue(false.ToString());
+                AddValue(true);
+                AddValue(false);
             }
 
             var type = propertyType.Value;
-            if (type != typeof(DateTime) && type != typeof(int) && type != typeof(float) && type != typeof(double) && type != typeof(string))
+            if (type != typeof(DateTime) && !type.IsNumberType() && type != typeof(string))
             {
-                HashSet<string> set = new HashSet<string>();
+                HashSet<object> set = new HashSet<object>();
                 if (isEnumerable.Value)
                 {
                     foreach (var game in api.Database.Games)
@@ -102,7 +123,7 @@ namespace DuplicateHider.Models
                             {
                                 foreach (var item in enumerable)
                                 {
-                                    set.Add(item.ToString());
+                                    set.Add(item);
                                 }
                             }
                         }
@@ -114,10 +135,10 @@ namespace DuplicateHider.Models
                         var val = propertyInfo.Value.GetValue(game);
                         if (val != null)
                         {
-                            set.Add(val.ToString());
+                            set.Add(val);
                         } else
                         {
-                            set.Add(Activator.CreateInstance(type).ToString());
+                            set.Add(Activator.CreateInstance(type));
                         }
                     }
                 }
@@ -201,13 +222,13 @@ namespace DuplicateHider.Models
         }
 
         private Lazy<bool> isEnumerable;
-        private Lazy<HashSet<string>> prioritySet;
+        private Lazy<HashSet<object>> prioritySet;
 
-        private bool AddValue(string value)
+        private bool AddValue(object value)
         {
             if (prioritySet.Value.Add(value))
             {
-                PriorityList.Add(value);
+                PriorityObjects.Add(value);
                 return false;
             }
             return false;
@@ -224,30 +245,30 @@ namespace DuplicateHider.Models
                     var valueB = propertyInfo.Value.GetValue(b);
                     int minA = int.MaxValue;
                     int minB = int.MaxValue;
-                    var valuesA = valueA as IEnumerable;
-                    var valuesB = valueA as IEnumerable;
-                    var stringsA = valuesA?.Cast<object>().Select(o => o.ToString()).ToList();
-                    var stringsB = valuesB?.Cast<object>().Select(o => o.ToString()).ToList();
-                    if (stringsA != null && stringsA.Count > 0)
+                    var valuesA = (valueA as IEnumerable)?.Cast<object>().ToList();
+                    var valuesB = (valueB as IEnumerable)?.Cast<object>().ToList();
+                    //var stringsA = valuesA?.Cast<object>().Select(o => o.ToString()).ToList();
+                    //var stringsB = valuesB?.Cast<object>().Select(o => o.ToString()).ToList();
+                    if (valuesA != null && valuesA.Count > 0)
                     {
-                        foreach (var item in stringsA)
+                        foreach (var item in valuesA)
                         {
                             AddValue(item);
                         }
-                        minA = stringsA.Min(s => PriorityList.IndexOf(s));
+                        minA = valuesA.Min(s => PriorityObjects.IndexOf(s));
                     }
-                    if (stringsB != null && stringsB.Count > 0)
+                    if (valuesB != null && valuesB.Count > 0)
                     {
-                        foreach (var item in stringsB)
+                        foreach (var item in valuesB)
                         {
                             AddValue(item);
                         }
-                        minB = stringsB.Min(s => PriorityList.IndexOf(s));
+                        minB = valuesB.Min(s => PriorityObjects.IndexOf(s));
                     }
                     if (minA == minB && minA != int.MaxValue)
                     {
-                        minA = PriorityList.IndexOf(stringsA[0]);
-                        minB = PriorityList.IndexOf(stringsB[0]);
+                        minA = PriorityObjects.IndexOf(valuesA[0]);
+                        minB = PriorityObjects.IndexOf(valuesB[0]);
                     }
                     return minA.CompareTo(minB);
                 }
@@ -255,17 +276,17 @@ namespace DuplicateHider.Models
                 {
                     var valueA = propertyInfo.Value.GetValue(a);
                     var valueB = propertyInfo.Value.GetValue(b);
-                    AddValue(valueA?.ToString() ?? Activator.CreateInstance(type).ToString());
-                    AddValue(valueB?.ToString() ?? Activator.CreateInstance(type).ToString());
-                    return PriorityList.IndexOf(valueA.ToString()).CompareTo(PriorityList.IndexOf(valueB.ToString()));
+                    AddValue(valueA ?? Activator.CreateInstance(propertyType.Value));
+                    AddValue(valueB ?? Activator.CreateInstance(propertyType.Value));
+                    return PriorityObjects.IndexOf(valueA).CompareTo(PriorityObjects.IndexOf(valueB));
                 }
                 
             }
             if (IsBool)
             {
-                var valueA = propertyInfo.Value.GetValue(a).ToString();
-                var valueB = propertyInfo.Value.GetValue(b).ToString();
-                return PriorityList.IndexOf(valueA).CompareTo(PriorityList.IndexOf(valueB));
+                var valueA = propertyInfo.Value.GetValue(a);
+                var valueB = propertyInfo.Value.GetValue(b);
+                return PriorityObjects.IndexOf(valueA).CompareTo(PriorityObjects.IndexOf(valueB));
             }
             if (IsComparable)
             {

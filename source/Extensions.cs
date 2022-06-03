@@ -25,6 +25,26 @@ namespace DuplicateHider
             return 0;
         }
 
+        private static readonly HashSet<TypeCode> numberTypeCodes = new HashSet<TypeCode>
+        { 
+            TypeCode.Byte,
+            TypeCode.Decimal,
+            TypeCode.Double,
+            TypeCode.Int16,
+            TypeCode.Int32,
+            TypeCode.Int64,
+            TypeCode.SByte,
+            TypeCode.Single,
+            TypeCode.UInt16,
+            TypeCode.UInt32,
+            TypeCode.UInt64
+        };
+
+        public static bool IsNumberType (this Type type)
+        {
+            return numberTypeCodes.Contains(Type.GetTypeCode(type));
+        }
+
         public static string Capitalize(this string input)
         {
             var builder = new StringBuilder();
