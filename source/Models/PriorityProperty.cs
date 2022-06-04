@@ -85,6 +85,11 @@ namespace DuplicateHider.Models
                 if (IsList)
                 {
                     var tryParseMethod = propertyType.Value.GetMethod("TryParse", BindingFlags.Static | BindingFlags.InvokeMethod | BindingFlags.Public);
+                    if (isEnumerable.Value && propertyType.Value.IsGenericType && propertyType.Value.GenericTypeArguments.Length > 0)
+                    {
+                        var genericType = propertyType.Value.GenericTypeArguments[0];
+                        tryParseMethod = genericType.GetMethod("TryParse", BindingFlags.Static | BindingFlags.InvokeMethod | BindingFlags.Public);
+                    }
                     if (tryParseMethod != null)
                     {
                         return priorityList.Select(priority => {
@@ -92,7 +97,7 @@ namespace DuplicateHider.Models
                             object[] parameters = new object[] { priority, value };
                             tryParseMethod.Invoke(null, BindingFlags.Static, null, parameters, null);
                             return parameters[1];
-                        }).ToObservable();
+                        }).Distinct().ToObservable();
                     }
                 }
                 return priorityList.Cast<object>().ToObservable();
