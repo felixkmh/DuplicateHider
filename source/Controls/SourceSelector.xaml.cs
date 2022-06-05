@@ -20,7 +20,7 @@ namespace DuplicateHider.Controls
     /// <summary>
     /// Interaktionslogik für DHSourceSelector.xaml
     /// </summary>
-    public partial class SourceSelector : Playnite.SDK.Controls.PluginUserControl
+    public partial class SourceSelector : Playnite.SDK.Controls.PluginUserControl, INotifyPropertyChanged
     {
 
         #region Public Fields
@@ -63,13 +63,19 @@ namespace DuplicateHider.Controls
 
         private void DHP_GameSelected(object sender, DuplicateHiderPlugin.GameSelectedArgs e)
         {
+            Game currentGame = null;
             foreach (ContentControl control in IconStackPanel.Children)
             {
                 if (control.DataContext is ListData data)
                 {
                     data.IsCurrent = data.Game.Id == e.newId;
+                    if (data.IsCurrent)
+                    {
+                        currentGame = data.Game;
+                    }
                 }
             }
+            Current = currentGame;
         }
 
         public SourceSelector(int number, Orientation orientation = Orientation.Horizontal) : this()
@@ -100,6 +106,12 @@ namespace DuplicateHider.Controls
         #endregion Public Constructors
 
         #region Public Properties
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private Game current = null;
+        public Game Current { get => current; set { current = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Current))); } }
 
         [Description("Orientation of the icon stack."), Category("Appearance")]
         public Orientation IconStackOrientation
@@ -154,6 +166,8 @@ namespace DuplicateHider.Controls
                     return;
                 }
 
+                Game currentGame = null;
+
                 for (int i = 0; i < games.Count; ++i)
                 {
                     ContentControl button = null;
@@ -178,6 +192,11 @@ namespace DuplicateHider.Controls
                     listData.Game = game;
                     listData.IsCurrent = isCurrent;
 
+                    if (isCurrent)
+                    {
+                        currentGame = game;
+                    }
+
                     button.DataContext = null;
                     button.DataContext = listData;
 
@@ -195,12 +214,15 @@ namespace DuplicateHider.Controls
                     ButtonCaches[selectorNumber].Push(button);
                     IconStackPanel.Children.RemoveAt(i);
                 }
+
+                Current = currentGame;
             }
             else
             {
                 ButtonCaches[selectorNumber].Consume(IconStackPanel.Children);
             }
         }
+
 
         #endregion Internal Methods
 
@@ -228,7 +250,12 @@ namespace DuplicateHider.Controls
         {
             if (sender is Button bt)
             {
-                DuplicateHiderPlugin.Instance.PlayniteApi.MainView.SelectGame((bt.DataContext as ListData).Game.Id);
+                ListData listData = (bt.DataContext as ListData);
+                DuplicateHiderPlugin.Instance.PlayniteApi.MainView.SelectGame(listData.Game.Id);
+                if (bt.Parent is ContentControl cc && cc.Parent is StackPanel sp && sp.Parent is SourceSelector ss)
+                {
+                    ss.Current = listData.Game;
+                }
             }
         }
 
@@ -277,6 +304,10 @@ namespace DuplicateHider.Controls
             {
                 if (control.DataContext is ListData data)
                 {
+                    if (control.Parent is StackPanel sp && sp.Parent is SourceSelector ss)
+                    {
+                        ss.Current = data.Game;
+                    }
                     data.SelectCommand.Execute(null);
                     e.Handled = true;
                 }
