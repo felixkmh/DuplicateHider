@@ -1,5 +1,11 @@
 AddonId: 'felixkmh_DuplicateHider_Plugin'
 Packages:
+  - Version: 3.10.7
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2022-06-05
+    PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.10.7/felixkmh_DuplicateHider_Plugin_3_10_7.pext
+    Changelog:
+      - SourceSelector keeps track of current game
   - Version: 3.10.6
     RequiredApiVersion: 6.2.0
     ReleaseDate: 2022-05-04
