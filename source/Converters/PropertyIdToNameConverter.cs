@@ -101,7 +101,7 @@ namespace DuplicateHider.Converters
                 }
             }
 
-            return "None";
+            return values[0].ToString();
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

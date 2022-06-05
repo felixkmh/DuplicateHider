@@ -114,7 +114,7 @@ namespace DuplicateHider.Models
             }
 
             var type = propertyType.Value;
-            if (type != typeof(DateTime) && !type.IsNumberType() && type != typeof(string))
+            if (type != typeof(DateTime) && !type.IsNumberType() && IsList)
             {
                 HashSet<object> set = new HashSet<object>();
                 if (isEnumerable.Value)
@@ -141,7 +141,7 @@ namespace DuplicateHider.Models
                         if (val != null)
                         {
                             set.Add(val);
-                        } else
+                        } else if (propertyType.Value.IsValueType)
                         {
                             set.Add(Activator.CreateInstance(type));
                         }
@@ -176,7 +176,7 @@ namespace DuplicateHider.Models
                         isList = true;
                     } else
                     {
-                        isList = IsBool;
+                        isList = IsBool || PropertyName == nameof(Game.Version);
                     } 
                 }
                 return isList ?? default;
@@ -281,8 +281,24 @@ namespace DuplicateHider.Models
                 {
                     var valueA = propertyInfo.Value.GetValue(a);
                     var valueB = propertyInfo.Value.GetValue(b);
-                    AddValue(valueA ?? Activator.CreateInstance(propertyType.Value));
-                    AddValue(valueB ?? Activator.CreateInstance(propertyType.Value));
+                    if (propertyType.Value.IsValueType)
+                    {
+                        AddValue(valueA ?? Activator.CreateInstance(propertyType.Value));
+                        AddValue(valueB ?? Activator.CreateInstance(propertyType.Value));
+                    } else
+                    {
+                        if (valueA == null && valueB == null) return 0;
+                        if (valueA != null && valueB == null)
+                        {
+                            AddValue(valueA);
+                            return -1;
+                        }
+                        if (valueA == null && valueB != null)
+                        {
+                            AddValue(valueB);
+                            return 1;
+                        }
+                    }
                     return PriorityObjects.IndexOf(valueA).CompareTo(PriorityObjects.IndexOf(valueB));
                 }
                 
