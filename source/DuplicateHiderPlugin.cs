@@ -131,13 +131,18 @@ namespace DuplicateHider
             }
         }
 
-        internal void UpdateGuidToCopiesDict(IEnumerable<Guid> updatedIds)
+        internal IEnumerable<Guid> UpdateGuidToCopiesDict(IEnumerable<Guid> updatedIds)
         {
+            var requireUpdate = new HashSet<Guid>();
             if (updatedIds?.Any() ?? false)
             {
                 var nameFilter = GetNameFilter();
                 foreach (var id in updatedIds)
                 {
+                    if (GuidToCopies.TryGetValue(id, out var oldList))
+                    {
+                        oldList.ForEach(g => requireUpdate.Add(g.Id));
+                    }
                     GuidToCopies.Remove(id);
                     var game = PlayniteApi.Database.Games.Get(id);
                     if (game is Game)
@@ -152,11 +157,13 @@ namespace DuplicateHider
                             foreach(var copy in games)
                             {
                                 GuidToCopies[copy.Id] = games;
+                                requireUpdate.Add(copy.Id);
                             }
                         }
                     }
                 }
             }
+            return requireUpdate;
         }
 #if DEBUG
         static int GeneratedElements = 0;
@@ -573,6 +580,7 @@ namespace DuplicateHider
             PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
             PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
             var toUpdate = new List<Game>();
+            var toUpdateGroups = new HashSet<Guid>();
             if (settings.UpdateAutomatically)
             {
                 var filter = GetGameFilter();
@@ -584,6 +592,7 @@ namespace DuplicateHider
                     if (Index.ContainsKey(name))
                     {
                         List<Guid> guids = Index[name];
+                        guids?.ForEach(id => toUpdateGroups.Add(id));
                         if (guids != null && guids.Remove(game.Id) && guids.Count == 1)
                         {
                             if (PlayniteApi.Database.Games.Get(Index[name][0]) is Game last)
@@ -611,8 +620,10 @@ namespace DuplicateHider
                 var filter = GetGameFilter();
                 var added = e.AddedItems.Where(g => g.Name != "New Game").Filter(filter);
                 var removed = e.RemovedItems.AsEnumerable().Filter(filter);
-                UpdateGuidToCopiesDict(removed.Concat(added).Select(u => u.Id).ToHashSet());
+                HashSet<Guid> updatedIds = removed.Concat(added).Select(u => u.Id).Concat(toUpdateGroups).ToHashSet();
                 PlayniteApi.Database.Games.Update(toUpdate);
+                UpdateGuidToCopiesDict(updatedIds);
+                GroupUpdated?.Invoke(this, updatedIds);
             }
             PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
