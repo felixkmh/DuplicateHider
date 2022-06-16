@@ -7,6 +7,7 @@ Packages:
     Changelog:
       - 'added option to assign union of some fields over all copies of a game to each game in the "Copy Info to other Copies" dialog'
       - 'added option to exclude items in the "Copy Info to other Copies" dialog'
+      - 'added option to copy completion status to other copies in the "Copy Info to other Copies" dialog'
   - Version: 3.11.1
     RequiredApiVersion: 6.2.0
     ReleaseDate: 2022-06-07
