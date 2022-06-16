@@ -85,6 +85,7 @@ Wil je deze spellen verplaatsen van hun oude groepen naar de nieuwe en conflicte
     <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve">Ingeschakeld: Score spellen gebaseerd op de positie in de groepslijst.
 Uitgeschakeld: Score met behulp van de normale scoremethode op basis van de bronprioriteiten.</sys:String>
     <sys:String x:Key="LOC_DH_UnionizeField"></sys:String>
+    <sys:String x:Key="LOC_DH_ExcludedTooltip"></sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Map met gebruikerspictogrammen openen</sys:String>
     <sys:String x:Key="LOC_DH_MoveButton">Verplaats</sys:String>
