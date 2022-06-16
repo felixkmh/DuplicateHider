@@ -85,6 +85,7 @@ Voulez-vous déplacer ces jeux de leurs anciens groupes vers le nouveau, les gar
     <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve">Activé : Déterminer le score des jeux en fonction de leur position dans la liste des groupes.
 Désactivé : Utiliser la méthode normale de notation basée sur les priorités de source.</sys:String>
     <sys:String x:Key="LOC_DH_UnionizeField"></sys:String>
+    <sys:String x:Key="LOC_DH_ExcludedTooltip"></sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Ouvrir le dossier icônes utilisateur</sys:String>
     <sys:String x:Key="LOC_DH_MoveButton">Déplacer</sys:String>
