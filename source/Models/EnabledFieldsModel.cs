@@ -32,6 +32,9 @@ namespace DuplicateHider.Models
         protected bool features;
         public bool Features { get => features; set => SetValue(ref features, value); }
 
+        protected bool completionStatus;
+        public bool CompletionStatus { get => completionStatus; set => SetValue(ref completionStatus, value); }
+
         protected bool tags;
         public bool Tags { get => tags; set => SetValue(ref tags, value); }
 

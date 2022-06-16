@@ -57,6 +57,7 @@ namespace DuplicateHider.Models
             if (enabledFields.CriticsScore) targets.ForEach(g => g.CriticScore = SourceGame.CriticScore);
             if (enabledFields.CommunityScore) targets.ForEach(g => g.CommunityScore = SourceGame.CommunityScore);
             if (enabledFields.Links) targets.ForEach(g => g.Links = SourceGame.Links);
+            if (enabledFields.CompletionStatus) targets.ForEach(g => g.CompletionStatusId = SourceGame.CompletionStatusId);
 
             { // copy background image
                 if (enabledFields.BackgroundImage && SourceGame.BackgroundImage is string imagePath && !string.IsNullOrWhiteSpace(imagePath))
