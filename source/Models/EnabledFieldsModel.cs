@@ -20,11 +20,17 @@ namespace DuplicateHider.Models
         protected bool platformsUnion;
         public bool PlatformsUnion { get => platformsUnion; set => SetValue(ref platformsUnion, value); }
 
+        protected HashSet<Guid> platformsExcluded = new HashSet<Guid>();
+        public HashSet<Guid> PlatformsExcluded { get => platformsExcluded; set => SetValue(ref platformsExcluded, value); }
+
         protected bool genres;
         public bool Genres { get => genres; set => SetValue(ref genres, value); }
 
         protected bool genresUnion;
         public bool GenresUnion { get => genresUnion; set => SetValue(ref genresUnion, value); }
+
+        protected HashSet<Guid> genresExcluded = new HashSet<Guid>();
+        public HashSet<Guid> GenresExcluded { get => genresExcluded; set => SetValue(ref genresExcluded, value); }
 
         protected bool developers;
         public bool Developers { get => developers; set => SetValue(ref developers, value); }
@@ -32,11 +38,17 @@ namespace DuplicateHider.Models
         protected bool developersUnion;
         public bool DevelopersUnion { get => developersUnion; set => SetValue(ref developersUnion, value); }
 
+        protected HashSet<Guid> developersExcluded = new HashSet<Guid>();
+        public HashSet<Guid> DevelopersExcluded { get => developersExcluded; set => SetValue(ref developersExcluded, value); }
+
         protected bool publishers;
         public bool Publishers { get => publishers; set => SetValue(ref publishers, value); }
 
         protected bool publishersUnion;
         public bool PublishersUnion { get => publishersUnion; set => SetValue(ref publishersUnion, value); }
+
+        protected HashSet<Guid> publishersExcluded = new HashSet<Guid>();
+        public HashSet<Guid> PublishersExcluded { get => publishersExcluded; set => SetValue(ref publishersExcluded, value); }
 
         protected bool categories;
         public bool Categories { get => categories; set => SetValue(ref categories, value); }
@@ -44,11 +56,17 @@ namespace DuplicateHider.Models
         protected bool categoriesUnion;
         public bool CategoriesUnion { get => categoriesUnion; set => SetValue(ref categoriesUnion, value); }
 
+        protected HashSet<Guid> categoriesExcluded = new HashSet<Guid>();
+        public HashSet<Guid> CategoriesExcluded { get => categoriesExcluded; set => SetValue(ref categoriesExcluded, value); }
+
         protected bool features;
         public bool Features { get => features; set => SetValue(ref features, value); }
 
         protected bool featuresUnion;
         public bool FeaturesUnion { get => featuresUnion; set => SetValue(ref featuresUnion, value); }
+
+        protected HashSet<Guid> featuresExcluded = new HashSet<Guid>();
+        public HashSet<Guid> FeaturesExcluded { get => featuresExcluded; set => SetValue(ref featuresExcluded, value); }
 
         protected bool completionStatus;
         public bool CompletionStatus { get => completionStatus; set => SetValue(ref completionStatus, value); }
@@ -58,6 +76,9 @@ namespace DuplicateHider.Models
 
         protected bool tagsUnion;
         public bool TagsUnion { get => tagsUnion; set => SetValue(ref tagsUnion, value); }
+
+        protected HashSet<Guid> tagsExcluded = new HashSet<Guid>();
+        public HashSet<Guid> TagsExcluded { get => tagsExcluded; set => SetValue(ref tagsExcluded, value); }
 
         protected bool description;
         public bool Description { get => description; set => SetValue(ref description, value); }
@@ -71,17 +92,26 @@ namespace DuplicateHider.Models
         protected bool seriesUnion;
         public bool SeriesUnion { get => seriesUnion; set => SetValue(ref seriesUnion, value); }
 
+        protected HashSet<Guid> seriesExcluded = new HashSet<Guid>();
+        public HashSet<Guid> SeriesExcluded { get => seriesExcluded; set => SetValue(ref seriesExcluded, value); }
+
         protected bool ageRestriction;
         public bool AgeRatings { get => ageRestriction; set => SetValue(ref ageRestriction, value); }
 
         protected bool ageRestrictionUnion;
         public bool AgeRatingsUnion { get => ageRestrictionUnion; set => SetValue(ref ageRestrictionUnion, value); }
 
+        protected HashSet<Guid> ageRestrictionExcluded = new HashSet<Guid>();
+        public HashSet<Guid> AgeRatingsExcluded { get => ageRestrictionExcluded; set => SetValue(ref ageRestrictionExcluded, value); }
+
         protected bool regions;
         public bool Regions { get => regions; set => SetValue(ref regions, value); }
 
         protected bool regionsUnion;
         public bool RegionsUnion { get => regionsUnion; set => SetValue(ref regionsUnion, value); }
+
+        protected HashSet<Guid> regionsExcluded = new HashSet<Guid>();
+        public HashSet<Guid> RegionsExcluded { get => regionsExcluded; set => SetValue(ref regionsExcluded, value); }
 
         protected bool version;
         public bool Version { get => version; set => SetValue(ref version, value); }

@@ -78,6 +78,7 @@
     <Compile Include="Controls\SourceSelector.xaml.cs">
       <DependentUpon>SourceSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\DatabaseIdToNameConverter.cs" />
     <Compile Include="Converters\EnumToStringConverter.cs" />
     <Compile Include="Converters\GamePropertyToNameConverter.cs" />
     <Compile Include="Converters\GameToPrioConverter.cs" />

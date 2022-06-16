@@ -30,24 +30,20 @@ namespace DuplicateHider.Models
             }
         }
 
-        public void UnionizeGuidList(string propertyName, Game source, IEnumerable<Game> targets)
+        public void UnionizeGuidList(string propertyName, Game source, IEnumerable<Game> targets, IEnumerable<Guid> excluded = null)
         {
+            excluded = excluded ?? Enumerable.Empty<Guid>();
+
             var property = typeof(Game).GetProperty(propertyName);
             if (property != null && property.CanRead && property.CanWrite && property.PropertyType == typeof(List<Guid>))
             {
-                var dhTagIds = new HashSet<Guid> {
-                    DuplicateHiderPlugin.Instance.settings.HiddenTagId,
-                    DuplicateHiderPlugin.Instance.settings.RevealedTagId,
-                    DuplicateHiderPlugin.Instance.settings.HighPrioTagId,
-                    DuplicateHiderPlugin.Instance.settings.LowPrioTagId
-                };
                 var union = new HashSet<Guid>();
                 var sourceValues = property.GetValue(source) as List<Guid>;
                 if (sourceValues != null)
                 {
                     foreach(var sourceValue in sourceValues)
                     {
-                        if (!dhTagIds.Contains(sourceValue))
+                        if (!excluded.Contains(sourceValue))
                         {
                             union.Add(sourceValue);
                         }
@@ -60,7 +56,7 @@ namespace DuplicateHider.Models
                     {
                         foreach(var targetValue in targetValues)
                         {
-                            if (!dhTagIds.Contains(targetValue))
+                            if (!excluded.Contains(targetValue))
                             {
                                 union.Add(targetValue);
                             }
@@ -71,14 +67,14 @@ namespace DuplicateHider.Models
                 {
                     sourceValues = new List<Guid>();
                 }
-                property.SetValue(source, union.Union(sourceValues.Where(id => dhTagIds.Contains(id))).ToList());
+                property.SetValue(source, union.Union(sourceValues.Intersect(excluded)).ToList());
                 foreach(var target in targets)
                 {
                     var newTargetValues = union;
                     var targetValues = property.GetValue(target) as List<Guid>;
                     if (targetValues != null)
                     {
-                        newTargetValues = union.Union(targetValues.Where(id => dhTagIds.Contains(id))).ToHashSet();
+                        newTargetValues = union.Union(targetValues.Intersect(excluded)).ToHashSet();
                     }
                     property.SetValue(target, newTargetValues.ToList());
                 }
@@ -100,7 +96,7 @@ namespace DuplicateHider.Models
             if (enabledFields.Platforms)
                 if (enabledFields.PlatformsUnion)
                 {
-                    UnionizeGuidList(nameof(Game.PlatformIds), SourceGame, TargetGames);
+                    UnionizeGuidList(nameof(Game.PlatformIds), SourceGame, TargetGames, enabledFields.PlatformsExcluded);
                 } else
                 {
                     targets.ForEach(g => g.PlatformIds = SourceGame.PlatformIds);
@@ -110,7 +106,7 @@ namespace DuplicateHider.Models
             if (enabledFields.Genres)
                 if (enabledFields.GenresUnion)
                 {
-                    UnionizeGuidList(nameof(Game.GenreIds), SourceGame, TargetGames);
+                    UnionizeGuidList(nameof(Game.GenreIds), SourceGame, TargetGames, enabledFields.GenresExcluded);
                 } else
                 {
                     targets.ForEach(g => g.GenreIds = SourceGame.GenreIds);
@@ -119,7 +115,7 @@ namespace DuplicateHider.Models
             if (enabledFields.Developers)
                 if (enabledFields.DevelopersUnion)
                 {
-                    UnionizeGuidList(nameof(Game.DeveloperIds), SourceGame, TargetGames);
+                    UnionizeGuidList(nameof(Game.DeveloperIds), SourceGame, TargetGames, enabledFields.DevelopersExcluded);
                 }
                 else {
                     targets.ForEach(g => g.DeveloperIds = SourceGame.DeveloperIds);
@@ -128,7 +124,7 @@ namespace DuplicateHider.Models
             if (enabledFields.Publishers) 
                 if (enabledFields.PublishersUnion)
                 {
-                    UnionizeGuidList(nameof(Game.PublisherIds), SourceGame, TargetGames);
+                    UnionizeGuidList(nameof(Game.PublisherIds), SourceGame, TargetGames, enabledFields.PublishersExcluded);
                 } else
                 {
                     targets.ForEach(g => g.PublisherIds = SourceGame.PublisherIds);
@@ -138,7 +134,7 @@ namespace DuplicateHider.Models
             if (enabledFields.Categories)
                 if (enabledFields.CategoriesUnion)
                 {
-                    UnionizeGuidList(nameof(Game.CategoryIds), SourceGame, TargetGames);
+                    UnionizeGuidList(nameof(Game.CategoryIds), SourceGame, TargetGames, enabledFields.CategoriesExcluded);
                 } else
                 {
                     targets.ForEach(g => g.CategoryIds = SourceGame.CategoryIds);
@@ -147,7 +143,7 @@ namespace DuplicateHider.Models
             if (enabledFields.Features)
                 if (enabledFields.FeaturesUnion)
                 {
-                    UnionizeGuidList(nameof(Game.FeatureIds), SourceGame, TargetGames);
+                    UnionizeGuidList(nameof(Game.FeatureIds), SourceGame, TargetGames, enabledFields.FeaturesExcluded);
                 }
                 else
                 {
@@ -157,7 +153,7 @@ namespace DuplicateHider.Models
             if (enabledFields.Tags)
                 if (enabledFields.TagsUnion)
                 {
-                    UnionizeGuidList(nameof(Game.TagIds), SourceGame, TargetGames);
+                    UnionizeGuidList(nameof(Game.TagIds), SourceGame, TargetGames, dhTagIds);
                 }
                 else
                 {
@@ -167,7 +163,7 @@ namespace DuplicateHider.Models
             if (enabledFields.Series)
                 if (enabledFields.SeriesUnion)
                 {
-                    UnionizeGuidList(nameof(Game.SeriesIds), SourceGame, TargetGames);
+                    UnionizeGuidList(nameof(Game.SeriesIds), SourceGame, TargetGames, enabledFields.SeriesExcluded);
                 }
                 else
                 {
@@ -177,7 +173,7 @@ namespace DuplicateHider.Models
             if (enabledFields.AgeRatings)
                 if (enabledFields.AgeRatingsUnion)
                 {
-                    UnionizeGuidList(nameof(Game.AgeRatingIds), SourceGame, TargetGames);
+                    UnionizeGuidList(nameof(Game.AgeRatingIds), SourceGame, TargetGames, enabledFields.AgeRatingsExcluded);
                 }
                 else
                 {
@@ -187,7 +183,7 @@ namespace DuplicateHider.Models
             if (enabledFields.Regions)
                 if (enabledFields.RegionsUnion)
                 {
-                    UnionizeGuidList(nameof(Game.RegionIds), SourceGame, TargetGames);
+                    UnionizeGuidList(nameof(Game.RegionIds), SourceGame, TargetGames, enabledFields.RegionsExcluded);
                 }
                 else
                 {
