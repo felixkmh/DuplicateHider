@@ -85,6 +85,7 @@
     <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">Включено: вы не будете получать уведомление, если значки найдутся в текущей теме.</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve">Включено: Оценивать игры по занимаемому месту в списке групп.
 Отключено: Оценивать обычным способом по приоритету клиентов.</sys:String>
+    <sys:String x:Key="LOC_DH_UnionizeField"></sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Открыть папку с польз. значками</sys:String>
     <sys:String x:Key="LOC_DH_MoveButton">Переместить</sys:String>
