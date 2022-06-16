@@ -85,6 +85,7 @@ Vuoi spostare questi giochi dai loro vecchi gruppi a quello nuovo, mantenere i g
     <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve">Abilitato: Dai un punteggio ai giochi in base alla posizione nella lista del gruppo.
 Disabilitato: Dai un punteggio usando il normale metodo di assegnazione in base alle priorità fonte.</sys:String>
     <sys:String x:Key="LOC_DH_UnionizeField"></sys:String>
+    <sys:String x:Key="LOC_DH_ExcludedTooltip"></sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Apri la cartella icone dell'utente</sys:String>
     <sys:String x:Key="LOC_DH_MoveButton">Sposta</sys:String>
