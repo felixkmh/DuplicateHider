@@ -99,7 +99,7 @@ namespace DuplicateHider.Models
                     UnionizeGuidList(nameof(Game.PlatformIds), SourceGame, TargetGames, enabledFields.PlatformsExcluded);
                 } else
                 {
-                    targets.ForEach(g => g.PlatformIds = SourceGame.PlatformIds);
+                    targets.ForEach(g => g.PlatformIds = SourceGame.PlatformIds.Where(id => !enabledFields.PlatformsExcluded.Contains(id)).ToList());
                 }
 
 
@@ -109,7 +109,7 @@ namespace DuplicateHider.Models
                     UnionizeGuidList(nameof(Game.GenreIds), SourceGame, TargetGames, enabledFields.GenresExcluded);
                 } else
                 {
-                    targets.ForEach(g => g.GenreIds = SourceGame.GenreIds);
+                    targets.ForEach(g => g.GenreIds = SourceGame.GenreIds.Where(id => !enabledFields.GenresExcluded.Contains(id)).ToList());
                 }
 
             if (enabledFields.Developers)
@@ -118,7 +118,7 @@ namespace DuplicateHider.Models
                     UnionizeGuidList(nameof(Game.DeveloperIds), SourceGame, TargetGames, enabledFields.DevelopersExcluded);
                 }
                 else {
-                    targets.ForEach(g => g.DeveloperIds = SourceGame.DeveloperIds);
+                    targets.ForEach(g => g.DeveloperIds = SourceGame.DeveloperIds.Where(id => !enabledFields.DevelopersExcluded.Contains(id)).ToList());
                 }
 
             if (enabledFields.Publishers) 
@@ -127,7 +127,7 @@ namespace DuplicateHider.Models
                     UnionizeGuidList(nameof(Game.PublisherIds), SourceGame, TargetGames, enabledFields.PublishersExcluded);
                 } else
                 {
-                    targets.ForEach(g => g.PublisherIds = SourceGame.PublisherIds);
+                    targets.ForEach(g => g.PublisherIds = SourceGame.PublisherIds.Where(id => !enabledFields.PublishersExcluded.Contains(id)).ToList());
                 }
 
 
@@ -137,7 +137,7 @@ namespace DuplicateHider.Models
                     UnionizeGuidList(nameof(Game.CategoryIds), SourceGame, TargetGames, enabledFields.CategoriesExcluded);
                 } else
                 {
-                    targets.ForEach(g => g.CategoryIds = SourceGame.CategoryIds);
+                    targets.ForEach(g => g.CategoryIds = SourceGame.CategoryIds.Where(id => !enabledFields.CategoriesExcluded.Contains(id)).ToList());
                 }
 
             if (enabledFields.Features)
@@ -147,7 +147,7 @@ namespace DuplicateHider.Models
                 }
                 else
                 {
-                    targets.ForEach(g => g.FeatureIds = SourceGame.FeatureIds);
+                    targets.ForEach(g => g.FeatureIds = SourceGame.FeatureIds.Where(id => !enabledFields.FeaturesExcluded.Contains(id)).ToList());
                 }
 
             if (enabledFields.Tags)
@@ -157,7 +157,7 @@ namespace DuplicateHider.Models
                 }
                 else
                 {
-                    targets.ForEach(g => g.TagIds = SourceGame.TagIds.Where(t => !dhTagIds.Contains(t)).Concat(g.TagIds.Where(id => dhTagIds.Contains(id))).Distinct().ToList());
+                    targets.ForEach(g => g.TagIds = SourceGame.TagIds.Where(t => (!dhTagIds.Contains(t) && !enabledFields.TagsExcluded.Contains(t))).Concat(g.TagIds.Where(id => dhTagIds.Contains(id))).Distinct().ToList());
                 }
 
             if (enabledFields.Series)
@@ -167,7 +167,7 @@ namespace DuplicateHider.Models
                 }
                 else
                 {
-                    targets.ForEach(g => g.SeriesIds = SourceGame.SeriesIds);
+                    targets.ForEach(g => g.SeriesIds = SourceGame.SeriesIds.Where(id => !enabledFields.SeriesExcluded.Contains(id)).ToList());
                 }
             
             if (enabledFields.AgeRatings)
@@ -177,7 +177,7 @@ namespace DuplicateHider.Models
                 }
                 else
                 {
-                    targets.ForEach(g => g.AgeRatingIds = SourceGame.AgeRatingIds);
+                    targets.ForEach(g => g.AgeRatingIds = SourceGame.AgeRatingIds.Where(id => !enabledFields.AgeRatingsExcluded.Contains(id)).ToList());
                 }
             
             if (enabledFields.Regions)
@@ -187,7 +187,7 @@ namespace DuplicateHider.Models
                 }
                 else
                 {
-                    targets.ForEach(g => g.RegionIds = SourceGame.RegionIds);
+                    targets.ForEach(g => g.RegionIds = SourceGame.RegionIds.Where(id => !enabledFields.RegionsExcluded.Contains(id)).ToList());
                 }
 
             if (enabledFields.Links)
