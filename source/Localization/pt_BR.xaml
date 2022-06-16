@@ -77,6 +77,7 @@
     <sys:String x:Key="LOC_DH_ShowSingleIconTooltip">Indica para o tema que você não quer ter elementos personalizados de interface se não existirem cópias extras de um jogo.</sys:String>
     <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">Se habilitado, você não será notificado se um tema de ícones for encontrado no tema atual.</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve"></sys:String>
+    <sys:String x:Key="LOC_DH_UnionizeField"></sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Abrir a pasta de ícones de usuário</sys:String>
     <sys:String x:Key="LOC_DH_MoveButton">Mover</sys:String>

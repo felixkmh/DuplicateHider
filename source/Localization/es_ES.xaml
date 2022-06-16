@@ -84,6 +84,7 @@ Haga clic en &quot;{0}&quot; para continuar o &quot;{1}&quot; para cancelar esta
     <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">Si está habilitado, no se te notificará si se encuentran los iconos del tema en el tema actual.</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve">Habilitado: puntuación de juegos basados en la posición en la lista de grupos.
 Deshabilitado: puntuación utilizando el método de puntuación normal en función de las prioridades de origen.</sys:String>
+    <sys:String x:Key="LOC_DH_UnionizeField"></sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Abra la carpeta de iconos del usuario</sys:String>
     <sys:String x:Key="LOC_DH_MoveButton">Mover</sys:String>
