@@ -14,6 +14,8 @@ namespace DuplicateHider.ViewModels
 {
     public class CopyFieldsViewModel : ObservableObject
     {
+        private static DuplicateHider.Converters.DatabaseIdToNameConverter DatabaseIdToNameConverter = new DuplicateHider.Converters.DatabaseIdToNameConverter();
+
         protected IEnumerable<CopyFieldsModel> copyFields = Array.Empty<CopyFieldsModel>();
         public IEnumerable<CopyFieldsModel> CopyFields { get => copyFields; set { SetValue(ref copyFields, value); OnPropertyChanged(nameof(Sources)); } }
 
@@ -30,6 +32,7 @@ namespace DuplicateHider.ViewModels
 
         public class CheckableGuid
         {
+            public string Name { get; set; }
             public Guid Guid { get; set; }
             public bool IsChecked { get; set; }
         }
@@ -109,8 +112,9 @@ namespace DuplicateHider.ViewModels
                 if (excludedPlatforms == null)
                 {
                     excludedPlatforms = DuplicateHiderPlugin.Instance.PlayniteApi.Database.Platforms
-                        .Select(p => new CheckableGuid { Guid = p.Id, IsChecked = EnabledFields.PlatformsExcluded.Contains(p.Id) })
+                        .Select(p => new CheckableGuid { Guid = p.Id, IsChecked = EnabledFields.PlatformsExcluded.Contains(p.Id), Name = DatabaseIdToNameConverter.Convert(p.Id, typeof(string), null, null) as string })
                         .OrderByDescending(p => p.IsChecked)
+                        .ThenBy(p => p.Name)
                         .ToObservable();
                 }
                 return excludedPlatforms;
@@ -125,8 +129,9 @@ namespace DuplicateHider.ViewModels
                 if (excludedGenres == null)
                 {
                     excludedGenres = DuplicateHiderPlugin.Instance.PlayniteApi.Database.Genres
-                        .Select(p => new CheckableGuid { Guid = p.Id, IsChecked = EnabledFields.GenresExcluded.Contains(p.Id) })
+                        .Select(p => new CheckableGuid { Guid = p.Id, IsChecked = EnabledFields.GenresExcluded.Contains(p.Id), Name = DatabaseIdToNameConverter.Convert(p.Id, typeof(string), null, null) as string })
                         .OrderByDescending(p => p.IsChecked)
+                        .ThenBy(p => p.Name)
                         .ToObservable();
                 }
                 return excludedGenres;
@@ -141,8 +146,9 @@ namespace DuplicateHider.ViewModels
                 if (excludedDevelopers == null)
                 {
                     excludedDevelopers = DuplicateHiderPlugin.Instance.PlayniteApi.Database.Companies
-                        .Select(p => new CheckableGuid { Guid = p.Id, IsChecked = EnabledFields.DevelopersExcluded.Contains(p.Id) })
+                        .Select(p => new CheckableGuid { Guid = p.Id, IsChecked = EnabledFields.DevelopersExcluded.Contains(p.Id), Name = DatabaseIdToNameConverter.Convert(p.Id, typeof(string), null, null) as string })
                         .OrderByDescending(p => p.IsChecked)
+                        .ThenBy(p => p.Name)
                         .ToObservable();
                 }
                 return excludedDevelopers;
@@ -157,8 +163,9 @@ namespace DuplicateHider.ViewModels
                 if (excludedPublishers == null)
                 {
                     excludedPublishers = DuplicateHiderPlugin.Instance.PlayniteApi.Database.Companies
-                        .Select(p => new CheckableGuid { Guid = p.Id, IsChecked = EnabledFields.PublishersExcluded.Contains(p.Id) })
+                        .Select(p => new CheckableGuid { Guid = p.Id, IsChecked = EnabledFields.PublishersExcluded.Contains(p.Id), Name = DatabaseIdToNameConverter.Convert(p.Id, typeof(string), null, null) as string })
                         .OrderByDescending(p => p.IsChecked)
+                        .ThenBy(p => p.Name)
                         .ToObservable();
                 }
                 return excludedPublishers;
@@ -173,8 +180,9 @@ namespace DuplicateHider.ViewModels
                 if (excludedCategories == null)
                 {
                     excludedCategories = DuplicateHiderPlugin.Instance.PlayniteApi.Database.Categories
-                        .Select(p => new CheckableGuid { Guid = p.Id, IsChecked = EnabledFields.CategoriesExcluded.Contains(p.Id) })
+                        .Select(p => new CheckableGuid { Guid = p.Id, IsChecked = EnabledFields.CategoriesExcluded.Contains(p.Id), Name = DatabaseIdToNameConverter.Convert(p.Id, typeof(string), null, null) as string })
                         .OrderByDescending(p => p.IsChecked)
+                        .ThenBy(p => p.Name)
                         .ToObservable();
                 }
                 return excludedCategories;
@@ -189,8 +197,9 @@ namespace DuplicateHider.ViewModels
                 if (excludedFeatures == null)
                 {
                     excludedFeatures = DuplicateHiderPlugin.Instance.PlayniteApi.Database.Features
-                        .Select(p => new CheckableGuid { Guid = p.Id, IsChecked = EnabledFields.FeaturesExcluded.Contains(p.Id) })
+                        .Select(p => new CheckableGuid { Guid = p.Id, IsChecked = EnabledFields.FeaturesExcluded.Contains(p.Id), Name = DatabaseIdToNameConverter.Convert(p.Id, typeof(string), null, null) as string })
                         .OrderByDescending(p => p.IsChecked)
+                        .ThenBy(p => p.Name)
                         .ToObservable();
                 }
                 return excludedFeatures;
@@ -205,8 +214,9 @@ namespace DuplicateHider.ViewModels
                 if (excludedTags == null)
                 {
                     excludedTags = DuplicateHiderPlugin.Instance.PlayniteApi.Database.Tags
-                        .Select(p => new CheckableGuid { Guid = p.Id, IsChecked = EnabledFields.TagsExcluded.Contains(p.Id) })
+                        .Select(p => new CheckableGuid { Guid = p.Id, IsChecked = EnabledFields.TagsExcluded.Contains(p.Id), Name = DatabaseIdToNameConverter.Convert(p.Id, typeof(string), null, null) as string })
                         .OrderByDescending(p => p.IsChecked)
+                        .ThenBy(p => p.Name)
                         .ToObservable();
                 }
                 return excludedTags;
@@ -221,8 +231,9 @@ namespace DuplicateHider.ViewModels
                 if (excludedSeries == null)
                 {
                     excludedSeries = DuplicateHiderPlugin.Instance.PlayniteApi.Database.Series
-                        .Select(p => new CheckableGuid { Guid = p.Id, IsChecked = EnabledFields.SeriesExcluded.Contains(p.Id) })
+                        .Select(p => new CheckableGuid { Guid = p.Id, IsChecked = EnabledFields.SeriesExcluded.Contains(p.Id), Name = DatabaseIdToNameConverter.Convert(p.Id, typeof(string), null, null) as string })
                         .OrderByDescending(p => p.IsChecked)
+                        .ThenBy(p => p.Name)
                         .ToObservable();
                 }
                 return excludedSeries;
@@ -237,8 +248,9 @@ namespace DuplicateHider.ViewModels
                 if (excludedAgeRatings == null)
                 {
                     excludedAgeRatings = DuplicateHiderPlugin.Instance.PlayniteApi.Database.AgeRatings
-                        .Select(p => new CheckableGuid { Guid = p.Id, IsChecked = EnabledFields.AgeRatingsExcluded.Contains(p.Id) })
+                        .Select(p => new CheckableGuid { Guid = p.Id, IsChecked = EnabledFields.AgeRatingsExcluded.Contains(p.Id), Name = DatabaseIdToNameConverter.Convert(p.Id, typeof(string), null, null) as string })
                         .OrderByDescending(p => p.IsChecked)
+                        .ThenBy(p => p.Name)
                         .ToObservable();
                 }
                 return excludedAgeRatings;
@@ -253,8 +265,9 @@ namespace DuplicateHider.ViewModels
                 if (excludedRegions == null)
                 {
                     excludedRegions = DuplicateHiderPlugin.Instance.PlayniteApi.Database.Regions
-                        .Select(p => new CheckableGuid { Guid = p.Id, IsChecked = EnabledFields.RegionsExcluded.Contains(p.Id) })
+                        .Select(p => new CheckableGuid { Guid = p.Id, IsChecked = EnabledFields.RegionsExcluded.Contains(p.Id), Name = DatabaseIdToNameConverter.Convert(p.Id, typeof(string), null, null) as string })
                         .OrderByDescending(p => p.IsChecked)
+                        .ThenBy(p => p.Name)
                         .ToObservable();
                 }
                 return excludedRegions;

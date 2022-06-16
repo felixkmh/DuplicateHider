@@ -51,7 +51,7 @@
                                               ScrollViewer.VerticalScrollBarVisibility="Auto">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <CheckBox Content="{Binding Guid, Converter={StaticResource DatabaseIdToNameConverter}}" IsChecked="{Binding IsChecked}"/>
+                                            <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}"/>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
@@ -66,7 +66,7 @@
                                   IsEnabled="{Binding EnabledFields.Platforms}"/>
                         <ToggleButton x:Name="PlatformsToggle" IsEnabled="{Binding EnabledFields.Platforms}"
                                       DockPanel.Dock="Right" Padding="5,0"
-                                      ToolTip="Excluded">
+                                      ToolTip="{DynamicResource LOC_DH_ExcludedTooltip}">
                             <ToggleButton.Content>
                                 <TextBlock Text="" FontFamily="{DynamicResource FontIcoFont}"/>
                             </ToggleButton.Content>
@@ -78,7 +78,7 @@
                                               ScrollViewer.VerticalScrollBarVisibility="Auto">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <CheckBox Content="{Binding Guid, Converter={StaticResource DatabaseIdToNameConverter}}" IsChecked="{Binding IsChecked}"/>
+                                            <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}"/>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
@@ -93,7 +93,7 @@
                                   IsEnabled="{Binding EnabledFields.Categories}"/>
                         <ToggleButton x:Name="CategoriesToggle" IsEnabled="{Binding EnabledFields.Categories}"
                                       DockPanel.Dock="Right" Padding="5,0"
-                                      ToolTip="Excluded">
+                                      ToolTip="{DynamicResource LOC_DH_ExcludedTooltip}">
                             <ToggleButton.Content>
                                 <TextBlock Text="" FontFamily="{DynamicResource FontIcoFont}"/>
                             </ToggleButton.Content>
@@ -105,7 +105,7 @@
                                               ScrollViewer.VerticalScrollBarVisibility="Auto">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <CheckBox Content="{Binding Guid, Converter={StaticResource DatabaseIdToNameConverter}}" IsChecked="{Binding IsChecked}"/>
+                                            <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}"/>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
@@ -132,7 +132,7 @@
                                   IsEnabled="{Binding EnabledFields.Tags}"/>
                         <ToggleButton x:Name="TagsToggle" IsEnabled="{Binding EnabledFields.Tags}"
                                       DockPanel.Dock="Right" Padding="5,0"
-                                      ToolTip="Excluded">
+                                      ToolTip="{DynamicResource LOC_DH_ExcludedTooltip}">
                             <ToggleButton.Content>
                                 <TextBlock Text="" FontFamily="{DynamicResource FontIcoFont}"/>
                             </ToggleButton.Content>
@@ -144,7 +144,7 @@
                                               ScrollViewer.VerticalScrollBarVisibility="Auto">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <CheckBox Content="{Binding Guid, Converter={StaticResource DatabaseIdToNameConverter}}" IsChecked="{Binding IsChecked}"/>
+                                            <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}"/>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
@@ -163,7 +163,7 @@
                                   IsEnabled="{Binding EnabledFields.Features}"/>
                         <ToggleButton x:Name="FeaturesToggle" IsEnabled="{Binding EnabledFields.Features}"
                                       DockPanel.Dock="Right" Padding="5,0"
-                                      ToolTip="Excluded">
+                                      ToolTip="{DynamicResource LOC_DH_ExcludedTooltip}">
                             <ToggleButton.Content>
                                 <TextBlock Text="" FontFamily="{DynamicResource FontIcoFont}"/>
                             </ToggleButton.Content>
@@ -175,7 +175,7 @@
                                               ScrollViewer.VerticalScrollBarVisibility="Auto">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <CheckBox Content="{Binding Guid, Converter={StaticResource DatabaseIdToNameConverter}}" IsChecked="{Binding IsChecked}"/>
+                                            <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}"/>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
@@ -190,7 +190,7 @@
                                   IsEnabled="{Binding EnabledFields.Developers}"/>
                         <ToggleButton x:Name="DevelopersToggle" IsEnabled="{Binding EnabledFields.Developers}"
                                       DockPanel.Dock="Right" Padding="5,0"
-                                      ToolTip="Excluded">
+                                      ToolTip="{DynamicResource LOC_DH_ExcludedTooltip}">
                             <ToggleButton.Content>
                                 <TextBlock Text="" FontFamily="{DynamicResource FontIcoFont}"/>
                             </ToggleButton.Content>
@@ -202,7 +202,7 @@
                                               ScrollViewer.VerticalScrollBarVisibility="Auto">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <CheckBox Content="{Binding Guid, Converter={StaticResource DatabaseIdToNameConverter}}" IsChecked="{Binding IsChecked}"/>
+                                            <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}"/>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
@@ -217,7 +217,7 @@
                                   IsEnabled="{Binding EnabledFields.Publishers}"/>
                         <ToggleButton x:Name="PublishersToggle" IsEnabled="{Binding EnabledFields.Publishers}"
                                       DockPanel.Dock="Right" Padding="5,0"
-                                      ToolTip="Excluded">
+                                      ToolTip="{DynamicResource LOC_DH_ExcludedTooltip}">
                             <ToggleButton.Content>
                                 <TextBlock Text="" FontFamily="{DynamicResource FontIcoFont}"/>
                             </ToggleButton.Content>
@@ -229,7 +229,7 @@
                                               ScrollViewer.VerticalScrollBarVisibility="Auto">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <CheckBox Content="{Binding Guid, Converter={StaticResource DatabaseIdToNameConverter}}" IsChecked="{Binding IsChecked}"/>
+                                            <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}"/>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
@@ -244,7 +244,7 @@
                                   IsEnabled="{Binding EnabledFields.Regions}"/>
                         <ToggleButton x:Name="RegionsToggle" IsEnabled="{Binding EnabledFields.Regions}"
                                       DockPanel.Dock="Right" Padding="5,0"
-                                      ToolTip="Excluded">
+                                      ToolTip="{DynamicResource LOC_DH_ExcludedTooltip}">
                             <ToggleButton.Content>
                                 <TextBlock Text="" FontFamily="{DynamicResource FontIcoFont}"/>
                             </ToggleButton.Content>
@@ -256,7 +256,7 @@
                                               ScrollViewer.VerticalScrollBarVisibility="Auto">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <CheckBox Content="{Binding Guid, Converter={StaticResource DatabaseIdToNameConverter}}" IsChecked="{Binding IsChecked}"/>
+                                            <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}"/>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
@@ -271,7 +271,7 @@
                                   IsEnabled="{Binding EnabledFields.AgeRatings}"/>
                         <ToggleButton x:Name="AgeRatingsToggle" IsEnabled="{Binding EnabledFields.AgeRatings}"
                                       DockPanel.Dock="Right" Padding="5,0"
-                                      ToolTip="Excluded">
+                                      ToolTip="{DynamicResource LOC_DH_ExcludedTooltip}">
                             <ToggleButton.Content>
                                 <TextBlock Text="" FontFamily="{DynamicResource FontIcoFont}"/>
                             </ToggleButton.Content>
@@ -283,7 +283,7 @@
                                               ScrollViewer.VerticalScrollBarVisibility="Auto">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <CheckBox Content="{Binding Guid, Converter={StaticResource DatabaseIdToNameConverter}}" IsChecked="{Binding IsChecked}"/>
+                                            <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}"/>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
@@ -302,7 +302,7 @@
                                   IsEnabled="{Binding EnabledFields.Series}"/>
                         <ToggleButton x:Name="SeriesToggle" IsEnabled="{Binding EnabledFields.Series}"
                                       DockPanel.Dock="Right" Padding="5,0"
-                                      ToolTip="Excluded">
+                                      ToolTip="{DynamicResource LOC_DH_ExcludedTooltip}">
                             <ToggleButton.Content>
                                 <TextBlock Text="" FontFamily="{DynamicResource FontIcoFont}"/>
                             </ToggleButton.Content>
@@ -314,7 +314,7 @@
                                               ScrollViewer.VerticalScrollBarVisibility="Auto">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <CheckBox Content="{Binding Guid, Converter={StaticResource DatabaseIdToNameConverter}}" IsChecked="{Binding IsChecked}"/>
+                                            <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}"/>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
