@@ -86,6 +86,7 @@
     <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve">مفعل: سجل الألعاب بناءً على المركز في قائمة المجموعة.
 معطل: سجل باستخدام طريقة التسجيل العادية بناءً على أولويات المصدر.</sys:String>
     <sys:String x:Key="LOC_DH_UnionizeField"></sys:String>
+    <sys:String x:Key="LOC_DH_ExcludedTooltip"></sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">فتح مجلد أيقونة المستخدم</sys:String>
     <sys:String x:Key="LOC_DH_MoveButton">نقل</sys:String>
