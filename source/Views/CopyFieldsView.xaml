@@ -22,95 +22,117 @@
         </Grid.ColumnDefinitions>
         <GroupBox Header="{DynamicResource LOC_DH_GameFields}" Margin="2,0">
             <ScrollViewer>
-                <StackPanel HorizontalAlignment="Left" Margin="0">
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                <StackPanel HorizontalAlignment="Stretch" Margin="0">
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.Name}"/>
                         <TextBlock Text="{DynamicResource LOCGameNameTitle}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.SortingName}"/>
                         <TextBlock Text="{DynamicResource LOCGameSortingNameTitle}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.Genres}"/>
+                        <CheckBox IsChecked="{Binding EnabledFields.GenresUnion}" DockPanel.Dock="Right"
+                                  ToolTip="{DynamicResource LOC_DH_UnionizeField}"/>
                         <TextBlock Text="{DynamicResource LOCGenresLabel}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.Platforms}"/>
+                        <CheckBox IsChecked="{Binding EnabledFields.PlatformsUnion}" DockPanel.Dock="Right"
+                                  ToolTip="{DynamicResource LOC_DH_UnionizeField}"/>
                         <TextBlock Text="{DynamicResource LOCGamePlatformTitle}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.Categories}"/>
+                        <CheckBox IsChecked="{Binding EnabledFields.CategoriesUnion}" DockPanel.Dock="Right"
+                                  ToolTip="{DynamicResource LOC_DH_UnionizeField}"/>
                         <TextBlock Text="{DynamicResource LOCGameCategoriesTitle}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.Icon}"/>
                         <TextBlock Text="{DynamicResource LOCGameIconTitle}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.CoverImage}"/>
                         <TextBlock Text="{DynamicResource LOCGameCoverTitle}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.BackgroundImage}"/>
                         <TextBlock Text="{DynamicResource LOCGameBackgroundTitle}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.Tags}"/>
+                        <CheckBox IsChecked="{Binding EnabledFields.TagsUnion}" DockPanel.Dock="Right"
+                                  ToolTip="{DynamicResource LOC_DH_UnionizeField}"/>
                         <TextBlock Text="{DynamicResource LOCGameTagsTitle}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.Description}"/>
                         <TextBlock Text="{DynamicResource LOCGameDescriptionTitle}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.Features}"/>
+                        <CheckBox IsChecked="{Binding EnabledFields.FeaturesUnion}" DockPanel.Dock="Right"
+                                  ToolTip="{DynamicResource LOC_DH_UnionizeField}"/>
                         <TextBlock Text="{DynamicResource LOCFeaturesLabel}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.Developers}"/>
+                        <CheckBox IsChecked="{Binding EnabledFields.DevelopersUnion}" DockPanel.Dock="Right"
+                                  ToolTip="{DynamicResource LOC_DH_UnionizeField}"/>
                         <TextBlock Text="{DynamicResource LOCDevelopersLabel}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.Publishers}"/>
+                        <CheckBox IsChecked="{Binding EnabledFields.PublishersUnion}" DockPanel.Dock="Right"
+                                  ToolTip="{DynamicResource LOC_DH_UnionizeField}"/>
                         <TextBlock Text="{DynamicResource LOCPublishersLabel}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.Regions}"/>
+                        <CheckBox IsChecked="{Binding EnabledFields.RegionsUnion}" DockPanel.Dock="Right"
+                                  ToolTip="{DynamicResource LOC_DH_UnionizeField}"/>
                         <TextBlock Text="{DynamicResource LOCRegionsLabel}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.AgeRatings}"/>
+                        <CheckBox IsChecked="{Binding EnabledFields.AgeRatingsUnion}" DockPanel.Dock="Right"
+                                  ToolTip="{DynamicResource LOC_DH_UnionizeField}"/>
                         <TextBlock Text="{DynamicResource LOCAgeRatingsLabel}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.ReleaseDate}"/>
                         <TextBlock Text="{DynamicResource LOCGameReleaseDateTitle}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.Series}"/>
+                        <CheckBox IsChecked="{Binding EnabledFields.SeriesUnion}" DockPanel.Dock="Right"
+                                  ToolTip="{DynamicResource LOC_DH_UnionizeField}"/>
                         <TextBlock Text="{DynamicResource LOCSeriesLabel}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.UserScore}"/>
                         <TextBlock Text="{DynamicResource LOCUserScore}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.CriticsScore}"/>
                         <TextBlock Text="{DynamicResource LOCCriticScore}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.CommunityScore}"/>
                         <TextBlock Text="{DynamicResource LOCCommunityScore}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.Links}"/>
+                        <CheckBox IsChecked="{Binding EnabledFields.LinksUnion}" DockPanel.Dock="Right"
+                                  ToolTip="{DynamicResource LOC_DH_UnionizeField}"/>
                         <TextBlock Text="{DynamicResource LOCLinksLabel}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="3">
+                    </DockPanel>
+                    <DockPanel Margin="3">
                         <CheckBox IsChecked="{Binding EnabledFields.CompletionStatus}"/>
                         <TextBlock Text="{DynamicResource LOCCompletionStatus}" Foreground="{DynamicResource TextBrush}"/>
-                    </StackPanel>
+                    </DockPanel>
                     <StackPanel Orientation="Horizontal" Margin="3" 
                                 Tag="{DynamicResource LOCExtra_Metadata_Loader_MenuItemSectionLogos}" 
                                 Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}">

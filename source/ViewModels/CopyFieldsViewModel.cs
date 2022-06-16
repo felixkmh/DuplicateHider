@@ -56,7 +56,7 @@ namespace DuplicateHider.ViewModels
                                 args.CurrentProgressValue = done;
                             }
                             args.Text = ResourceProvider.GetString("LOC_DH_Updating");
-                            DuplicateHiderPlugin.API.Database.Games.Update(CopyFields.SelectMany(cf => cf.TargetGames));
+                            DuplicateHiderPlugin.API.Database.Games.Update(CopyFields.SelectMany(cf => cf.TargetGames).Union(CopyFields.Select(cf => cf.SourceGame)));
                             if (SaveAsDefault) DuplicateHiderPlugin.Instance.settings.DefaultEnabledFields = EnabledFields;
                         }, new GlobalProgressOptions(string.Format("{0}/{1}", 0, CopyFields.Count()), true) { IsIndeterminate = false });
                     }
