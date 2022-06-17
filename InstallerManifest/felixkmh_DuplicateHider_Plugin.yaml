@@ -1,5 +1,13 @@
 AddonId: 'felixkmh_DuplicateHider_Plugin'
 Packages:
+  - Version: 3.12.0
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2022-06-16
+    PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.12.0/felixkmh_DuplicateHider_Plugin_3_12_0.pext
+    Changelog:
+      - 'added option to assign union of some fields over all copies of a game to each game in the "Copy Info to other Copies" dialog'
+      - 'added option to exclude items in the "Copy Info to other Copies" dialog'
+      - 'added option to copy completion status to other copies in the "Copy Info to other Copies" dialog'
   - Version: 3.11.1
     RequiredApiVersion: 6.2.0
     ReleaseDate: 2022-06-07
