@@ -1,5 +1,12 @@
 AddonId: 'felixkmh_DuplicateHider_Plugin'
 Packages:
+  - Version: 3.12.1
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2022-06-17
+    PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.12.1/felixkmh_DuplicateHider_Plugin_3_12_1.pext
+    Changelog:
+      - fixed source selector icons not updating correctly for custom groups
+      - localization updates
   - Version: 3.12.0
     RequiredApiVersion: 6.2.0
     ReleaseDate: 2022-06-16
