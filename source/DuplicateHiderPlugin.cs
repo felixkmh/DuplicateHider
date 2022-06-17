@@ -147,7 +147,7 @@ namespace DuplicateHider
                     var game = PlayniteApi.Database.Games.Get(id);
                     if (game is Game)
                     {
-                        var name = game.Name.Filter(nameFilter);
+                        string name = GetFilteredName(game, nameFilter);
                         if (Index.TryGetValue(name, out var copies))
                         {
                             var games = copies
@@ -685,35 +685,20 @@ namespace DuplicateHider
                         if (guids.Remove(oldData.Id))
                         {
                             updatedIds.Add(oldData.Id);
-                            var filtered = (new Game[] { oldData, newData }).AsEnumerable().Filter(gameFilter);
-                            if (filtered.Count() < 2)
-                            {
-                                if (newData.Hidden)
-                                {
-                                    // newData.Hidden = false;
-                                    // PlayniteApi.Database.Games.Update(newData);
-                                }
-                            }
-                            if (guids.Count == 1)
-                            {
-                                if (PlayniteApi.Database.Games.Get(guids[0]) is Game game)
-                                {
-                                    if (game.Hidden)
-                                    {
-                                        // game.Hidden = false;
-                                        // PlayniteApi.Database.Games.Update(game);
-                                    }
-                                }
-                            }
                             guids.ForEach(id => updatedIds.Add(id));
                         }
                     }
                 }
-                foreach (var newData in (from update in e.UpdatedItems select update.NewData).Filter(gameFilter))
+                var filtered = e.UpdatedItems
+                    .Select(u => u.NewData)
+                    .Filter(gameFilter)
+                    .Intersect(e.UpdatedItems.Select(u => u.NewData));
+                foreach (var newData in filtered)
                 {
                     var filteredName = GetFilteredName(newData, nameFilter);
                     if (Index.TryGetValue(filteredName, out var guids))
                     {
+                        guids.Remove(newData.Id);
                         guids.InsertSorted(newData.Id, GameComparer.Comparer);
                         guids.ForEach(id => updatedIds.Add(id));
                     } else
