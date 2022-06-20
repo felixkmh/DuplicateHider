@@ -4,7 +4,7 @@
 	<sys:String x:Key="LOC_DH_HideDuplicatesEntry">Duplicaten verbergen</sys:String>
 	<sys:String x:Key="LOC_DH_RevealDuplicatesEntry">Duplicaten weergeven</sys:String>
 	<sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntry">Voeg geselecteerde games toe aan de negeerlijst</sys:String>
-    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal"></sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal">Geselecteerde spellen toevoegen aan negeerlijst en onthullen</sys:String>
 	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry">Verwijder geselecteerde games toe aan de negeerlijst</sys:String>
 	
 	<!--Message Boxes-->
@@ -28,7 +28,7 @@ Klik op &quot;{0}&quot; om verder te gaan of &quot;{1}&quot; om deze operatie te
     <sys:String x:Key="LOC_DH_AssignOverrideTag">Prioriteit Overschrijvingstag toewijzen</sys:String>
     <sys:String x:Key="LOC_DH_AssignOverrideTagHigh">Hoogste prioriteit</sys:String>
     <sys:String x:Key="LOC_DH_AssignOverrideTagLow">Laagste prioriteit</sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTagClear"></sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagClear">Verwijder Overschrijf Tags voor alle kopieën</sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
