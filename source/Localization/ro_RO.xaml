@@ -4,6 +4,7 @@
 	<sys:String x:Key="LOC_DH_HideDuplicatesEntry">Ascunde dublurile</sys:String>
 	<sys:String x:Key="LOC_DH_RevealDuplicatesEntry">Dezvăluie dublurile</sys:String>
 	<sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntry">Adăugați jocurile selectate la Lista de Ignorare</sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal"></sys:String>
 	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry">Scoateți jocurile selectate de la Lista de Ignorare</sys:String>
 	
 	<!--Message Boxes-->
