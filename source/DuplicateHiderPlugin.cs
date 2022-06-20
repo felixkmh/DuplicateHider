@@ -1009,16 +1009,13 @@ namespace DuplicateHider
 #endif
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-
-            var entries = new List<GameMenuItem>();
-
             if (editGamesCommand is ICommand && args.Games.Count == 1)
             {
                 Game mainCopy = args.Games.FirstOrDefault();
                 var otherCopies = GetOtherCopies(mainCopy);
                 if (otherCopies.Count > 0)
                 {
-                    entries.Add(new GameMenuItem
+                    yield return new GameMenuItem
                     {
                         Description = ResourceProvider.GetString("LOC_DH_EditAllCopies"),
                         Icon = "EditGameIcon",
@@ -1032,11 +1029,11 @@ namespace DuplicateHider
                                 PlayniteApi.MainView.SelectGames(new[] { mainCopy.Id });
                             }
                         }
-                    });
+                    };
                 }
             }
 
-            entries.Add(new GameMenuItem
+            yield return new GameMenuItem
             {
                 Description = ResourceProvider.GetString("LOC_DH_CopyFieldsFromGame"),
                 MenuSection = "DuplicateHider",
@@ -1063,7 +1060,7 @@ namespace DuplicateHider
                     window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                     window.Show();
                 }
-            });
+            };
 
             if (settings.ShowOtherCopiesInGameMenu)
             {
@@ -1074,26 +1071,26 @@ namespace DuplicateHider
                     string menuSection = string.Format(ResourceProvider.GetString("LOC_DH_N_OtherCopies"), others.Count());
                     foreach (var copy in others)
                     {
-                        entries.Add(new GameMenuItem
+                        yield return new GameMenuItem
                         {
                             Action = context => PlayniteApi.StartGame(copy.Id),
                             MenuSection = menuSection,
                             Description = ExpandDisplayString(copy, settings.DisplayString)
-                        });
+                        };
                     }
                 }
             }
             // Create new group and add selected
-            entries.Add(new GameMenuItem()
+            yield return new GameMenuItem()
             {
                 Description = ResourceProvider.GetString("LOC_DH_AddSelectedToNewCustomGroup"),
                 MenuSection = $"DuplicateHider|{ResourceProvider.GetString("LOC_DH_CustomGroups")}",
                 Action = CreateNewGroup
-            });
+            };
             // Add to existing group
             foreach (var group in settings.CustomGroups)
             {
-                entries.Add(new GameMenuItem()
+                yield return new GameMenuItem()
                 {
                     Description = group.Name,
                     MenuSection = $"DuplicateHider|{ResourceProvider.GetString("LOC_DH_CustomGroups")}|{ResourceProvider.GetString("LOC_DH_AddSelectedToExistingCustomGroup")}",
@@ -1101,26 +1098,26 @@ namespace DuplicateHider
                     {
                         AddToGroup(context, group);
                     }
-                });
+                };
             }
             // Remove from existing group
-            entries.Add(new GameMenuItem()
+            yield return new GameMenuItem()
             {
                 Description = ResourceProvider.GetString("LOC_DH_RemoveFromExistingGroup"),
                 MenuSection = $"DuplicateHider|{ResourceProvider.GetString("LOC_DH_CustomGroups")}",
                 Action = RemoveFromGroups
-            });
+            };
 
             // Remove group with selected games inside
-            entries.Add(new GameMenuItem()
+            yield return new GameMenuItem()
             {
                 Description = ResourceProvider.GetString("LOC_DH_DisbandGroupOfSelected"),
                 MenuSection = $"DuplicateHider|{ResourceProvider.GetString("LOC_DH_CustomGroups")}",
                 Action = DisbandGroups
-            });
+            };
 
             // Remove group with selected games inside
-            entries.Add(new GameMenuItem()
+            yield return new GameMenuItem()
             {
                 Description = ResourceProvider.GetString("LOC_DH_AssignOverrideTagHigh"),
                 MenuSection = $"DuplicateHider|{ResourceProvider.GetString("LOC_DH_AssignOverrideTag")}",
@@ -1138,9 +1135,9 @@ namespace DuplicateHider
                     PlayniteApi.Database.Games.Update(a.Games);
                     PlayniteApi.MainView.SelectGames(a.Games.Select(g => g.Id));
                 }
-            });
+            };
 
-            entries.Add(new GameMenuItem()
+            yield return new GameMenuItem()
             {
                 Description = ResourceProvider.GetString("LOC_DH_AssignOverrideTagLow"),
                 MenuSection = $"DuplicateHider|{ResourceProvider.GetString("LOC_DH_AssignOverrideTag")}",
@@ -1158,9 +1155,9 @@ namespace DuplicateHider
                     PlayniteApi.Database.Games.Update(a.Games);
                     PlayniteApi.MainView.SelectGames(a.Games.Select(g => g.Id));
                 }
-            });
+            };
 
-            entries.Add(new GameMenuItem()
+            yield return new GameMenuItem()
             {
                 Description = ResourceProvider.GetString("LOC_DH_AssignOverrideTagClear"),
                 MenuSection = $"DuplicateHider|{ResourceProvider.GetString("LOC_DH_AssignOverrideTag")}",
@@ -1183,9 +1180,82 @@ namespace DuplicateHider
                     PlayniteApi.Database.Games.Update(updated);
                     PlayniteApi.MainView.SelectGames(a.Games.Select(g => g.Id));
                 }
-            });
+            };
+            
+            yield return new GameMenuItem
+            {
+                Description = ResourceProvider.GetString("LOC_DH_AddSelectedToIgnoreEntry"),
+                MenuSection = "DuplicateHider",
+                Action = context => {
+                    PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
+                    PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
+                    foreach (var game in context.Games)
+                    {
+                        settings.IgnoredGames.Add(game.Id);
+                    }
+                    BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
+                    if (settings.UpdateAutomatically)
+                    {
+                        var revealed = SetDuplicateState(Hidden);
+                        PlayniteApi.Database.Games.Update(revealed);
+                    }
+                    PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
+                    PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
+                    UpdateGuidToCopiesDict();
+                    GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
+                }
+            };
 
-            return entries;
+            yield return new GameMenuItem
+            {
+                Description = ResourceProvider.GetString("LOC_DH_AddSelectedToIgnoreEntryAndReveal"),
+                MenuSection = "DuplicateHider",
+                Action = context => {
+                    PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
+                    PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
+                    foreach (var game in context.Games)
+                    {
+                        settings.IgnoredGames.Add(game.Id);
+                    }
+                    BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
+                    if (settings.UpdateAutomatically)
+                    {
+                        var revealed = SetDuplicateState(Hidden);
+                        PlayniteApi.Database.Games.Update(revealed);
+                    }
+                    context.Games.ForEach(g => g.Hidden = false);
+                    PlayniteApi.Database.Games.Update(context.Games);
+                    PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
+                    PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
+                    UpdateGuidToCopiesDict();
+                    GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
+                }
+            };
+
+            yield return new GameMenuItem
+            {
+                Description = ResourceProvider.GetString("LOC_DH_RemoveSelectedFromIgnoreEntry"),
+                MenuSection = "DuplicateHider",
+                Action = context =>
+                {
+                    PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
+                    PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
+                    foreach (var game in PlayniteApi.MainView.SelectedGames)
+                    {
+                        settings.IgnoredGames.Remove(game.Id);
+                    }
+                    BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
+                    if (settings.UpdateAutomatically)
+                    {
+                        var revealed = SetDuplicateState(Hidden);
+                        PlayniteApi.Database.Games.Update(revealed);
+                    }
+                    PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
+                    PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
+                    UpdateGuidToCopiesDict();
+                    GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
+                }
+            };
         }
 
         private void DisbandGroups(GameMenuItemActionArgs context)
