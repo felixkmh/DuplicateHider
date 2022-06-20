@@ -4,6 +4,7 @@
 	<sys:String x:Key="LOC_DH_HideDuplicatesEntry">Dölj dubbletter</sys:String>
 	<sys:String x:Key="LOC_DH_RevealDuplicatesEntry">Visa dubbletter</sys:String>
 	<sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntry">Lägg till utvalda spel i Ignorera-listan</sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal"></sys:String>
 	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry">Ta bort utvalda spel i Ignorera-listan</sys:String>
 	
 	<!--Message Boxes-->
