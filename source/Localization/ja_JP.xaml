@@ -4,6 +4,7 @@
 	<sys:String x:Key="LOC_DH_HideDuplicatesEntry">重複を隠す</sys:String>
 	<sys:String x:Key="LOC_DH_RevealDuplicatesEntry">重複を表示</sys:String>
 	<sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntry">選択したゲームを除外リストに追加</sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal"></sys:String>
 	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry">選択したゲームを除外リストから削除</sys:String>
 	
 	<!--Message Boxes-->

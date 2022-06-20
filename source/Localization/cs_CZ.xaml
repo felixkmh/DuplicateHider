@@ -4,6 +4,7 @@
 	<sys:String x:Key="LOC_DH_HideDuplicatesEntry"></sys:String>
 	<sys:String x:Key="LOC_DH_RevealDuplicatesEntry"></sys:String>
 	<sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntry"></sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal"></sys:String>
 	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry"></sys:String>
 	
 	<!--Message Boxes-->
