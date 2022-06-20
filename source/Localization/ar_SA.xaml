@@ -4,6 +4,7 @@
 	<sys:String x:Key="LOC_DH_HideDuplicatesEntry">إخفاء المكررة</sys:String>
 	<sys:String x:Key="LOC_DH_RevealDuplicatesEntry">كشف المكررة</sys:String>
 	<sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntry">إضافة ألعاب مختارة إلى قائمة التجاهل</sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal"></sys:String>
 	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry">إزالة الألعاب المحددة من قائمة التجاهل</sys:String>
 	
 	<!--Message Boxes-->
