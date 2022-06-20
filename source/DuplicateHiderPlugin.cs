@@ -910,52 +910,52 @@ namespace DuplicateHider
                         GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
                     }
                 },
-                new MainMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOC_DH_AddSelectedToIgnoreEntry"),
-                    MenuSection = "@|DuplicateHider",
-                    Action = (context) => {
-                        PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
-                        PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
-                        foreach(var game in PlayniteApi.MainView.SelectedGames)
-                        {
-                            settings.IgnoredGames.Add(game.Id);
-                        }
-                        BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
-                        if (settings.UpdateAutomatically)
-                        {
-                            var revealed = SetDuplicateState(Hidden);
-                            PlayniteApi.Database.Games.Update(revealed);
-                        }
-                        PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
-                        PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
-                        UpdateGuidToCopiesDict();
-                        GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
-                    }
-                },
-                new MainMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOC_DH_RemoveSelectedFromIgnoreEntry"),
-                    MenuSection = "@|DuplicateHider",
-                    Action = (context) => {
-                        PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
-                        PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
-                        foreach(var game in PlayniteApi.MainView.SelectedGames)
-                        {
-                            settings.IgnoredGames.Remove(game.Id);
-                        }
-                        BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
-                        if (settings.UpdateAutomatically)
-                        {
-                            var revealed = SetDuplicateState(Hidden);
-                            PlayniteApi.Database.Games.Update(revealed);
-                        }
-                        PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
-                        PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
-                        UpdateGuidToCopiesDict();
-                        GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
-                    }
-                }
+                //new MainMenuItem
+                //{
+                //    Description = ResourceProvider.GetString("LOC_DH_AddSelectedToIgnoreEntry"),
+                //    MenuSection = "@|DuplicateHider",
+                //    Action = (context) => {
+                //        PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
+                //        PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
+                //        foreach(var game in PlayniteApi.MainView.SelectedGames)
+                //        {
+                //            settings.IgnoredGames.Add(game.Id);
+                //        }
+                //        BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
+                //        if (settings.UpdateAutomatically)
+                //        {
+                //            var revealed = SetDuplicateState(Hidden);
+                //            PlayniteApi.Database.Games.Update(revealed);
+                //        }
+                //        PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
+                //        PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
+                //        UpdateGuidToCopiesDict();
+                //        GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
+                //    }
+                //},
+                //new MainMenuItem
+                //{
+                //    Description = ResourceProvider.GetString("LOC_DH_RemoveSelectedFromIgnoreEntry"),
+                //    MenuSection = "@|DuplicateHider",
+                //    Action = (context) => {
+                //        PlayniteApi.Database.Games.ItemUpdated -= Games_ItemUpdated;
+                //        PlayniteApi.Database.Games.ItemCollectionChanged -= Games_ItemCollectionChanged;
+                //        foreach(var game in PlayniteApi.MainView.SelectedGames)
+                //        {
+                //            settings.IgnoredGames.Remove(game.Id);
+                //        }
+                //        BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
+                //        if (settings.UpdateAutomatically)
+                //        {
+                //            var revealed = SetDuplicateState(Hidden);
+                //            PlayniteApi.Database.Games.Update(revealed);
+                //        }
+                //        PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
+                //        PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
+                //        UpdateGuidToCopiesDict();
+                //        GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
+                //    }
+                //}
 #if DEBUG
                 , new MainMenuItem
                 {
