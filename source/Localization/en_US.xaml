@@ -4,6 +4,7 @@
 	<sys:String x:Key="LOC_DH_HideDuplicatesEntry">Hide Duplicates</sys:String>
 	<sys:String x:Key="LOC_DH_RevealDuplicatesEntry">Reveal Duplicates</sys:String>
 	<sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntry">Add Selected Games to Ignore List</sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal">Add Selected Games to Ignore List and reveal them</sys:String>
 	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry">Remove Selected Games from Ignore List</sys:String>
 	
 	<!--Message Boxes-->
