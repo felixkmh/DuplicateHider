@@ -4,7 +4,7 @@
 	<sys:String x:Key="LOC_DH_HideDuplicatesEntry">隐藏重复者</sys:String>
 	<sys:String x:Key="LOC_DH_RevealDuplicatesEntry">显示重复者</sys:String>
 	<sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntry">向忽略列表添加所选游戏</sys:String>
-    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal"></sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal">将所选游戏添加到忽略列表并显示出来</sys:String>
 	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry">从忽略列表中移除所选游戏</sys:String>
 	
 	<!--Message Boxes-->
