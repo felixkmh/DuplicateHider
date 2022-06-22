@@ -46,7 +46,7 @@ namespace DuplicateHider
         [QuickSearch.Attributes.GenericOption("LOC_DH_EnableThemeIcons", Description = "LOC_DH_EnableThemeIconsTooltip")]
         public bool EnableThemeIcons { get; set; } = true;
         [QuickSearch.Attributes.GenericOption("LOC_DH_EnableUIIntegration", Description = "LOC_DH_EnableUIIntegrationTooltip")]
-        public bool EnableUiIntegration { get; set; } = false;
+        public bool EnableUiIntegration { get; set; } = true;
         [QuickSearch.Attributes.GenericOption("LOC_DH_ShowSingleIcon", Description = "LOC_DH_ShowSingleIconTooltip")]
         public bool ShowSingleIcon { get; set; } = false;
         [QuickSearch.Attributes.GenericOption("LOC_DH_SuppressNotification", Description = "LOC_DH_SuppressNotificationTooltip")]
