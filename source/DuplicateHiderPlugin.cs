@@ -1531,7 +1531,7 @@ namespace DuplicateHider
             {
                 var numberOfThreads = Environment.ProcessorCount;
                 var minNumberOfItems = 500;
-                var maxDepth = (int)Math.Ceiling(Math.Log(numberOfThreads, 2));
+                var maxDepth = (int)Math.Round(Math.Log(numberOfThreads, 2));
 
                 return await PartitionAndMergeIndexAsync(new ArraySegment<Game>(games.Filter(gameFilter).ToArray()), nameFilter, maxDepth, minNumberOfItems);
             }).ConfigureAwait(false);
