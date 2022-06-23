@@ -1535,13 +1535,13 @@ namespace DuplicateHider
 
         private async Task<Dictionary<string, List<Guid>>> PartitionAndMergeIndexAsync(ArraySegment<Game> games, IFilter<string> nameFilter, int maxDepth, int minItems)
         {
+            var count = games.Count;
+            if (maxDepth <= 0 || count <= minItems)
+            {
+                return await BuildPartialIndexAsync(games, nameFilter).ConfigureAwait(false);
+            }
             return await Task.Run(async () =>
             {
-                var count = games.Count;
-                if (maxDepth <= 0 || count <= minItems)
-                {
-                    return await BuildPartialIndexAsync(games, nameFilter).ConfigureAwait(false);
-                }
                 var partA = new ArraySegment<Game>(games.Array, games.Offset, count / 2);
                 var partB = new ArraySegment<Game>(games.Array, games.Offset + partA.Count, count - partA.Count);
                 var a = PartitionAndMergeIndexAsync(partA, nameFilter, maxDepth - 1, minItems).ConfigureAwait(false);
