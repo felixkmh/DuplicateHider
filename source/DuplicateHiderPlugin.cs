@@ -31,6 +31,7 @@ using DuplicateHider.ViewModels;
 using DuplicateHider.Views;
 using StartPage.SDK;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("DuplicateHider")]
 namespace DuplicateHider
@@ -830,6 +831,27 @@ namespace DuplicateHider
         {
             return new List<MainMenuItem>
             {
+#if DEBUG
+                new MainMenuItem
+                {
+                    MenuSection = "@DuplicateHider",
+                    Description = "Benchmark",
+                    Action = c =>
+                    {
+                        leaves = 0;
+                        var gameFilter = GetGameFilter();
+                        var nameFilter = GetNameFilter();
+                        var synchronousStopwatch = Stopwatch.StartNew();
+                        BuildIndex(PlayniteApi.Database.Games, gameFilter, nameFilter);
+                        synchronousStopwatch.Stop();
+                        var synchronousIndex = Index;
+                        var asynchronousStopwatch = Stopwatch.StartNew();
+                        var asynchronousIndex = BuildIndexAsync(PlayniteApi.Database.Games, gameFilter, nameFilter).Result;
+                        asynchronousStopwatch.Stop();
+                        PlayniteApi.Dialogs.ShowMessage($"Sync: {synchronousStopwatch.Elapsed.TotalMilliseconds}ms\nAsync: {asynchronousStopwatch.Elapsed.TotalMilliseconds}ms");
+                    }
+                },
+#endif
                 new MainMenuItem
                 {
                     Description = ResourceProvider.GetString("LOC_DH_ExportIndex"),
@@ -909,7 +931,7 @@ namespace DuplicateHider
                         UpdateGuidToCopiesDict();
                         GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
                     }
-                },
+                }
                 //new MainMenuItem
                 //{
                 //    Description = ResourceProvider.GetString("LOC_DH_AddSelectedToIgnoreEntry"),
@@ -1489,17 +1511,91 @@ namespace DuplicateHider
 
         private void BuildIndex(IEnumerable<Game> games, IFilter<IEnumerable<Game>> gameFilter, IFilter<string> nameFilter)
         {
-            Index.Clear();
-            foreach (var game in games.Filter(gameFilter))
-            {
-                var cleanName = GetFilteredName(game, nameFilter);
-                if (!Index.ContainsKey(cleanName))
-                {
-                    Index[cleanName] = new List<Guid> { };
-                }
+            Index = BuildIndexAsync(games, gameFilter, nameFilter).Result;
+            //Index.Clear();
+            //foreach (var game in games.Filter(gameFilter))
+            //{
+            //    var cleanName = GetFilteredName(game, nameFilter);
+            //    if (!Index.ContainsKey(cleanName))
+            //    {
+            //        Index[cleanName] = new List<Guid> { };
+            //    }
 
-                Index[cleanName].InsertSorted(game.Id, GameComparer.Comparer);
-            }
+            //    Index[cleanName].InsertSorted(game.Id, GameComparer.Comparer);
+            //}
+        }
+
+        private async Task<Dictionary<string, List<Guid>>> BuildIndexAsync(IEnumerable<Game> games, IFilter<IEnumerable<Game>> gameFilter, IFilter<string> nameFilter)
+        {
+            return await Task.Run(async () =>
+            {
+                var numberOfThreads = Environment.ProcessorCount;
+                var minNumberOfItems = 500;
+                var maxDepth = (int)Math.Ceiling(Math.Log(numberOfThreads, 2));
+
+                return await PartitionAndMergeIndexAsync(new ArraySegment<Game>(games.Filter(gameFilter).ToArray()), nameFilter, maxDepth, minNumberOfItems);
+            }).ConfigureAwait(false);
+        }
+
+        private async Task<Dictionary<string, List<Guid>>> PartitionAndMergeIndexAsync(ArraySegment<Game> games, IFilter<string> nameFilter, int maxDepth, int minItems)
+        {
+            return await Task.Run(async () =>
+            {
+                var count = games.Count;
+                if (maxDepth <= 0 || count <= minItems)
+                {
+                    return await BuildPartialIndexAsync(games, nameFilter);
+                }
+                var partA = new ArraySegment<Game>(games.Array, games.Offset, count / 2);
+                var partB = new ArraySegment<Game>(games.Array, games.Offset + partA.Count, count - partA.Count);
+                var a = PartitionAndMergeIndexAsync(partA, nameFilter, maxDepth - 1, minItems);
+                var b = PartitionAndMergeIndexAsync(partB, nameFilter, maxDepth - 1, minItems);
+                return await MergeIndexIntoAsync(await a, await b);
+            }).ConfigureAwait(false);
+        }
+
+        private async Task<Dictionary<string, List<Guid>>> BuildPartialIndexAsync(ArraySegment<Game> games, IFilter<string> nameFilter)
+        {
+            return await Task.Run(() =>
+            {
+                var part = new Dictionary<string, List<Guid>>();
+                foreach (var game in games)
+                {
+                    var cleanName = GetFilteredName(game, nameFilter);
+                    if (!part.ContainsKey(cleanName))
+                    {
+                        part[cleanName] = new List<Guid> { };
+                    }
+
+                    part[cleanName].InsertSorted(game.Id, GameComparer.Comparer);
+                }
+                return part;
+            }).ConfigureAwait(false);
+        }
+
+        private async Task<Dictionary<string, List<Guid>>> MergeIndexIntoAsync(Dictionary<string, List<Guid>> from, Dictionary<string, List<Guid>> into)
+        {
+            return await Task.Run(() =>
+            {
+                foreach (var entry in from)
+                {
+                    var cleanName = entry.Key;
+                    foreach(var id in entry.Value)
+                    {
+                        List<Guid> existing = null;
+                        if (into.TryGetValue(cleanName, out var guids))
+                        {
+                            existing = guids;
+                        } else
+                        {
+                            existing = new List<Guid> { };
+                            into[cleanName] = existing;
+                        }
+                        existing.InsertSorted(id, GameComparer.Comparer);
+                    }
+                }
+                return into;
+            }).ConfigureAwait(false);
         }
 
         static readonly Regex regexVariable = new Regex(@"{(?:(?<Prefix>[^'{}]*)')?(?<Variable>[^'{}]+)(?:'(?<Suffix>[^'{}]*))?}");
