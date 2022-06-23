@@ -1526,14 +1526,11 @@ namespace DuplicateHider
 
         private async Task<Dictionary<string, List<Guid>>> BuildIndexAsync(IEnumerable<Game> games, IFilter<IEnumerable<Game>> gameFilter, IFilter<string> nameFilter)
         {
-            return await Task.Run(async () =>
-            {
-                var numberOfThreads = Environment.ProcessorCount;
-                var minNumberOfItems = 500;
-                var maxDepth = (int)Math.Round(Math.Log(numberOfThreads, 2));
+            var numberOfThreads = Environment.ProcessorCount;
+            var minNumberOfItems = 500;
+            var maxDepth = (int)Math.Round(Math.Log(numberOfThreads, 2));
 
-                return await PartitionAndMergeIndexAsync(new ArraySegment<Game>(games.Filter(gameFilter).ToArray()), nameFilter, maxDepth, minNumberOfItems);
-            }).ConfigureAwait(false);
+            return await PartitionAndMergeIndexAsync(new ArraySegment<Game>(games.Filter(gameFilter).ToArray()), nameFilter, maxDepth, minNumberOfItems).ConfigureAwait(false);
         }
 
         private async Task<Dictionary<string, List<Guid>>> PartitionAndMergeIndexAsync(ArraySegment<Game> games, IFilter<string> nameFilter, int maxDepth, int minItems)
@@ -1543,13 +1540,13 @@ namespace DuplicateHider
                 var count = games.Count;
                 if (maxDepth <= 0 || count <= minItems)
                 {
-                    return await BuildPartialIndexAsync(games, nameFilter);
+                    return await BuildPartialIndexAsync(games, nameFilter).ConfigureAwait(false);
                 }
                 var partA = new ArraySegment<Game>(games.Array, games.Offset, count / 2);
                 var partB = new ArraySegment<Game>(games.Array, games.Offset + partA.Count, count - partA.Count);
-                var a = PartitionAndMergeIndexAsync(partA, nameFilter, maxDepth - 1, minItems);
-                var b = PartitionAndMergeIndexAsync(partB, nameFilter, maxDepth - 1, minItems);
-                return await MergeIndexIntoAsync(await a, await b);
+                var a = PartitionAndMergeIndexAsync(partA, nameFilter, maxDepth - 1, minItems).ConfigureAwait(false);
+                var b = PartitionAndMergeIndexAsync(partB, nameFilter, maxDepth - 1, minItems).ConfigureAwait(false);
+                return MergeIndexInto(await a, await b);
             }).ConfigureAwait(false);
         }
 
@@ -1572,29 +1569,26 @@ namespace DuplicateHider
             }).ConfigureAwait(false);
         }
 
-        private async Task<Dictionary<string, List<Guid>>> MergeIndexIntoAsync(Dictionary<string, List<Guid>> from, Dictionary<string, List<Guid>> into)
+        private Dictionary<string, List<Guid>> MergeIndexInto(Dictionary<string, List<Guid>> from, Dictionary<string, List<Guid>> into)
         {
-            return await Task.Run(() =>
+            foreach (var entry in from)
             {
-                foreach (var entry in from)
+                var cleanName = entry.Key;
+                foreach(var id in entry.Value)
                 {
-                    var cleanName = entry.Key;
-                    foreach(var id in entry.Value)
+                    List<Guid> existing = null;
+                    if (into.TryGetValue(cleanName, out var guids))
                     {
-                        List<Guid> existing = null;
-                        if (into.TryGetValue(cleanName, out var guids))
-                        {
-                            existing = guids;
-                        } else
-                        {
-                            existing = new List<Guid> { };
-                            into[cleanName] = existing;
-                        }
-                        existing.InsertSorted(id, GameComparer.Comparer);
+                        existing = guids;
+                    } else
+                    {
+                        existing = new List<Guid> { };
+                        into[cleanName] = existing;
                     }
+                    existing.InsertSorted(id, GameComparer.Comparer);
                 }
-                return into;
-            }).ConfigureAwait(false);
+            }
+            return into;
         }
 
         static readonly Regex regexVariable = new Regex(@"{(?:(?<Prefix>[^'{}]*)')?(?<Variable>[^'{}]+)(?:'(?<Suffix>[^'{}]*))?}");
