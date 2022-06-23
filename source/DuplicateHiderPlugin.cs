@@ -838,7 +838,6 @@ namespace DuplicateHider
                     Description = "Benchmark",
                     Action = c =>
                     {
-                        leaves = 0;
                         var gameFilter = GetGameFilter();
                         var nameFilter = GetNameFilter();
                         var synchronousStopwatch = Stopwatch.StartNew();
