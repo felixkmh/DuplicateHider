@@ -4,7 +4,7 @@
 	<sys:String x:Key="LOC_DH_HideDuplicatesEntry">Ocultar duplicados</sys:String>
 	<sys:String x:Key="LOC_DH_RevealDuplicatesEntry">Revelar duplicados</sys:String>
 	<sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntry">Añadir juegos seleccionados para a la lista de ignorar</sys:String>
-    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal"></sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal">Añadir los juegos seleccionados a la lista de ignorados y revelarlos</sys:String>
 	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry">Eliminar juegos seleccionados de la lista de ignorar</sys:String>
 	
 	<!--Message Boxes-->
@@ -62,7 +62,7 @@ Haga clic en &quot;{0}&quot; para continuar o &quot;{1}&quot; para cancelar esta
     <sys:String x:Key="LOC_DH_GroupConflict">Conflictos de agrupación</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderLabel">Mantener el orden</sys:String>
     <sys:String x:Key="LOC_DH_Games">Juegos</sys:String>
-    <sys:String x:Key="LOC_DH_ExportIndex"></sys:String>
+    <sys:String x:Key="LOC_DH_ExportIndex">Exportar índice</sys:String>
     <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve">Los siguientes juegos están en conflicto con los grupos personalizados existentes:
 {0}
 
@@ -85,8 +85,8 @@ Haga clic en &quot;{0}&quot; para continuar o &quot;{1}&quot; para cancelar esta
     <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">Si está habilitado, no se te notificará si se encuentran los iconos del tema en el tema actual.</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve">Habilitado: puntuación de juegos basados en la posición en la lista de grupos.
 Deshabilitado: puntuación utilizando el método de puntuación normal en función de las prioridades de origen.</sys:String>
-    <sys:String x:Key="LOC_DH_UnionizeField"></sys:String>
-    <sys:String x:Key="LOC_DH_ExcludedTooltip"></sys:String>
+    <sys:String x:Key="LOC_DH_UnionizeField">Asigna la unión sobre todas las copias a cada una de ellas, incluyendo el juego de origen.</sys:String>
+    <sys:String x:Key="LOC_DH_ExcludedTooltip">Excluídos</sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Abra la carpeta de iconos del usuario</sys:String>
     <sys:String x:Key="LOC_DH_MoveButton">Mover</sys:String>
