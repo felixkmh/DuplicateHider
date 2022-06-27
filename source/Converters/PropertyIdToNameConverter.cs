@@ -47,12 +47,12 @@ namespace DuplicateHider.Converters
                             }
                             else
                             {
-                                return playniteAPI.Database.Sources.Get(id).Name;
+                                return playniteAPI.Database.Sources.Get(id)?.Name;
                             }
                         }
                         else if (propertyName == nameof(Game.CompletionStatusId))
                         {
-                            return playniteAPI.Database.CompletionStatuses.Get(id).Name;
+                            return playniteAPI.Database.CompletionStatuses.Get(id)?.Name;
                         }
                         else if (propertyName == nameof(Game.PluginId))
                         {
