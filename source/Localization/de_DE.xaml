@@ -85,7 +85,7 @@ Möchten Sie diese Spiele aus ihren alten Gruppen in die neue Gruppe verschieben
     <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">Wenn aktiv, wird keine Benachrichtigung bezüglich verfügbarer Theme-Icons angezeigt.</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve">Aktiviert: Spiele werden auf der Grundlage der Position in der Gruppenliste gewertet.
 Deaktiviert: Die normale Wertungsmethode basierend auf den Prioritäten der Quellen wird verwendet.</sys:String>
-    <sys:String x:Key="LOC_DH_UnionizeField"></sys:String>
+    <sys:String x:Key="LOC_DH_UnionizeField">Weise jeder Kopie, einschließlich des Ausgangsspiels, die Vereinigung über alle Kopien zu.</sys:String>
     <sys:String x:Key="LOC_DH_ExcludedTooltip">Ausgeschlossen</sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Öffne Benutzer-Icon-Verzeichnis</sys:String>
