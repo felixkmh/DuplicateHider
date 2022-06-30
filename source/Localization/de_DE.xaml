@@ -34,7 +34,7 @@ Klicke auf &quot;{0}&quot;, um fortzufahren oder &quot;{1}&quot;, um diesen Vorg
 	<!--Tabs-->
 	<sys:String x:Key="LOC_DH_CommonTab">Allgemein</sys:String>
 	<sys:String x:Key="LOC_DH_CustomRulesTab">Eigene Regeln</sys:String>
-	<sys:String x:Key="LOC_DH_UIIntegrationTab"></sys:String>
+	<sys:String x:Key="LOC_DH_UIIntegrationTab">UI-Integration</sys:String>
 	<!--Labels-->
     <sys:String x:Key="LOC_DH_Updating">Aktualisieren...</sys:String>
     <sys:String x:Key="LOC_DH_GameFields">Spiel-Datenfelder</sys:String>
