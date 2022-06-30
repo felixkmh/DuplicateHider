@@ -86,7 +86,7 @@
     <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">若启用，则在当前主题中发现主题图标时不通知。</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve">启用：根据小组列表中的位置对游戏排位评分。
 禁用：使用基于来源优先级的普通排位评分方法。</sys:String>
-    <sys:String x:Key="LOC_DH_UnionizeField"></sys:String>
+    <sys:String x:Key="LOC_DH_UnionizeField">将所有副本的联合指定给每个副本，包括源游戏。</sys:String>
     <sys:String x:Key="LOC_DH_ExcludedTooltip">已排除</sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">打开用户图标文件夹</sys:String>
