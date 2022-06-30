@@ -85,7 +85,7 @@ Do you want to move these games from their old groups to the new one, keep confl
     <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">If enabled, you will not be notified if Theme Icons are found in the current Theme.</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve">Enabled: Score games based on the position in the group list.
 Disabled: Score using the normal scoring method based on the source priorities.</sys:String>
-    <sys:String x:Key="LOC_DH_UnionizeField">Assign union over all copies to every copy, inlcuding the source game.</sys:String>
+    <sys:String x:Key="LOC_DH_UnionizeField">Assign union over all copies to every copy, including the source game.</sys:String>
     <sys:String x:Key="LOC_DH_ExcludedTooltip">Excluded</sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Open user icon folder</sys:String>
