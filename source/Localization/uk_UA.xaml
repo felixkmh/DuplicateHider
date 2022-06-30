@@ -85,7 +85,7 @@
     <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">Якщо увімкнено, ви не отримаєте сповіщення, якщо значки теми знайдуться в поточній темі.</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve">Увімкнено: оцінювати ігри на основі місця у списку груп.
 Вимкнено: оцінювати за звичайним методом оцінки на основі пріоритетів джерела.</sys:String>
-    <sys:String x:Key="LOC_DH_UnionizeField">Призначити об'єднання по всіх копіях кожній копії, включати гру-джерело.</sys:String>
+    <sys:String x:Key="LOC_DH_UnionizeField"></sys:String>
     <sys:String x:Key="LOC_DH_ExcludedTooltip">Виключено</sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Відкрити теку зі значками користувача</sys:String>
