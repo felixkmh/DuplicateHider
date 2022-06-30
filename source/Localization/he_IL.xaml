@@ -16,7 +16,7 @@
     <sys:String x:Key="LOC_DH_CopyFieldsWarning" xml:space="preserve"></sys:String>
     
     <!--GameMenu Entries-->
-	<sys:String x:Key="LOC_DH_N_OtherCopies"></sys:String>
+	<sys:String x:Key="LOC_DH_N_OtherCopies">עוד עותקים: {0}</sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup"></sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup"></sys:String>
     <sys:String x:Key="LOC_DH_RemoveFromExistingGroup"></sys:String>
@@ -30,7 +30,7 @@
 	
 	<!--Settings-->
 	<!--Tabs-->
-	<sys:String x:Key="LOC_DH_CommonTab"></sys:String>
+	<sys:String x:Key="LOC_DH_CommonTab">נפוץ</sys:String>
 	<sys:String x:Key="LOC_DH_CustomRulesTab"></sys:String>
 	<sys:String x:Key="LOC_DH_UIIntegrationTab"></sys:String>
 	<!--Labels-->
