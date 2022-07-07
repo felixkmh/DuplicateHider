@@ -62,7 +62,9 @@ namespace DuplicateHider.ViewModels
                                 {
                                     break;
                                 }
+
                                 cf.Apply(EnabledFields);
+
                                 args.Text = string.Format("{0}/{1}", ++done, total);
                                 args.CurrentProgressValue = done;
                             }

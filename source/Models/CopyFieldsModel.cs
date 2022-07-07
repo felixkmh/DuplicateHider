@@ -83,282 +83,298 @@ namespace DuplicateHider.Models
 
         public void Apply(EnabledFieldsModel enabledFields)
         {
-            var targets = TargetGames;
-            var dhTagIds = new HashSet<Guid> {
+            try
+            {
+                var targets = TargetGames;
+                var dhTagIds = new HashSet<Guid> {
                 DuplicateHiderPlugin.Instance.settings.HiddenTagId,
                 DuplicateHiderPlugin.Instance.settings.RevealedTagId,
                 DuplicateHiderPlugin.Instance.settings.HighPrioTagId,
                 DuplicateHiderPlugin.Instance.settings.LowPrioTagId
             };
-            if (enabledFields.Name) targets.ForEach(g => g.Name = SourceGame.Name);
-            if (enabledFields.SortingName) targets.ForEach(g => g.SortingName = SourceGame.SortingName);
+                if (enabledFields.Name) targets.ForEach(g => g.Name = SourceGame.Name);
+                if (enabledFields.SortingName) targets.ForEach(g => g.SortingName = SourceGame.SortingName);
 
-            if (enabledFields.Platforms)
-                if (enabledFields.PlatformsUnion)
-                {
-                    UnionizeGuidList(nameof(Game.PlatformIds), SourceGame, TargetGames, enabledFields.PlatformsExcluded);
-                } else
-                {
-                    targets.ForEach(g => g.PlatformIds = SourceGame.PlatformIds.Where(id => !enabledFields.PlatformsExcluded.Contains(id)).ToList());
-                }
-
-
-            if (enabledFields.Genres)
-                if (enabledFields.GenresUnion)
-                {
-                    UnionizeGuidList(nameof(Game.GenreIds), SourceGame, TargetGames, enabledFields.GenresExcluded);
-                } else
-                {
-                    targets.ForEach(g => g.GenreIds = SourceGame.GenreIds.Where(id => !enabledFields.GenresExcluded.Contains(id)).ToList());
-                }
-
-            if (enabledFields.Developers)
-                if (enabledFields.DevelopersUnion)
-                {
-                    UnionizeGuidList(nameof(Game.DeveloperIds), SourceGame, TargetGames, enabledFields.DevelopersExcluded);
-                }
-                else {
-                    targets.ForEach(g => g.DeveloperIds = SourceGame.DeveloperIds.Where(id => !enabledFields.DevelopersExcluded.Contains(id)).ToList());
-                }
-
-            if (enabledFields.Publishers) 
-                if (enabledFields.PublishersUnion)
-                {
-                    UnionizeGuidList(nameof(Game.PublisherIds), SourceGame, TargetGames, enabledFields.PublishersExcluded);
-                } else
-                {
-                    targets.ForEach(g => g.PublisherIds = SourceGame.PublisherIds.Where(id => !enabledFields.PublishersExcluded.Contains(id)).ToList());
-                }
-
-
-            if (enabledFields.Categories)
-                if (enabledFields.CategoriesUnion)
-                {
-                    UnionizeGuidList(nameof(Game.CategoryIds), SourceGame, TargetGames, enabledFields.CategoriesExcluded);
-                } else
-                {
-                    targets.ForEach(g => g.CategoryIds = SourceGame.CategoryIds.Where(id => !enabledFields.CategoriesExcluded.Contains(id)).ToList());
-                }
-
-            if (enabledFields.Features)
-                if (enabledFields.FeaturesUnion)
-                {
-                    UnionizeGuidList(nameof(Game.FeatureIds), SourceGame, TargetGames, enabledFields.FeaturesExcluded);
-                }
-                else
-                {
-                    targets.ForEach(g => g.FeatureIds = SourceGame.FeatureIds.Where(id => !enabledFields.FeaturesExcluded.Contains(id)).ToList());
-                }
-
-            if (enabledFields.Tags)
-                if (enabledFields.TagsUnion)
-                {
-                    UnionizeGuidList(nameof(Game.TagIds), SourceGame, TargetGames, dhTagIds);
-                }
-                else
-                {
-                    targets.ForEach(g => g.TagIds = SourceGame.TagIds.Where(t => (!dhTagIds.Contains(t) && !enabledFields.TagsExcluded.Contains(t))).Concat(g.TagIds.Where(id => dhTagIds.Contains(id))).Distinct().ToList());
-                }
-
-            if (enabledFields.Series)
-                if (enabledFields.SeriesUnion)
-                {
-                    UnionizeGuidList(nameof(Game.SeriesIds), SourceGame, TargetGames, enabledFields.SeriesExcluded);
-                }
-                else
-                {
-                    targets.ForEach(g => g.SeriesIds = SourceGame.SeriesIds.Where(id => !enabledFields.SeriesExcluded.Contains(id)).ToList());
-                }
-            
-            if (enabledFields.AgeRatings)
-                if (enabledFields.AgeRatingsUnion)
-                {
-                    UnionizeGuidList(nameof(Game.AgeRatingIds), SourceGame, TargetGames, enabledFields.AgeRatingsExcluded);
-                }
-                else
-                {
-                    targets.ForEach(g => g.AgeRatingIds = SourceGame.AgeRatingIds.Where(id => !enabledFields.AgeRatingsExcluded.Contains(id)).ToList());
-                }
-            
-            if (enabledFields.Regions)
-                if (enabledFields.RegionsUnion)
-                {
-                    UnionizeGuidList(nameof(Game.RegionIds), SourceGame, TargetGames, enabledFields.RegionsExcluded);
-                }
-                else
-                {
-                    targets.ForEach(g => g.RegionIds = SourceGame.RegionIds.Where(id => !enabledFields.RegionsExcluded.Contains(id)).ToList());
-                }
-
-            if (enabledFields.Links)
-                if (enabledFields.LinksUnion)
-                {
-                    List<Link> linkUnion = new List<Link>();
-                    sourceGame?.Links?.ForEach(l => linkUnion.Add(l));
-                    foreach(var target in TargetGames)
+                if (enabledFields.Platforms)
+                    if (enabledFields.PlatformsUnion)
                     {
-                        target?.Links?.ForEach(l =>
+                        UnionizeGuidList(nameof(Game.PlatformIds), SourceGame, TargetGames, enabledFields.PlatformsExcluded);
+                    }
+                    else
+                    {
+                        targets.ForEach(g => g.PlatformIds = SourceGame.PlatformIds?.Where(id => !enabledFields.PlatformsExcluded.Contains(id)).ToList() ?? g.PlatformIds);
+                    }
+
+
+                if (enabledFields.Genres)
+                    if (enabledFields.GenresUnion)
+                    {
+                        UnionizeGuidList(nameof(Game.GenreIds), SourceGame, TargetGames, enabledFields.GenresExcluded);
+                    }
+                    else
+                    {
+                        targets.ForEach(g => g.GenreIds = SourceGame.GenreIds?.Where(id => !enabledFields.GenresExcluded.Contains(id)).ToList() ?? g.GenreIds);
+                    }
+
+                if (enabledFields.Developers)
+                    if (enabledFields.DevelopersUnion)
+                    {
+                        UnionizeGuidList(nameof(Game.DeveloperIds), SourceGame, TargetGames, enabledFields.DevelopersExcluded);
+                    }
+                    else
+                    {
+                        targets.ForEach(g => g.DeveloperIds = SourceGame.DeveloperIds?.Where(id => !enabledFields.DevelopersExcluded.Contains(id)).ToList() ?? g.DeveloperIds);
+                    }
+
+                if (enabledFields.Publishers)
+                    if (enabledFields.PublishersUnion)
+                    {
+                        UnionizeGuidList(nameof(Game.PublisherIds), SourceGame, TargetGames, enabledFields.PublishersExcluded);
+                    }
+                    else
+                    {
+                        targets.ForEach(g => g.PublisherIds = SourceGame.PublisherIds?.Where(id => !enabledFields.PublishersExcluded.Contains(id)).ToList() ?? g.PublisherIds);
+                    }
+
+
+                if (enabledFields.Categories)
+                    if (enabledFields.CategoriesUnion)
+                    {
+                        UnionizeGuidList(nameof(Game.CategoryIds), SourceGame, TargetGames, enabledFields.CategoriesExcluded);
+                    }
+                    else
+                    {
+                        targets.ForEach(g => g.CategoryIds = SourceGame.CategoryIds?.Where(id => !enabledFields.CategoriesExcluded.Contains(id)).ToList() ?? g.CategoryIds);
+                    }
+
+                if (enabledFields.Features)
+                    if (enabledFields.FeaturesUnion)
+                    {
+                        UnionizeGuidList(nameof(Game.FeatureIds), SourceGame, TargetGames, enabledFields.FeaturesExcluded);
+                    }
+                    else
+                    {
+                        targets.ForEach(g => g.FeatureIds = SourceGame.FeatureIds?.Where(id => !enabledFields.FeaturesExcluded.Contains(id)).ToList() ?? g.FeatureIds);
+                    }
+
+                if (enabledFields.Tags)
+                    if (enabledFields.TagsUnion)
+                    {
+                        UnionizeGuidList(nameof(Game.TagIds), SourceGame, TargetGames, dhTagIds);
+                    }
+                    else
+                    {
+                        targets.ForEach(g => g.TagIds = SourceGame.TagIds?.Where(t => (!dhTagIds.Contains(t) && !enabledFields.TagsExcluded.Contains(t))).Concat(g.TagIds.Where(id => dhTagIds.Contains(id))).Distinct().ToList() ?? g.TagIds);
+                    }
+
+                if (enabledFields.Series)
+                    if (enabledFields.SeriesUnion)
+                    {
+                        UnionizeGuidList(nameof(Game.SeriesIds), SourceGame, TargetGames, enabledFields.SeriesExcluded);
+                    }
+                    else
+                    {
+                        targets.ForEach(g => g.SeriesIds = SourceGame.SeriesIds?.Where(id => !enabledFields.SeriesExcluded.Contains(id)).ToList() ?? g.SeriesIds);
+                    }
+
+                if (enabledFields.AgeRatings)
+                    if (enabledFields.AgeRatingsUnion)
+                    {
+                        UnionizeGuidList(nameof(Game.AgeRatingIds), SourceGame, TargetGames, enabledFields.AgeRatingsExcluded);
+                    }
+                    else
+                    {
+                        targets.ForEach(g => g.AgeRatingIds = SourceGame.AgeRatingIds?.Where(id => !enabledFields.AgeRatingsExcluded.Contains(id)).ToList() ?? g.AgeRatingIds);
+                    }
+
+                if (enabledFields.Regions)
+                    if (enabledFields.RegionsUnion)
+                    {
+                        UnionizeGuidList(nameof(Game.RegionIds), SourceGame, TargetGames, enabledFields.RegionsExcluded);
+                    }
+                    else
+                    {
+                        targets.ForEach(g => g.RegionIds = SourceGame.RegionIds?.Where(id => !enabledFields.RegionsExcluded.Contains(id)).ToList() ?? g.RegionIds);
+                    }
+
+                if (enabledFields.Links)
+                    if (enabledFields.LinksUnion)
+                    {
+                        List<Link> linkUnion = new List<Link>();
+                        sourceGame?.Links?.ForEach(l => linkUnion.Add(l));
+                        foreach (var target in TargetGames)
                         {
-                            if (!linkUnion.Any(existing => existing.Name == l.Name && existing.Url == l.Url))
+                            target?.Links?.ForEach(l =>
                             {
-                                linkUnion.Add(l);
-                            }
-                        });
-                    }
-                    var obsersvableLinks = linkUnion.ToObservable();
-                    sourceGame.Links = obsersvableLinks;
-                    foreach(var target in TargetGames)
-                    {
-                        target.Links = obsersvableLinks;
-                    }
-                } else
-                {
-                    targets.ForEach(g => g.Links = SourceGame.Links);
-                }
-
-            if (enabledFields.Description) targets.ForEach(g => g.Description = SourceGame.Description);
-            if (enabledFields.ReleaseDate) targets.ForEach(g => g.ReleaseDate = SourceGame.ReleaseDate);
-            if (enabledFields.Version) targets.ForEach(g => g.Version = SourceGame.Version);
-            if (enabledFields.UserScore) targets.ForEach(g => g.UserScore = SourceGame.UserScore);
-            if (enabledFields.CriticsScore) targets.ForEach(g => g.CriticScore = SourceGame.CriticScore);
-            if (enabledFields.CommunityScore) targets.ForEach(g => g.CommunityScore = SourceGame.CommunityScore);
-            if (enabledFields.CompletionStatus) targets.ForEach(g => g.CompletionStatusId = SourceGame.CompletionStatusId);
-
-            { // copy background image
-                if (enabledFields.BackgroundImage && SourceGame.BackgroundImage is string imagePath && !string.IsNullOrWhiteSpace(imagePath))
-                {
-                    if (imagePath.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
-                     || imagePath.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
-                     || (Path.IsPathRooted(imagePath) && File.Exists(imagePath)))
-                    {
-                        foreach (var target in targets)
+                                if (!linkUnion.Any(existing => existing.Name == l.Name && existing.Url == l.Url))
+                                {
+                                    linkUnion.Add(l);
+                                }
+                            });
+                        }
+                        var obsersvableLinks = linkUnion.ToObservable();
+                        sourceGame.Links = obsersvableLinks;
+                        foreach (var target in TargetGames)
                         {
-                            target.BackgroundImage = imagePath;
+                            target.Links = obsersvableLinks;
                         }
                     }
-                    else if (DuplicateHiderPlugin.API.Database.GetFullFilePath(imagePath) is string fullPath && File.Exists(fullPath))
+                    else
                     {
-                        foreach (var target in targets)
+                        targets.ForEach(g => g.Links = SourceGame.Links ?? g.Links);
+                    }
+
+                if (enabledFields.Description) targets.ForEach(g => g.Description = SourceGame.Description ?? g.Description);
+                if (enabledFields.ReleaseDate) targets.ForEach(g => g.ReleaseDate = SourceGame.ReleaseDate ?? g.ReleaseDate);
+                if (enabledFields.Version) targets.ForEach(g => g.Version = SourceGame.Version ?? g.Version);
+                if (enabledFields.UserScore) targets.ForEach(g => g.UserScore = SourceGame.UserScore ?? g.UserScore);
+                if (enabledFields.CriticsScore) targets.ForEach(g => g.CriticScore = SourceGame.CriticScore ?? g.CriticScore);
+                if (enabledFields.CommunityScore) targets.ForEach(g => g.CommunityScore = SourceGame.CommunityScore ?? g.CommunityScore);
+                if (enabledFields.CompletionStatus) targets.ForEach(g => g.CompletionStatusId = SourceGame.CompletionStatusId);
+
+                { // copy background image
+                    if (enabledFields.BackgroundImage && SourceGame.BackgroundImage is string imagePath && !string.IsNullOrWhiteSpace(imagePath))
+                    {
+                        if (imagePath.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+                         || imagePath.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
+                         || (Path.IsPathRooted(imagePath) && File.Exists(imagePath)))
+                        {
+                            foreach (var target in targets)
+                            {
+                                target.BackgroundImage = imagePath;
+                            }
+                        }
+                        else if (DuplicateHiderPlugin.API.Database.GetFullFilePath(imagePath) is string fullPath && File.Exists(fullPath))
+                        {
+                            foreach (var target in targets)
+                            {
+                                try
+                                {
+                                    if (!string.IsNullOrEmpty(target.BackgroundImage)) DuplicateHiderPlugin.API.Database.RemoveFile(target.BackgroundImage);
+                                    var databasePath = DuplicateHiderPlugin.API.Database.AddFile(fullPath, target.Id);
+                                    target.BackgroundImage = databasePath;
+                                }
+                                catch (Exception) { }
+                            }
+                        }
+                    }
+                }
+                { // copy icon image
+                    if (enabledFields.Icon && SourceGame.Icon is string imagePath && !string.IsNullOrWhiteSpace(imagePath))
+                    {
+                        if (imagePath.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+                         || imagePath.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
+                         || (Path.IsPathRooted(imagePath) && File.Exists(imagePath)))
+                        {
+                            foreach (var target in targets)
+                            {
+                                target.Icon = imagePath;
+                            }
+                        }
+                        else if (DuplicateHiderPlugin.API.Database.GetFullFilePath(imagePath) is string fullPath && File.Exists(fullPath))
+                        {
+                            foreach (var target in targets)
+                            {
+                                try
+                                {
+                                    if (!string.IsNullOrEmpty(target.Icon)) DuplicateHiderPlugin.API.Database.RemoveFile(target.Icon);
+                                    var databasePath = DuplicateHiderPlugin.API.Database.AddFile(fullPath, target.Id);
+                                    target.Icon = databasePath;
+                                }
+                                catch (Exception) { }
+                            }
+                        }
+                    }
+                }
+                { // copy cover image
+                    if (enabledFields.CoverImage && SourceGame.CoverImage is string imagePath && !string.IsNullOrWhiteSpace(imagePath))
+                    {
+                        if (imagePath.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+                         || imagePath.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
+                         || (Path.IsPathRooted(imagePath) && File.Exists(imagePath)))
+                        {
+                            foreach (var target in targets)
+                            {
+                                target.CoverImage = imagePath;
+                            }
+                        }
+                        else if (DuplicateHiderPlugin.API.Database.GetFullFilePath(imagePath) is string fullPath && File.Exists(fullPath))
+                        {
+                            foreach (var target in targets)
+                            {
+                                try
+                                {
+                                    if (!string.IsNullOrEmpty(target.CoverImage)) DuplicateHiderPlugin.API.Database.RemoveFile(target.CoverImage);
+                                    var databasePath = DuplicateHiderPlugin.API.Database.AddFile(fullPath, target.Id);
+                                    target.CoverImage = databasePath;
+                                }
+                                catch (Exception)
+                                {
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // ExtraMetaData
+                var emtPath = Path.Combine(DuplicateHiderPlugin.API.Paths.ConfigurationPath, "ExtraMetadata", "games");
+                var sourceEmt = Path.Combine(emtPath, SourceGame.Id.ToString().ToLower());
+                if (Directory.Exists(emtPath) && Directory.Exists(sourceEmt))
+                {
+                    foreach (var target in targets)
+                    {
+                        var targetEmt = Path.Combine(emtPath, target.Id.ToString().ToLower());
+                        if (!Directory.Exists(targetEmt))
+                        {
+                            Directory.CreateDirectory(targetEmt);
+                        }
+                        var sourceLogo = Directory.GetFiles(sourceEmt, "Logo.*").FirstOrDefault();
+                        if (enabledFields.Logo && !string.IsNullOrEmpty(sourceLogo))
                         {
                             try
                             {
-                                if (!string.IsNullOrEmpty(target.BackgroundImage)) DuplicateHiderPlugin.API.Database.RemoveFile(target.BackgroundImage);
-                                var databasePath = DuplicateHiderPlugin.API.Database.AddFile(fullPath, target.Id);
-                                target.BackgroundImage = databasePath;
+                                var sourceFileName = Path.GetFileName(sourceLogo);
+                                var targetLogo = Path.Combine(targetEmt, sourceFileName);
+                                File.Copy(sourceLogo, targetLogo, true);
                             }
-                            catch (Exception) {}
+                            catch (Exception)
+                            { }
                         }
-                    }
-                }
-            }
-            { // copy icon image
-                if (enabledFields.Icon && SourceGame.Icon is string imagePath && !string.IsNullOrWhiteSpace(imagePath))
-                {
-                    if (imagePath.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
-                     || imagePath.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
-                     || (Path.IsPathRooted(imagePath) && File.Exists(imagePath)))
-                    {
-                        foreach (var target in targets)
-                        {
-                            target.Icon = imagePath;
-                        }
-                    }
-                    else if (DuplicateHiderPlugin.API.Database.GetFullFilePath(imagePath) is string fullPath && File.Exists(fullPath))
-                    {
-                        foreach (var target in targets)
+                        var sourceTrailer = Directory.GetFiles(sourceEmt, "VideoTrailer.*").FirstOrDefault();
+                        if (enabledFields.Trailer && !string.IsNullOrEmpty(sourceTrailer))
                         {
                             try
                             {
-                                if (!string.IsNullOrEmpty(target.Icon)) DuplicateHiderPlugin.API.Database.RemoveFile(target.Icon);
-                                var databasePath = DuplicateHiderPlugin.API.Database.AddFile(fullPath, target.Id);
-                                target.Icon = databasePath;
+                                var sourceFileName = Path.GetFileName(sourceTrailer);
+                                var targetTrailer = Path.Combine(targetEmt, sourceFileName);
+                                File.Copy(sourceTrailer, targetTrailer, true);
                             }
-                            catch (Exception) { }
+                            catch (Exception)
+                            { }
                         }
-                    }
-                }
-            }
-            { // copy cover image
-                if (enabledFields.CoverImage && SourceGame.CoverImage is string imagePath && !string.IsNullOrWhiteSpace(imagePath))
-                {
-                    if (imagePath.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
-                     || imagePath.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
-                     || (Path.IsPathRooted(imagePath) && File.Exists(imagePath)))
-                    {
-                        foreach (var target in targets)
-                        {
-                            target.CoverImage = imagePath;
-                        }
-                    }
-                    else if (DuplicateHiderPlugin.API.Database.GetFullFilePath(imagePath) is string fullPath && File.Exists(fullPath))
-                    {
-                        foreach (var target in targets)
+                        var sourceMicroTrailer = Directory.GetFiles(sourceEmt, "VideoMicrotrailer.*").FirstOrDefault();
+                        if (enabledFields.MicroTrailer && !string.IsNullOrEmpty(sourceMicroTrailer))
                         {
                             try
                             {
-                                if (!string.IsNullOrEmpty(target.CoverImage)) DuplicateHiderPlugin.API.Database.RemoveFile(target.CoverImage);
-                                var databasePath = DuplicateHiderPlugin.API.Database.AddFile(fullPath, target.Id);
-                                target.CoverImage = databasePath;
+                                var sourceFileName = Path.GetFileName(sourceMicroTrailer);
+                                var targetMicroTrailer = Path.Combine(targetEmt, sourceFileName);
+                                File.Copy(sourceTrailer, targetMicroTrailer, true);
                             }
-                            catch (Exception) {
-                            }
+                            catch (Exception)
+                            { }
                         }
                     }
                 }
-            }
 
-            // ExtraMetaData
-            var emtPath = Path.Combine(DuplicateHiderPlugin.API.Paths.ConfigurationPath, "ExtraMetadata", "games");
-            var sourceEmt = Path.Combine(emtPath, SourceGame.Id.ToString().ToLower());
-            if (Directory.Exists(emtPath) && Directory.Exists(sourceEmt))
+                // DuplicateHiderPlugin.API.Database.Games.Update(targets);
+            }
+            catch (Exception ex)
             {
-                foreach(var target in targets)
-                {
-                    var targetEmt = Path.Combine(emtPath, target.Id.ToString().ToLower());
-                    if (!Directory.Exists(targetEmt))
-                    {
-                        Directory.CreateDirectory(targetEmt);
-                    }
-                    var sourceLogo = Directory.GetFiles(sourceEmt, "Logo.*").FirstOrDefault();
-                    if (enabledFields.Logo && !string.IsNullOrEmpty(sourceLogo))
-                    {
-                        try
-                        {
-                            var sourceFileName = Path.GetFileName(sourceLogo);
-                            var targetLogo = Path.Combine(targetEmt, sourceFileName);
-                            File.Copy(sourceLogo, targetLogo, true);
-                        }
-                        catch (Exception)
-                        {}
-                    }
-                    var sourceTrailer = Directory.GetFiles(sourceEmt, "VideoTrailer.*").FirstOrDefault();
-                    if (enabledFields.Trailer && !string.IsNullOrEmpty(sourceTrailer))
-                    {
-                        try
-                        {
-                            var sourceFileName = Path.GetFileName(sourceTrailer);
-                            var targetTrailer = Path.Combine(targetEmt, sourceFileName);
-                            File.Copy(sourceTrailer, targetTrailer, true);
-                        }
-                        catch (Exception)
-                        { }
-                    }
-                    var sourceMicroTrailer = Directory.GetFiles(sourceEmt, "VideoMicrotrailer.*").FirstOrDefault();
-                    if (enabledFields.MicroTrailer && !string.IsNullOrEmpty(sourceMicroTrailer))
-                    {
-                        try
-                        {
-                            var sourceFileName = Path.GetFileName(sourceMicroTrailer);
-                            var targetMicroTrailer = Path.Combine(targetEmt, sourceFileName);
-                            File.Copy(sourceTrailer, targetMicroTrailer, true);
-                        }
-                        catch (Exception)
-                        { }
-                    }
-                }
+                var fieldsString = Newtonsoft.Json.JsonConvert.SerializeObject(enabledFields, Newtonsoft.Json.Formatting.Indented);
+                DuplicateHiderPlugin.logger.Error(ex, $"Failed to copy fields from {SourceGame?.Name}.\nEnabled Fields:\n{fieldsString}");
+                throw;
             }
-
-            // DuplicateHiderPlugin.API.Database.Games.Update(targets);
         }
 
         public void Revert()

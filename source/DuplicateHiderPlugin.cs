@@ -44,7 +44,7 @@ namespace DuplicateHider
         internal struct GameSelectedArgs { public Guid? oldId; public Guid? newId; }
         internal event EventHandler<GameSelectedArgs> GameSelected;
 
-        private readonly ILogger logger;
+        internal static readonly ILogger logger = LogManager.GetLogger();
 
         internal DuplicateHiderSettings settings { get; private set; }
         internal static IPlayniteAPI API { get; private set; } = null;
@@ -68,7 +68,6 @@ namespace DuplicateHider
 
         public DuplicateHiderPlugin(IPlayniteAPI api) : base(api)
         {
-            logger = LogManager.GetLogger();
             API = api;
             Instance = this;
             settings = new DuplicateHiderSettings(this);
