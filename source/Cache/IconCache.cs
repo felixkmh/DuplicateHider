@@ -1,4 +1,5 @@
-﻿using Playnite.SDK.Models;
+﻿using Playnite.SDK;
+using Playnite.SDK.Models;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
@@ -14,19 +15,19 @@ using System.Windows.Media.Imaging;
 
 namespace DuplicateHider.Cache
 {
-    class IconCache : IGeneratorCache<ImageSource, Game>, IReadOnlyDictionary<GameSource, ImageSource>
+    class IconCache : IGeneratorCache<ImageSource, Game>, IReadOnlyDictionary<object, ImageSource>
     {
         public List<string> UserIconFolderPaths { get; set; } = new List<string>();
 
-        public IEnumerable<GameSource> Keys => ((IReadOnlyDictionary<GameSource, ImageSource>)cache).Keys;
+        public IEnumerable<object> Keys => ((IReadOnlyDictionary<object, ImageSource>)cache).Keys;
 
-        public IEnumerable<ImageSource> Values => ((IReadOnlyDictionary<GameSource, ImageSource>)cache).Values;
+        public IEnumerable<ImageSource> Values => ((IReadOnlyDictionary<object, ImageSource>)cache).Values;
 
-        public int Count => ((IReadOnlyCollection<KeyValuePair<GameSource, ImageSource>>)cache).Count;
+        public int Count => ((IReadOnlyCollection<KeyValuePair<object, ImageSource>>)cache).Count;
 
-        public ImageSource this[GameSource key] => ((IReadOnlyDictionary<GameSource, ImageSource>)cache)[key];
+        public ImageSource this[object key] => cache.ContainsKey(key) ? ((IReadOnlyDictionary<object, ImageSource>)cache)[key] : null;
 
-        internal ConcurrentDictionary<string, ImageSource> cache = new ConcurrentDictionary<string, ImageSource>();
+        internal ConcurrentDictionary<object, ImageSource> cache = new ConcurrentDictionary<object, ImageSource>();
 
         internal BitmapImage generate(Game game)
         {
@@ -51,6 +52,14 @@ namespace DuplicateHider.Cache
         public void Clear()
         {
             cache.Clear();
+        }
+
+        public void LoadIcons(IPlayniteAPI api)
+        {
+            foreach(var source in api.Database.Sources)
+            {
+                
+            }
         }
 
         public ImageSource GetOrGenerate(Game game)
@@ -257,19 +266,19 @@ namespace DuplicateHider.Cache
             return null;
         }
 
-        public bool ContainsKey(GameSource key)
+        public bool ContainsKey(object key)
         {
-            return ((IReadOnlyDictionary<GameSource, ImageSource>)cache).ContainsKey(key);
+            return ((IReadOnlyDictionary<object, ImageSource>)cache).ContainsKey(key);
         }
 
-        public bool TryGetValue(GameSource key, out ImageSource value)
+        public bool TryGetValue(object key, out ImageSource value)
         {
-            return ((IReadOnlyDictionary<GameSource, ImageSource>)cache).TryGetValue(key, out value);
+            return ((IReadOnlyDictionary<object, ImageSource>)cache).TryGetValue(key, out value);
         }
 
-        public IEnumerator<KeyValuePair<GameSource, ImageSource>> GetEnumerator()
+        public IEnumerator<KeyValuePair<object, ImageSource>> GetEnumerator()
         {
-            return ((IEnumerable<KeyValuePair<GameSource, ImageSource>>)cache).GetEnumerator();
+            return ((IEnumerable<KeyValuePair<object, ImageSource>>)cache).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
