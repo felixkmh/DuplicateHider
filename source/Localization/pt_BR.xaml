@@ -25,10 +25,10 @@ Clique em &quot;{0}&quot; para continuar ou &quot;{1}&quot; para cancelar esta o
     <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Desagrupar grupos de jogos selecionados</sys:String>
     <sys:String x:Key="LOC_DH_EditAllCopies">Editar Todas as Cópias</sys:String>
     <sys:String x:Key="LOC_DH_CopyFieldsFromGame">Copiar informações para outras cópias</sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTag"></sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTagHigh"></sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTagLow"></sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTagClear"></sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTag">Atribuir Etiqueta de Substituição Prioritária</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagHigh">Prioridade máxima</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagLow">Prioridade mais baixa</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagClear">Limpar etiquetas de substituição para todas as cópias</sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
@@ -36,9 +36,9 @@ Clique em &quot;{0}&quot; para continuar ou &quot;{1}&quot; para cancelar esta o
 	<sys:String x:Key="LOC_DH_CustomRulesTab">Regras personalizadas</sys:String>
 	<sys:String x:Key="LOC_DH_UIIntegrationTab">Integrações de interface</sys:String>
 	<!--Labels-->
-    <sys:String x:Key="LOC_DH_Updating"></sys:String>
-    <sys:String x:Key="LOC_DH_GameFields"></sys:String>
-    <sys:String x:Key="LOC_DH_SourceGames"></sys:String>
+    <sys:String x:Key="LOC_DH_Updating">Atualizando...</sys:String>
+    <sys:String x:Key="LOC_DH_GameFields">Campos de jogo</sys:String>
+    <sys:String x:Key="LOC_DH_SourceGames">Jogos Fonte</sys:String>
     <sys:String x:Key="LOC_DH_Warning">Alerta</sys:String>
 	<sys:String x:Key="LOC_DH_Priorities">Prioridades</sys:String>
 	<sys:String x:Key="LOC_DH_AutomaticUpdate">Atualizar automaticamente</sys:String>
@@ -58,9 +58,9 @@ Clique em &quot;{0}&quot; para continuar ou &quot;{1}&quot; para cancelar esta o
     <sys:String x:Key="LOC_DH_SuppressNotification">Suprimir a notificação de tema de ícone</sys:String>
     <sys:String x:Key="LOC_DH_CustomGroups">Grupos personalizados</sys:String>
     <sys:String x:Key="LOC_DH_CustomGroupName">Nome dos grupos personalizados</sys:String>
-    <sys:String x:Key="LOC_DH_CustomGroupNamePrompt"></sys:String>
-    <sys:String x:Key="LOC_DH_GroupConflict"></sys:String>
-    <sys:String x:Key="LOC_DH_KeepOrderLabel"></sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupNamePrompt">Por favor, selecione um nome para o novo grupo:</sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflict">Conflitos de grupo</sys:String>
+    <sys:String x:Key="LOC_DH_KeepOrderLabel">Manter a ordem</sys:String>
     <sys:String x:Key="LOC_DH_Games">Jogos</sys:String>
     <sys:String x:Key="LOC_DH_ExportIndex">Exportar Índice</sys:String>
     <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve">Os seguintes jogos estão em conflito com os grupos personalizados existentes: 
