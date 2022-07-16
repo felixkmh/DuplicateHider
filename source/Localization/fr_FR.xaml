@@ -4,7 +4,7 @@
 	<sys:String x:Key="LOC_DH_HideDuplicatesEntry">Cacher les doublons</sys:String>
 	<sys:String x:Key="LOC_DH_RevealDuplicatesEntry">Révéler les doublons</sys:String>
 	<sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntry">Ajouter les jeux sélectionnés dans la liste des ignorés</sys:String>
-    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal"></sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal">Ajouter les jeux sélectionnés à la liste des ignorés et les révéler</sys:String>
 	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry">Supprimer les jeux sélectionnés de la liste des ignorés</sys:String>
 	
 	<!--Message Boxes-->
@@ -85,8 +85,8 @@ Voulez-vous déplacer ces jeux de leurs anciens groupes vers le nouveau, les gar
     <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">Si activé, vous ne serez pas averti si des icônes de thème sont trouvées dans le thème actuel.</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve">Activé : Déterminer le score des jeux en fonction de leur position dans la liste des groupes.
 Désactivé : Utiliser la méthode normale de notation basée sur les priorités de source.</sys:String>
-    <sys:String x:Key="LOC_DH_UnionizeField"></sys:String>
-    <sys:String x:Key="LOC_DH_ExcludedTooltip"></sys:String>
+    <sys:String x:Key="LOC_DH_UnionizeField">Assignez une union entre toutes les copies, y compris le jeu source.</sys:String>
+    <sys:String x:Key="LOC_DH_ExcludedTooltip">Exclus</sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Ouvrir le dossier icônes utilisateur</sys:String>
     <sys:String x:Key="LOC_DH_MoveButton">Déplacer</sys:String>
