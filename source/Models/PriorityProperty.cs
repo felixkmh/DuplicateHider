@@ -233,22 +233,17 @@ namespace DuplicateHider.Models
 
         private bool AddValue(object value)
         {
-            if (Application.Current.Dispatcher.Thread != Thread.CurrentThread)
-            {
-                return Application.Current.Dispatcher.Invoke(() =>
-                {
-                    if (prioritySet.Value.Add(value))
-                    {
-                        PriorityObjects.Add(value);
-                        return false;
-                    }
-                    return false;
-                });
-            }
             if (prioritySet.Value.Add(value))
             {
+                if (Application.Current.Dispatcher.Thread.ManagedThreadId != Thread.CurrentThread.ManagedThreadId)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        PriorityObjects.Add(value);
+                    });
+                }
                 PriorityObjects.Add(value);
-                return false;
+                return true;
             }
             return false;
         }

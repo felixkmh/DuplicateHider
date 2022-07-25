@@ -1511,18 +1511,18 @@ namespace DuplicateHider
 
         private void BuildIndex(IEnumerable<Game> games, IFilter<IEnumerable<Game>> gameFilter, IFilter<string> nameFilter)
         {
-            Index = BuildIndexAsync(games, gameFilter, nameFilter).Result;
-            //Index.Clear();
-            //foreach (var game in games.Filter(gameFilter))
-            //{
-            //    var cleanName = GetFilteredName(game, nameFilter);
-            //    if (!Index.ContainsKey(cleanName))
-            //    {
-            //        Index[cleanName] = new List<Guid> { };
-            //    }
+            //Index = BuildIndexAsync(games, gameFilter, nameFilter).Result;
+            Index.Clear();
+            foreach (var game in games.Filter(gameFilter))
+            {
+                var cleanName = GetFilteredName(game, nameFilter);
+                if (!Index.ContainsKey(cleanName))
+                {
+                    Index[cleanName] = new List<Guid> { };
+                }
 
-            //    Index[cleanName].InsertSorted(game.Id, GameComparer.Comparer);
-            //}
+                Index[cleanName].InsertSorted(game.Id, GameComparer.Comparer);
+            }
         }
 
         private async Task<Dictionary<string, List<Guid>>> BuildIndexAsync(IEnumerable<Game> games, IFilter<IEnumerable<Game>> gameFilter, IFilter<string> nameFilter)
