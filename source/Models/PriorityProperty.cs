@@ -241,8 +241,10 @@ namespace DuplicateHider.Models
                     {
                         PriorityObjects.Add(value);
                     });
+                } else
+                {
+                    PriorityObjects.Add(value);
                 }
-                PriorityObjects.Add(value);
                 return true;
             }
             return false;
