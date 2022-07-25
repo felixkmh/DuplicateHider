@@ -210,7 +210,7 @@ namespace DuplicateHider
         }
 
 #region Events       
-        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
+        public override async void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
             //PlayniteApi.Database.Games.ItemUpdated += (sender, itemUpdatedArgs) =>
             //{
@@ -309,7 +309,8 @@ namespace DuplicateHider
                 settings.Priorities.Add(source.Name);
             }
 
-            BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
+            await UpdateIndexAsync();
+
             GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
             if (settings.UpdateAutomatically)
             {
@@ -547,7 +548,7 @@ namespace DuplicateHider
             SavePluginSettings(settings);
         }
 
-        private void Settings_OnSettingsChanged(DuplicateHiderSettings oldSettings, DuplicateHiderSettings newSettings)
+        private async void Settings_OnSettingsChanged(DuplicateHiderSettings oldSettings, DuplicateHiderSettings newSettings)
         {
             NameFilters = null;
             GameFilters = null;
@@ -558,7 +559,7 @@ namespace DuplicateHider
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Visible));
                 GameFilters = null;
                 NameFilters = null;
-                BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
+                await UpdateIndexAsync();
                 PlayniteApi.Database.Games.Update(SetDuplicateState(Hidden));
                 PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
                 if (selected?.Count > 0)
@@ -1523,6 +1524,16 @@ namespace DuplicateHider
 
                 Index[cleanName].InsertSorted(game.Id, GameComparer.Comparer);
             }
+        }
+
+        public async Task UpdateIndexAsync()
+        {
+            Index = await BuildIndexAsync(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
+        }
+
+        public void UpdateIndex()
+        {
+            BuildIndex(PlayniteApi.Database.Games, GetGameFilter(), GetNameFilter());
         }
 
         private async Task<Dictionary<string, List<Guid>>> BuildIndexAsync(IEnumerable<Game> games, IFilter<IEnumerable<Game>> gameFilter, IFilter<string> nameFilter)
