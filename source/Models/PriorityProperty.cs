@@ -10,7 +10,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace DuplicateHider.Models
@@ -231,6 +233,18 @@ namespace DuplicateHider.Models
 
         private bool AddValue(object value)
         {
+            if (Application.Current.Dispatcher.Thread != Thread.CurrentThread)
+            {
+                return Application.Current.Dispatcher.Invoke(() =>
+                {
+                    if (prioritySet.Value.Add(value))
+                    {
+                        PriorityObjects.Add(value);
+                        return false;
+                    }
+                    return false;
+                });
+            }
             if (prioritySet.Value.Add(value))
             {
                 PriorityObjects.Add(value);
