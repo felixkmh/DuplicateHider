@@ -46,6 +46,8 @@ namespace DuplicateHider
 
         internal static readonly ILogger logger = LogManager.GetLogger();
 
+        public DuplicateHiderSettings Settings => settings;
+
         internal DuplicateHiderSettings settings { get; private set; }
         internal static IPlayniteAPI API { get; private set; } = null;
 
@@ -115,7 +117,7 @@ namespace DuplicateHider
                 SourceName = "DuplicateHider"
             });
 
-            AddSettingsSupport(new AddSettingsSupportArgs { SettingsRoot = "settings", SourceName = "DuplicateHider" });
+            AddSettingsSupport(new AddSettingsSupportArgs { SettingsRoot = "Settings", SourceName = "DuplicateHider" });
         }
 
         internal void UpdateGuidToCopiesDict()
@@ -523,7 +525,7 @@ namespace DuplicateHider
 
         public override void OnGameSelected(OnGameSelectedEventArgs args)
         {
-            var oldId = args.OldValue?.FirstOrDefault()?.Id;
+            var oldId = CurrentlySelected;
             var newId = args.NewValue?.FirstOrDefault()?.Id;
             if (oldId != newId)
             {
@@ -1543,9 +1545,10 @@ namespace DuplicateHider
             {
                 var partA = new ArraySegment<Game>(games.Array, games.Offset, count / 2);
                 var partB = new ArraySegment<Game>(games.Array, games.Offset + partA.Count, count - partA.Count);
-                var a = PartitionAndMergeIndexAsync(partA, nameFilter, maxDepth - 1, minItems).ConfigureAwait(false);
-                var b = PartitionAndMergeIndexAsync(partB, nameFilter, maxDepth - 1, minItems).ConfigureAwait(false);
-                return MergeIndexInto(await a, await b);
+                var a = PartitionAndMergeIndexAsync(partA, nameFilter, maxDepth - 1, minItems);
+                var b = PartitionAndMergeIndexAsync(partB, nameFilter, maxDepth - 1, minItems);
+                await Task.WhenAll(a, b).ConfigureAwait(false);
+                return MergeIndexInto(a.Result, b.Result);
             }).ConfigureAwait(false);
         }
 
