@@ -15,7 +15,7 @@ using System.Windows.Input;
 
 namespace DuplicateHider
 {
-    public class DuplicateHiderSettings : ISettings
+    public class DuplicateHiderSettings : ObservableObject, ISettings
     {
         private readonly DuplicateHiderPlugin plugin;
 
@@ -47,8 +47,9 @@ namespace DuplicateHider
         public bool EnableThemeIcons { get; set; } = true;
         [QuickSearch.Attributes.GenericOption("LOC_DH_EnableUIIntegration", Description = "LOC_DH_EnableUIIntegrationTooltip")]
         public bool EnableUiIntegration { get; set; } = true;
+        private bool showSingleIcon = true;
         [QuickSearch.Attributes.GenericOption("LOC_DH_ShowSingleIcon", Description = "LOC_DH_ShowSingleIconTooltip")]
-        public bool ShowSingleIcon { get; set; } = false;
+        public bool ShowSingleIcon { get => showSingleIcon; set => SetValue(ref showSingleIcon, value); }
         [QuickSearch.Attributes.GenericOption("LOC_DH_SuppressNotification", Description = "LOC_DH_SuppressNotificationTooltip")]
         public bool SupressThemeIconNotification { get; set; } = false;
         [QuickSearch.Attributes.GenericOption("LOC_DH_PrioritizeNewerGames")]
