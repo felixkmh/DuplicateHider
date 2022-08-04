@@ -198,9 +198,10 @@ namespace DuplicateHider.Cache
             var sourceName = game?.Source?.Name ?? "Default";
             if (UserIconFolderPaths.Count == 0) UserIconFolderPaths.Add(DuplicateHiderPlugin.Instance.GetUserIconFolderPath());
             var paths = UserIconFolderPaths
-               .SelectMany(s => System.IO.Directory.GetFiles(s))
-               .Where(f => System.IO.Path.GetFileNameWithoutExtension(f).Equals(sourceName, StringComparison.OrdinalIgnoreCase))
-               .FirstOrDefault(f =>
+                .Where(p => System.IO.Directory.Exists(p))
+                .SelectMany(s => System.IO.Directory.GetFiles(s))
+                .Where(f => System.IO.Path.GetFileNameWithoutExtension(f).Equals(sourceName, StringComparison.OrdinalIgnoreCase))
+                .FirstOrDefault(f =>
                     f.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
                  || f.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
                  || f.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase)

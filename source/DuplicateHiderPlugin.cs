@@ -276,6 +276,7 @@ namespace DuplicateHider
             {
                 Directory.CreateDirectory(GetUserIconFolderPath());
             }
+
             iconWatcher = new FileSystemWatcher(GetUserIconFolderPath())
             {
                 NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.CreationTime
