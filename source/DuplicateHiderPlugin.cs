@@ -505,10 +505,15 @@ namespace DuplicateHider
 
         public string GetUserIconFolderPath()
         {
-            return Path.Combine(
-                            GetPluginUserDataPath(),
-                            "source_icons"
-                        );
+            string path = Path.Combine(
+                                    GetPluginUserDataPath(),
+                                    "source_icons"
+                                );
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            return path;
         }
 
         public void SelectGame(Guid? gameId)
