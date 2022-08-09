@@ -58,7 +58,6 @@ namespace DuplicateHider.Controls
             Unloaded += SourceSelector_Unloaded;
             IsVisibleChanged += SourceSelector_IsVisibleChanged;
             IconStackPanel.Unloaded += IconStackPanel_Unloaded;
-            IconStackPanel.IsEnabledChanged += IconStackPanel_IsEnabledChanged;
         }
 
         private void DHP_GameSelected(object sender, DuplicateHiderPlugin.GameSelectedArgs e)
@@ -219,7 +218,10 @@ namespace DuplicateHider.Controls
             }
             else
             {
-                ButtonCaches[selectorNumber].Consume(IconStackPanel.Children);
+                if (IconStackPanel.Children.Count > 0)
+                {
+                    ButtonCaches[selectorNumber].Consume(IconStackPanel.Children);
+                }
             }
         }
 
@@ -237,7 +239,10 @@ namespace DuplicateHider.Controls
         {
             if (Parent is null && !(oldParent is null))
             {
-                ButtonCaches[selectorNumber].Consume(IconStackPanel.Children);
+                if (IconStackPanel.Children.Count > 0)
+                {
+                    ButtonCaches[selectorNumber].Consume(IconStackPanel.Children);
+                }
             }
             base.OnVisualParentChanged(oldParent);
         }
@@ -365,19 +370,20 @@ namespace DuplicateHider.Controls
 
         private void DuplicateHider_GroupUpdated(object sender, IEnumerable<Guid> e)
         {
-            Dispatcher.Invoke(() =>
+            if (IsVisible)
             {
                 if (GameContext is Game game)
                 {
                     if (e.Any(id => game.Id == id))
                     {
                         UpdateGameSourceIcons(game);
-#if DEBUG
+    #if DEBUG
                         System.Diagnostics.Debug.WriteLine("Called Group Update");
 #endif
                     }
                 }
-            });
+            }
+
         }
 
         private IEnumerable<Game> GetGames(Game game)
@@ -397,25 +403,20 @@ namespace DuplicateHider.Controls
             return new Game[] { };
         }
 
-        private void IconStackPanel_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.NewValue as bool? == false && sender is StackPanel panel)
-            {
-                ButtonCaches[selectorNumber].Consume(panel.Children);
-            }
-        }
-
         private void IconStackPanel_Unloaded(object sender, RoutedEventArgs e)
         {
             if (sender is StackPanel panel)
             {
-                ButtonCaches[selectorNumber].Consume(panel.Children);
+                if (IconStackPanel.Children.Count > 0)
+                {
+                    ButtonCaches[selectorNumber].Consume(IconStackPanel.Children);
+                }
             }
         }
 
         private void SourceSelector_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (e.NewValue as bool? == true)
+            if (e.NewValue is true)
             {
                 DuplicateHiderPlugin.Instance.GroupUpdated += DuplicateHider_GroupUpdated;
                 DuplicateHiderPlugin.Instance.GameSelected += DHP_GameSelected;
@@ -425,14 +426,19 @@ namespace DuplicateHider.Controls
             {
                 DuplicateHiderPlugin.Instance.GameSelected -= DHP_GameSelected;
                 DuplicateHiderPlugin.Instance.GroupUpdated -= DuplicateHider_GroupUpdated;
-                ButtonCaches[selectorNumber].Consume(IconStackPanel.Children);
+                if (IconStackPanel.Children.Count > 0)
+                {
+                    ButtonCaches[selectorNumber].Consume(IconStackPanel.Children);
+                }
             }
         }
 
         private void SourceSelector_Unloaded(object sender, RoutedEventArgs e)
         {
-            if (e.Source is SourceSelector selector)
+            if (e.Source is SourceSelector selector && selector.IconStackPanel.Children.Count > 0)
+            {
                 ButtonCaches[selectorNumber].Consume(selector.IconStackPanel.Children);
+            }
         }
 
         #endregion Private Methods

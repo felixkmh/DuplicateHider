@@ -495,7 +495,10 @@ namespace DuplicateHider
                     || e.Name.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase))
                 {
                     SourceIconCache.Clear();
-                    GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        GroupUpdated?.Invoke(this, PlayniteApi.Database.Games.Select(g => g.Id));
+                    });
 #if DEBUG
                     System.Diagnostics.Debug.WriteLine($"Name={e.Name}, Type={e.ChangeType}");
 #endif
