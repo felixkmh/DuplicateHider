@@ -1624,7 +1624,9 @@ namespace DuplicateHider
             {
                 new KeyValuePair<string, string>("Installed", "{'Installed'}"),
                 new KeyValuePair<string, string>("SourceName", "{'SourceName'}"),
-                new KeyValuePair<string, string>("Regions", "{'Regions'}")
+                new KeyValuePair<string, string>("Regions", "{'Regions'}"),
+                new KeyValuePair<string, string>("PlayActionName", "{'PlayActionName'}"),
+                new KeyValuePair<string, string>("PlayActionFileName", "{'PlayActionFileName'}"),
             };
 
 
@@ -1668,6 +1670,16 @@ namespace DuplicateHider
                         if (expanded.Contains("{Regions}"))
                         {
                             expanded = expanded.Replace("{Regions}", game.Regions != null ? string.Join(", ", game.Regions.Select(e => e.Name)) : "");
+                        }
+                        if (game.GameActions?.FirstOrDefault(a => a.IsPlayAction) is GameAction playAction && game.PluginId == Guid.Empty)
+                        {
+                            expanded = expanded.Replace("{PlayActionName}", playAction.Name ?? "");
+                            expanded = expanded.Replace("{PlayActionFileName}", Path.GetFileNameWithoutExtension(playAction.Path) ?? "");
+
+                        } else
+                        {
+                            expanded = expanded.Replace("{PlayActionName}", "");
+                            expanded = expanded.Replace("{PlayActionFileName}", "");
                         }
 
                         var type = typeof(Game).GetFields();
