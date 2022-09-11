@@ -61,6 +61,9 @@
     <sys:String x:Key="LOC_DH_KeepOrderLabel">Behåll ordning</sys:String>
     <sys:String x:Key="LOC_DH_Games">Spelen</sys:String>
     <sys:String x:Key="LOC_DH_ExportIndex">Exportera index</sys:String>
+    <sys:String x:Key="LOC_DH_PriorityTagsDescription"></sys:String>
+    <sys:String x:Key="LOC_DH_PriorityAddHighTag"></sys:String>
+    <sys:String x:Key="LOC_DH_PriorityAddLowTag"></sys:String>
     <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve"></sys:String>
     <sys:String x:Key="LOC_DH_HiddenTag">[DH] Dold</sys:String>
     <sys:String x:Key="LOC_DH_RevealedTag">[DH] Avslöjade</sys:String>

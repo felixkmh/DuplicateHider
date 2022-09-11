@@ -63,6 +63,9 @@ Click &quot;{0}&quot; to continue or &quot;{1}&quot; to cancel this operation.</
     <sys:String x:Key="LOC_DH_KeepOrderLabel">Keep order</sys:String>
     <sys:String x:Key="LOC_DH_Games">Games</sys:String>
     <sys:String x:Key="LOC_DH_ExportIndex">Export Index</sys:String>
+    <sys:String x:Key="LOC_DH_PriorityTagsDescription">Tags added here have the same effect as the &quot;[DH] High&quot; and &quot;[DH] Low&quot; tags.</sys:String>
+    <sys:String x:Key="LOC_DH_PriorityAddHighTag">Add high priority tags</sys:String>
+    <sys:String x:Key="LOC_DH_PriorityAddLowTag">Add low priority tags</sys:String>
     <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve">The following games are in conflict with existing custom groups: 
 {0}
 		

@@ -63,6 +63,9 @@ Klicke auf &quot;{0}&quot;, um fortzufahren oder &quot;{1}&quot;, um diesen Vorg
     <sys:String x:Key="LOC_DH_KeepOrderLabel">Reihenfolge beibehalten</sys:String>
     <sys:String x:Key="LOC_DH_Games">Spiele</sys:String>
     <sys:String x:Key="LOC_DH_ExportIndex">Index exportieren</sys:String>
+    <sys:String x:Key="LOC_DH_PriorityTagsDescription">Hier hinzugefügte Tags haben die gleiche Wirkung wie die Tags &quot;[DH] Hoch&quot; und &quot;[DH] Niedrig&quot;.</sys:String>
+    <sys:String x:Key="LOC_DH_PriorityAddHighTag">Tags mit hoher Priorität hinzufügen</sys:String>
+    <sys:String x:Key="LOC_DH_PriorityAddLowTag">Tags mit niedriger Priorität hinzufügen</sys:String>
     <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve">Die folgenden Spiele stehen in Konflikt mit bestehenden benutzerdefinierten Gruppen: 
 {0}
 		
