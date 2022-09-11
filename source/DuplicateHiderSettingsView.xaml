@@ -7,9 +7,11 @@
              xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
              xmlns:conv="clr-namespace:DuplicateHider.Converters"
              mc:Ignorable="d"
-             d:DesignHeight="400" d:DesignWidth="600">
+             d:DesignHeight="400" d:DesignWidth="600"
+             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False, Type=DuplicateHiders:DuplicateHiderSettings}">
     <UserControl.Resources>
         <conv:GamePropertyToNameConverter x:Key="GamePropertyToNameConverter"/>
+        <conv:PropertyIdToNameConverter x:Key="PropertyIdToNameConverter"/>
     </UserControl.Resources>
     <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
         <TabItem Header="{DynamicResource LOC_DH_CommonTab}">
@@ -176,6 +178,79 @@
                     <views:CustomGroupList x:Name="GroupsList"/>
                 </StackPanel>
             </ScrollViewer>
+        </TabItem>
+        <TabItem Header="{DynamicResource LOCTagsLabel}">
+            <DockPanel>
+                <TextBlock Text="{DynamicResource LOC_DH_PriorityTagsDescription}" Margin="10" DockPanel.Dock="Top"/>
+                <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="5,10">
+                    <StackPanel Margin="5,0">
+                        <ToggleButton Padding="3" Content="{DynamicResource LOC_DH_PriorityAddHighTag}" x:Name="AddHighTagsToggle" Margin="0,0,0,5"/>
+                        <Popup Style="{StaticResource {x:Type Popup}}" 
+                                   IsOpen="{Binding IsChecked, ElementName=AddHighTagsToggle, Mode=TwoWay, Delay=100}"
+                           
+                           VerticalOffset="2"
+                           x:Name="AddHighTagsPopup" StaysOpen="False" Placement="Bottom" 
+                           PlacementTarget="{Binding ElementName=AddHighTagsToggle}">
+                            <Border MinWidth="{Binding ActualWidth, ElementName=AddHighTagsToggle}" 
+                                    Margin="15"
+                                    Background="{DynamicResource PopupBackgroundBrush}" 
+                                    CornerRadius="{DynamicResource ControlCornerRadius}">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="15" ShadowDepth="0" Opacity="0.75"/>
+                                </Border.Effect>
+                                <views:AddTagView DataContext="{Binding AddHighPrioTagViewModel}"/>
+                            </Border>
+                        </Popup>
+                        <ListBox ItemsSource="{Binding HighPriorityTags}" MaxHeight="150" SelectionMode="Extended">
+                            <ListBox.CommandBindings>
+                                <CommandBinding Command="Delete" Executed="CommandBinding_Executed" CanExecute="CommandBinding_CanExecute"/>
+                            </ListBox.CommandBindings>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource PropertyIdToNameConverter}, ConverterParameter=TagIds}">
+                                        <TextBlock.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Command="Delete" CommandParameter="{Binding}"/>
+                                            </ContextMenu>
+                                        </TextBlock.ContextMenu>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                    <StackPanel Margin="5,0">
+                        <ToggleButton Padding="3" Content="{DynamicResource LOC_DH_PriorityAddLowTag}" x:Name="AddLowTagsToggle" Margin="0,0,0,5"/>
+                        <Popup Style="{StaticResource {x:Type Popup}}" 
+                                   IsOpen="{Binding IsChecked, ElementName=AddLowTagsToggle, Mode=TwoWay, Delay=100}"
+                           x:Name="AddLowTagsPopup" StaysOpen="False" Placement="Bottom" 
+                           PlacementTarget="{Binding ElementName=AddLowTagsToggle}" VerticalOffset="2">
+
+                            <Border MinWidth="{Binding ActualWidth, ElementName=AddLowTagsToggle}" Margin="15" Background="{DynamicResource PopupBackgroundBrush}" CornerRadius="{DynamicResource ControlCornerRadius}">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="15" ShadowDepth="0" Opacity="0.75"/>
+                                </Border.Effect>
+                                <views:AddTagView DataContext="{Binding AddLowPrioTagViewModel}"/>
+                            </Border>
+                        </Popup>
+                        <ListBox ItemsSource="{Binding LowPriorityTags}" MaxHeight="150" SelectionMode="Extended">
+                            <ListBox.CommandBindings>
+                                <CommandBinding Command="Delete" Executed="CommandBinding_Executed" CanExecute="CommandBinding_CanExecute"/>
+                            </ListBox.CommandBindings>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource PropertyIdToNameConverter}, ConverterParameter=TagIds}">
+                                        <TextBlock.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Command="Delete" CommandParameter="{Binding}"/>
+                                            </ContextMenu>
+                                        </TextBlock.ContextMenu>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </UniformGrid>
+            </DockPanel>
         </TabItem>
     </TabControl>
 </UserControl>

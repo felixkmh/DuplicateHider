@@ -1,5 +1,8 @@
-﻿using Playnite.SDK.Models;
+﻿using DuplicateHider.ViewModels;
+using DuplicateHider.Views;
+using Playnite.SDK.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -345,6 +348,36 @@ namespace DuplicateHider
                 cm.Placement = System.Windows.Controls.Primitives.PlacementMode.Right;
                 cm.PlacementTarget = bt;
                 cm.IsOpen = true;
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var viewModel = new AddTagViewModel(DuplicateHiderPlugin.Instance.Settings.HighPriorityTags);
+            var view = new AddTagView() { DataContext = viewModel };
+            var window = Playnite.SDK.API.Instance.Dialogs.CreateWindow(new Playnite.SDK.WindowCreationOptions { });
+            window.Content = view;
+            window.Owner = Playnite.SDK.API.Instance.Dialogs.GetCurrentAppWindow();
+            window.Show();
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (sender is ListBox lb && lb.ItemsSource is IList items)
+            {
+                var selected = lb.SelectedItems.OfType<object>().ToList();
+                foreach(var item in selected)
+                {
+                    items.Remove(item);
+                }
+            }
+        }
+
+        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (sender is ListBox lb)
+            {
+                e.CanExecute = lb.Items.Count > 0;
             }
         }
     }

@@ -12,7 +12,7 @@ using Playnite.SDK.Plugins;
 
 namespace DuplicateHider.Converters
 {
-    public class PropertyIdToNameConverter : IMultiValueConverter
+    public class PropertyIdToNameConverter : IMultiValueConverter, IValueConverter
     {
         private IPlayniteAPI playniteAPI;
         public string PropertyName { get; set; }
@@ -86,6 +86,10 @@ namespace DuplicateHider.Converters
                         {
                             return playniteAPI.Database.Regions.Get(id)?.Name;
                         }
+                        else if (propertyName == nameof(Game.TagIds))
+                        {
+                            return playniteAPI.Database.Tags.Get(id)?.Name;
+                        }
                     }
                     if (bool.TryParse(s, out var state))
                     {
@@ -106,7 +110,91 @@ namespace DuplicateHider.Converters
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
+        }
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var propertyName = parameter as string;
+            string s = null;
+            if (value is Guid guid)
+            {
+                s = guid.ToString();
+            }
+            if (!string.IsNullOrEmpty(propertyName) && !string.IsNullOrEmpty(s))
+            {
+                if (Guid.TryParse(s, out var id))
+                {
+                    if (propertyName == nameof(Game.SourceId))
+                    {
+                        if (id == default)
+                        {
+                            return Constants.UNDEFINED_SOURCE;
+                        }
+                        else
+                        {
+                            return playniteAPI.Database.Sources.Get(id)?.Name;
+                        }
+                    }
+                    else if (propertyName == nameof(Game.CompletionStatusId))
+                    {
+                        return playniteAPI.Database.CompletionStatuses.Get(id)?.Name;
+                    }
+                    else if (propertyName == nameof(Game.PluginId))
+                    {
+                        return playniteAPI.Addons.Plugins.OfType<LibraryPlugin>().FirstOrDefault(p => p.Id == id)?.Name ?? Constants.UNDEFINED_SOURCE;
+                    }
+                    else if (propertyName == nameof(Game.PlatformIds))
+                    {
+                        return playniteAPI.Database.Platforms.Get(id)?.Name ?? Constants.UNDEFINED_PLATFORM;
+                    }
+                    else if (propertyName == nameof(Game.GenreIds))
+                    {
+                        return playniteAPI.Database.Genres.Get(id)?.Name;
+                    }
+                    else if (propertyName == nameof(Game.PublisherIds) || propertyName == nameof(Game.DeveloperIds))
+                    {
+                        return playniteAPI.Database.Companies.Get(id)?.Name;
+                    }
+                    else if (propertyName == nameof(Game.FeatureIds))
+                    {
+                        return playniteAPI.Database.Features.Get(id)?.Name;
+                    }
+                    else if (propertyName == nameof(Game.CategoryIds))
+                    {
+                        return playniteAPI.Database.Categories.Get(id)?.Name;
+                    }
+                    else if (propertyName == nameof(Game.SeriesIds))
+                    {
+                        return playniteAPI.Database.Series.Get(id)?.Name;
+                    }
+                    else if (propertyName == nameof(Game.RegionIds))
+                    {
+                        return playniteAPI.Database.Regions.Get(id)?.Name;
+                    }
+                    else if (propertyName == nameof(Game.TagIds))
+                    {
+                        return playniteAPI.Database.Tags.Get(id)?.Name;
+                    }
+                }
+                if (bool.TryParse(s, out var state))
+                {
+                    if (propertyName == nameof(Game.IsInstalled))
+                    {
+                        return state ? ResourceProvider.GetString("LOCGameIsGameInstalledTitle") : ResourceProvider.GetString("LOCGameIsUnInstalledTitle");
+                    }
+                    if (propertyName == nameof(Game.Favorite))
+                    {
+                        return state ? ResourceProvider.GetString("LOCGameFavoriteTitle") : ResourceProvider.GetString("LOCNone");
+                    }
+                }
+            }
+            return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotSupportedException();
         }
     }
 }

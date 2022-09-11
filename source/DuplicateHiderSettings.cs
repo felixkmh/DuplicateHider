@@ -1,5 +1,6 @@
 ﻿using DuplicateHider.Data;
 using DuplicateHider.Models;
+using DuplicateHider.ViewModels;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -33,6 +34,20 @@ namespace DuplicateHider
         public UniqueList<string> Priorities { get; set; } = new UniqueList<string>();
         [JsonIgnore]
         public Dictionary<Guid, Guid> SharedGameIds { get; set; } = new Dictionary<Guid, Guid>();
+
+        #region StartPage View
+        private bool showLibraryColumn;
+        public bool ShowLibraryColumn
+        {
+            get { return showLibraryColumn; }
+            set { SetValue(ref showLibraryColumn, value); }
+        }
+        #endregion
+
+        [JsonIgnore]
+        public AddTagViewModel AddHighPrioTagViewModel => new AddTagViewModel(HighPriorityTags);
+        [JsonIgnore]
+        public AddTagViewModel AddLowPrioTagViewModel => new AddTagViewModel(LowPriorityTags);
 
         public EnabledFieldsModel DefaultEnabledFields { get; set; } = new EnabledFieldsModel();
         public UniqueList<string> IncludePlatforms { get; set; } = new UniqueList<string> { "PC (Windows)", Constants.UNDEFINED_SOURCE };
@@ -75,6 +90,10 @@ namespace DuplicateHider
             .OrderBy(p => Converters.GamePropertyToNameConverter.Instance.Convert(p, typeof(string), null, null));
 
         // Tag Ids
+
+        public ObservableCollection<Guid> LowPriorityTags { get; set; } = new ObservableCollection<Guid>();
+        public ObservableCollection<Guid> HighPriorityTags { get; set; } = new ObservableCollection<Guid>();
+
         [JsonIgnore]
         private Guid hiddenTagId = Guid.Empty;
         [JsonIgnore]
@@ -346,6 +365,8 @@ namespace DuplicateHider
                 DefaultEnabledFields = savedSettings.DefaultEnabledFields;
                 PreferNewerGame = savedSettings.PreferNewerGame;
                 PriorityProperties = savedSettings.PriorityProperties;
+                HighPriorityTags = savedSettings.HighPriorityTags;
+                LowPriorityTags = savedSettings.LowPriorityTags;
             }
 
             if (Priorities.Count == 0)
@@ -567,6 +588,8 @@ namespace DuplicateHider
             // Code executed when user decides to cancel any changes made since BeginEdit was called.
             // This method should revert any changes made to Option1 and Option2.
             PriorityProperties = previousSettings.PriorityProperties;
+            HighPriorityTags = previousSettings.HighPriorityTags;
+            LowPriorityTags = previousSettings.LowPriorityTags;
         }
 
         public void EndEdit()

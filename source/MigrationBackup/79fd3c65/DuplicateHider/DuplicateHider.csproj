@@ -31,6 +31,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GongSolutions.WPF.DragDrop, Version=2.0.0.0, Culture=neutral, PublicKeyToken=91f1945125b7a587, processorArchitecture=MSIL">
+      <HintPath>packages\gong-wpf-dragdrop.2.4.1\lib\net462\GongSolutions.WPF.DragDrop.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Playnite.SDK, Version=6.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\PlayniteSDK.6.2.0\lib\net462\Playnite.SDK.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="QuickSearchSDK">
@@ -96,13 +105,9 @@
     <Compile Include="Controls\CustomGroupList.xaml.cs">
       <DependentUpon>CustomGroupList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\AddTagViewModel.cs" />
     <Compile Include="ViewModels\CopyFieldsViewModel.cs" />
     <Compile Include="ViewModels\LibraryStatisticsViewModel.cs" />
     <Compile Include="ViewModels\PriorityPropertyViewModel.cs" />
-    <Compile Include="Views\AddTagView.xaml.cs">
-      <DependentUpon>AddTagView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\CopyFieldsView.xaml.cs">
       <DependentUpon>CopyFieldsView.xaml</DependentUpon>
     </Compile>
@@ -122,6 +127,7 @@
     <None Include="extension.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\DHContentControl.xaml">
@@ -146,10 +152,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Page Include="Controls\CustomGroupList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\AddTagView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -217,17 +219,7 @@
   <ItemGroup>
     <Resource Include="icons\playnite.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="gong-wpf-dragdrop">
-      <Version>2.4.1</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>10.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="PlayniteSDK">
-      <Version>6.2.0</Version>
-    </PackageReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>%25LOCALAPPDATA%25\Playnite\Toolbox.exe pack $(ProjectDir)$(OutDir) $(ProjectDir)bin

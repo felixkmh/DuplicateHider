@@ -757,23 +757,28 @@ namespace DuplicateHider
                 var comp = 0;
                 if (gameA != null && gameB != null)
                 {
-                    if ((gameA.TagIds?.Contains(Instance.settings.HighPrioTagId) ?? false)
-                        && !(gameB.TagIds?.Contains(Instance.settings.HighPrioTagId) ?? false))
+                    List<Guid> gameATags = gameA.TagIds ?? new List<Guid>();
+                    List<Guid> gameBTags = gameB.TagIds ?? new List<Guid>();
+                    var highPrioTagIds = Instance.settings.HighPriorityTags.Concat(new[] { Instance.settings.HighPrioTagId });
+                    var lowPrioTagIds = Instance.settings.LowPriorityTags.Concat(new[] { Instance.settings.LowPrioTagId });
+                    if (gameATags.Intersect(highPrioTagIds).Any()
+                        && !gameBTags.Intersect(highPrioTagIds).Any())
                     {
                         return -1;
                     }
-                    if ((gameA.TagIds?.Contains(Instance.settings.LowPrioTagId) ?? false)
-                        && !(gameB.TagIds?.Contains(Instance.settings.LowPrioTagId) ?? false))
+
+                    if (gameATags.Intersect(lowPrioTagIds).Any()
+                        && !gameBTags.Intersect(lowPrioTagIds).Any())
                     {
                         return 1;
                     }
-                    if (!(gameA.TagIds?.Contains(Instance.settings.HighPrioTagId) ?? false)
-                        && (gameB.TagIds?.Contains(Instance.settings.HighPrioTagId) ?? false))
+                    if (!gameATags.Intersect(highPrioTagIds).Any()
+                        && gameBTags.Intersect(highPrioTagIds).Any())
                     {
                         return 1;
                     }
-                    if (!(gameA.TagIds?.Contains(Instance.settings.LowPrioTagId) ?? false)
-                        && (gameB.TagIds?.Contains(Instance.settings.LowPrioTagId) ?? false))
+                    if (!gameATags.Intersect(lowPrioTagIds).Any()
+                        && gameBTags.Intersect(lowPrioTagIds).Any())
                     {
                         return -1;
                     }
@@ -1722,7 +1727,7 @@ namespace DuplicateHider
             if (PlayniteApi.Database.Games.Get(id) is Game game)
             {
                 var offset = 0;
-                var tags = game.TagIds ?? new List<Guid>();
+                var tags = game.TagIds ?? Enumerable.Empty<Guid>();
                 if (tags.Contains(settings.HighPrioTagId))
                 {
                     offset -= 2 * rankRange;

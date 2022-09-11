@@ -23,7 +23,7 @@
                 <DataGridTextColumn Header="Dups" Binding="{Binding HiddenDuplicates}" Width="Auto" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>-->
-        <ListView ItemsSource="{Binding Libraries}">
+        <ListView ItemsSource="{Binding LibrariesCollection}">
             <ListView.View>
                 <GridView AllowsColumnReorder="True">
                     <GridViewColumn Width="Auto">
@@ -33,13 +33,13 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <!--<GridViewColumn Width="Auto" Header="Library">
+                    <GridViewColumn Width="Auto" Header="Library">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding LibrarySource.Name}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                    </GridViewColumn>-->
+                    </GridViewColumn>
                     <GridViewColumn Width="Auto" Header="Games">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
