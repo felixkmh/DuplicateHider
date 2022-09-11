@@ -4,7 +4,7 @@
 	<sys:String x:Key="LOC_DH_HideDuplicatesEntry">Скрыть дубликаты</sys:String>
 	<sys:String x:Key="LOC_DH_RevealDuplicatesEntry">Показать дубликаты</sys:String>
 	<sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntry">Добавить в исключения выделенные игры</sys:String>
-    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal"></sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal">Добавить в исключения выделенные игры и показать их</sys:String>
 	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry">Убрать из исключений выделенные игры</sys:String>
 	
 	<!--Message Boxes-->
@@ -25,10 +25,10 @@
     <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Расформировать группы выделенных игр</sys:String>
     <sys:String x:Key="LOC_DH_EditAllCopies">Изменить во всех копиях</sys:String>
     <sys:String x:Key="LOC_DH_CopyFieldsFromGame">Копировать данные в другие копии</sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTag"></sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTagHigh"></sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTagLow"></sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTagClear"></sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTag">Присвоить тег переопределения</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagHigh">Наивысший приоритет</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagLow">Низший приоритет</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagClear">Очистить тег во всех копиях</sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
@@ -62,7 +62,7 @@
     <sys:String x:Key="LOC_DH_GroupConflict">Несостыковки в группе</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderLabel">Сохранить порядок</sys:String>
     <sys:String x:Key="LOC_DH_Games">игр(ы)</sys:String>
-    <sys:String x:Key="LOC_DH_ExportIndex"></sys:String>
+    <sys:String x:Key="LOC_DH_ExportIndex">Экспортировать индекс</sys:String>
     <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve">Перечисленные игры конфликтуют с существующими польз. группами: 
 {0}
 		
@@ -86,13 +86,13 @@
     <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">Включено: вы не будете получать уведомление, если значки найдутся в текущей теме.</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve">Включено: Оценивать игры по занимаемому месту в списке групп.
 Отключено: Оценивать обычным способом по приоритету клиентов.</sys:String>
-    <sys:String x:Key="LOC_DH_UnionizeField"></sys:String>
-    <sys:String x:Key="LOC_DH_ExcludedTooltip"></sys:String>
+    <sys:String x:Key="LOC_DH_UnionizeField">Присвоить объединение копий на каждую из игр, в том числе исходную.</sys:String>
+    <sys:String x:Key="LOC_DH_ExcludedTooltip">Исключенные</sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Открыть папку с польз. значками</sys:String>
     <sys:String x:Key="LOC_DH_MoveButton">Переместить</sys:String>
     <sys:String x:Key="LOC_DH_KeepButton">Как есть</sys:String>
 
-    <sys:String x:Key="LOC_DH_RestartMessage"></sys:String>
+    <sys:String x:Key="LOC_DH_RestartMessage">Для смены некоторых настроек необходимо перезапустить Playnite.</sys:String>
     
 </ResourceDictionary>
