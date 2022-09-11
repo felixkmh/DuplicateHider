@@ -596,9 +596,9 @@ namespace DuplicateHider
             if (settings.UpdateAutomatically)
             {
                 var filter = GetGameFilter();
-                UpdateDuplicateState(e.AddedItems.Where(g => g.Name != "New Game").Filter(filter), Hidden);
+                UpdateDuplicateState(e.AddedItems.Where(g => g.Name != "New Game").Filter(filter).Where(g => e.AddedItems.Contains(g)), Hidden);
                 var nameFilter = GetNameFilter();
-                foreach (var game in e.RemovedItems.Filter<IEnumerable<Game>, IFilter<IEnumerable<Game>>>(filter))
+                foreach (var game in e.RemovedItems.Filter<IEnumerable<Game>, IFilter<IEnumerable<Game>>>(filter).Where(g => e.RemovedItems.Contains(g)))
                 {
                     var name = GetFilteredName(game, nameFilter);
                     if (Index.ContainsKey(name))
@@ -630,8 +630,8 @@ namespace DuplicateHider
             if (toUpdate.Count > 0)
             {
                 var filter = GetGameFilter();
-                var added = e.AddedItems.Where(g => g.Name != "New Game").Filter(filter);
-                var removed = e.RemovedItems.AsEnumerable().Filter(filter);
+                var added = e.AddedItems.Where(g => g.Name != "New Game").Filter(filter).Where(g => e.AddedItems.Contains(g));
+                var removed = e.RemovedItems.AsEnumerable().Filter(filter).Where(g => e.RemovedItems.Contains(g));
                 HashSet<Guid> updatedIds = removed.Concat(added).Select(u => u.Id).Concat(toUpdateGroups).ToHashSet();
                 PlayniteApi.Database.Games.Update(toUpdate);
                 UpdateGuidToCopiesDict(updatedIds);
