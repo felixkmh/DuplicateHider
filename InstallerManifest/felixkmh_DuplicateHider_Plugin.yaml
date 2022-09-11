@@ -1,5 +1,14 @@
 AddonId: 'felixkmh_DuplicateHider_Plugin'
 Packages:
+  - Version: 3.14.0
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2022-09-11
+    PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.14.0/felixkmh_DuplicateHider_Plugin_3_14_0.pext
+    Changelog:
+      - Added option to define tags as priority override tags
+      - Added GameAction as placeholder to DisplayString
+      - Some small fixes
+      - Updated localization
   - Version: 3.13.3
     RequiredApiVersion: 6.2.0
     ReleaseDate: 2022-07-25
