@@ -635,7 +635,16 @@ namespace DuplicateHider
                 HashSet<Guid> updatedIds = removed.Concat(added).Select(u => u.Id).Concat(toUpdateGroups).ToHashSet();
                 PlayniteApi.Database.Games.Update(toUpdate);
                 UpdateGuidToCopiesDict(updatedIds);
-                GroupUpdated?.Invoke(this, updatedIds);
+                if (Application.Current.Dispatcher.Thread.ManagedThreadId != Thread.CurrentThread.ManagedThreadId)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        GroupUpdated?.Invoke(this, updatedIds);
+                    });
+                } else
+                {
+                    GroupUpdated?.Invoke(this, updatedIds);
+                }
             }
             PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
             PlayniteApi.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
@@ -736,7 +745,17 @@ namespace DuplicateHider
                 }
             }
             UpdateGuidToCopiesDict(updatedIds);
-            GroupUpdated?.Invoke(this, updatedIds);
+            if (Application.Current.Dispatcher.Thread.ManagedThreadId != Thread.CurrentThread.ManagedThreadId)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    GroupUpdated?.Invoke(this, updatedIds);
+                });
+            }
+            else
+            {
+                GroupUpdated?.Invoke(this, updatedIds);
+            }
             PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
         }
 
