@@ -1,5 +1,11 @@
 AddonId: 'felixkmh_DuplicateHider_Plugin'
 Packages:
+  - Version: 3.14.2
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2022-09-12
+    PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.14.2/felixkmh_DuplicateHider_Plugin_3_14_2.pext
+    Changelog:
+      - Fixed exception when adding/removing/editing games
   - Version: 3.14.1
     RequiredApiVersion: 6.2.0
     ReleaseDate: 2022-09-11
