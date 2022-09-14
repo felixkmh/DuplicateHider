@@ -1,5 +1,11 @@
 AddonId: 'felixkmh_DuplicateHider_Plugin'
 Packages:
+  - Version: 3.14.3
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2022-09-14
+    PackageUrl: https://github.com/felixkmh/DuplicateHider/releases/download/v3.14.3/felixkmh_DuplicateHider_Plugin_3_14_3.pext
+    Changelog:
+      - Update priority property lists when opening settings
   - Version: 3.14.2
     RequiredApiVersion: 6.2.0
     ReleaseDate: 2022-09-12
