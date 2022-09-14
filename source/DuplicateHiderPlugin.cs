@@ -852,6 +852,7 @@ namespace DuplicateHider
 
         public override UserControl GetSettingsView(bool firstRunSettings)
         {
+            Settings.PriorityProperties?.AsParallel().ForEach(p => p.Update(PlayniteApi));
             SettingsView = new DuplicateHiderSettingsView();
             return SettingsView;
         }

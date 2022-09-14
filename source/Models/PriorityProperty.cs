@@ -19,59 +19,17 @@ namespace DuplicateHider.Models
 {
     public class PriorityProperty : ObservableObject, IComparer<Game>
     {
-        private string propertyName = string.Empty;
-        public string PropertyName { get => propertyName; set => SetValue(ref propertyName, value); }
-
-        private Lazy<Type> propertyType;
-        private Lazy<PropertyInfo> propertyInfo;
-
-        private PropertyInfo InitPropertyInfo()
-        {
-            return typeof(Game).GetProperty(PropertyName);
-        }
-
-        private Type InitPropertyType()
-        {
-            var type = propertyInfo.Value.PropertyType;
-            type = Nullable.GetUnderlyingType(type) ?? type;
-            return type;
-
-        }
-
         private ListSortDirection direction = ListSortDirection.Ascending;
-        public ListSortDirection Direction { get => direction;
-            set
-            {
-                var oldValue = Direction;
-                if (oldValue != value)
-                {
-                    SetValue(ref direction, value);
-                    OnPropertyChanged(nameof(IsAscending));
-                }
-            }
-        }
-
-        private Lazy<ObservableCollection<object>> priorityObjects;
-        [JsonIgnore]
-        public ObservableCollection<object> PriorityObjects { get => priorityObjects.Value; }
-
+        private bool? isBool = null;
+        private bool? isComparable = null;
+        private Lazy<bool> isEnumerable;
+        private bool? isList = null;
         private ObservableCollection<string> priorityList = new ObservableCollection<string>();
-        public ObservableCollection<string> PriorityList { get => priorityObjects.IsValueCreated ? PriorityObjects.Select(o => o.ToString()).ToObservable() : priorityList; set => SetValue(ref priorityList, value); }
-
-        [JsonIgnore]
-        public bool IsAscending
-        {
-            get => Direction == ListSortDirection.Ascending;
-            set
-            {
-                var oldValue = IsAscending;
-                if (oldValue != value)
-                {
-                    Direction = value ? ListSortDirection.Ascending : ListSortDirection.Descending;
-                }
-            }
-        }
-
+        private Lazy<ObservableCollection<object>> priorityObjects;
+        private Lazy<HashSet<object>> prioritySet;
+        private Lazy<PropertyInfo> propertyInfo;
+        private string propertyName = string.Empty;
+        private Lazy<Type> propertyType;
         public PriorityProperty()
         {
             propertyInfo = new Lazy<PropertyInfo>(InitPropertyInfo);
@@ -94,7 +52,8 @@ namespace DuplicateHider.Models
                     }
                     if (tryParseMethod != null)
                     {
-                        return priorityList.Select(priority => {
+                        return priorityList.Select(priority =>
+                        {
                             object value = null;
                             object[] parameters = new object[] { priority, value };
                             tryParseMethod.Invoke(null, BindingFlags.Static, null, parameters, null);
@@ -135,7 +94,8 @@ namespace DuplicateHider.Models
                             }
                         }
                     }
-                } else
+                }
+                else
                 {
                     foreach (var game in api.Database.Games)
                     {
@@ -143,13 +103,14 @@ namespace DuplicateHider.Models
                         if (val != null)
                         {
                             set.Add(val);
-                        } else if (propertyType.Value.IsValueType)
+                        }
+                        else if (propertyType.Value.IsValueType)
                         {
                             set.Add(Activator.CreateInstance(type));
                         }
                     }
                 }
-                
+
                 foreach (var item in set)
                 {
                     AddValue(item);
@@ -157,35 +118,37 @@ namespace DuplicateHider.Models
             }
         }
 
+        public ListSortDirection Direction
+        {
+            get => direction;
+            set
+            {
+                var oldValue = Direction;
+                if (oldValue != value)
+                {
+                    SetValue(ref direction, value);
+                    OnPropertyChanged(nameof(IsAscending));
+                }
+            }
+        }
+
         [JsonIgnore]
         public int DirectionMulitplier => Direction == ListSortDirection.Ascending ? 1 : -1;
 
-        private bool? isList = null;
         [JsonIgnore]
-        public bool IsList 
-        { 
-            get
+        public bool IsAscending
+        {
+            get => Direction == ListSortDirection.Ascending;
+            set
             {
-                if (isList == null)
+                var oldValue = IsAscending;
+                if (oldValue != value)
                 {
-                    isList = false;
-                    var type = typeof(Game).GetProperty(PropertyName).PropertyType;
-                    if (type == typeof(Guid))
-                    {
-                        isList = true;
-                    } else if (type.IsGenericType && type.GetGenericArguments()[0] == typeof(Guid))
-                    {
-                        isList = true;
-                    } else
-                    {
-                        isList = IsBool || PropertyName == nameof(Game.Version);
-                    } 
+                    Direction = value ? ListSortDirection.Ascending : ListSortDirection.Descending;
                 }
-                return isList ?? default;
-            } 
+            }
         }
 
-        private bool? isBool = null;
         [JsonIgnore]
         public bool IsBool
         {
@@ -199,7 +162,6 @@ namespace DuplicateHider.Models
             }
         }
 
-        private bool? isComparable = null;
         [JsonIgnore]
         public bool IsComparable
         {
@@ -211,7 +173,8 @@ namespace DuplicateHider.Models
                     if (IsBool || IsList)
                     {
                         isComparable = false;
-                    } else
+                    }
+                    else
                     {
                         System.Reflection.PropertyInfo propertyInfo = typeof(Game).GetProperty(PropertyName);
                         var type = propertyInfo.PropertyType;
@@ -228,26 +191,93 @@ namespace DuplicateHider.Models
             }
         }
 
-        private Lazy<bool> isEnumerable;
-        private Lazy<HashSet<object>> prioritySet;
-
-        private bool AddValue(object value)
+        [JsonIgnore]
+        public bool IsList
         {
-            if (prioritySet.Value.Add(value))
+            get
             {
-                if (Application.Current.Dispatcher.Thread.ManagedThreadId != Thread.CurrentThread.ManagedThreadId)
+                if (isList == null)
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
+                    isList = false;
+                    var type = typeof(Game).GetProperty(PropertyName).PropertyType;
+                    if (type == typeof(Guid))
                     {
-                        PriorityObjects.Add(value);
-                    });
-                } else
-                {
-                    PriorityObjects.Add(value);
+                        isList = true;
+                    }
+                    else if (type.IsGenericType && type.GetGenericArguments()[0] == typeof(Guid))
+                    {
+                        isList = true;
+                    }
+                    else
+                    {
+                        isList = IsBool || PropertyName == nameof(Game.Version);
+                    }
                 }
-                return true;
+                return isList ?? default;
             }
-            return false;
+        }
+
+        public ObservableCollection<string> PriorityList { get => priorityObjects.IsValueCreated ? PriorityObjects.Select(o => o.ToString()).ToObservable() : priorityList; set => SetValue(ref priorityList, value); }
+        [JsonIgnore]
+        public ObservableCollection<object> PriorityObjects { get => priorityObjects.Value; }
+
+        public string PropertyName { get => propertyName; set => SetValue(ref propertyName, value); }
+
+        public void Update(IPlayniteAPI api)
+        {
+            HashSet<object> set = new HashSet<object>();
+            if (IsBool)
+            {
+                set.Add(true);
+                set.Add(false);
+            }
+            else
+            {
+                var type = propertyType.Value;
+                if (type != typeof(DateTime) && !type.IsNumberType() && IsList)
+                {
+                    if (isEnumerable.Value)
+                    {
+                        foreach (var game in api.Database.Games)
+                        {
+                            var val = propertyInfo.Value.GetValue(game);
+                            if (val != null)
+                            {
+                                if (val is IEnumerable enumerable)
+                                {
+                                    foreach (var item in enumerable)
+                                    {
+                                        set.Add(item);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (var game in api.Database.Games)
+                        {
+                            var val = propertyInfo.Value.GetValue(game);
+                            if (val != null)
+                            {
+                                set.Add(val);
+                            }
+                            else if (propertyType.Value.IsValueType)
+                            {
+                                set.Add(Activator.CreateInstance(type));
+                            }
+                        }
+                    }
+                }
+
+                foreach (var value in prioritySet.Value.ToArray())
+                {
+                    if (!set.Contains(value))
+                    {
+                        RemoveValue(value);
+                    }
+                }
+            }
         }
 
         public int Compare(Game a, Game b)
@@ -296,7 +326,8 @@ namespace DuplicateHider.Models
                     {
                         AddValue(valueA ?? Activator.CreateInstance(propertyType.Value));
                         AddValue(valueB ?? Activator.CreateInstance(propertyType.Value));
-                    } else
+                    }
+                    else
                     {
                         if (valueA == null && valueB == null) return 0;
                         if (valueA != null && valueB == null)
@@ -312,7 +343,7 @@ namespace DuplicateHider.Models
                     }
                     return PriorityObjects.IndexOf(valueA).CompareTo(PriorityObjects.IndexOf(valueB));
                 }
-                
+
             }
             if (IsBool)
             {
@@ -339,6 +370,59 @@ namespace DuplicateHider.Models
                 return valueA.CompareTo(valueB) * DirectionMulitplier;
             }
             return 0;
+        }
+
+        private bool AddValue(object value)
+        {
+            if (prioritySet.Value.Add(value))
+            {
+                if (Application.Current.Dispatcher.Thread.ManagedThreadId != Thread.CurrentThread.ManagedThreadId)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        PriorityObjects.Add(value);
+                    });
+                }
+                else
+                {
+                    PriorityObjects.Add(value);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private bool RemoveValue(object value)
+        {
+            if (prioritySet.Value.Remove(value))
+            {
+                if (Application.Current.Dispatcher.Thread.ManagedThreadId != Thread.CurrentThread.ManagedThreadId)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        PriorityObjects.Remove(value);
+                    });
+                }
+                else
+                {
+                    PriorityObjects.Remove(value);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private PropertyInfo InitPropertyInfo()
+        {
+            return typeof(Game).GetProperty(PropertyName);
+        }
+
+        private Type InitPropertyType()
+        {
+            var type = propertyInfo.Value.PropertyType;
+            type = Nullable.GetUnderlyingType(type) ?? type;
+            return type;
+
         }
     }
 }
