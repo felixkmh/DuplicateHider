@@ -270,6 +270,11 @@ namespace DuplicateHider.Models
                     }
                 }
 
+                foreach(var value in set)
+                {
+                    AddValue(value);
+                }
+
                 foreach (var value in prioritySet.Value.ToArray())
                 {
                     if (!set.Contains(value))
