@@ -71,6 +71,7 @@ namespace DuplicateHider.Controls
                     if (data.IsCurrent)
                     {
                         currentGame = data.Game;
+                        break;
                     }
                 }
             }
