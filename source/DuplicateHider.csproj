@@ -40,7 +40,7 @@
       <HintPath>..\..\QuickSearch\source\bin\$(Configuration)\QuickSearchSDK.Attributes.dll</HintPath>
     </Reference>
     <Reference Include="StartPage.SDK">
-      <HintPath>..\..\StartPage-for-Playnite\source\StartPage.SDK\bin\Release\StartPage.SDK.dll</HintPath>
+      <HintPath>..\..\StartPage-for-Playnite\source\StartPage.SDK\bin\$(Configuration)\net462\StartPage.SDK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
