@@ -34,10 +34,10 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="QuickSearchSDK">
-      <HintPath>..\..\QuickSearch\source\bin\Release\QuickSearchSDK.dll</HintPath>
+      <HintPath>..\..\QuickSearch\source\bin\$(Configuration)\QuickSearchSDK.dll</HintPath>
     </Reference>
     <Reference Include="QuickSearchSDK.Attributes">
-      <HintPath>..\..\QuickSearch\source\bin\Release\QuickSearchSDK.Attributes.dll</HintPath>
+      <HintPath>..\..\QuickSearch\source\bin\$(Configuration)\QuickSearchSDK.Attributes.dll</HintPath>
     </Reference>
     <Reference Include="StartPage.SDK">
       <HintPath>..\..\StartPage-for-Playnite\source\StartPage.SDK\bin\Release\StartPage.SDK.dll</HintPath>
