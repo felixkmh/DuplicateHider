@@ -44,52 +44,57 @@
 	<sys:String x:Key="LOC_DH_AutomaticUpdate">Αυτόματη Ενημέρωση</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopies">Εμφάνιση αντιγράφων στο μενού παιχνιδιού</sys:String>
 	<sys:String x:Key="LOC_DH_PrioritizeNewerGames">Προτεραιότητα σε νεότερο παιχνίδι από την ίδια πηγή</sys:String>
-	<sys:String x:Key="LOC_DH_IncludedPlatforms"></sys:String>
-	<sys:String x:Key="LOC_DH_ExcludedSources"></sys:String>
-	<sys:String x:Key="LOC_DH_ExcludedCategories"></sys:String>
-	<sys:String x:Key="LOC_DH_IgnoredGames"></sys:String>
-    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGames"></sys:String>
-    <sys:String x:Key="LOC_DH_DisplayString"></sys:String>
-    <sys:String x:Key="LOC_DH_CustomRulesHeader"></sys:String>
-    <sys:String x:Key="LOC_DH_EnableUIIntegration"></sys:String>
-    <sys:String x:Key="LOC_DH_EnableThemeIcons"></sys:String>
-    <sys:String x:Key="LOC_DH_PreferUserIcons"></sys:String>
-    <sys:String x:Key="LOC_DH_ShowSingleIcon"></sys:String>
-    <sys:String x:Key="LOC_DH_SuppressNotification"></sys:String>
-    <sys:String x:Key="LOC_DH_CustomGroups"></sys:String>
-    <sys:String x:Key="LOC_DH_CustomGroupName"></sys:String>
-    <sys:String x:Key="LOC_DH_CustomGroupNamePrompt"></sys:String>
-    <sys:String x:Key="LOC_DH_GroupConflict"></sys:String>
-    <sys:String x:Key="LOC_DH_KeepOrderLabel"></sys:String>
-    <sys:String x:Key="LOC_DH_Games"></sys:String>
-    <sys:String x:Key="LOC_DH_ExportIndex"></sys:String>
-    <sys:String x:Key="LOC_DH_PriorityTagsDescription"></sys:String>
-    <sys:String x:Key="LOC_DH_PriorityAddHighTag"></sys:String>
-    <sys:String x:Key="LOC_DH_PriorityAddLowTag"></sys:String>
-    <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve"></sys:String>
-    <sys:String x:Key="LOC_DH_HiddenTag"></sys:String>
-    <sys:String x:Key="LOC_DH_RevealedTag"></sys:String>
-    <sys:String x:Key="LOC_DH_HighPrioTag"></sys:String>
-    <sys:String x:Key="LOC_DH_LowPrioTag"></sys:String>
+	<sys:String x:Key="LOC_DH_IncludedPlatforms">Συμπεριλαμβανόμενες Πλατφόρμες:</sys:String>
+	<sys:String x:Key="LOC_DH_ExcludedSources">Εξαιρούμενες πηγές:</sys:String>
+	<sys:String x:Key="LOC_DH_ExcludedCategories">Εξαιρούμενες κατηγορίες:</sys:String>
+	<sys:String x:Key="LOC_DH_IgnoredGames">Αγνοημένα παιχνίδια:</sys:String>
+    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGames">Χειροκίνητη προσθήκη κρυμμένων/αποκαλυφθέντων παιχνιδιών</sys:String>
+    <sys:String x:Key="LOC_DH_DisplayString">Εμφάνιση συμβολοσειράς για άλλα αντίγραφα:</sys:String>
+    <sys:String x:Key="LOC_DH_CustomRulesHeader">Καθορίστε τους κανόνες που εφαρμόζονται στα ονόματα παιχνιδιών πριν από την περαιτέρω επεξεργασία. Οι κανόνες εφαρμόζονται με τη σειρά που εμφανίζονται στη λίστα.</sys:String>
+    <sys:String x:Key="LOC_DH_EnableUIIntegration">Ενεργοποίηση ενσωμάτωσης UI</sys:String>
+    <sys:String x:Key="LOC_DH_EnableThemeIcons">Ενεργοποίηση εικονιδίων θέματος</sys:String>
+    <sys:String x:Key="LOC_DH_PreferUserIcons">Προτίμηση Εικονιδίων Χρήστη</sys:String>
+    <sys:String x:Key="LOC_DH_ShowSingleIcon">Εμφάνιση εικονιδίου αν υπάρχει μόνο ένα αντίγραφο</sys:String>
+    <sys:String x:Key="LOC_DH_SuppressNotification">Απενεργοποίηση ειδοποίησης εικονιδίου θέματος</sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroups">Προσαρμοσμένες Ομάδες</sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupName">Προσαρμοσμένο Όνομα Ομάδας</sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupNamePrompt">Παρακαλώ επιλέξτε ένα όνομα για τη νέα ομάδα:</sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflict">Ομαδικές συγκρούσεις</sys:String>
+    <sys:String x:Key="LOC_DH_KeepOrderLabel">Διατήρηση σειράς</sys:String>
+    <sys:String x:Key="LOC_DH_Games">Παιχνίδια</sys:String>
+    <sys:String x:Key="LOC_DH_ExportIndex">Εξαγωγή Ευρετηρίου</sys:String>
+    <sys:String x:Key="LOC_DH_PriorityTagsDescription">Οι ετικέτες που προστίθενται εδώ έχουν την ίδια χρήση όπως οι ετικέτες &quot;[DH] Υψηλή&quot; και &quot;[DH] Χαμηλή&quot;.</sys:String>
+    <sys:String x:Key="LOC_DH_PriorityAddHighTag">Προσθήκη ετικετών υψηλής προτεραιότητας</sys:String>
+    <sys:String x:Key="LOC_DH_PriorityAddLowTag">Προσθήκη ετικετών χαμηλής προτεραιότητας</sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve">Τα ακόλουθα παιχνίδια έρχονται σε σύγκρουση με υπάρχουσες προσαρμοσμένες ομάδες: 
+{0}
+		
+Θέλετε να μετακινήσετε αυτά τα παιχνίδια από τις παλιές τους ομάδες στις νέες, να διατηρήσετε τα συγκρουόμενα παιχνίδια στις παλιές τους ομάδες ή να ακυρώσετε τη δημιουργία ομάδας;
+    </sys:String>
+    <sys:String x:Key="LOC_DH_HiddenTag">[DH] Κρυφό</sys:String>
+    <sys:String x:Key="LOC_DH_RevealedTag">[DH] Αποκαλύφθηκε</sys:String>
+    <sys:String x:Key="LOC_DH_HighPrioTag">[DH] Υψηλή</sys:String>
+    <sys:String x:Key="LOC_DH_LowPrioTag">[DH] Χαμηλή</sys:String>
     <!--Tool Tips-->
-	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip"></sys:String>
-	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip"></sys:String>
-	<sys:String x:Key="LOC_DH_PrioritizeNewerGamesTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGamesTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_DisplayStringTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_EnableUIIntegrationTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_EnableThemeIconsTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_PreferUserIconsTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_ShowSingleIconTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_SuppressNotificationTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve"></sys:String>
-    <sys:String x:Key="LOC_DH_UnionizeField"></sys:String>
-    <sys:String x:Key="LOC_DH_ExcludedTooltip"></sys:String>
+	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">Αν είναι ενεργοποιημένο, το DuplicateHider θα επανεκτιμά την κατάταξη ενός αντιγράφου όταν αυτό αλλάζει, διατηρώντας πάντα ορατό το αντίγραφο με την υψηλότερη κατάταξη, ενώ αποκρύπτει όλα τα άλλα αντίγραφα.</sys:String>
+	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">Εάν είναι ενεργοποιημένο, άλλα αντίγραφα ενός παιχνιδιού μπορούν να ξεκινήσουν χρησιμοποιώντας το μενού περιβάλλοντος ενός παιχνιδιού.</sys:String>
+	<sys:String x:Key="LOC_DH_PrioritizeNewerGamesTooltip">Ενεργοποίηση: Προτιμήστε το νεότερο παιχνίδι αν οι βαθμολογίες είναι ίσες. Απενεργοποιημένο: Προτιμήστε το παλαιότερο παιχνίδι αν οι βαθμολογίες είναι ίσες.</sys:String>
+    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGamesTooltip">Εάν είναι ενεργοποιημένο, τα παιχνίδια που αποκρύπτονται ή αποκαλύπτονται με άλλα μέσα εκτός από το DuplicateHider θα προστίθενται στη λίστα αγνοουμένων.</sys:String>
+    <sys:String x:Key="LOC_DH_DisplayStringTooltip">Κάντε δεξί κλικ για να εισαγάγετε μεταβλητές τοποθέτησης.</sys:String>
+    <sys:String x:Key="LOC_DH_EnableUIIntegrationTooltip">Ενεργοποιεί τα προσαρμοσμένα στοιχεία του περιβάλλοντος εργασίας ανάλογα με το αν υποστηρίζονται από το τρέχον θέμα.</sys:String>
+    <sys:String x:Key="LOC_DH_EnableThemeIconsTooltip">Αν είναι ενεργοποιημένο, τα εικονίδια που περιλαμβάνονται στο τρέχον θέμα χρησιμοποιούνται για τα προσαρμοσμένα στοιχεία του περιβάλλοντος εργασίας.</sys:String>
+    <sys:String x:Key="LOC_DH_PreferUserIconsTooltip">Εάν είναι ενεργοποιημένη, τα εικονίδια που τοποθετούνται στο φάκελο εικονιδίων χρήστη έχουν πάντα προτεραιότητα κατά την αναζήτηση εικονιδίων πηγής.</sys:String>
+    <sys:String x:Key="LOC_DH_ShowSingleIconTooltip">Υποδεικνύει στο Θέμα ότι δε θέλετε να έχετε προσαρμοσμένα στοιχεία εμφάνισης εάν δε υπάρχουν επιπλέον αντίγραφα ενός παιχνιδιού.</sys:String>
+    <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">Εάν είναι ενεργοποιημένο, δεν θα ειδοποιείστε εάν τα εικονίδια θέματος βρίσκονται στο τρέχον θέμα.</sys:String>
+    <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve">Ενεργοποιημένο: Βαθμολογία παιχνιδιών με βάση τη θέση στη λίστα ομάδων.
+Απενεργοποιημένο: Βαθμολόγηση με την κανονική μέθοδο βαθμολόγησης βάσει των προτεραιοτήτων της πηγής.</sys:String>
+    <sys:String x:Key="LOC_DH_UnionizeField">Αναθέστε την ενοποίηση σε όλα τα αντίγραφα σε κάθε αντίγραφο, συμπεριλαμβανομένου του αρχικού παιχνιδιού.</sys:String>
+    <sys:String x:Key="LOC_DH_ExcludedTooltip">Εξαιρούνται</sys:String>
     <!--Buttons-->
-    <sys:String x:Key="LOC_DH_OpenUserIconFolderButton"></sys:String>
-    <sys:String x:Key="LOC_DH_MoveButton"></sys:String>
-    <sys:String x:Key="LOC_DH_KeepButton"></sys:String>
+    <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Άνοιγμα φακέλου εικονιδίων χρήστη</sys:String>
+    <sys:String x:Key="LOC_DH_MoveButton">Μετακίνηση</sys:String>
+    <sys:String x:Key="LOC_DH_KeepButton">Διατήρηση</sys:String>
 
-    <sys:String x:Key="LOC_DH_RestartMessage"></sys:String>
+    <sys:String x:Key="LOC_DH_RestartMessage">Ορισμένες αλλαγές απαιτούν την επανεκκίνηση του Playnite για να τεθούν σε ισχύ.</sys:String>
     
 </ResourceDictionary>
