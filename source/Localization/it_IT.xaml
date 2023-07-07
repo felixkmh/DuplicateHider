@@ -4,7 +4,7 @@
 	<sys:String x:Key="LOC_DH_HideDuplicatesEntry">Nascondi Duplicati</sys:String>
 	<sys:String x:Key="LOC_DH_RevealDuplicatesEntry">Mostra Duplicati</sys:String>
 	<sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntry">Aggiungi i Giochi selezionati alla Lista Ignorati</sys:String>
-    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal"></sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal">Aggiungere i giochi selezionati all'elenco degli ignoranti e rivelarli</sys:String>
 	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry">Rimuovi i Giochi selezionati dalla Lista Ignorati</sys:String>
 	
 	<!--Message Boxes-->
@@ -25,10 +25,10 @@ Clicca &quot;{0}&quot; per continuare o &quot;{1}&quot; per annullare questa ope
     <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Sciogli i gruppi dei Giochi selezionati</sys:String>
     <sys:String x:Key="LOC_DH_EditAllCopies">Modifica tutte le Copie</sys:String>
     <sys:String x:Key="LOC_DH_CopyFieldsFromGame">Copia Informazione alle altre Copie</sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTag"></sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTagHigh"></sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTagLow"></sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTagClear"></sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTag">Assegnare Priorità Override Tag</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagHigh">Priorità massima</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagLow">Priorità bassissima</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagClear">Cancellare il Tag Override per tutte le copie</sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
@@ -62,10 +62,10 @@ Clicca &quot;{0}&quot; per continuare o &quot;{1}&quot; per annullare questa ope
     <sys:String x:Key="LOC_DH_GroupConflict">Conflitti tra Gruppi</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderLabel">Mantieni l'ordine</sys:String>
     <sys:String x:Key="LOC_DH_Games">Giochi</sys:String>
-    <sys:String x:Key="LOC_DH_ExportIndex"></sys:String>
-    <sys:String x:Key="LOC_DH_PriorityTagsDescription"></sys:String>
-    <sys:String x:Key="LOC_DH_PriorityAddHighTag"></sys:String>
-    <sys:String x:Key="LOC_DH_PriorityAddLowTag"></sys:String>
+    <sys:String x:Key="LOC_DH_ExportIndex">Esportare Indice</sys:String>
+    <sys:String x:Key="LOC_DH_PriorityTagsDescription">I tag aggiunti qui hanno lo stesso effetto dei tag &quot;[DH] High&quot; e &quot;[DH] Low&quot;.</sys:String>
+    <sys:String x:Key="LOC_DH_PriorityAddHighTag">Aggiungere tag ad alta priorità</sys:String>
+    <sys:String x:Key="LOC_DH_PriorityAddLowTag">Aggiungere tag a bassa priorità</sys:String>
     <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve">I seguenti giochi sono in conflitto con i gruppi personalizzati esistenti: 
 {0}
 		
@@ -88,13 +88,13 @@ Vuoi spostare questi giochi dai loro vecchi gruppi a quello nuovo, mantenere i g
     <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">Se abilitato, non riceverai notifiche se le Icone del Tema sono trovate nel Tema corrente.</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve">Abilitato: Dai un punteggio ai giochi in base alla posizione nella lista del gruppo.
 Disabilitato: Dai un punteggio usando il normale metodo di assegnazione in base alle priorità fonte.</sys:String>
-    <sys:String x:Key="LOC_DH_UnionizeField"></sys:String>
-    <sys:String x:Key="LOC_DH_ExcludedTooltip"></sys:String>
+    <sys:String x:Key="LOC_DH_UnionizeField">Assegnare unione su tutte le copie ad ogni copia, incluso il gioco sorgente.</sys:String>
+    <sys:String x:Key="LOC_DH_ExcludedTooltip">Escluso</sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Apri la cartella icone dell'utente</sys:String>
     <sys:String x:Key="LOC_DH_MoveButton">Sposta</sys:String>
     <sys:String x:Key="LOC_DH_KeepButton">Tieni</sys:String>
 
-    <sys:String x:Key="LOC_DH_RestartMessage"></sys:String>
+    <sys:String x:Key="LOC_DH_RestartMessage">Alcune modifiche richiedono il riavvio di Playnite per avere effetto.</sys:String>
     
 </ResourceDictionary>
