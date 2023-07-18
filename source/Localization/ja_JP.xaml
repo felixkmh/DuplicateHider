@@ -4,12 +4,12 @@
 	<sys:String x:Key="LOC_DH_HideDuplicatesEntry">重複を隠す</sys:String>
 	<sys:String x:Key="LOC_DH_RevealDuplicatesEntry">重複を表示</sys:String>
 	<sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntry">選択したゲームを除外リストに追加</sys:String>
-    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal"></sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal">選択したゲームを無視リストに追加して表示</sys:String>
 	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry">選択したゲームを除外リストから削除</sys:String>
 	
 	<!--Message Boxes-->
-    <sys:String x:Key="LOC_DH_NGamesHidden"></sys:String>
-    <sys:String x:Key="LOC_DH_NGamesRevealed"></sys:String>
+    <sys:String x:Key="LOC_DH_NGamesHidden">隠されたゲーム: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_NGamesRevealed">表示されたゲーム: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">グループ &quot;{1}&quot; 次のゲームを追加しました: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">グループからゲームを削除しました: {0}</sys:String>
     <sys:String x:Key="LOC_DH_N_GroupsDisbanded">グループを解除しました: {0}</sys:String>
@@ -19,14 +19,14 @@
 	<sys:String x:Key="LOC_DH_N_OtherCopies">その他のコピー: {0}</sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup">選択したゲームを新しいグループに追加</sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup">選択したゲームを既存のグループに追加</sys:String>
-    <sys:String x:Key="LOC_DH_RemoveFromExistingGroup"></sys:String>
+    <sys:String x:Key="LOC_DH_RemoveFromExistingGroup">選択したゲームをグループから削除</sys:String>
     <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">選択したゲームのグループを解除</sys:String>
     <sys:String x:Key="LOC_DH_EditAllCopies">すべてのコピーを編集</sys:String>
     <sys:String x:Key="LOC_DH_CopyFieldsFromGame">情報を他のコピーにコピー</sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTag"></sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTagHigh"></sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTagLow"></sys:String>
-    <sys:String x:Key="LOC_DH_AssignOverrideTagClear"></sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTag">優先度の上書きタグの割り当て</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagHigh">最高優先度</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagLow">最低優先度</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagClear">すべてのコピーの上書きタグを消去</sys:String>
 	
 	<!--Settings-->
 	<!--Tabs-->
@@ -35,19 +35,19 @@
 	<sys:String x:Key="LOC_DH_UIIntegrationTab">UI統合</sys:String>
 	<!--Labels-->
     <sys:String x:Key="LOC_DH_Updating">更新中...</sys:String>
-    <sys:String x:Key="LOC_DH_GameFields"></sys:String>
-    <sys:String x:Key="LOC_DH_SourceGames"></sys:String>
+    <sys:String x:Key="LOC_DH_GameFields">ゲームフィールド</sys:String>
+    <sys:String x:Key="LOC_DH_SourceGames">ソースゲーム</sys:String>
     <sys:String x:Key="LOC_DH_Warning">警告</sys:String>
 	<sys:String x:Key="LOC_DH_Priorities">優先順位</sys:String>
-	<sys:String x:Key="LOC_DH_AutomaticUpdate"></sys:String>
-	<sys:String x:Key="LOC_DH_ShowOtherCopies"></sys:String>
-	<sys:String x:Key="LOC_DH_PrioritizeNewerGames"></sys:String>
+	<sys:String x:Key="LOC_DH_AutomaticUpdate">自動的に更新</sys:String>
+	<sys:String x:Key="LOC_DH_ShowOtherCopies">ゲームメニューにコピーを表示</sys:String>
+	<sys:String x:Key="LOC_DH_PrioritizeNewerGames">同じソースからの新しいゲームを優先する</sys:String>
 	<sys:String x:Key="LOC_DH_IncludedPlatforms">含めるプラットフォーム:</sys:String>
 	<sys:String x:Key="LOC_DH_ExcludedSources">除外するソース:</sys:String>
 	<sys:String x:Key="LOC_DH_ExcludedCategories">除外するカテゴリー:</sys:String>
-	<sys:String x:Key="LOC_DH_IgnoredGames">無視されたゲーム:</sys:String>
-    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGames"></sys:String>
-    <sys:String x:Key="LOC_DH_DisplayString"></sys:String>
+	<sys:String x:Key="LOC_DH_IgnoredGames">無視したゲーム:</sys:String>
+    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGames">手動で非表示/表示ゲームを追加</sys:String>
+    <sys:String x:Key="LOC_DH_DisplayString">他のコピーの表示文字列:</sys:String>
     <sys:String x:Key="LOC_DH_CustomRulesHeader">処理を行う前に、ゲーム名に適用されるルールを定義します。ルールはリストに表示された順に適用されます。</sys:String>
     <sys:String x:Key="LOC_DH_EnableUIIntegration">UI 統合を有効にする</sys:String>
     <sys:String x:Key="LOC_DH_EnableThemeIcons">テーマアイコンを有効にする</sys:String>
@@ -56,38 +56,38 @@
     <sys:String x:Key="LOC_DH_SuppressNotification">テーマアイコンの通知を無効にする</sys:String>
     <sys:String x:Key="LOC_DH_CustomGroups">カスタムグループ</sys:String>
     <sys:String x:Key="LOC_DH_CustomGroupName">カスタムグループ名</sys:String>
-    <sys:String x:Key="LOC_DH_CustomGroupNamePrompt"></sys:String>
-    <sys:String x:Key="LOC_DH_GroupConflict"></sys:String>
-    <sys:String x:Key="LOC_DH_KeepOrderLabel"></sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupNamePrompt">新しいグループの名前を選択してください:</sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflict">グループの競合</sys:String>
+    <sys:String x:Key="LOC_DH_KeepOrderLabel">順序を保つ</sys:String>
     <sys:String x:Key="LOC_DH_Games">ゲーム</sys:String>
-    <sys:String x:Key="LOC_DH_ExportIndex"></sys:String>
+    <sys:String x:Key="LOC_DH_ExportIndex">インデックスをエクスポート</sys:String>
     <sys:String x:Key="LOC_DH_PriorityTagsDescription"></sys:String>
-    <sys:String x:Key="LOC_DH_PriorityAddHighTag"></sys:String>
-    <sys:String x:Key="LOC_DH_PriorityAddLowTag"></sys:String>
+    <sys:String x:Key="LOC_DH_PriorityAddHighTag">高優先度のタグを追加</sys:String>
+    <sys:String x:Key="LOC_DH_PriorityAddLowTag">低優先度のタグを追加</sys:String>
     <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve"></sys:String>
-    <sys:String x:Key="LOC_DH_HiddenTag"></sys:String>
-    <sys:String x:Key="LOC_DH_RevealedTag"></sys:String>
-    <sys:String x:Key="LOC_DH_HighPrioTag"></sys:String>
-    <sys:String x:Key="LOC_DH_LowPrioTag"></sys:String>
+    <sys:String x:Key="LOC_DH_HiddenTag">[DH] 非表示</sys:String>
+    <sys:String x:Key="LOC_DH_RevealedTag">[DH] 表示</sys:String>
+    <sys:String x:Key="LOC_DH_HighPrioTag">[DH] 高</sys:String>
+    <sys:String x:Key="LOC_DH_LowPrioTag">[DH] 低</sys:String>
     <!--Tool Tips-->
 	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip"></sys:String>
-	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip"></sys:String>
+	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">有効にすると、ゲームのコンテキストメニューを使用して、ゲームの他のコピーを開始できます。</sys:String>
 	<sys:String x:Key="LOC_DH_PrioritizeNewerGamesTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGamesTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_DisplayStringTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_EnableUIIntegrationTooltip"></sys:String>
+    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGamesTooltip">有効にすると、DuplicateHider 以外の方法で非表示または表示されたりしたゲームが無視リストに追加されます。</sys:String>
+    <sys:String x:Key="LOC_DH_DisplayStringTooltip">右クリックしてプレースホルダ変数を挿入します。</sys:String>
+    <sys:String x:Key="LOC_DH_EnableUIIntegrationTooltip">カスタム UI 要素が現在のテーマでサポートされているかどうかに応じて有効にします。</sys:String>
     <sys:String x:Key="LOC_DH_EnableThemeIconsTooltip"></sys:String>
     <sys:String x:Key="LOC_DH_PreferUserIconsTooltip"></sys:String>
     <sys:String x:Key="LOC_DH_ShowSingleIconTooltip"></sys:String>
-    <sys:String x:Key="LOC_DH_SuppressNotificationTooltip"></sys:String>
+    <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">有効にすると、現在のテーマにテーマアイコンがあっても通知されなくなります。</sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve"></sys:String>
     <sys:String x:Key="LOC_DH_UnionizeField"></sys:String>
     <sys:String x:Key="LOC_DH_ExcludedTooltip">除外</sys:String>
     <!--Buttons-->
     <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">ユーザーアイコンフォルダーを開く</sys:String>
-    <sys:String x:Key="LOC_DH_MoveButton"></sys:String>
-    <sys:String x:Key="LOC_DH_KeepButton"></sys:String>
+    <sys:String x:Key="LOC_DH_MoveButton">移動</sys:String>
+    <sys:String x:Key="LOC_DH_KeepButton">保持</sys:String>
 
-    <sys:String x:Key="LOC_DH_RestartMessage"></sys:String>
+    <sys:String x:Key="LOC_DH_RestartMessage">いくつかの変更を有効にするには、Playnite の再起動が必要です。</sys:String>
     
 </ResourceDictionary>
