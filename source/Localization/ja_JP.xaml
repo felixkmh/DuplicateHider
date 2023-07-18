@@ -10,19 +10,19 @@
 	<!--Message Boxes-->
     <sys:String x:Key="LOC_DH_NGamesHidden"></sys:String>
     <sys:String x:Key="LOC_DH_NGamesRevealed"></sys:String>
-    <sys:String x:Key="LOC_DH_N_GamesAddedToGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_N_GroupsDisbanded"></sys:String>
+    <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">グループ &quot;{1}&quot; 次のゲームを追加しました: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">グループからゲームを削除しました: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_N_GroupsDisbanded">グループを解除しました: {0}</sys:String>
     <sys:String x:Key="LOC_DH_CopyFieldsWarning" xml:space="preserve"></sys:String>
     
     <!--GameMenu Entries-->
-	<sys:String x:Key="LOC_DH_N_OtherCopies"></sys:String>
+	<sys:String x:Key="LOC_DH_N_OtherCopies">その他のコピー: {0}</sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup">選択したゲームを新しいグループに追加</sys:String>
     <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup">選択したゲームを既存のグループに追加</sys:String>
     <sys:String x:Key="LOC_DH_RemoveFromExistingGroup"></sys:String>
-    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected"></sys:String>
-    <sys:String x:Key="LOC_DH_EditAllCopies"></sys:String>
-    <sys:String x:Key="LOC_DH_CopyFieldsFromGame"></sys:String>
+    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">選択したゲームのグループを解除</sys:String>
+    <sys:String x:Key="LOC_DH_EditAllCopies">すべてのコピーを編集</sys:String>
+    <sys:String x:Key="LOC_DH_CopyFieldsFromGame">情報を他のコピーにコピー</sys:String>
     <sys:String x:Key="LOC_DH_AssignOverrideTag"></sys:String>
     <sys:String x:Key="LOC_DH_AssignOverrideTagHigh"></sys:String>
     <sys:String x:Key="LOC_DH_AssignOverrideTagLow"></sys:String>
@@ -37,7 +37,7 @@
     <sys:String x:Key="LOC_DH_Updating">更新中...</sys:String>
     <sys:String x:Key="LOC_DH_GameFields"></sys:String>
     <sys:String x:Key="LOC_DH_SourceGames"></sys:String>
-    <sys:String x:Key="LOC_DH_Warning"></sys:String>
+    <sys:String x:Key="LOC_DH_Warning">警告</sys:String>
 	<sys:String x:Key="LOC_DH_Priorities">優先順位</sys:String>
 	<sys:String x:Key="LOC_DH_AutomaticUpdate"></sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopies"></sys:String>
@@ -48,18 +48,18 @@
 	<sys:String x:Key="LOC_DH_IgnoredGames">無視されたゲーム:</sys:String>
     <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGames"></sys:String>
     <sys:String x:Key="LOC_DH_DisplayString"></sys:String>
-    <sys:String x:Key="LOC_DH_CustomRulesHeader"></sys:String>
-    <sys:String x:Key="LOC_DH_EnableUIIntegration"></sys:String>
-    <sys:String x:Key="LOC_DH_EnableThemeIcons"></sys:String>
-    <sys:String x:Key="LOC_DH_PreferUserIcons"></sys:String>
-    <sys:String x:Key="LOC_DH_ShowSingleIcon"></sys:String>
-    <sys:String x:Key="LOC_DH_SuppressNotification"></sys:String>
+    <sys:String x:Key="LOC_DH_CustomRulesHeader">処理を行う前に、ゲーム名に適用されるルールを定義します。ルールはリストに表示された順に適用されます。</sys:String>
+    <sys:String x:Key="LOC_DH_EnableUIIntegration">UI 統合を有効にする</sys:String>
+    <sys:String x:Key="LOC_DH_EnableThemeIcons">テーマアイコンを有効にする</sys:String>
+    <sys:String x:Key="LOC_DH_PreferUserIcons">ユーザーアイコンを優先する</sys:String>
+    <sys:String x:Key="LOC_DH_ShowSingleIcon">コピーが1つしかない場合にアイコンを表示</sys:String>
+    <sys:String x:Key="LOC_DH_SuppressNotification">テーマアイコンの通知を無効にする</sys:String>
     <sys:String x:Key="LOC_DH_CustomGroups">カスタムグループ</sys:String>
     <sys:String x:Key="LOC_DH_CustomGroupName">カスタムグループ名</sys:String>
     <sys:String x:Key="LOC_DH_CustomGroupNamePrompt"></sys:String>
     <sys:String x:Key="LOC_DH_GroupConflict"></sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderLabel"></sys:String>
-    <sys:String x:Key="LOC_DH_Games"></sys:String>
+    <sys:String x:Key="LOC_DH_Games">ゲーム</sys:String>
     <sys:String x:Key="LOC_DH_ExportIndex"></sys:String>
     <sys:String x:Key="LOC_DH_PriorityTagsDescription"></sys:String>
     <sys:String x:Key="LOC_DH_PriorityAddHighTag"></sys:String>
@@ -82,9 +82,9 @@
     <sys:String x:Key="LOC_DH_SuppressNotificationTooltip"></sys:String>
     <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve"></sys:String>
     <sys:String x:Key="LOC_DH_UnionizeField"></sys:String>
-    <sys:String x:Key="LOC_DH_ExcludedTooltip"></sys:String>
+    <sys:String x:Key="LOC_DH_ExcludedTooltip">除外</sys:String>
     <!--Buttons-->
-    <sys:String x:Key="LOC_DH_OpenUserIconFolderButton"></sys:String>
+    <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">ユーザーアイコンフォルダーを開く</sys:String>
     <sys:String x:Key="LOC_DH_MoveButton"></sys:String>
     <sys:String x:Key="LOC_DH_KeepButton"></sys:String>
 
