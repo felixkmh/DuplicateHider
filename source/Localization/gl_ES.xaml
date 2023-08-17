@@ -1,0 +1,100 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+	<!--Menu Entries-->
+	<sys:String x:Key="LOC_DH_HideDuplicatesEntry">Ocultar duplicados</sys:String>
+	<sys:String x:Key="LOC_DH_RevealDuplicatesEntry">Mostrar duplicados</sys:String>
+	<sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntry">Engadir xogos seleccionados á lista de ignorados</sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToIgnoreEntryAndReveal">Engadir os xogos seleccionados á lista de ignorados e mostralos</sys:String>
+	<sys:String x:Key="LOC_DH_RemoveSelectedFromIgnoreEntry">Quitar os xogos seleccionados da lista de ignorados</sys:String>
+	
+	<!--Message Boxes-->
+    <sys:String x:Key="LOC_DH_NGamesHidden">Xogos ocultos: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_NGamesRevealed">Xogos mostrados: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_N_GamesAddedToGroup">Xogos engadidos ao grupo &quot;{1}&quot;: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_N_GamesRemovedfromGroup">Xogos quitados dos seus grupos: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_N_GroupsDisbanded">Grupos disoltos: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_CopyFieldsWarning" xml:space="preserve">Esta operación copiará os campos seleccionados das copias nas que se invocou esta operación a todas as súas copias. Isto sobrescribirá e eliminará os campos existentes e as imaxes das outras copias e non se pode desfacer.
+
+Preme &quot;{0}&quot; para continuar ou &quot;{1}&quot; para cancelar esta operación.</sys:String>
+    
+    <!--GameMenu Entries-->
+	<sys:String x:Key="LOC_DH_N_OtherCopies">Outras copias: {0}</sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToNewCustomGroup">Engadir os xogos seleccionados a un grupo novo</sys:String>
+    <sys:String x:Key="LOC_DH_AddSelectedToExistingCustomGroup">Engadir xogos seleccionados a un grupo existente</sys:String>
+    <sys:String x:Key="LOC_DH_RemoveFromExistingGroup">Quitar xogos seleccionados dos seus grupos</sys:String>
+    <sys:String x:Key="LOC_DH_DisbandGroupOfSelected">Disolver grupos dos xogos seleccionados</sys:String>
+    <sys:String x:Key="LOC_DH_EditAllCopies">Editar todas as copias</sys:String>
+    <sys:String x:Key="LOC_DH_CopyFieldsFromGame">Copiar información a outras copias</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTag">Asignar etiqueta de sobrescrita da prioridade</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagHigh">Maior prioridade</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagLow">Menor prioridade</sys:String>
+    <sys:String x:Key="LOC_DH_AssignOverrideTagClear">Borrar etiquetas de sobrescrita de todas as copias</sys:String>
+	
+	<!--Settings-->
+	<!--Tabs-->
+	<sys:String x:Key="LOC_DH_CommonTab">Xeral</sys:String>
+	<sys:String x:Key="LOC_DH_CustomRulesTab">Regras personalizadas</sys:String>
+	<sys:String x:Key="LOC_DH_UIIntegrationTab">Integración da IU</sys:String>
+	<!--Labels-->
+    <sys:String x:Key="LOC_DH_Updating">A actualizar...</sys:String>
+    <sys:String x:Key="LOC_DH_GameFields">Campos do xogo</sys:String>
+    <sys:String x:Key="LOC_DH_SourceGames">Xogos da fonte</sys:String>
+    <sys:String x:Key="LOC_DH_Warning">Advertencia</sys:String>
+	<sys:String x:Key="LOC_DH_Priorities">Prioridades</sys:String>
+	<sys:String x:Key="LOC_DH_AutomaticUpdate">Actualizar automaticamente</sys:String>
+	<sys:String x:Key="LOC_DH_ShowOtherCopies">Amosar copias no menú do xogo</sys:String>
+	<sys:String x:Key="LOC_DH_PrioritizeNewerGames">Dar prioridade a un xogo novo da mesma fonte</sys:String>
+	<sys:String x:Key="LOC_DH_IncludedPlatforms">Plataformas incluídas:</sys:String>
+	<sys:String x:Key="LOC_DH_ExcludedSources">Fontes excluídas:</sys:String>
+	<sys:String x:Key="LOC_DH_ExcludedCategories">Categorías excluídas:</sys:String>
+	<sys:String x:Key="LOC_DH_IgnoredGames">Xogos ignorados:</sys:String>
+    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGames">Engadir manualmente os xogos ocultos ou amosados</sys:String>
+    <sys:String x:Key="LOC_DH_DisplayString">Cadea para mostrar para as outras copias:</sys:String>
+    <sys:String x:Key="LOC_DH_CustomRulesHeader">Define regras que se aplican a nomes de xoges antes de procesalos. As regras aplícanse na orde na que aparecen na lista.</sys:String>
+    <sys:String x:Key="LOC_DH_EnableUIIntegration">Activar integración da IU</sys:String>
+    <sys:String x:Key="LOC_DH_EnableThemeIcons">Activar iconas do tema</sys:String>
+    <sys:String x:Key="LOC_DH_PreferUserIcons">Preferir iconas do usuario</sys:String>
+    <sys:String x:Key="LOC_DH_ShowSingleIcon">Amosar icona se só hai unha copia</sys:String>
+    <sys:String x:Key="LOC_DH_SuppressNotification">Silenciar a notificación da icona do tema</sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroups">Grupos personalizados</sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupName">Nome de grupo personalizado</sys:String>
+    <sys:String x:Key="LOC_DH_CustomGroupNamePrompt">Selecciona un nome para o novo grupo:</sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflict">Conflitos do grupo</sys:String>
+    <sys:String x:Key="LOC_DH_KeepOrderLabel">Manter a orde</sys:String>
+    <sys:String x:Key="LOC_DH_Games">Xogos</sys:String>
+    <sys:String x:Key="LOC_DH_ExportIndex">Exportar índice</sys:String>
+    <sys:String x:Key="LOC_DH_PriorityTagsDescription">As etiquetas engadidas aquí terán o mesmo efecto que as de &quot;[DH] Alta&quot; e &quot;[DH] Baixa&quot;.</sys:String>
+    <sys:String x:Key="LOC_DH_PriorityAddHighTag">Engadir etiquetas de prioridade alta</sys:String>
+    <sys:String x:Key="LOC_DH_PriorityAddLowTag">Engadir etiquetas de prioridade baixa</sys:String>
+    <sys:String x:Key="LOC_DH_GroupConflictDescription" xml:space="preserve">Os seguintes xogos presentan un conflito cos grupos personalizados existentes:
+{0}
+
+Queres mover estes xogos dos seus grupos anteriores ao novo, manter os xogos con conflitos nos grupos antiguos ou cancelar a creación do grupo?
+    </sys:String>
+    <sys:String x:Key="LOC_DH_HiddenTag">[DH] Oculto</sys:String>
+    <sys:String x:Key="LOC_DH_RevealedTag">[DH] Mostrado</sys:String>
+    <sys:String x:Key="LOC_DH_HighPrioTag">[DH] Alta</sys:String>
+    <sys:String x:Key="LOC_DH_LowPrioTag">[DH] Baixa</sys:String>
+    <!--Tool Tips-->
+	<sys:String x:Key="LOC_DH_AutomaticUpdateTooltip">Se se activa esta opción, DuplicateHider volverá avaliar o rango dunha copia cando se modifique e manterá a copia sempre na maior posición visible e ocultará as outras copias.</sys:String>
+	<sys:String x:Key="LOC_DH_ShowOtherCopiesTooltip">Se se activa esta opción, as outras copias dun xogo poden iniciarse desde un menú contextual do xogo.</sys:String>
+	<sys:String x:Key="LOC_DH_PrioritizeNewerGamesTooltip">Activado: priorizar os xogos novos se a puntuación é a mesma. Desactivado: priorizar os xogos antigos se a puntuación é a mesma.</sys:String>
+    <sys:String x:Key="LOC_DH_IgnoreManuallyHiddenGamesTooltip">Se se activa esta opción, os xogos ocultos ou mostrados por outro motivo e non por DuplicateHider engadiranse á lista de ignorados.</sys:String>
+    <sys:String x:Key="LOC_DH_DisplayStringTooltip">Preme co botón dereito para inserir variables de marcador de posición.</sys:String>
+    <sys:String x:Key="LOC_DH_EnableUIIntegrationTooltip">Permite elementos da IU personalizados segundo se os admite o tema actual.</sys:String>
+    <sys:String x:Key="LOC_DH_EnableThemeIconsTooltip">Se se activa esta opción, as iconas incluídas co tema actual empregaranse para elementos personalizados da IU.</sys:String>
+    <sys:String x:Key="LOC_DH_PreferUserIconsTooltip">Se se activa esta opción, as iconas colocadas no cartafol de iconas de usuario terán prioridade sempre ao buscar iconas.</sys:String>
+    <sys:String x:Key="LOC_DH_ShowSingleIconTooltip">Indica ao tema que non queres elementos da IU personalizados se non hai copias adicionais dun xogo.</sys:String>
+    <sys:String x:Key="LOC_DH_SuppressNotificationTooltip">Se se activa esta opción, non recibirás unha notificación se hai iconas do tema no tema actual.</sys:String>
+    <sys:String x:Key="LOC_DH_KeepOrderTooltip" xml:space="preserve">Activado: puntuar os xogos segundo a posición na lista do grupo.
+Desactivado: puntuar segundo o método de puntuación normal segundo as prioridades da fonte.</sys:String>
+    <sys:String x:Key="LOC_DH_UnionizeField">Asignar a unión sobre todas as copias a cada unha delas, incluído o xogo da fonte.</sys:String>
+    <sys:String x:Key="LOC_DH_ExcludedTooltip">Excluídos</sys:String>
+    <!--Buttons-->
+    <sys:String x:Key="LOC_DH_OpenUserIconFolderButton">Abrir o cartafol de iconas do usuario</sys:String>
+    <sys:String x:Key="LOC_DH_MoveButton">Mover</sys:String>
+    <sys:String x:Key="LOC_DH_KeepButton">Manter</sys:String>
+
+    <sys:String x:Key="LOC_DH_RestartMessage">Cómpre reiniciar Playnite para aplicar algunhas modificacións.</sys:String>
+    
+</ResourceDictionary>
