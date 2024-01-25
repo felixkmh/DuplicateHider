@@ -626,21 +626,21 @@ namespace DuplicateHider
                     }
                 }
 
-                UniqueList<string> updatedPriorites = new UniqueList<string> { };
+                UniqueList<string> updatedPriorities = new UniqueList<string> { };
                 {
                     foreach (ListBoxItem item in plugin.SettingsView.PriorityListBox.Items)
                     {
                         if (item.Tag is GameSource source)
                         {
-                            updatedPriorites.AddMissing(source.Name);
+                            updatedPriorities.AddMissing(source.Name);
                         }
                         else
                         {
-                            updatedPriorites.AddMissing(Constants.UNDEFINED_SOURCE);
+                            updatedPriorities.AddMissing(Constants.UNDEFINED_SOURCE);
                         }
                     }
                 }
-                Priorities = updatedPriorites;
+                Priorities = updatedPriorities;
                 {
                     foreach (CheckBox cb in plugin.SettingsView.PlatformComboBox.Items)
                     {

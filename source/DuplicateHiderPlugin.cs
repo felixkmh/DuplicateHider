@@ -290,7 +290,7 @@ namespace DuplicateHider
                 iconWatcher.EnableRaisingEvents = true;
             }
 
-            // Clean orphaned entries from Priorites list
+            // Clean orphaned entries from Priorities list
             for (int i = settings.Priorities.Count - 1; i >= 0; --i)
             {
                 var prio = settings.Priorities[i];
