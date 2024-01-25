@@ -40,7 +40,7 @@ Click "{0}" to continue or "{1}" to cancel this operation.</sys:String>
     <sys:String x:Key="LOC_DH_GameFields">Game Fields</sys:String>
     <sys:String x:Key="LOC_DH_SourceGames">Source Games</sys:String>
     <sys:String x:Key="LOC_DH_Warning">Warning</sys:String>
-	<sys:String x:Key="LOC_DH_Priorities">Priorites</sys:String>
+	<sys:String x:Key="LOC_DH_Priorities">Priorities</sys:String>
 	<sys:String x:Key="LOC_DH_AutomaticUpdate">Update Automatically</sys:String>
 	<sys:String x:Key="LOC_DH_ShowOtherCopies">Show Copies in Game Menu</sys:String>
 	<sys:String x:Key="LOC_DH_PrioritizeNewerGames">Prioritize newer Game from same source</sys:String>
